@@ -1,0 +1,23 @@
+import { defineAsyncComponent } from 'vue'
+
+/**
+ * The Component Registry
+ * Keys are the HTML tags (e.g., <test-component>)
+ * Values are the dynamic imports.
+ */
+const components = {
+  TestComponent: () => import('../components/Test.vue'),
+  // Add future components here:
+  // CocktailCard: () => import('../components/CocktailCard.vue'),
+}
+
+export default {
+  install(app) {
+    Object.entries(components).forEach(([name, loadComponent]) => {
+      // defineAsyncComponent handles the lazy loading automatically
+      app.component(name, defineAsyncComponent(loadComponent))
+    })
+    
+    console.log(`Registered ${Object.keys(components).length} components.`)
+  }
+}

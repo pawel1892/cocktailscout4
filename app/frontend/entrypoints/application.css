@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Tailwind 4 scans files for classes.
+   To add additional paths, use @source. */
+@source "../../../app/views/**/*.html.erb";
+@source "../../../app/helpers/**/*.rb";
+@source "../../../app/frontend/**/*.{js,vue}";
