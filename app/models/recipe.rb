@@ -6,4 +6,8 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipe_ingredients
   
   validates :title, presence: true
+
+  def to_param
+    slug
+  end
 end
