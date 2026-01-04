@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   
   has_many :recipe_ingredients, -> { order(position: :asc) }, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients
+  has_many :recipe_comments, dependent: :destroy
   
   validates :title, presence: true
 

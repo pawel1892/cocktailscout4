@@ -14,6 +14,7 @@ RSpec.describe "Recipes", type: :request do
   describe "GET /rezepte/:slug" do
     let(:ingredient) { create(:ingredient, name: "Gin") }
     let!(:recipe_ingredient) { create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 4, unit: "cl") }
+    let!(:comment) { create(:recipe_comment, recipe: recipe, body: "Yummy!", user: recipe.user) }
 
     it "returns http success and shows details" do
       get recipe_path(recipe)
@@ -21,6 +22,7 @@ RSpec.describe "Recipes", type: :request do
       expect(response.body).to include(recipe.title)
       expect(response.body).to include("Gin")
       expect(response.body).to include("4.0 cl")
+      expect(response.body).to include("Yummy!")
     end
 
     it "returns 404 for non-existent slug" do

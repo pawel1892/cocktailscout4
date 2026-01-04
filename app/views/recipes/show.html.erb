@@ -26,3 +26,18 @@
   <strong>Alkoholgehalt:</strong> <%= @recipe.alcohol_content %>%<br>
   <strong>Gesamtvolumen:</strong> <%= @recipe.total_volume %> cl
 </p>
+
+<% if @recipe.recipe_comments.any? %>
+  <div id="comments">
+    <h2>Kommentare</h2>
+    <% @recipe.recipe_comments.each do |comment| %>
+      <div class="comment">
+        <p>
+          <strong><%= comment.user&.username || "Gast" %></strong> 
+          <small><%= l comment.created_at, format: :short %></small>
+        </p>
+        <%= simple_format comment.body %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
