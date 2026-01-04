@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_04_033836) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_04_071614) do
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.decimal "alcoholic_content", precision: 10
     t.datetime "created_at", null: false
@@ -19,6 +19,39 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_033836) do
     t.integer "old_id"
     t.string "slug"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "recipe_ingredients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.bigint "ingredient_id", null: false
+    t.integer "old_id"
+    t.integer "position"
+    t.bigint "recipe_id", null: false
+    t.string "unit", default: "cl"
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
+    t.index ["old_id"], name: "index_recipe_ingredients_on_old_id"
+    t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
+  end
+
+  create_table "recipes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.decimal "alcohol_content", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "old_id"
+    t.string "slug"
+    t.string "title", null: false
+    t.decimal "total_volume", precision: 10, scale: 2
+    t.datetime "updated_at", null: false
+    t.bigint "updated_by_id"
+    t.bigint "user_id", null: false
+    t.integer "views", default: 0
+    t.index ["old_id"], name: "index_recipes_on_old_id"
+    t.index ["slug"], name: "index_recipes_on_slug", unique: true
+    t.index ["updated_by_id"], name: "index_recipes_on_updated_by_id"
+    t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -49,5 +82,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_033836) do
     t.index ["username"], name: "index_users_on_username"
   end
 
+  add_foreign_key "recipe_ingredients", "ingredients"
+  add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "recipes", "users"
+  add_foreign_key "recipes", "users", column: "updated_by_id"
   add_foreign_key "sessions", "users"
 end

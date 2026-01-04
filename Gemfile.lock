@@ -75,6 +75,9 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
+    acts_as_list (1.2.6)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.21)
@@ -391,6 +394,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  acts_as_list (~> 1.2)
   bcrypt (~> 3.1.7)
   bootsnap
   database_cleaner-active_record

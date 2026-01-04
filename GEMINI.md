@@ -12,9 +12,30 @@
 - Prioritize build-in rails generators over hand written code (if applicable)
 - Logic: "Fat Model, Skinny Controller" or use Concerns. Avoid over-engineering with excessive patterns unless requested.
 
+### DB Migration Standards
+- **Column Ordering**:
+  1. Primary Key (`id`) - *Implicit*
+  2. Foreign Keys (`user_id`, `category_id`, etc.)
+  3. Essential Data Columns (slugs, names, titles)
+  4. Other Data Columns
+  5. Caches/Counters
+  6. Legacy/Meta columns (`old_id`, `position`)
+  7. Timestamps (`created_at`, `updated_at`) - *Must be last*
+
 ## Workflow
 - Always propose a plan before executing shell commands.
 - Ensure all new migrations include the `old_id` field.
+- **Worklog Entries**: When the user asks for a log entry or worklog, provide it in the following Obsidian-ready format:
+    ```markdown
+    YYYY-MM-DD HH:MM — Short Title
+    Time spent: Xh
+    Description:
+    ...
+    Constraints & Decisions:
+    ...
+    Outcome:
+    ...
+    ```
 
 ## Technical Stack & Decisions
 - **Authentication**: Rails 8 Native Auth (User/Session/Current).
