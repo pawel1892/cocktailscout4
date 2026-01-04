@@ -1,0 +1,28 @@
+<h1><%= @recipe.title %></h1>
+
+<p>
+  <strong>Autor:</strong> <%= @recipe.user.username %>
+</p>
+
+<% if @recipe.description.present? %>
+  <div class="description">
+    <%= simple_format @recipe.description %>
+  </div>
+<% end %>
+
+<h2>Zutaten</h2>
+<ul>
+  <% @recipe.recipe_ingredients.each do |ri| %>
+    <li>
+      <%= ri.amount %> <%= ri.unit %> <%= ri.ingredient.name %>
+      <% if ri.description.present? %>
+        (<%= ri.description %>)
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  <strong>Alkoholgehalt:</strong> <%= @recipe.alcohol_content %>%<br>
+  <strong>Gesamtvolumen:</strong> <%= @recipe.total_volume %> cl
+</p>
