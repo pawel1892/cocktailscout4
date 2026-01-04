@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_04_071614) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_04_140228) do
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.decimal "alcoholic_content", precision: 10
     t.datetime "created_at", null: false
@@ -19,6 +19,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_071614) do
     t.integer "old_id"
     t.string "slug"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "recipe_comments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.integer "old_id"
+    t.bigint "recipe_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["old_id"], name: "index_recipe_comments_on_old_id"
+    t.index ["recipe_id"], name: "index_recipe_comments_on_recipe_id"
+    t.index ["user_id"], name: "index_recipe_comments_on_user_id"
   end
 
   create_table "recipe_ingredients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -82,6 +94,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_071614) do
     t.index ["username"], name: "index_users_on_username"
   end
 
+  add_foreign_key "recipe_comments", "recipes"
+  add_foreign_key "recipe_comments", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"

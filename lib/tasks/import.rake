@@ -1,7 +1,35 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [:ingredients, :users]
+  task all: [:ingredients, :users, :recipes, :comments]
+
+  desc "Import comments from the legacy database"
+  task comments: :environment do
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}, Recipes: #{recipe_map.size}"
+
+    puts "Importing comments..."
+    count = 0
+    Legacy::RecipeComment.find_each do |legacy_comment|
+      new_recipe_id = recipe_map[legacy_comment.recipe_id]
+      next unless new_recipe_id # Skip if recipe doesn't exist
+
+      comment = RecipeComment.find_or_initialize_by(old_id: legacy_comment.id)
+      comment.assign_attributes(
+        recipe_id: new_recipe_id,
+        user_id: user_map[legacy_comment.user_id], # Nil if user not found
+        body: legacy_comment.comment,
+        created_at: legacy_comment.created_at,
+        updated_at: legacy_comment.updated_at
+      )
+      comment.save!(validate: false)
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nComments imported: #{count}"
+  end
 
   desc "Import ingredients from the legacy database"
   task ingredients: :environment do
