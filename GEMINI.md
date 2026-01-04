@@ -3,6 +3,9 @@
 ## Context
 - Rewriting legacy app from scratch: cocktail recipe database with community functions
 - Legacy Schema Reference: db/legacy/schema.sql
+- Legacy Code is in: /legacy
+  - only use legacy code to see old functionality
+  - never reference or copy it
 - Migration Strategy: Every new table MUST include an `old_id` column (integer/bigint) to facilitate future data imports.
 
 ## Coding Standards (DHH/Rails Way)
