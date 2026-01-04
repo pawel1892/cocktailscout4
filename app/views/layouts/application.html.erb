@@ -22,9 +22,13 @@
     <%= vite_javascript_tag 'application' %>
     <%= vite_stylesheet_tag 'application' %>
 
+    <% authenticated? %>
+    <meta name="current-user" content="<%= (Current.user ? Current.user.as_json(only: [:id, :email_address]) : nil).to_json %>">
   </head>
 
   <body>
-    <%= yield %>
+    <div id="app">
+      <%= yield %>
+    </div>
   </body>
 </html>

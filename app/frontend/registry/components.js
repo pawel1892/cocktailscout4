@@ -7,6 +7,7 @@ import { defineAsyncComponent } from 'vue'
  */
 const components = {
   TestComponent: () => import('../components/Test.vue'),
+  AuthForm: () => import('../components/AuthForm.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

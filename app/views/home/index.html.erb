@@ -1,5 +1,17 @@
-BLUBB
-<div id="app">
-    BLABLA
-    <test-component></test-component>
+<div class="container mx-auto mt-10">
+  <h1 class="text-3xl font-bold mb-6 text-center">Cocktail Scout 4</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div>
+        <h2 class="text-xl mb-4">Vue Component Area</h2>
+        <!-- This component will show the auth status reactively -->
+        <test-component></test-component>
+    </div>
+
+    <div>
+        <h2 class="text-xl mb-4">Authentication</h2>
+        <!-- This is our new Ajax Auth Form -->
+        <auth-form></auth-form>
+    </div>
+  </div>
 </div>
