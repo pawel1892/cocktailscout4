@@ -1,0 +1,9 @@
+= link_to user.login, user_profile_path(user_profile)
+%span{:class => "rank_#{user.user_rank.rank}_color"}
+  = fa_icon 'user'
+= link_to new_private_message_path(:receiver_id => user.id) do
+  = fa_icon 'comment-o'
+-#todo find cool icon for is online
+- if user.is_online?
+  %span{class: 'user-online'}
+    = fa_icon 'wifi'

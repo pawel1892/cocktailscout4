@@ -1,0 +1,77 @@
+.row
+  .small-12.medium-8.columns
+    %h1 Profil von #{@user_profile.user.login}
+
+- if @user_profile.user == current_user
+  .row
+    .small-12.medium-8.columns
+      = link_to private_messages_path do
+        = fa_icon 'envelope'
+        Meine Nachrichten
+        - if unread_pm_count > 0
+          %span.alert.badge
+            = unread_pm_count
+  - if can?(:approve, RecipeImage)
+    .row
+      .small-12.medium-8.columns
+        = link_to recipe_images_path(params: {to_approve: 'true'}) do
+          = fa_icon 'image'
+          Bilder freischalten
+          - if images_to_approve_count > 0
+            %span.alert.badge
+              = images_to_approve_count
+  - if can?(:manage, Ingredient)
+    .row
+      .small-12.medium-8.columns
+        = link_to ingredients_path do
+          = fa_icon 'lemon-o'
+          Zutaten verwalten
+
+%hr
+
+- if @user_profile.gender.present?
+  .row
+    .small-12.medium-3.columns
+      %strong Geschlecht:
+    .small-12.medium-9.columns
+      = @user_profile.gender == 'm' ? 'männlich' : 'weiblich' unless @user_profile.gender.nil?
+
+- if @user_profile.prename.present?
+  .row
+    .small-12.medium-3.columns
+      %strong Vorname:
+    .small-12.medium-9.columns
+      = @user_profile.prename
+
+- if @user_profile.public_mail.present?
+  .row
+    .small-12.medium-3.columns
+      %strong öffentliche E-Mail-Adresse:
+    .small-12.medium-9.columns
+      = @user_profile.public_mail
+
+- if @user_profile.homepage.present?
+  .row
+    .small-12.medium-3.columns
+      %strong Homepage:
+    .small-12.medium-9.columns
+      = @user_profile.homepage
+
+- if @user_profile.location.present?
+  .row
+    .small-12.medium-3.columns
+      %strong Ort:
+    .small-12.medium-9.columns
+      = @user_profile.location
+
+- if @user_profile.title.present?
+  .row
+    .small-12.medium-3.columns
+      %strong Titel:
+    .small-12.medium-9.columns
+      = @user_profile.title
+
+- if @user_profile.user == current_user
+  .row
+    .small-12.columns.vspace_top
+      = link_to 'bearbeiten', edit_user_profile_path, class: 'button'

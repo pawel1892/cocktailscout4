@@ -1,0 +1,68 @@
+source 'https://rubygems.org'
+
+# rails core stuff
+gem 'rails', '~> 5.1.7'
+gem 'mysql2'
+gem 'coffee-rails', '~> 4.2'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'rails-i18n', '~> 5.0.0'
+gem 'puma', '~> 3.7'
+gem 'activerecord-session_store', '~>1.1' #store session in db
+
+# frontend
+gem 'jbuilder', '~> 2.5' # json views
+gem 'haml-rails'
+gem 'jquery-rails'
+gem 'foundation-rails', '= 6.2.4.0'
+gem 'font-awesome-rails', '~> 4.7'
+gem 'foundation_rails_helper'
+gem 'turbolinks', '~> 5'
+gem 'cocoon'
+gem 'select2-rails'
+gem 'webpacker', '~> 3.0'
+gem 'react-rails'
+#gem 'webpacker-react', "~> 0.3.2"
+
+# auth
+gem 'devise', '~> 4.0'
+gem 'cancancan', '~> 2.0'
+
+# some other fancy stuff
+gem 'paperclip', '~> 5.0'  # file uploads
+gem 'sanitize'  # sanitize html strings
+gem 'kaminari'  # pagination
+gem 'letsrate'  # rating
+gem 'friendly_id'  # for using slugs as id
+gem 'acts-as-taggable-on', '~> 5.0'  # tagging
+gem 'breadcrumbs_on_rails'
+gem 'sitemap_generator'
+gem 'whenever', :require => false  # cronjobs
+gem 'paper_trail', '~> 8.0'
+gem 'exception_notification', '~> 4.3'
+
+
+group :develpoment do
+  gem 'capistrano',  '~> 3.10.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'capistrano3-puma'
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem "factory_girl_rails", '>= 4.1.0'
+  gem 'capybara'
+  gem "database_cleaner"
+  gem "launchy"
+  gem "faker"
+  gem 'byebug'
+end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

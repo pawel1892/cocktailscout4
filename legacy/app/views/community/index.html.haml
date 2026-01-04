@@ -1,0 +1,65 @@
+.row
+  .large-8.medium-6.small-12.columns
+    .vspace_bottom_large
+      %h3 Cocktailforum
+      %p Plaudere mit Gleichgesinnten über Cocktails, Zutaten, Bars, das Leben, das Universum und den ganzen Rest.
+      = link_to 'Zum Forum', forum_topics_path, class: 'button'
+      %h5 Zuletzt aktive Themen
+      %table
+        %tr
+          %th Titel
+          %th Letzter Beitrag
+
+        - @last_forum_threads.each do |forum_thread|
+          %tr
+            %td{:class => ("unread-forum-thread" if (current_user && forum_thread.last_post_created_cache > (1.week.ago) && !forum_thread.read_by?(current_user)))}
+              = link_to forum_thread.title, link_to_forum_thread(forum_thread)
+            %td
+              - if (forum_thread.last_post_user)
+                %div
+                  = user_profile(forum_thread.last_post_user)
+                %div
+                  = time_ago_in_words(forum_thread.last_post_created_cache, include_seconds: true)
+
+    .vspace_bottom_large
+      %h3 Neuste Kommentare
+      %table
+        %tr
+          %th{ colspan: 2 } Rezept
+          %th User
+
+        - @last_recipe_comments.each do |recipe_comment|
+          %tr
+            %td
+              .community-recipe-thumb
+                = link_to recipe_path(recipe_comment.recipe) do
+                  = render 'recipe_images/thumbnail_pic', recipe_image: recipe_comment.recipe.recipe_images.approved.first
+            %td
+              = link_to recipe_comment.recipe.name, recipe_path(recipe_comment.recipe)
+            %td
+              %div
+                = user_profile(recipe_comment.user)
+              %div
+                = time_ago_in_words(recipe_comment.created_at, include_seconds: true)
+
+  .large-4.medium-6.small-12.columns
+    .card.vspace_bottom_large
+      .card-divider
+        Shoutbox
+      .card-image
+        %img{ src: '/img/shoutbox_card.jpg' }
+      .card-section
+        = react_component('Shoutbox', loggedIn: current_user.present?)
+
+    .card.vspace_bottom_large
+      .card-divider
+        Gerade aktive User
+      .card-image
+        %img{ src: '/img/community_user.jpg' }
+      .card-section
+        - @online_users.each do |user|
+          .community_active_user
+            = user_profile(user)
+        - if @online_users.empty?
+          %p.community_inactive_user
+            Derzeit sind keine User aktiv

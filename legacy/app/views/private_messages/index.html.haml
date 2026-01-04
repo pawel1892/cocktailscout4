@@ -1,0 +1,45 @@
+.row
+  .small-12.columns
+    - if @mailbox == 'inbox'
+      %h1 Posteingang
+    - else
+      %h1 Postausgang
+
+    #private-messages
+
+      %ul.menu
+        %li
+          %a{:href => private_messages_path} Empfangen
+        - if unread_pm_count > 0
+          %li
+            = link_to private_messages_path(unread: true) do
+              Ungelesen
+              %span.alert.badge
+                = unread_pm_count
+        %li
+          %a{:href => private_messages_path(:mailbox => :outbox)} Gesendet
+
+      %table
+        %tr
+          -if @mailbox == 'inbox'
+            %th Von
+          -else
+            %th An
+          %th Betreff
+          %th Datum
+          %th
+          %th
+
+        - @private_messages.each do |private_message|
+          %tr
+            - if @mailbox == 'inbox'
+              %td= user_profile(private_message.sender)
+            -else
+              %td= user_profile(private_message.receiver)
+            %td{:class => (@mailbox == 'inbox' && private_message.read == false) ? 'unread' : ''}
+              = link_to private_message.subject, private_message
+            %td= l(private_message.created_at)
+            %td= link_to 'lesen', private_message
+            %td= link_to 'löschen', private_message, :method => :delete, :data => { :confirm => 'Nachricht löschen?' }
+
+      = paginate @private_messages

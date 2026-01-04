@@ -1,0 +1,59 @@
+.top-bar.default
+  .row.column
+    .top-bar-title.hide-for-small-only
+      %a{:href => root_path}
+        #logo
+          = image_tag("logo/cocktailscout-gold.svg")
+    .show-for-small-only
+      .row
+        .small-6.columns
+          .logo
+            %a{:href => root_path}
+              #logo-mobile
+                = image_tag("logo/cocktailscout-gold-no_icon.svg")
+        .small-6.columns
+          .nav
+            %span{"data-hide-for" => "medium", "data-responsive-toggle" => "responsive-menu" }
+              %span.menu-icon{"data-toggle" => ""}
+    #responsive-menu
+      .top-bar-left
+        = render 'shared/main_menu'
+      .top-bar-right
+        %ul.menu
+          %li
+            = form_tag recipes_path, :method => 'get', :class => "row collapse" do
+              .input-group
+                = text_field_tag :search, params[:search], placeholder: "Rezeptname eingeben", class: 'input-group-field'
+                .input-group-button
+                  %button{:class => 'button input-group-field small'}
+                    Suchen
+
+#my-cocktailscout
+  .row
+    .small-12.medium-6.columns.hide-for-small-only
+      .breadcrumbs
+        = render_breadcrumbs :separator => '&nbsp; | &nbsp;'
+    .small-12.medium-6.columns
+      .login
+        %ul.menu
+          - if user_signed_in?
+            %li
+              = link_to user_profile_path(current_user.user_profile) do
+                = fa_icon 'user'
+                = current_user.login
+                - if notification_count > 0
+                  %span.alert.badge
+                    = notification_count
+            %li
+              = link_to destroy_user_session_path, :method => :delete do
+                = fa_icon 'sign-out'
+                Abmelden
+          - else
+            %li
+              = link_to new_user_session_path do
+                = fa_icon 'sign-in'
+                Anmelden
+            %li
+              = link_to new_user_registration_path, class: 'register' do
+                = fa_icon 'user-plus'
+                Registrieren

@@ -1,0 +1,12 @@
+= form_for @recipe_image, html: {multipart: true}, url: url_for(recipe_recipe_images_path) do |f|
+  .row
+    .small-12.columns
+      = render 'shared/form_errors', errors: @recipe_image.errors[:base]
+
+  .row
+    .small-12.columns
+      = f.file_field :image, label: false
+
+  .row
+    .small-12.columns
+      = f.submit 'Bild hochladen', class: 'button'

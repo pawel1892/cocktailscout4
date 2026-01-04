@@ -1,0 +1,8 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+de:
+  recipes:
+    messages:
+      tags_saved: Danke! Deine Tags wurden gespeichert.
+      errors:
+        save_tags: Oops! Sorry, Deine Tags konnten nicht gespeichert werden.

@@ -1,0 +1,25 @@
+!!! 5
+%html{ :lang => "de"}
+  %head
+    = render 'shared/google_analytics'
+    %meta{ :charset => "utf-8" }
+
+    %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
+
+    %title= content_for?(:title) ? "#{yield(:title)} | Cocktailscout.de" : "Cocktailscout.de"
+
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "vendor/custom.modernizr"
+    = javascript_include_tag "application"
+    = javascript_pack_tag 'application'
+    %link{ :rel => "icon", :href => "favicon.ico", :type => "image/x-icon"}
+    %link{ :href => 'https://fonts.googleapis.com/css?family=Merriweather:400,300,700', :rel => 'stylesheet', :type => 'text/css' }
+    %link{ :href => 'https://fonts.googleapis.com/css?family=Merriweather+Sans:400,300,700', :rel => 'stylesheet', :type => 'text/css' }
+    = csrf_meta_tag
+
+  %body
+
+    = yield
+
+    %footer
+      = render 'layouts/footer'

@@ -1,0 +1,19 @@
+.row
+  .small-12.columns
+    %h1 Cocktailblog
+
+.row
+  .small-12.columns
+    - @blog_entries.each do |blog_entry|
+
+      .callout
+        =link_to(blog_entry_path(blog_entry.id)) do
+          %h3= blog_entry.title
+        = l(blog_entry.created_at)
+        von
+        = user_profile(blog_entry.user)
+        =link_to(blog_entry_path(blog_entry.id)) do
+          .teaser
+            = raw blog_entry.teaser
+
+    = paginate @blog_entries

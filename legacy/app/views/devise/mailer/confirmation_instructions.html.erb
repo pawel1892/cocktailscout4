@@ -1,0 +1,7 @@
+<p>Hallo <%= @resource.login %>!</p>
+
+<p>Willkommen bei Cocktailscout. Bitte klicke auf den folgenden Link, um deinen Account zu verifizieren:</p>
+
+<p><%= link_to 'Account Verifizieren', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p>Viele Grüße<br />Deine Cocktailscout-Webmaster</p>

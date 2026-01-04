@@ -1,0 +1,25 @@
+#global: &globala
+#  :recipe_comments:
+#    :per_page: 15
+
+global: &global
+  :recipe_comments:
+    :per_page: 20
+    :on_recipe_page: 10
+  :forum_threads:
+    :per_page: 15
+  :forum_posts:
+    :per_page: 15
+
+development: &development
+  <<: *global
+
+test: &test
+  <<: *global
+
+production:
+  <<: *global
+
+cucumber:
+  <<: *test
+

@@ -1,0 +1,31 @@
+.row
+  .columns.small-12
+    .forum-post
+      .heading
+        .row
+          .columns.small-12.medium-6
+            = l(forum_post.created_at)
+          .columns.small-12.medium-6.text-right
+            = link_to "##{forum_post.id}", {}, { name: forum_post.id }
+            =" | "
+            = link_to 'Beitrag melden', report_forum_post_path(forum_post)
+      .content
+        .row
+          .columns.small-12.medium-4.large-3
+            = user_profile(forum_post.user)
+            %div
+              %small
+                = "#{forum_post.user.forum_posts.count} Beiträge"
+            .show-for-small-only
+              %hr
+          .columns.small-12.medium-8.large-9
+            = raw forum_post.with_csbml{sanitize(forum_post.content)}
+            %hr
+            .row
+              .columns.small-6
+                - if can? :update, forum_post
+                  = link_to 'Bearbeiten', edit_forum_post_path(forum_post.id)
+                - if can? :destroy, ForumPost
+                  = link_to 'Löschen', forum_post_path(forum_post.id), :method => :delete, data: { confirm: 'Diesen Beitrag wirklich löschen?' }
+              .columns.small-6.text-right
+                = link_to 'Zitieren', new_forum_posts_path(@forum_thread.slug, quote: forum_post.id), class: 'button small'

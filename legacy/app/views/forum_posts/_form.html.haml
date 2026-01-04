@@ -1,0 +1,22 @@
+= form_for @forum_post do |f|
+  .row
+    .small-12.columns
+      = render 'shared/form_errors', errors: @forum_post.errors[:base]
+
+  .row
+    .small-12.columns
+      -if @quote.present?
+        = f.text_area :content, class: :big_text_area, value: @quote, id: :post_content
+      - else
+        = f.text_area :content, class: :big_text_area, id: :post_content
+
+  .row
+    .small-12.columns.text-right
+      = f.submit 'speichern', class: 'button'
+
+.row
+  .small-12.columns
+    = render 'shared/csbml'
+
+-#:javascript
+-#  document.getElementById("post_content").focus();

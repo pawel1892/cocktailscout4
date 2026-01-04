@@ -1,0 +1,12 @@
+
+.row
+  - @lists.each do |list|
+    .small-12.medium-6.columns
+      %table.recipe-toplist
+        %tr{colspan: 2}
+          %th
+            = "Top 10 #{list[:name]}"
+        - list[:recipes].each do |recipe|
+          %tr
+            %td= link_to recipe.name, recipe_path(recipe)
+            %td= recipe_rating(recipe)

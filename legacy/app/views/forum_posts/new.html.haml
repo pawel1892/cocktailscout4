@@ -1,0 +1,8 @@
+= render 'form'
+
+.row
+  .columns.small-12
+    %h4 Letzte Beiträge (neuste zuerst)
+
+- @last_forum_posts.each do |forum_post|
+  = render 'shared/forum_post', forum_post: forum_post

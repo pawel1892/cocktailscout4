@@ -1,0 +1,10 @@
+- recipe_image ||= nil
+- image_class ||= ''
+
+.square_gallery
+  .box
+    .content.thumbnail
+      - if recipe_image.present?
+        = image_tag recipe_image.image.url(:thumb), alt: recipe_image&.recipe&.name, class: image_class
+      - else
+        %img{ class: image_class, src: 'img/no_image.png' }

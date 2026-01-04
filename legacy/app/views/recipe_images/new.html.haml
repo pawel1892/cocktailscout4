@@ -1,0 +1,24 @@
+.row
+  .small-12.medium-8.columns
+    %h1 Bild hinzufügen
+    %p
+      Es dürfen ausschließlich Fotos von Cocktails hochgeladen werden. Die Fotos müssen vom User selber gemacht
+      worden sein. Insbesondere dürfen Fotos weder kopiert, noch aus Büchern eingescannt werden.
+    %p
+      Die Einhaltung dieser Regeln ist sehr wichtig, denn wenn dagegen verstoßen wird, macht Cocktailscout sich unter
+      Umständen schadensersatzpflichtig oder könnte abgemahnt werden. Wir bitten euch deshalb die Regeln unbedingt zu
+      befolgen. Andernfalls besteht die Möglichkeit, den Schaden, der Cocktailscout durch Regelverstöße entsteht, an
+      den entsprechenden User weiterzugeben.
+    %p
+      Zur Kontrolle werden die hochgeladenen Bilder von unseren Moderatoren freigeschaltet und sind nicht sofort online.
+      Bitte beachtet auch unsere Richtlinien:
+    %ul
+      %li Die Bilder müssen selbst erstellt worden sein. Die Moderatoren sind bei Bedarf angehalten, den Uploader um Einsendung der Orignale zu bitten.
+      %li Es dürfen keine Marken erkennbar sein (auch nicht nur teilweise).
+      %li Der Cocktail muss im Vordergrund stehen und sollte den Großteil des Bildes einnehmen.
+      %li Die Qualität der Bilder sollte angemessen sein, d. h. keine unscharfen oder verrauschten Fotos.
+    %p
+      Um eine hohe Qualität der Bilddatenbank zu gewährleisten, werden nur Fotos freigeschaltet, die diesen entsprechen.
+
+    = render 'form'
+    = link_to 'Abbrechen', recipe_path(@recipe)

@@ -1,0 +1,35 @@
+.rating
+  - if rating >= 1
+    = image_tag('/img/style/star-on.png')
+  - else
+    = image_tag('/img/style/star-off.png')
+
+  - if rating >= 2
+    = image_tag('/img/style/star-on.png')
+  - elsif rating >= 1.5
+    = image_tag('/img/style/star-half.png')
+  - else
+    = image_tag('/img/style/star-off.png')
+
+  - if rating >= 3
+    = image_tag('/img/style/star-on.png')
+  - elsif rating >= 2.5
+    = image_tag('/img/style/star-half.png')
+  - else
+    = image_tag('/img/style/star-off.png')
+
+  - if rating >= 4
+    = image_tag('/img/style/star-on.png')
+  - elsif rating >= 3.5
+    = image_tag('/img/style/star-half.png')
+  - else
+    = image_tag('/img/style/star-off.png')
+
+  - if rating >= 5
+    = image_tag('/img/style/star-on.png')
+  - elsif rating >= 4.5
+    = image_tag('/img/style/star-half.png')
+  - else
+    = image_tag('/img/style/star-off.png')
+
+  = "(#{rating_count})"

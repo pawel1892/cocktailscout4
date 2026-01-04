@@ -1,0 +1,6 @@
+- if flash.present?
+  - flash.each do |type, message|
+    .callout.small{"class" => type, "data-closable" => "slide-out-right"}
+      = message
+      %button.close-button{"aria-label" => "Dismiss alert", "data-close" => "", :type => "button"}
+        %span{"aria-hidden" => "true"} &times;

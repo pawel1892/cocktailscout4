@@ -1,0 +1,38 @@
+.row
+  .columns.small-12
+    %h1 Who Is Who
+    %p Hier möchten wir unsere freiwilligen Helfer vorstellen. Ohne Sie wäre diese Community gar nicht möglich.
+.row(data-equalizer data-equalize-on="medium")
+  .columns.small-6
+    .callout(data-equalizer-watch)
+      %h3 Administratoren
+      %p Gründer, Programmierer in Personalunion
+      %div
+        = user_profile(User.find_by_login('zoidberg'))
+      %div
+        = user_profile(User.find_by_login('Ripuli'))
+
+  .columns.small-6
+    .callout(data-equalizer-watch)
+      %h3 Forummoderatoren
+      %p Kämpfen gegen Spam und schlechte Manieren im Forum
+      - Role.find_by_name('forum_moderator').users.each do |user|
+        %div
+          = user_profile(user)
+
+.row(data-equalizer data-equalize-on="medium")
+  .columns.small-6
+    .callout(data-equalizer-watch)
+      %h3 Rezeptmoderatoren
+      %p Entfernen fiese Rezepte und schützen so Eure Geschmacksnerven
+      - Role.find_by_name('recipe_moderator').users.each do |user|
+        %div
+          = user_profile(user)
+
+  .columns.small-6
+    .callout(data-equalizer-watch)
+      %h3 Bildmoderatoren
+      %p Sorgen für eine ästhetische Galerie und verhidnern so Lizenzgebühren für geklaute Bilder
+      - Role.find_by_name('image_moderator').users.each do |user|
+        %div
+          = user_profile(user)

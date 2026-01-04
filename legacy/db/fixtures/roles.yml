@@ -1,0 +1,10 @@
+member:
+  name: member
+admin:
+  name: admin
+forum_moderator:
+  name: forum_moderator
+recipe_moderator:
+  name: recipe_moderator
+image_moderator:
+  name: image_moderator

@@ -1,0 +1,1 @@
+{"version":3,"file":"application-B7-Daugf.js","sources":["../../../app/javascript/entrypoints/application.js"],"sourcesContent":["// Import Tailwind CSS\nimport './application.css'\n\nconsole.log('🚀 Tailwind + Rails ready!')\n"],"names":[],"mappings":"kCAGA,QAAQ,IAAI,4BAA4B"}

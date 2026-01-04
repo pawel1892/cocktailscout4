@@ -1,0 +1,36 @@
+%ul{:class => "vertical medium-horizontal menu", "data-responsive-menu" => "drilldown medium-dropdown", "data-back-button" => '<li class="js-drilldown-back"><a><</a></li>' }
+  %li
+    %a{:href => recipes_path} Rezepte
+    %ul.menu.vertical
+      %li.show-for-small-only
+        %a{:href => recipes_path} Alle Rezepte
+      %li
+        %a{:href => tag_cloud_path} Kategorien
+      %li
+        %a{:href => recipe_images_path} Galerie
+      %li
+        %a{:href => ingredient_search_path} Zutatensuche
+      %li
+        %a{:href => top_lists_path} Toplisten
+      %li
+        %a{:href => new_recipe_path} Vorschlagen
+  %li
+    %a{:href => community_path} Community
+    %ul.menu.vertical
+      %li.show-for-small-only
+        %a{:href => community_path} Community Startseite
+      %li
+        %a{:href => forum_topics_path} Cocktailforum
+      %li
+        %a{:href => users_path} Userliste
+      %li
+        %a{:href => whoiswho_users_path} Who Is Who
+  %li
+    %a{:href => blog_entries_path} Blog
+  %li
+    %a{:href => '/cocktailforum/thema/lexikon'} Cocktailwissen
+    %ul.menu.vertical
+      %li.show-for-small-only
+        %a{:href => '/cocktailforum/thema/lexikon'} Lexikon
+      %li
+        %a{:href => knowledge_base_hausbar_path} Hausbar anlegen

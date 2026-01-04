@@ -1,0 +1,13 @@
+.row
+  .small-12.columns
+    %h1= @blog_entry.title
+    = l(@blog_entry.created_at)
+    von
+    = user_profile(@blog_entry.user)
+
+    .callout
+      .content= raw @blog_entry.content
+
+.row
+  .small-12.columns
+    =link_to("Zurück zu allen Blogbeiträgen", blog_entries_path)

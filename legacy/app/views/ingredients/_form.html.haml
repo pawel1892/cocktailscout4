@@ -1,0 +1,15 @@
+= form_for @ingredient do |f|
+  .row
+    .small-12.columns
+      = render 'shared/form_errors', errors: @ingredient.errors[:base]
+
+  .row
+    .small-12.columns
+      = f.text_field :name
+  .row
+    .small-12.columns
+      = f.text_field :alcoholic_content
+
+  .row
+    .small-12.columns.text-right
+      = f.submit 'speichern', class: 'button'

@@ -1,0 +1,8 @@
+.row
+  .large-6.small-12.columns
+    .callout
+      -#= react_component('Hello', name: 'Meister')
+  .large-6.small-12.columns
+    .callout
+      = react_component('Shoutbox', loggedIn: current_user.present?)
+      -#= react_component("HelloWorld", { greeting: "Hello from react-rails." })

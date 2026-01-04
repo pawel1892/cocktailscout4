@@ -1,0 +1,41 @@
+= render "forum/forum_header", forum_topic: @forum_topic, active: :thread
+
+.row
+  .small-12.columns
+    = link_to 'Neuen Beitrag erstellen', new_forum_threads_path(:topic_id => @forum_topic.slug), class: 'button'
+
+.row
+  .small-12.columns
+    = paginate @forum_threads
+
+.row
+  .small-12.columns
+    %table
+      %tr
+        %th &nbsp;
+        %th Aufrufe
+        %th Beiträge
+        %th Letzter Beitrag
+
+      - @forum_threads.each do |forum_thread|
+        %tr
+          %td{:class => ("unread-forum-thread" if (current_user && forum_thread.last_post_created_cache && forum_thread.last_post_created_cache > (1.week.ago) && !forum_thread.read_by?(current_user)))}
+            = link_to forum_thread.title, link_to_forum_thread(forum_thread)
+          %td
+            = link_to forum_thread.views, link_to_forum_thread(forum_thread)
+          %td
+            = link_to forum_thread.count_posts, link_to_forum_thread(forum_thread)
+          %td
+            - if (forum_thread.last_post_user)
+              %div
+                = user_profile(forum_thread.last_post_user)
+              %div
+                = time_ago_in_words(forum_thread.last_post_created_cache, include_seconds: true)
+
+.row
+  .small-12.columns
+    = paginate @forum_threads
+
+.row
+  .small-12.columns
+    = link_to 'Neuen Beitrag erstellen', new_forum_threads_path(:topic_id => @forum_topic.slug), class: 'button'

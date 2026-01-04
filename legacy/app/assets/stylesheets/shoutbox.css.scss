@@ -1,0 +1,28 @@
+@import 'settings';
+
+#shoutbox {
+  font-size: 80%;
+
+  .shoutboxEntry {
+    .header {
+      padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+    }
+    .message {
+      margin: 0.5rem 1.5rem 1rem 1.5rem;
+      overflow: hidden;
+    }
+    .timeAgo {
+      font-size: 75%;
+      color: #333333;
+      white-space: nowrap;
+    }
+  }
+
+  .shoutboxButton {
+    text-align: right;
+  }
+
+  .login, .new-post {
+    margin: 0.5rem;
+  }
+}

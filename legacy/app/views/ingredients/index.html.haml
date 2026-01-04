@@ -1,0 +1,43 @@
+.row
+  .small-12.medium-8.columns
+    %h1 Zutaten
+
+.row
+  .small-12.medium-8.columns
+    = paginate @ingredients
+
+.row
+  .small-12.large-12.columns
+    = link_to 'neue Zutat erstellen', new_ingredient_path, class: 'button'
+
+    %table
+      %tr
+        %th Name
+        %th Alkoholgehalt
+        %th Rezepte
+        %th &nbsp;
+        %th &nbsp;
+      - @ingredients.each do |ingredient|
+        - recipe_count = ingredient.recipes.count
+        %tr
+          %td= ingredient.name
+          %td= ingredient.alcoholic_content
+          %td
+            - if recipe_count > 0
+              = link_to recipe_count, recipes_path(ingredient: ingredient.slug)
+            - else
+              keine
+          %td= link_to 'bearbeiten', edit_ingredient_path(ingredient)
+          %td
+            - if recipe_count > 0
+              &nbsp;
+            - else
+              =link_to 'löschen', ingredient_path(ingredient), method: :delete, data: { confirm: "#{ingredient.name} löschen?" }
+
+.row
+  .small-12.medium-8.columns
+    = paginate @ingredients
+
+.row
+  .small-12.large-12.columns
+    = link_to 'neue Zutat erstellen', new_ingredient_path, class: 'button'

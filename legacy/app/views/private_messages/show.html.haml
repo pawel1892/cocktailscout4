@@ -1,0 +1,27 @@
+#private-messages
+  .row
+    .small-12.columns
+      - if @role == :receiver
+        = link_to 'Zurück zum Posteingang', private_messages_path, class: 'button'
+      - else
+        = link_to 'Zurück zum Postausgang', private_messages_path(:mailbox => :outbox), class: 'button'
+  .row
+    .small-12.columns
+      .message
+        .heading
+          %span
+            = sanitize "Von: #{user_profile(@private_message.sender)}"
+          %span.float-right
+            = l(@private_message.created_at)
+        .content
+          %p
+            Betreff:
+            %strong
+              = @private_message.subject
+          %p
+            = sanitize(@private_message.message, tags: %w(br a), attributes: %w(href))
+
+  .row
+    .small-12.columns
+      - if @role == :receiver
+        = link_to 'Antworten', new_private_message_path(:receiver_id => @private_message.sender_id), class: 'button'

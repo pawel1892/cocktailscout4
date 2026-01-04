@@ -1,0 +1,452 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+
+ *= require foundation_and_overrides
+ *= require font-awesome
+
+ *= require_tree .
+ *= require select2
+ */
+
+@import "font-awesome";
+@import 'settings';
+
+
+@mixin tertiary-link {
+  color: $tertiary-color;
+  a {
+    color: $tertiary-color;
+    &:hover,
+    &:focus {
+      color: lighten($tertiary-color, 30%);
+    }
+  }
+}
+
+body
+{
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+#main {
+  margin-top: 1rem;
+}
+
+#wrapper {
+  min-height: 100%;
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+footer {
+  height: 1.5rem;
+  line-height: 1.5rem;
+  background-color: black;
+  text-align: center;
+  font-size: 0.8rem;
+  @include tertiary-link;
+  position: absolute;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+}
+
+ul.pagination {
+  li.current {
+    a {
+      color: white;
+    }
+  }
+}
+
+#logo {
+  img {
+    padding: 1rem 1rem 1rem 0;
+    height: 6rem;
+  }
+}
+
+#logo-mobile {
+  img {
+    padding: 0.2rem 0.2rem 0.2rem 0;
+    height: 2.25rem;
+  }
+}
+
+.top-bar.default {
+  input {
+    margin-right: 0 !important;
+  }
+
+  .top-bar-left {
+    padding-top: 2rem;
+    a {
+      color: #fff;
+      &:hover { color: $tertiary-color }
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 0.8rem;
+    }
+  }
+
+  .top-bar-right {
+    input {
+      font-size: 0.7rem;
+    }
+    .input-group-field {
+      height: 2rem;
+    }
+    padding-top: 2rem;
+    input[type="submit"], .button {
+      color: $primary-color;
+      background-color: $tertiary-color;
+      &:hover,
+      &:focus {
+        background-color: darken($tertiary-color, 15%);
+      }
+    }
+  }
+
+  .nav { float: right; }
+  .logo { float: left; }
+
+  .dropdown.menu .is-dropdown-submenu.first-sub {
+    left: 0;
+    right: auto;
+    top: 100%;
+  }
+}
+
+
+.top-bar.start {
+  padding: 0.2rem;
+  background-color:rgba(0, 0, 0, 0.8);
+  ul { background-color:rgba(0, 0, 0, 0.8); }
+
+  .is-dropdown-submenu-parent.is-right-arrow > a::after {
+    border: none;
+  }
+
+  .dropdown.menu .is-dropdown-submenu.first-sub {
+    left: 0;
+    right: auto;
+    top: 100%;
+  }
+
+  a {
+    color: $tertiary-color;
+    &:hover { color: #fff }
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 0.6rem;
+  }
+
+  .nav { float: right; }
+}
+
+
+.callout.error {
+  background-color: #e74c3c;
+  color: white;
+  border: 0;
+  .close-button {
+    color: white;
+  }
+}
+.callout.notice,
+.callout.success {
+  background-color: #2ecc71;
+  color: white;
+  border: 0;
+  .close-button {
+    color: white;
+  }
+}
+
+#my-cocktailscout {
+  background-color: black;
+  font-size: 0.8em;
+  @include tertiary-link;
+  .breadcrumbs {
+    display: block;
+    line-height: 1;
+    padding: 0.7rem 0;
+    margin: auto auto;
+  }
+
+  .login {
+    float: right;
+  }
+
+  a.register {
+    padding-right: 0;
+  }
+}
+
+.hero {
+  background: url('/img/style/start/hero.jpg') no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+  margin-top: auto;
+  .intro {
+    padding: 2rem 3rem 1rem 3rem;
+    background-color:rgba(255, 255, 255, 0.65);
+    text-align: center;
+  }
+  .nav {
+    font-size: 0.75rem;
+  }
+  .logo {
+    margin-bottom: 2rem;
+  }
+  .container {
+    display: table;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+  }
+  .helper {
+    #position: absolute; #top: 50%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .content {
+    #position: relative; #top: -50%;
+    margin:0 auto;
+  }
+}
+
+.card {
+  .card-divider {
+    background-color: $primary-color;
+    margin: 0;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    color: white;
+  }
+  .card-image {
+    border-left: 1px solid $primary-color;
+    border-right: 1px solid $primary-color;
+  }
+  .card-section {
+    border: 1px solid $primary-color;
+    border-top: none;
+  }
+}
+
+.rank_0_color { color: #9A9A1E; }
+.rank_1_color { color: #4D9A34; }
+.rank_2_color { color: #0A9A39; }
+.rank_3_color { color: #00994C; }
+.rank_4_color { color: #049999; }
+.rank_5_color { color: #004D98; }
+.rank_6_color { color: #293377; }
+.rank_7_color { color: #472783; }
+.rank_8_color { color: #8A2D88; }
+.rank_9_color { color: #99134F; }
+.rank_10_color { color: #981915; }
+
+#recipe-details {
+  .tags {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    .label {
+      margin-bottom: 0.5rem;
+    }
+  }
+  .ingredient {
+    font-size: 1.15rem;
+  }
+  p.caption {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  img.thumbnail {
+    margin-bottom: 0.5rem;
+  }
+
+  .image_missing {
+    padding: 1.5rem;
+  }
+
+  .infos {
+    padding: 0rem 1rem 1rem 1rem;
+    color: $primary-color;
+    font-size: 0.9rem;
+  }
+
+  h5.comments {
+    padding-bottom: 1.5rem;
+  }
+}
+
+.recipe_comment {
+  border: 1px solid rgba(10, 10, 10, 0.25);
+  margin-bottom: 1.5rem;
+  .heading {
+    background-color: $secondary-color;
+    padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+  }
+  .content {
+    clear: both;
+    padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+  }
+}
+
+#recipe-tag-cloud {
+  .tag-cloud {
+    a{
+      padding: 0.5rem;
+      white-space: nowrap;
+    }
+    a.level-10 { font-size: 2rem; }
+    a.level-9 { font-size: 1.75rem; color: lighten($black, 2%);}
+    a.level-8 { font-size: 1.6rem; color: lighten($black, 4%);}
+    a.level-7 { font-size: 1.4rem; color: lighten($black, 8%);}
+    a.level-6 { font-size: 1.2rem; color: lighten($black, 12%);}
+    a.level-5 { font-size: 1.1rem; color: lighten($black, 16%);}
+    a.level-4 { font-size: 1rem; color: lighten($black, 20%);}
+    a.level-3 { font-size: 0.9rem; color: lighten($black, 24%);}
+    a.level-2 { font-size: 0.85rem; color: lighten($black, 28%);}
+    a.level-1 { font-size: 0.8rem; color: lighten($black, 32%);}
+  }
+}
+
+.recipe-toplist {
+  margin-top: 1.5rem;
+}
+
+.user-online {
+  position: relative;
+  top: -0.5em;
+  font-size: 50%;
+  color: $success-color;
+}
+
+.forum-post {
+  border: 1px solid rgba(10, 10, 10, 0.25);
+  margin-bottom: 1.5rem;
+  .heading {
+    background-color: $secondary-color;
+    padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+  }
+  .content {
+    clear: both;
+    padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .quote {
+    border: 1px solid $secondary-color;
+    padding: 1rem;
+    .author {
+      font-weight: bold;
+    }
+  }
+}
+
+.unread-forum-thread {
+  font-weight: bold;
+}
+
+.select2 {
+  margin-bottom: 1rem !important;
+}
+
+.square_gallery {
+  .box{
+    position: relative;
+    width: 100%;
+  }
+  .box:before{
+    content: "";
+    display: block;
+    padding-top: 100%; 	/* initial ratio of 1:1*/
+  }
+
+  .content{
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+  }
+
+  .caption{
+    margin-bottom: 1.5em;
+    margin-top: -0.35em;
+    min-height: 6rem;
+  }
+}
+
+.big_text_area {
+  height: 12em;
+}
+
+.vspace_top {
+  margin-top: 1rem;
+}
+
+.vspace_bottom {
+  margin-bottom: 1rem;
+}
+
+.vspace_bottom_large {
+  margin-bottom: 2rem;
+}
+
+#private-messages {
+  .unread {
+    &:before {
+      content: '•';
+    }
+    font-weight: bold;
+  }
+
+  .message {
+    border: 1px solid rgba(10, 10, 10, 0.25);
+    margin-bottom: 1.5rem;
+    .heading {
+      background-color: $secondary-color;
+      padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+    }
+    .content {
+      clear: both;
+      padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+    }
+  }
+}
+
+.emoji_link {
+ padding: 0.25rem 0.75rem;
+}
+
+.community-recipe-thumb {
+  width: 4rem;
+  .thumbnail {
+    margin: 0;
+  }
+}
+
+.community_active_user {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.community_inactive_user {
+  padding: 0.5rem;
+  text-align: center;
+  color: #333333;
+}

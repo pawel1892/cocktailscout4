@@ -1,0 +1,13 @@
+.row
+  .small-12.medium-8.columns
+    %h1 Rezepte
+
+.row
+  .small-12.medium-8.columns
+    = paginate @recipes
+
+=render 'list'
+
+.row
+  .small-12.medium-8.columns
+    = paginate @recipes

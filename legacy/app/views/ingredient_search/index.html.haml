@@ -1,0 +1,43 @@
+#recipe-ingredient-search
+  .row
+    .small-12.medium-8.columns
+      %h1 Zutatensuche
+  .row
+    .small-12.medium-8.columns
+      %p
+        %small
+          Trage hier alle Zutaten ein, die du zur Verfügung hast.
+      = form_tag do
+        #ingredients_select
+          = select_tag(:ingredients, options_for_select(@ingredients.map{|i| [i.name, i.id]}.sort), multiple: true, class: 'select2')
+
+        - if current_user
+          %p
+            = check_box_tag 'save'
+            Diese Auswahl als meine Hausbar speichern. Die aktuelle Hausbar wird dabei überschrieben.
+
+        .clearfix
+          = submit_tag "Rezepte Anzeigen", class: 'button float-right'
+
+    .small-12.medium-4.columns
+      .callout
+        - if current_user && @saved_ingredients.present?
+          %h5 Gespeicherte Hausbar
+          %p
+            = "Du hast aktuell #{@saved_ingredients.count} Zutaten in deiner Hausbar gespeichert. Klicke auf den Button unten, um diese zu laden."
+          = form_tag(ingredient_search_load_path) do
+            .text-center
+              = submit_tag "Hausbar laden", class: 'button tiny'
+        - elsif current_user
+          %h5 Deine Hausbar ist noch leer
+          %p
+            Du kannst deine Zutatenauswahl als Hausbar speichern, damit du sie nicht jedes mal neu auswählen musst.
+        - else
+          %h5 Hausbar anlegen
+          %p Als angemeldeter User kannst du deine Auswahl speichern.
+
+:javascript
+  $(document).on('turbolinks:load', function() {
+    var ingredientsSelect = $(".select2").select2();
+    ingredientsSelect.val(#{raw @selected}).trigger("change")
+  });

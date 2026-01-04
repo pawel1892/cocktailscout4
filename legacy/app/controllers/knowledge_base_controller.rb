@@ -1,0 +1,3 @@
+class KnowledgeBaseController < ApplicationController
+  skip_authorization_check
+end

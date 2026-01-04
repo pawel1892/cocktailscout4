@@ -1,0 +1,34 @@
+%ul.accordion{"data-accordion" => ""}
+  %li.accordion-item.is-active{"data-accordion-item" => ""}
+    %a.accordion-title{:href => "#"} Emojis
+    .accordion-content{"data-tab-content" => ""}
+      %p
+        - Csbml::SMILEYS.each do |emoji|
+          = link_to "javascript:insert_text('#{emoji[:shortcut]}')" do
+            = image_tag('smileys/' + emoji[:filename], title: emoji[:shortcut], alt: emoji[:name], class: 'emoji_link')
+
+  %li.accordion-item{"data-accordion-item" => ""}
+    %a.accordion-title{:href => "#"} Textformatierungen
+    .accordion-content{"data-tab-content" => ""}
+      %p
+        [b]fetter Text[/b]
+        %br
+        [i]kursiver Text[/i]
+        %br
+        [u]kursiver Text[/u]
+        %br
+        [color=#990000]farbiger Text[/color]
+  %li.accordion-item{"data-accordion-item" => ""}
+    %a.accordion-title{:href => "#"} Bilder, Links und Zitate
+    .accordion-content{"data-tab-content" => ""}
+      %p
+        [url=https://www.cocktailscout.de]Link zu Cocktailscout[/url]
+        %br
+        [quote=username]zitierter Text[/quote]
+        %br
+        [img]https://www.cocktailscout.de/bild.jpg[/img]
+
+:javascript
+  function insert_text(text) {
+    $('#post_content').insertAtCaret(text);
+  }

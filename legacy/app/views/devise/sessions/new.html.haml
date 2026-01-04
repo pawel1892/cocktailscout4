@@ -1,0 +1,15 @@
+.row
+  .small-12.medium-10.large-8.columns.large-offset-2.medium-offset-1
+    .callout
+      %h2 Anmelden
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+        = f.text_field :login, placeholder: 'Login'
+        = f.password_field :password, placeholder: 'Passwort'
+        .row
+          .small-12.medium-6.columns
+            - if devise_mapping.rememberable?
+              = f.check_box :remember_me, label: 'Login merken'
+          .small-12.medium-6.columns.text-right
+            = f.submit "Anmelden", :class => :button
+
+        = render "devise/shared/links"

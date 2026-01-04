@@ -1,0 +1,1 @@
+json.array! @shoutbox_entries, partial: 'api/shoutbox_entries/shoutbox_entry', as: :shoutbox_entry

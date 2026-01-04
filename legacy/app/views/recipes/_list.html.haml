@@ -1,0 +1,63 @@
+.row
+  .small-12.large-9.columns
+    %table
+      %tr
+        %th= sortable "name", "Name"
+        %th.hide-for-small-only= sortable "alcoholic_content", "Alk."
+        %th= sortable "rating", "Bewertung"
+        %th.hide-for-small-only= sortable "user", "User"
+        %th.hide-for-small-only= sortable "created_at", "Erstellt"
+        - @recipes.each do |recipe|
+          %tr
+            %td= link_to recipe.name, recipe_path(recipe)
+            %td.hide-for-small-only= recipe.alcoholic_content
+            %td= recipe_rating(recipe)
+            %td.hide-for-small-only= user_profile(recipe.user)
+            %td.hide-for-small-only= I18n.l recipe.created_at.to_date
+  .small-12.large-3.columns
+    .panel
+      .callout
+        - if @filter.empty?
+          %p Keine Filter aktiv
+        - else
+          %p aktive Filter
+          %ul
+            - @filter.each do |f|
+              %li= f
+          %p
+            = link_to 'alle Filter entfernen', recipes_path
+
+      = form_tag(recipes_path, :method => "get") do
+        = field_set_tag 'Filter', class: 'fieldset' do
+          = label_tag(:ingredient, "Name:")
+          = text_field_tag :search, params[:search]
+
+          = label_tag(:tag, "Tag:")
+          = select_tag "tag", options_from_collection_for_select(@tags, "slug", "name", params[:tag]), include_blank: true, class: 'select2'
+
+          = label_tag(:ingredient, "Zutat:")
+          = select_tag "ingredient", options_from_collection_for_select(@ingredients, "slug", "name", params[:ingredient]), include_blank: true, class: 'select2'
+
+          = label_tag(:rating, "mindeste Bewertung:")
+          = select_tag "rating", options_for_select(['5', '4', '3', '2', '1'], params[:rating]), include_blank: true, class: 'select2'
+
+          = check_box_tag 'non_alcoholic', true, params[:non_alcoholic]
+          = 'nur alkoholfrei'
+
+        = field_set_tag 'Zutatensuche', class: 'fieldset' do
+          - if @ingredient_search_selected_ingredients.count > 0
+            %p
+              ="#{@ingredient_search_selected_ingredients.count} Zutaten ausgewählt"
+            = check_box_tag 'ingredient_search', true, params[:ingredient_search]
+            Zutaten berücksichtigen
+            = link_to 'Zutaten ändern', ingredient_search_path, class: 'button tiny'
+          - else
+            .text-center
+              = link_to 'Zutaten auswählen', ingredient_search_path, class: 'button tiny'
+        .text-center
+          = submit_tag("Filter anwenden", class: 'button tiny')
+
+:javascript
+  $(document).on('turbolinks:load', function() {
+    $(".select2").select2();
+  });

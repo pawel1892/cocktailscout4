@@ -1,0 +1,14 @@
+= render "forum/forum_header", forum_topic: @forum_topic, forum_thread: @forum_thread, active: :post
+
+.row
+  .columns.small-12
+    = link_to 'Antworten', new_forum_posts_path(@forum_thread.slug), class: 'button'
+    = paginate @forum_posts
+
+- @forum_posts.each do |forum_post|
+  = render 'shared/forum_post', forum_post: forum_post
+
+.row
+  .columns.small-12
+    = paginate @forum_posts
+    = link_to 'Antworten', new_forum_posts_path(@forum_thread.slug), class: 'button'

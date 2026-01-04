@@ -1,0 +1,27 @@
+- content_for(:title, "Cocktailgalerie")
+
+.row
+  .small-12.columns
+    %h1 Cocktailgalerie
+
+    .row
+      - @recipe_images.each do |recipe_image|
+        .small-12.medium-3.columns
+          .square_gallery
+            .box
+              .content.thumbnail
+                %a{ href: recipe_image.image.url(:big), :"data-fancybox" => 'recipe', :"data-caption" => "Bild von #{recipe_image.user&.login}" }
+                  = image_tag recipe_image.image.url(:medium), alt: recipe_image.recipe&.name, style: 'min-width: 100%; height:'
+            .caption
+              = link_to recipe_image.recipe&.name, recipe_path(recipe_image.recipe)
+              %br
+              = "(#{l(recipe_image.created_at.to_date, format: :default)})"
+              %br
+              = user_profile(recipe_image.user)
+              - unless recipe_image.is_approved
+                %br
+                = link_to 'freischalten', recipe_image_approve_path(recipe_image, params: { approve_state: '1' }), method: :patch, class: 'button', data: { confirm: 'Dieses Bild freischalten?' }
+                %br
+                = link_to 'ablehnen', recipe_image_approve_path(recipe_image, params: { approve_state: '0' }), method: :patch, data: { confirm: 'Dieses Bild endgültig ablehnen?' }
+
+    = paginate @recipe_images

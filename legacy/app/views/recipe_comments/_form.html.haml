@@ -1,0 +1,14 @@
+%h4 Neuen Kommentar verfassen
+
+= form_for [@recipe, @recipe_comment] do |f|
+  .row
+    .small-12.columns
+      = render 'shared/form_errors', errors: @recipe_comment.errors[:base]
+
+  .row
+    .small-12.columns
+      = f.text_area :comment, class: :big_text_area, label: false
+
+  .row
+    .small-12.columns.text-right
+      = f.submit 'speichern', class: 'button'

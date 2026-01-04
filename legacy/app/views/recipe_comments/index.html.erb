@@ -1,0 +1,11 @@
+<h1>Kommentare zu <%= @recipe.name %></h1>
+
+<%= link_to 'Zum Rezept', recipe_path(@recipe) %>
+
+<% @recipe_comments.each do |recipe_comment| %>
+	<%= render :partial => "shared/recipe_comment", :locals => { :recipe_comment => recipe_comment } %>
+<% end %>
+
+<%= paginate @recipe_comments %>
+
+<%= link_to 'Zum Rezept', recipe_path(@recipe) %>

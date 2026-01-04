@@ -1,0 +1,20 @@
+= form_for @forum_thread_form, :url => forum_threads_path do |f|
+  .row
+    .small-12.columns
+      = render 'shared/form_errors', errors: @forum_thread_form.errors[:base]
+
+  .row
+    .small-12.columns
+      = f.text_field :thread_title
+
+  .row
+    .small-12.columns
+      = f.text_area :post_content, class: :big_text_area, id: :post_content
+
+  .row
+    .small-12.columns.text-right
+      = f.submit 'speichern', class: 'button'
+
+.row
+  .small-12.columns
+    = render 'shared/csbml'

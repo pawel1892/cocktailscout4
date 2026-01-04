@@ -1,0 +1,38 @@
+= form_for @recipe do |f|
+  .row
+    .small-12.columns
+      = render 'shared/form_errors', errors: @recipe.errors[:base]
+
+  .row
+    .small-12.columns
+      = f.label :name, "Rezeptname"
+      = f.text_field :name, label: false
+
+  .row
+    .small-12.columns
+      %h5 Zutaten
+
+  #recipe_ingredients
+    = f.fields_for :recipe_ingredients do |ri|
+      = render 'recipe_ingredient_fields', f: ri
+
+  .row
+    .small-12.columns
+      .links
+        = link_to_add_association raw('<i class="fa fa-plus-circle"></i> Zutat hinzufügen'), f, :recipe_ingredients
+
+  .row
+    .small-12.columns
+      = f.label :description, "Beschreibung"
+      = f.text_area :description, label: false, class: 'big_text_area'
+
+  .row
+    .small-12.columns
+      = f.submit 'speichern', class: 'button'
+
+:javascript
+  $(document).on('turbolinks:load', function() {
+    $('body').on('cocoon:after-insert', function(e, insertedItem) {
+      $(".select2").select2();
+    });
+  });

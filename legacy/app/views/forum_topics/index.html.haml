@@ -1,0 +1,24 @@
+= render 'forum/forum_header', active: :topic
+
+.row
+  .small-12.columns
+    %table
+      %tr
+        %th Cocktailforum
+        %th Beiträge
+        %th Themen
+        %th Letzter Beitrag
+      - @forum_topics.each do |forum_topic|
+        %tr
+          %td{:class => ("unread-forum-thread" if (current_user && @unread_topics.include?(forum_topic)))}
+            = link_to forum_topic.name, forum_topic_path(forum_topic.slug)
+          %td
+            = forum_topic.post_count
+          %td
+            = forum_topic.thread_count
+          %td
+            - if (forum_topic.last_post)
+              %div
+                = user_profile(forum_topic.last_post.user)
+              %div
+                = time_ago_in_words(forum_topic.last_post.created_at, include_seconds: true)

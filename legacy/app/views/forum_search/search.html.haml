@@ -1,0 +1,84 @@
+.row
+  .small-12.columns
+    %h2 Treffer in Beitragstiteln
+
+.row
+  .small-12.columns
+    %table
+      %tr
+        %th &nbsp;
+        %th Aufrufe
+        %th Beiträge
+        %th Letzter Beitrag
+
+      - @forum_threads.each do |forum_thread|
+        %tr
+          %td
+            = link_to(forum_thread.title, forum_thread_path(forum_thread))
+          %td
+            = link_to(forum_thread.views, forum_thread_path(forum_thread))
+          %td
+            = link_to(forum_thread.count_posts, forum_thread_path(forum_thread))
+          %td
+            - if (forum_thread.last_post_user)
+              %div
+                = user_profile(forum_thread.last_post_user)
+              %div
+                = time_ago_in_words(forum_thread.last_post_created_cache, include_seconds: true)
+
+.row
+  .small-12.columns
+    %h2 Treffer in Beiträgen
+
+.row
+  .small-12.columns
+    %table
+      %tr
+        %th &nbsp;
+        %th Aufrufe
+        %th Beiträge
+        %th Letzter Beitrag
+
+      - @forum_posts.each do |forum_post|
+        - forum_thread = forum_post.forum_thread
+        %tr
+          %td
+            = link_to forum_thread.title, link_to_forum_post(forum_post)
+          %td
+            = link_to forum_thread.views, link_to_forum_post(forum_post)
+          %td
+            = link_to forum_thread.count_posts, link_to_forum_post(forum_post)
+          %td
+            - if (forum_thread.last_post_user)
+              %div
+                = user_profile(forum_thread.last_post_user)
+              %div
+                = time_ago_in_words(forum_thread.last_post_created_cache, include_seconds: true)
+
+.row
+  .small-12.columns
+    %table
+      %tr
+        %th &nbsp;
+        %th Aufrufe
+        %th Beiträge
+        %th Letzter Beitrag
+
+      - @forum_posts.each do |forum_post|
+        - forum_thread = forum_post.forum_thread
+        %tr
+          %td
+            = link_to forum_thread.title, link_to_forum_post(forum_post)
+          %td
+            = link_to forum_thread.views, link_to_forum_post(forum_post)
+          %td
+            = link_to forum_thread.count_posts, link_to_forum_post(forum_post)
+          %td
+            - if (forum_thread.last_post_user)
+              %div
+                = user_profile(forum_thread.last_post_user)
+              %div
+                = time_ago_in_words(forum_thread.last_post_created_cache, include_seconds: true)
+
+-#- @forum_posts.each do |forum_post|
+-#  = link_to(forum_post.forum_thread.title, forum_thread_path(forum_post.forum_thread))

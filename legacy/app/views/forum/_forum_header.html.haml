@@ -1,0 +1,31 @@
+- active = nil if local_assigns[:active].nil?
+- forum_topic = nil if local_assigns[:forum_topic].nil?
+- forum_thread = nil if local_assigns[:forum_thread].nil?
+
+.row
+  .small-12.columns
+    %h1 Cocktailforum
+
+.row
+  .small-12.columns
+    %ul.breadcrumbs
+      %li{:class => active==:topic ? 'current' : ''}
+        %a{:href => forum_topics_path}
+          Übersicht
+      -if forum_topic
+        %li{:class => active==:thread ? 'current' : ''}
+          %a{:href => forum_topic_path(forum_topic.slug)}
+            = forum_topic.name
+      - if forum_thread
+        %li{:class => active==:post ? 'current' : ''}
+          %a{:href => forum_thread_path(forum_thread.slug)}
+            = forum_thread.title
+
+.row
+  .small-12.medium-6.large-4.columns.medium-offset-6.large-offset-8
+    = form_tag search_forum_path, :method => 'post', :class => "row collapse" do
+      .input-group
+        = text_field_tag :forum_search_query, params[:forum_search_query], placeholder: "Forensuche", class: 'input-group-field'
+        .input-group-button
+          %button{:class => 'button input-group-field small', :id => 'forum_search_button'}
+            Suchen

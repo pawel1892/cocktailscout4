@@ -1,0 +1,62 @@
+.hero
+  .top-bar.start
+    .row.column
+      .top-bar-title.show-for-small-only.top-bar-right
+      .nav
+        %span{"data-hide-for" => "medium", "data-responsive-toggle" => "responsive-menu" }
+          %span.menu-icon{"data-toggle" => ""}
+      #responsive-menu
+        .top-bar-left
+          = render 'shared/main_menu'
+        .top-bar-right
+          %ul.menu
+          - if user_signed_in?
+            %li
+              = link_to user_profile_path(current_user.user_profile) do
+                = fa_icon 'user'
+                = current_user.login
+                - if notification_count > 0
+                  %span.alert.badge
+                    = notification_count
+            %li
+              = link_to destroy_user_session_path, :method => :delete do
+                = fa_icon 'sign-out'
+                Abmelden
+          - else
+            %li
+              = link_to new_user_session_path do
+                = fa_icon 'sign-in'
+                Anmelden
+            %li
+              = link_to new_user_registration_path, class: 'register' do
+                = fa_icon 'user-plus'
+                Registrieren
+
+  = render 'shared/flash', locals: { flash: flash }
+
+  .container
+    .helper
+      .content
+        .row
+          .small-centered.small-12.medium-8.large-6.columns.intro
+            .logo
+              = image_tag('/img/style/start/logo.svg')
+            = form_tag recipes_path, :method => 'get', :class => "row collapse" do
+              .input-group
+                = text_field_tag :search, params[:search], placeholder: "Rezept suchen", class: 'input-group-field'
+                .input-group-button
+                  %button{:class => 'button input-group-field small'}
+                    Suchen
+            .row.nav
+              .small-12.medium-4.columns
+                = link_to recipes_path do
+                  = fa_icon 'glass'
+                  Alle Rezepte
+              .small-12.medium-4.columns
+                = link_to ingredient_search_path do
+                  = fa_icon 'search'
+                  Zutatensuche
+              .small-12.medium-4.columns
+                = link_to forum_topics_path do
+                  = fa_icon 'user'
+                  Community

@@ -1,0 +1,99 @@
+- content_for(:title, "#{@recipe.name} | Cocktailrezept")
+
+#recipe-details
+  .row
+    .small-12.medium-8.columns
+      %h1= @recipe.name
+
+      .rating
+        = rating_for @recipe, "taste", star: 5
+      .tags
+        = fa_icon 'tags'
+        - tag_cloud(@tags, ['tag']) do |tag|
+          %span.label.secondary
+            = link_to tag.name, tags_recipes_path(tag.slug)
+        %span
+          %a{'data-open' => 'editTagsModal' }
+            = fa_icon 'edit'
+
+      #editTagsModal.reveal{'data-reveal' => ''}
+        = form_for @recipe, :url => recipe_tags_edit_path(@recipe) do |f|
+          .row
+            .small-12.columns
+              = f.text_field :tag_list, value: @recipe.tag_list.join(',')
+          .row
+            .small-12.columns
+              = f.submit 'speichern', class: 'button'
+
+      .callout
+        - @recipe.recipe_ingredients.each do |recipeIngredient|
+          .ingredient= recipeIngredient.description
+        %hr
+        %div= sanitize(@recipe.description, tags: %w(br))
+        - if can? :edit, @recipe
+          %hr
+          = link_to edit_recipe_path(@recipe) do
+            = fa_icon 'edit'
+            Rezept bearbeiten
+
+
+      %h5.comments
+        = fa_icon 'comments'
+        Kommentare
+      - @recipe_comments.each do |recipe_comment|
+        = render :partial => "shared/recipe_comment", :locals => { :recipe_comment => recipe_comment }
+
+      - if @count_all_recipe_comments > APP_CONFIG[:recipe_comments][:on_recipe_page]
+        = link_to 'Weitere Kommentare', recipe_recipe_comments_path(@recipe), class: 'button small'
+
+      - if can? :create, RecipeComment
+        %hr
+        = render 'recipe_comments/form'
+      - else
+        %div Du musst dich einloggen, um Kommentarte zu verfassen.
+
+    .small-12.medium-4.columns
+      - if @recipe_images.count > 0
+        - @recipe_images.each_with_index do |ri, i|
+          - if i == 0
+            %a{href: ri.image.url(:big), :"data-fancybox" => 'recipe', :"data-caption" => "Bild von #{ri.user&.login}"}
+              = image_tag ri.image.url(:medium), alt: @recipe.name, class: 'thumbnail'
+            %p.caption
+              Bild von
+              = user_profile(User.where(id: ri&.user_id).first)
+          - else
+            %a{href: ri.image.url(:big), :"data-fancybox" => 'recipe', :"data-caption" => "Bild von #{ri.user&.login}"}
+        %p
+          = link_to 'Eigenes Bild hochladen', new_recipe_recipe_image_path(@recipe), class: 'button small'
+      - else
+        .image_missing.thumbnail
+          = link_to new_recipe_recipe_image_path(@recipe) do
+            = image_tag 'recipe_image_missing.png'
+
+      .callout
+        %div
+          %strong
+            Rezept von:
+          = user_profile(@recipe.user)
+        - unless @recipe.cl_amount.nil?
+          %div
+            %strong
+              Menge:
+            = "#{@recipe.cl_amount.round} cl"
+        - unless @recipe.alcoholic_content.nil?
+          %div
+            %strong
+              Alkoholgehalt:
+            = "#{@recipe.alcoholic_content.round} %"
+        %div
+          %strong
+            Aufrufe:
+          = @recipe.visits_count
+        -#TODO: compute rank
+        -#%div
+        -#  %strong
+        -#    Cocktailscout-Rang:
+        -#  64
+
+-#- if current_user
+-#  %i.fi-heart.recipe_favorite{:id => "recipe_favorite_#{@recipe.id}", :class => @is_favorite ? 'faved' : '' }

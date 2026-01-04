@@ -1,0 +1,12 @@
+.recipe_comment
+  .heading
+    %span
+      - if recipe_comment.user
+        = user_profile(recipe_comment.user)
+      - else
+        = recipe_comment.guest_name.length > 0 ? recipe_comment.guest_name : 'anonym'
+    %span.float-right
+      = recipe_comment.created_at.strftime('%d.%m.%Y %H:%M')
+  .content
+    %div
+      = sanitize(recipe_comment.comment)

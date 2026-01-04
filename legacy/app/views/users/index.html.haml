@@ -1,0 +1,28 @@
+.row
+  .small-12.columns
+    %h1 Benutzer
+
+.row
+  .small-12.columns
+    = paginate @users
+
+.row
+  .small-12.columns
+    %table
+      %tr
+        %th= sortable "login", "Name"
+        %th= sortable "last_sign_in_at", "Letzte Anmeldung"
+        %th= sortable "user_points", "CS-Punkte"
+        %th= sortable "created_at", "Registriert seit"
+      - @users.each do |user|
+        %tr
+          %td= user_profile(user)
+          %td
+            - if user.last_sign_in_at.present?
+              = l(user.last_sign_in_at)
+          %td= user.user_rank.points
+          %td= l(user.created_at, format: :date)
+
+.row
+  .small-12.columns
+    = paginate @users

@@ -1,0 +1,6 @@
+#recipe-tag-cloud
+  .row
+    .small-12.medium-8.columns
+      .tag-cloud
+        - tag_cloud(@tags, @levels) do |tag, css_class|
+          = link_to tag.name, tags_recipes_path(tag), :class => css_class
