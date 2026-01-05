@@ -9,8 +9,6 @@ def main():
     issue_body = os.getenv("ISSUE_BODY")
     issue_num = os.getenv("ISSUE_NUMBER")
 
-    # Wir versuchen zuerst das stabilste Modell für 2026
-    # Sollte dies fehlschlagen, listet das Skript Alternativen auf
     model = "gemini-2.5-flash" 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
 
