@@ -6,8 +6,7 @@ import subprocess
 # 1. Setup with the NEW library
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-# We use 'gemini-2.0-flash' as it is the most stable and fast for coding tasks right now
-MODEL_ID = "gemini-2.0-flash" 
+MODEL_ID = "gemini-1.5-flash" 
 
 def run_command(command):
     try:
