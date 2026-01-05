@@ -1,94 +1,48 @@
 import os
-from google import genai
+import json
+import subprocess
+import urllib.request
 
-def diagnose():
+def main():
     api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        print("FEHLER: GEMINI_API_KEY ist nicht gesetzt!")
+    issue_title = os.getenv("ISSUE_TITLE")
+    issue_body = os.getenv("ISSUE_BODY")
+    issue_num = os.getenv("ISSUE_NUMBER")
+
+    # Der direkte Link zur Google API (keine Library nötig!)
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+
+    # Die Anfrage an die KI
+    data = {
+        "contents": [{
+            "parts": [{"text": f"Task: {issue_title}\nDetails: {issue_body}\n\nReturn ONLY the content for the requested file."}]
+        }]
+    }
+
+    # Der eigentliche Aufruf
+    req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={'Content-Type': 'application/json'})
+    
+    try:
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read().decode("utf-8"))
+            ai_output = result['candidates'][0]['content']['parts'][0]['text']
+    except Exception as e:
+        print(f"Fehler beim API-Aufruf: {e}")
         return
 
-    client = genai.Client(api_key=api_key)
-    
-    print("--- DIAGNOSE START ---")
-    
-    # Versuch 1: Einfaches Listing
-    print("Versuch 1 (Standard List):")
-    try:
-        for m in client.models.list():
-            print(f" > Gefunden: {m.name}")
-    except Exception as e:
-        print(f" > Fehler bei Versuch 1: {e}")
+    # Git Workflow (wie gehabt)
+    branch_name = f"gemini-task-{issue_num}"
+    subprocess.run(f"git config user.name 'github-actions[bot]'", shell=True)
+    subprocess.run(f"git config user.email 'github-actions[bot]@users.noreply.github.com'", shell=True)
+    subprocess.run(f"git checkout -b {branch_name}", shell=True)
 
-    # Versuch 2: Test-Abfrage mit dem wahrscheinlichsten Modell
-    print("\nVersuch 2 (Direkter Test-Call):")
-    test_model = "gemini-1.5-flash"
-    try:
-        response = client.models.generate_content(
-            model=test_model, 
-            contents="Say 'System Ready'"
-        )
-        print(f" > Erfolg mit {test_model}! Antwort: {response.text}")
-    except Exception as e:
-        print(f" > Fehler mit {test_model}: {e}")
+    with open("geminitest.txt", "w") as f:
+        f.write(ai_output)
 
-    print("--- DIAGNOSE ENDE ---")
+    subprocess.run("git add .", shell=True)
+    subprocess.run(f"git commit -m 'Gemini: {issue_title}'", shell=True)
+    subprocess.run(f"git push origin {branch_name}", shell=True)
+    os.system(f"gh pr create --title 'Gemini: {issue_title}' --body 'Closes #{issue_num}' --head {branch_name}")
 
 if __name__ == "__main__":
-    diagnose()
-
-# import os
-# import sys
-# from google import genai
-# import subprocess
-
-# # 1. Setup with the NEW library
-# client = genai.Client(
-#     api_key=os.getenv("GEMINI_API_KEY"),
-#     http_options={'api_version': 'v1beta'}
-# )
-
-# MODEL_ID = "gemini-1.5-flash" 
-
-# def run_command(command):
-#     try:
-#         return subprocess.check_output(command, shell=True).decode('utf-8')
-#     except subprocess.CalledProcessError as e:
-#         print(f"Error: {e.output.decode()}")
-#         return ""
-
-# def main():
-#     issue_title = os.getenv("ISSUE_TITLE")
-#     issue_body = os.getenv("ISSUE_BODY")
-#     issue_num = os.getenv("ISSUE_NUMBER")
-    
-#     prompt = f"Task: {issue_title}\nDetails: {issue_body}\n\nAct as an expert developer. Create the requested file. Return ONLY the code/text for the file."
-    
-#     # 2. Generate Content using the new SDK
-#     response = client.models.generate_content(
-#         model=MODEL_ID,
-#         contents=prompt
-#     )
-    
-#     ai_output = response.text
-
-#     # 3. Git Workflow
-#     branch_name = f"gemini-task-{issue_num}"
-#     run_command("git config user.name 'github-actions[bot]'")
-#     run_command("git config user.email 'github-actions[bot]@users.noreply.github.com'")
-#     run_command(f"git checkout -b {branch_name}")
-
-#     # 4. Save the file (Simplified: saves the AI output to the requested filename)
-#     # Since your issue asked for 'geminitest.txt', we'll name it that for the test
-#     with open("geminitest.txt", "w") as f:
-#         f.write(ai_output)
-
-#     # 5. Push and PR
-#     run_command("git add .")
-#     run_command(f"git commit -m 'Gemini: {issue_title}'")
-#     run_command(f"git push origin {branch_name}")
-    
-#     # Create PR via GitHub CLI
-#     os.system(f"gh pr create --title 'Gemini: {issue_title}' --body 'Closes #{issue_num}' --head {branch_name}")
-
-# if __name__ == "__main__":
-#     main()
+    main()
