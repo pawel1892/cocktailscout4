@@ -1,20 +1,40 @@
 import os
 from google import genai
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+def diagnose():
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        print("FEHLER: GEMINI_API_KEY ist nicht gesetzt!")
+        return
 
-def list_my_models():
-    print("--- Start der Modell-Liste ---")
+    client = genai.Client(api_key=api_key)
+    
+    print("--- DIAGNOSE START ---")
+    
+    # Versuch 1: Einfaches Listing
+    print("Versuch 1 (Standard List):")
     try:
-        # Wir listen nur den Namen auf, das ist am sichersten
-        for model in client.models.list():
-            print(f"Modell-ID: {model.name}")
+        for m in client.models.list():
+            print(f" > Gefunden: {m.name}")
     except Exception as e:
-        print(f"Fehler: {e}")
-    print("--- Ende der Liste ---")
+        print(f" > Fehler bei Versuch 1: {e}")
+
+    # Versuch 2: Test-Abfrage mit dem wahrscheinlichsten Modell
+    print("\nVersuch 2 (Direkter Test-Call):")
+    test_model = "gemini-1.5-flash"
+    try:
+        response = client.models.generate_content(
+            model=test_model, 
+            contents="Say 'System Ready'"
+        )
+        print(f" > Erfolg mit {test_model}! Antwort: {response.text}")
+    except Exception as e:
+        print(f" > Fehler mit {test_model}: {e}")
+
+    print("--- DIAGNOSE ENDE ---")
 
 if __name__ == "__main__":
-    list_my_models()
+    diagnose()
 
 # import os
 # import sys
