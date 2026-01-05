@@ -4,7 +4,10 @@ from google import genai
 import subprocess
 
 # 1. Setup with the NEW library
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY"),
+    http_options={'api_version': 'v1beta'}
+)
 
 MODEL_ID = "gemini-1.5-flash" 
 
