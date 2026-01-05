@@ -1,19 +1,17 @@
 import os
 from google import genai
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY"),
-    http_options={'api_version': 'v1beta'}
-)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def list_my_models():
-    print("--- Verfügbare Modelle für diesen API-Key ---")
+    print("--- Start der Modell-Liste ---")
     try:
-        # Listet alle Modelle auf
+        # Wir listen nur den Namen auf, das ist am sichersten
         for model in client.models.list():
-            print(f"Modell: {model.name} | Methods: {model.supported_methods}")
+            print(f"Modell-ID: {model.name}")
     except Exception as e:
-        print(f"Fehler beim Auflisten: {e}")
+        print(f"Fehler: {e}")
+    print("--- Ende der Liste ---")
 
 if __name__ == "__main__":
     list_my_models()
