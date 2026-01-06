@@ -26,6 +26,7 @@ export function useAuth() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify(formData)
@@ -49,6 +50,7 @@ export function useAuth() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify({ user: formData })
@@ -71,6 +73,7 @@ export function useAuth() {
       await fetch('/session.json', {
         method: 'DELETE',
         headers: {
+          'Accept': 'application/json',
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
         }
       })
