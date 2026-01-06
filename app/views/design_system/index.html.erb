@@ -78,6 +78,108 @@
     </div>
   </section>
 
+  <!-- Form Validation -->
+  <section class="space-y-6 max-w-2xl">
+    <h2 class="text-xl font-semibold border-b pb-2">Formular Validierung</h2>
+    
+    <!-- Standard Group -->
+    <div class="form-group">
+      <label class="label-field">Benutzername</label>
+      <input type="text" class="input-field" placeholder="Gültige Eingabe">
+      <p class="form-hint">Darf nur Buchstaben und Zahlen enthalten.</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="form-group">
+      <label class="label-field label-error">Passwort</label>
+      <input type="password" class="input-field input-error" value="123">
+      <p class="form-error-message">Das Passwort ist zu kurz (mind. 8 Zeichen).</p>
+    </div>
+
+    <div class="mt-4">
+       <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Standard Group with Hint --&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="label-field"&gt;Benutzername&lt;/label&gt;
+  &lt;input type="text" class="input-field"&gt;
+  &lt;p class="form-hint"&gt;Hilfetext...&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Error State --&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="label-field label-error"&gt;Passwort&lt;/label&gt;
+  &lt;input type="password" class="input-field input-error"&gt;
+  &lt;p class="form-error-message"&gt;Fehlermeldung...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Boxes & Cards -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b pb-2">Boxen & Karten</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <!-- Standard Card -->
+      <div class="card">
+        <div class="card-header">Standard Card</div>
+        <div class="card-body">
+          <p>This is a standard card with header, body, and footer. Great for grouping related content like a single cocktail recipe or user profile.</p>
+        </div>
+        <div class="card-footer">Last updated 3 mins ago</div>
+      </div>
+
+      <!-- Callouts -->
+      <div class="space-y-4">
+        <div class="callout">
+          <strong>Neutral Callout</strong>
+          <p class="text-sm mt-1">Useful for general notes or side information.</p>
+        </div>
+        <div class="callout-gold">
+          <strong>Gold Feature</strong>
+          <p class="text-sm mt-1">Highlighting a premium feature or "Pro Tip".</p>
+        </div>
+        <div class="callout-red">
+          <strong>Important Note</strong>
+          <p class="text-sm mt-1">Critical information that shouldn't be ignored.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Card Component --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;Header&lt;/div&gt;
+  &lt;div class="card-body"&gt;Content...&lt;/div&gt;
+  &lt;div class="card-footer"&gt;Footer...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Callouts --&gt;
+&lt;div class="callout"&gt;...&lt;/div&gt;
+&lt;div class="callout-gold"&gt;...&lt;/div&gt;
+&lt;div class="callout-red"&gt;...&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Tags -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-semibold border-b pb-2">Tags / Labels</h2>
+    <div class="flex flex-wrap gap-2">
+      <span class="tag tag-neutral">Neutral</span>
+      <span class="tag tag-primary">Primary</span>
+      <span class="tag tag-gold">Gold</span>
+      <span class="tag tag-success">Success</span>
+      <span class="tag tag-warning">Warning</span>
+      <span class="tag tag-error">Error</span>
+    </div>
+    <div class="mt-4">
+      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;span class="tag tag-neutral"&gt;Neutral&lt;/span&gt;
+&lt;span class="tag tag-primary"&gt;Primary&lt;/span&gt;
+&lt;span class="tag tag-gold"&gt;Gold&lt;/span&gt;
+&lt;span class="tag tag-success"&gt;Success&lt;/span&gt;
+&lt;span class="tag tag-warning"&gt;Warning&lt;/span&gt;
+&lt;span class="tag tag-error"&gt;Error&lt;/span&gt;</code></pre>
+    </div>
+  </section>
+
   <!-- Colors -->
   <section class="space-y-4">
     <h2 class="text-xl font-semibold border-b pb-2">Farben</h2>
