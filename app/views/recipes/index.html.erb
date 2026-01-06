@@ -28,7 +28,18 @@
       <% @recipes.each do |recipe| %>
         <tr class="table-tr-hover">
           <td class="table-td">
-            <%= link_to recipe.title, recipe_path(recipe), class: "link font-semibold" %>
+            <div class="flex flex-col">
+              <%= link_to recipe.title, recipe_path(recipe), class: "link font-bold text-lg" %>
+              <% if recipe.tag_list.any? %>
+                <div class="flex flex-wrap gap-1.5 mt-1.5">
+                  <% recipe.tag_list.each do |tag| %>
+                    <span class="tag-mini">
+                      <%= tag %>
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
           </td>
           <td class="table-td text-center">
             <div class="flex flex-col items-center">

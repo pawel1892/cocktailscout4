@@ -1,7 +1,41 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [:ingredients, :users, :recipes, :comments, :ratings]
+  task all: [:ingredients, :users, :recipes, :comments, :ratings, :tags]
+
+  desc "Import tags from the legacy database"
+  task tags: :environment do
+    puts "Loading maps..."
+    recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Recipes: #{recipe_map.size}"
+
+    puts "Loading legacy tags..."
+    legacy_tags = Legacy::Tag.pluck(:id, :name).to_h
+    puts "Loaded #{legacy_tags.size} legacy tags."
+
+    puts "Grouping tags by recipe..."
+    recipe_tags = Hash.new { |h, k| h[k] = [] }
+    Legacy::Tagging.where(taggable_type: 'Recipe', context: 'tags').find_each do |legacy_tagging|
+      tag_name = legacy_tags[legacy_tagging.tag_id]
+      recipe_tags[legacy_tagging.taggable_id] << tag_name if tag_name
+    end
+    puts "Found tags for #{recipe_tags.size} recipes."
+
+    puts "Importing tags..."
+    count = 0
+    recipe_tags.each do |legacy_recipe_id, tags|
+      new_id = recipe_map[legacy_recipe_id]
+      next unless new_id
+
+      recipe = Recipe.find(new_id)
+      recipe.tag_list.add(tags)
+      recipe.save!(validate: false)
+      
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nTags imported for #{count} recipes."
+  end
 
   desc "Import ratings from the legacy database"
   task ratings: :environment do

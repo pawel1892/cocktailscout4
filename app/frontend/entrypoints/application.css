@@ -116,6 +116,10 @@
   @apply tag bg-red-100 text-red-800 border-red-200;
 }
 
+@utility tag-mini {
+  @apply inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wider font-medium bg-gray-100 text-gray-500;
+}
+
 @utility link {
   @apply text-cs-dark-red hover:opacity-80 transition cursor-pointer;
 }
