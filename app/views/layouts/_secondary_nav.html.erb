@@ -6,14 +6,6 @@
     </div>
 
     <!-- Right: Register/Login -->
-    <div class="flex space-x-4">
-      <% if authenticated? %>
-        <span>Willkommen, <%= Current.user.username %></span>
-        <%= button_to "Logout", session_path, method: :delete, class: "hover:underline bg-transparent border-0 p-0 text-cs-gold cursor-pointer" %>
-      <% else %>
-        <%= link_to "Login", new_session_path, class: "hover:underline" %>
-        <%= link_to "Registrieren", new_registration_path, class: "hover:underline" %>
-      <% end %>
-    </div>
+    <user-session></user-session>
   </div>
 </div>
