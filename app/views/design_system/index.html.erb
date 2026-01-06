@@ -4,6 +4,19 @@
     <p class="text-gray-600">Standard-Komponenten für CocktailScout</p>
   </section>
 
+  <!-- Links -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-semibold border-b pb-2">Links</h2>
+    <div class="flex flex-wrap gap-8 items-start">
+      <a href="#" class="link">Standard Link</a>
+      <a href="#" class="link-underline">Link with Underline</a>
+    </div>
+    <div class="mt-4">
+      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;a href="#" class="link"&gt;Standard Link&lt;/a&gt;
+&lt;a href="#" class="link-underline"&gt;Link with Underline&lt;/a&gt;</code></pre>
+    </div>
+  </section>
+
   <!-- Buttons -->
   <section class="space-y-4">
     <h2 class="text-xl font-semibold border-b pb-2">Buttons</h2>
@@ -14,12 +27,15 @@
       <button class="btn btn-primary btn-sm">Small Button</button>
     </div>
     <div class="mt-4">
-      <code class="text-sm bg-gray-100 p-2 rounded">class="btn btn-primary"</code>
+      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;button class="btn btn-primary"&gt;Primary Button&lt;/button&gt;
+&lt;button class="btn btn-gold"&gt;Gold Button&lt;/button&gt;
+&lt;button class="btn btn-outline"&gt;Outline Button&lt;/button&gt;
+&lt;button class="btn btn-primary btn-sm"&gt;Small Button&lt;/button&gt;</code></pre>
     </div>
   </section>
 
   <!-- Form Fields -->
-  <section class="space-y-6 max-w-md">
+  <section class="space-y-6 max-w-2xl">
     <h2 class="text-xl font-semibold border-b pb-2">Formulare</h2>
     
     <div>
@@ -42,7 +58,23 @@
     </div>
 
     <div class="mt-4">
-       <code class="text-sm bg-gray-100 p-2 rounded">class="label-field"</code> / <code class="text-sm bg-gray-100 p-2 rounded">class="input-field"</code>
+       <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Text Input --&gt;
+&lt;div&gt;
+  &lt;label class="label-field"&gt;Standard Label&lt;/label&gt;
+  &lt;input type="text" class="input-field" placeholder="..."&gt;
+&lt;/div&gt;
+
+&lt;!-- With Helper Text --&gt;
+&lt;div&gt;
+  &lt;label class="label-field"&gt;Email Adresse&lt;/label&gt;
+  &lt;input type="email" class="input-field" placeholder="..."&gt;
+  &lt;p class="mt-1 text-sm text-gray-500"&gt;Ein kleiner Hilfetext.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Select --&gt;
+&lt;select class="input-field"&gt;
+  &lt;option&gt;Option 1&lt;/option&gt;
+&lt;/select&gt;</code></pre>
     </div>
   </section>
 
@@ -51,16 +83,49 @@
     <h2 class="text-xl font-semibold border-b pb-2">Farben</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="p-4 rounded bg-cs-dark-red text-white">
-        <strong>Dark Red</strong><br>
-        #360D0C
+        <strong class="block mb-1 text-lg">Dark Red</strong>
+        <div class="mb-1">
+          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-dark-red</code>
+        </div>
+        <div class="text-sm font-mono opacity-80">#360D0C</div>
       </div>
       <div class="p-4 rounded bg-cs-gold text-cs-dark-red">
-        <strong>Gold</strong><br>
-        #CBB859
+        <strong class="block mb-1 text-lg">Gold</strong>
+        <div class="mb-1">
+          <code class="text-xs bg-white/30 p-1 rounded">bg-cs-gold</code>
+        </div>
+        <div class="text-sm font-mono opacity-80">#CBB859</div>
       </div>
-      <div class="p-4 rounded bg-black text-cs-gold">
-        <strong>Black</strong><br>
-        #000000
+      <div class="p-4 rounded bg-black text-cs-gold border border-gray-700">
+        <strong class="block mb-1 text-lg">Black</strong>
+        <div class="mb-1">
+          <code class="text-xs bg-white/20 p-1 rounded text-white">bg-black</code>
+        </div>
+        <div class="text-sm font-mono opacity-80 text-white">#000000</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+      <div class="p-4 rounded bg-cs-success text-white">
+        <strong class="block mb-1 text-lg">Success</strong>
+        <div class="mb-1">
+          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-success</code>
+        </div>
+        <div class="text-sm font-mono opacity-80">#16A34A</div>
+      </div>
+      <div class="p-4 rounded bg-cs-warning text-white">
+        <strong class="block mb-1 text-lg">Warning</strong>
+        <div class="mb-1">
+          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-warning</code>
+        </div>
+        <div class="text-sm font-mono opacity-80">#CA8A04</div>
+      </div>
+      <div class="p-4 rounded bg-cs-error text-white">
+        <strong class="block mb-1 text-lg">Error</strong>
+        <div class="mb-1">
+          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-error</code>
+        </div>
+        <div class="text-sm font-mono opacity-80">#DC2626</div>
       </div>
     </div>
   </section>
