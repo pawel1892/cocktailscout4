@@ -1,9 +1,62 @@
-<h1>Rezepte</h1>
+<% content_for :head do %>
+  <%= pagy_seo_tags(@pagy) %>
+<% end %>
 
-<ul>
-  <% @recipes.each do |recipe| %>
-    <li>
-      <%= link_to recipe.title, recipe_path(recipe) %>
-    </li>
-  <% end %>
-</ul>
+<div class="mb-8 flex items-center justify-between">
+  <h1 class="text-3xl font-bold">Rezepte</h1>
+  <div class="text-sm text-gray-500">
+    <%= @pagy.count %> <%= Recipe.model_name.human(count: @pagy.count) %> gefunden
+  </div>
+</div>
+
+<div class="flex justify-center mb-6">
+  <%== pagy_nav(@pagy) %>
+</div>
+
+<div class="table-container mb-6">
+  <table class="table-standard">
+    <thead>
+      <tr>
+        <th class="table-th"><%= sortable "title", Recipe.human_attribute_name(:title) %></th>
+        <th class="table-th"><div class="flex justify-center"><%= sortable "average_rating", Recipe.human_attribute_name(:average_rating) %></div></th>
+        <th class="table-th"><%= sortable "users.username", Recipe.human_attribute_name(:user) %></th>
+        <th class="table-th"><div class="flex justify-center"><%= sortable "alcohol_content", Recipe.human_attribute_name(:alcohol_content) %></div></th>
+        <th class="table-th"><div class="flex justify-end"><%= sortable "views", Recipe.human_attribute_name(:views) %></div></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <% @recipes.each do |recipe| %>
+        <tr class="table-tr-hover">
+          <td class="table-td">
+            <%= link_to recipe.title, recipe_path(recipe), class: "link font-semibold" %>
+          </td>
+          <td class="table-td text-center">
+            <div class="flex flex-col items-center">
+              <span class="<%= rating_badge_class(recipe.average_rating) %> p-1 rounded-lg text-sm font-bold min-w-[3rem]">
+                <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
+              </span>
+              <span class="text-xs text-gray-400 mt-1">(<%= recipe.ratings_count %>)</span>
+            </div>
+          </td>
+          <td class="table-td">
+            <%= recipe.user.username %>
+          </td>
+          <td class="table-td text-center">
+            <% if recipe.alcohol_content.present? %>
+              <%= number_to_percentage recipe.alcohol_content, precision: 1 %>
+            <% else %>
+              <span class="text-gray-400">-</span>
+            <% end %>
+          </td>
+          <td class="table-td text-right text-gray-500 font-mono">
+            <%= number_with_delimiter recipe.views %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="flex justify-center py-4">
+  <%== pagy_nav(@pagy) %>
+</div>
