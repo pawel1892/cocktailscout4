@@ -12,7 +12,7 @@
       
       <form @submit.prevent="handleSubmit">
         <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          <label class="label-field" for="email">
             Email Address
           </label>
           <input 
@@ -21,12 +21,12 @@
             type="email" 
             required
             autocomplete="username"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="input-field"
           >
         </div>
 
         <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+          <label class="label-field" for="password">
             Password
           </label>
           <input 
@@ -35,12 +35,12 @@
             type="password" 
             required
             autocomplete="current-password"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="input-field"
           >
         </div>
 
         <div v-if="!isLoginMode" class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="password_confirmation">
+          <label class="label-field" for="password_confirmation">
             Confirm Password
           </label>
           <input 
@@ -49,7 +49,7 @@
             type="password" 
             required
             autocomplete="new-password"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="input-field"
           >
         </div>
 
@@ -66,7 +66,7 @@
         <div class="flex items-center justify-between">
           <button 
             type="submit" 
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            class="btn btn-primary w-full"
             :disabled="loading"
           >
             {{ loading ? 'Processing...' : (isLoginMode ? 'Sign In' : 'Sign Up') }}
@@ -74,7 +74,7 @@
         </div>
         
         <div class="mt-4 text-center">
-            <a href="#" @click.prevent="toggleMode" class="text-blue-500 hover:text-blue-700 text-sm">
+            <a href="#" @click.prevent="toggleMode" class="text-cs-dark-red hover:underline text-sm">
                 {{ isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Sign In" }}
             </a>
         </div>
