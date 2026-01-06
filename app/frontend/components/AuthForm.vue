@@ -84,12 +84,25 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineEmits, defineProps, watch } from 'vue'
 import { useAuth } from '../composables/useAuth'
 
+const props = defineProps({
+  initialMode: {
+    type: String,
+    default: 'login'
+  }
+})
+
+const emit = defineEmits(['success'])
 const { user, isAuthenticated, login, register, logout } = useAuth()
 
-const isLoginMode = ref(true)
+const isLoginMode = ref(props.initialMode === 'login')
+
+watch(() => props.initialMode, (newMode) => {
+  isLoginMode.value = newMode === 'login'
+})
+
 const loading = ref(false)
 const error = ref(null)
 const errors = ref([])
@@ -134,6 +147,8 @@ const handleSubmit = async () => {
       form.email_address = ''
       form.password = ''
       form.password_confirmation = ''
+      
+      emit('success')
   }
 }
 </script>

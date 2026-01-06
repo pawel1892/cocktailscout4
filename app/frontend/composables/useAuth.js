@@ -81,7 +81,7 @@ export function useAuth() {
       console.error("Logout failed", e)
     } finally {
       state.user = null
-      window.location.href = '/' 
+      // window.location.href = '/' 
     }
   }
 

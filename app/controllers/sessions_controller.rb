@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       start_new_session_for user
       respond_to do |format|
         format.html { redirect_to after_authentication_url }
-        format.json { render json: { user: user, message: "Signed in successfully" }, status: :ok }
+        format.json { render json: { user: user, message: "Signed in successfully", redirect_url: after_authentication_url }, status: :ok }
       end
     else
       respond_to do |format|
