@@ -1,5 +1,6 @@
 class Recipe < ApplicationRecord
   include Rateable
+  acts_as_taggable_on :tags
   
   belongs_to :user
   belongs_to :updated_by, class_name: 'User', optional: true
