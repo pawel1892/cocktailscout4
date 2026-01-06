@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --color-cs-dark-red: #360D0C;
+  --color-cs-gold: #CBB859;
+}
+
 /* Tailwind 4 scans files for classes.
    To add additional paths, use @source. */
 @source "../../../app/views/**/*.html.erb";

@@ -28,7 +28,7 @@
 ## Workflow
 - Always propose a plan before executing shell commands.
 - Ensure all new migrations include the `old_id` field.
-- **Worklog Entries**: When the user asks for a log entry or worklog, provide it in the following Obsidian-ready format:
+- **Worklog Entries**: ONLY provide a worklog entry when explicitly asked by the user, typically at the very end of a session. Use the following Obsidian-ready format:
     ```markdown
     YYYY-MM-DD HH:MM — Short Title
     Time spent: Xh
