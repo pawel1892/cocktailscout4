@@ -1,0 +1,28 @@
+de:
+  hello: "Hallo Welt"
+  activerecord:
+    models:
+      recipe:
+        one: "Rezept"
+        other: "Rezepte"
+    attributes:
+      recipe:
+        title: "Name"
+        alcohol_content: "Alkoholgehalt"
+        average_rating: "Bewertung"
+        user: "Benutzer"
+        created_at: "Erstellt am"
+        views: "Aufrufe"
+  pagy:
+    item_name:
+      one: "Eintrag"
+      other: "Einträge"
+    nav:
+      prev: "&lsaquo; Zurück"
+      next: "Weiter &rsaquo;"
+      gap: "&hellip;"
+    aria_label:
+      nav: "Seitennavigation"
+      prev: "Vorherige Seite"
+      next: "Nächste Seite"
+      page: "Gehe zu Seite %{page}"
