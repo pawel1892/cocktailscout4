@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
   resources :recipes, path: 'rezepte', only: [:index, :show]
+  
+  post 'rate', to: 'ratings#create'
+  delete 'rate', to: 'ratings#destroy'
+
   get 'design-system', to: 'design_system#index'
   root "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

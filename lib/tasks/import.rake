@@ -1,7 +1,101 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [:ingredients, :users, :recipes, :comments]
+  task all: [:ingredients, :users, :recipes, :comments, :ratings]
+
+  desc "Import ratings from the legacy database"
+  task ratings: :environment do
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}, Recipes: #{recipe_map.size}"
+
+    puts "Importing ratings..."
+    count = 0
+    Legacy::Rate.where(rateable_type: 'Recipe').find_each do |legacy_rate|
+      new_recipe_id = recipe_map[legacy_rate.rateable_id]
+      new_user_id = user_map[legacy_rate.rater_id]
+      
+      next unless new_recipe_id && new_user_id
+
+      # Convert stars (1-5) to score (1-10)
+      # Assuming legacy stars are float 1.0-5.0
+      new_score = (legacy_rate.stars * 2).round
+      new_score = 10 if new_score > 10
+      new_score = 1 if new_score < 1
+
+      rating = Rating.find_or_initialize_by(
+        user_id: new_user_id,
+        rateable_type: 'Recipe',
+        rateable_id: new_recipe_id
+      )
+      
+      rating.score = new_score
+      rating.old_id = legacy_rate.id
+      rating.created_at = legacy_rate.created_at
+      rating.updated_at = legacy_rate.updated_at
+      
+      rating.save!(validate: false)
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nRatings imported: #{count}"
+    
+    puts "Updating recipe cache..."
+    Recipe.find_each(&:update_rating_cache!)
+    puts "Cache updated."
+  end
+
+  desc "Import recipes from the legacy database"
+  task recipes: :environment do
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    ingredient_map = Ingredient.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}, Ingredients: #{ingredient_map.size}"
+
+    puts "Importing recipes..."
+    count = 0
+    Legacy::Recipe.includes(:recipe_ingredients).find_each do |legacy_recipe|
+      user_id = user_map[legacy_recipe.user_id]
+      next unless user_id # Skip if user not found
+
+      recipe = Recipe.find_or_initialize_by(old_id: legacy_recipe.id)
+      recipe.assign_attributes(
+        user_id: user_id,
+        title: legacy_recipe.name,
+        description: legacy_recipe.description,
+        slug: legacy_recipe.slug,
+        views: legacy_recipe.views || 0,
+        total_volume: legacy_recipe.cl_amount || 0,
+        alcohol_content: legacy_recipe.alcoholic_content || 0,
+        created_at: legacy_recipe.created_at,
+        updated_at: legacy_recipe.updated_at
+      )
+      recipe.save!(validate: false)
+
+      # Import ingredients
+      legacy_recipe.recipe_ingredients.each do |legacy_ri|
+        new_ingredient_id = ingredient_map[legacy_ri.ingredient_id]
+        next unless new_ingredient_id
+
+        ri = recipe.recipe_ingredients.find_or_initialize_by(old_id: legacy_ri.id)
+        ri.assign_attributes(
+          ingredient_id: new_ingredient_id,
+          amount: legacy_ri.cl_amount,
+          unit: 'cl', # Legacy seems to use cl_amount float, implies cl
+          description: legacy_ri.description,
+          position: legacy_ri.sequence,
+          created_at: legacy_ri.created_at,
+          updated_at: legacy_ri.updated_at
+        )
+        ri.save!(validate: false)
+      end
+
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nRecipes imported: #{count}"
+  end
 
   desc "Import comments from the legacy database"
   task comments: :environment do
