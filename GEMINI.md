@@ -15,6 +15,12 @@
 - Prioritize build-in rails generators over hand written code (if applicable)
 - Logic: "Fat Model, Skinny Controller" or use Concerns. Avoid over-engineering with excessive patterns unless requested.
 
+### Frontend & Design System
+- **Utilities First**: Prioritize using predefined Tailwind utilities (defined via `@utility` in `application.css`).
+- **Kitchen Sink**: Refer to the Design System page (`/design-system`) for available components (buttons, inputs, cards, tags, etc.).
+- **Extensibility**: When a new reusable element is required, create a global Tailwind utility in `application.css` and add a corresponding example to the Design System page.
+- **Consistency**: Avoid arbitrary Tailwind classes or custom CSS if a design system utility already exists.
+
 ### DB Migration Standards
 - **Column Ordering**:
   1. Primary Key (`id`) - *Implicit*
@@ -53,6 +59,11 @@
 
 ## Progress & Status
 - **Ingredients**: Model created, imported, validations added.
-- **Users**: Model created, imported (filtered ~2k active from ~38k total), Auth working.
-- **Next Steps**:
-  - **Recipes**: Create model with associations to User. Import data linking via `old_id`.
+- **Users**: Model created, imported (filtered ~2k active), Auth (Modal/Vue) working with German localization.
+- **Recipes**: Model created, imported (~1.5k), associations linked via `old_id`.
+- **Comments**: Model created, imported (~21k), linked to Recipes and Users.
+- **Ratings**: Custom 1-10 polymorphic system created, imported (~17k), cache logic on Recipes.
+- **Design System**: "Kitchen Sink" showcase established with global Tailwind utilities.
+
+## Next Steps
+- **Recipe Index**: Implement pagination (Pagy) and a table-like layout for the recipe list.
