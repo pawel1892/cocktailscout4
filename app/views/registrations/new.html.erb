@@ -5,8 +5,8 @@
   
   <%= form_with model: @user, url: registration_path do |form| %>
     <% if @user.errors.any? %>
-      <div class="mb-4 text-red-600 bg-red-50 p-3 rounded text-sm">
-        <ul class="list-disc pl-5">
+      <div class="callout-red mb-6">
+        <ul class="list-disc pl-5 text-sm">
           <% @user.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
@@ -14,17 +14,18 @@
       </div>
     <% end %>
 
-    <div class="mb-4">
+    <div class="form-group">
       <%= form.label :email_address, "Email Adresse", class: "label-field" %>
       <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "name@example.com", class: "input-field" %>
     </div>
 
-    <div class="mb-4">
+    <div class="form-group">
       <%= form.label :password, "Passwort", class: "label-field" %>
       <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Mindestens 8 Zeichen", maxlength: 72, class: "input-field" %>
+      <p class="form-hint">Mindestens 8 Zeichen.</p>
     </div>
 
-    <div class="mb-6">
+    <div class="form-group">
       <%= form.label :password_confirmation, "Passwort bestätigen", class: "label-field" %>
       <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Passwort wiederholen", maxlength: 72, class: "input-field" %>
     </div>

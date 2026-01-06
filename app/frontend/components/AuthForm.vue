@@ -1,19 +1,19 @@
 <template>
-  <div class="auth-form p-6 border rounded shadow-md bg-white max-w-sm mx-auto">
+  <div class="auth-form max-w-sm mx-auto">
     <div v-if="isAuthenticated" class="text-center">
-      <p class="mb-4 text-green-600">You are logged in as <strong>{{ user.email_address }}</strong></p>
+      <p class="mb-4 text-green-600">Angemeldet als <strong>{{ user.email_address }}</strong></p>
       <button @click="logout" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-full">
-        Sign Out
+        Abmelden
       </button>
     </div>
 
     <div v-else>
-      <h2 class="text-xl font-bold mb-4 text-center">{{ isLoginMode ? 'Sign In' : 'Sign Up' }}</h2>
+      <h2 class="text-xl font-bold mb-6 text-center text-black">{{ isLoginMode ? 'Anmelden' : 'Registrieren' }}</h2>
       
       <form @submit.prevent="handleSubmit">
-        <div class="mb-4">
+        <div class="form-group">
           <label class="label-field" for="email">
-            Email Address
+            Email Adresse
           </label>
           <input 
             v-model="form.email_address"
@@ -25,9 +25,9 @@
           >
         </div>
 
-        <div class="mb-6">
+        <div class="form-group">
           <label class="label-field" for="password">
-            Password
+            Passwort
           </label>
           <input 
             v-model="form.password"
@@ -39,9 +39,9 @@
           >
         </div>
 
-        <div v-if="!isLoginMode" class="mb-6">
+        <div v-if="!isLoginMode" class="form-group">
           <label class="label-field" for="password_confirmation">
-            Confirm Password
+            Passwort bestätigen
           </label>
           <input 
             v-model="form.password_confirmation"
@@ -51,14 +51,15 @@
             autocomplete="new-password"
             class="input-field"
           >
+          <p class="form-hint">Mindestens 8 Zeichen.</p>
         </div>
 
-        <div v-if="error" class="mb-4 text-red-500 text-sm">
-          {{ error }}
+        <div v-if="error" class="callout-red mb-4">
+          <p class="text-sm">{{ error }}</p>
         </div>
         
-        <div v-if="errors.length" class="mb-4 text-red-500 text-sm">
-          <ul class="list-disc pl-5">
+        <div v-if="errors.length" class="callout-red mb-4">
+          <ul class="list-disc pl-5 text-sm">
             <li v-for="(err, index) in errors" :key="index">{{ err }}</li>
           </ul>
         </div>
@@ -69,13 +70,13 @@
             class="btn btn-primary w-full"
             :disabled="loading"
           >
-            {{ loading ? 'Processing...' : (isLoginMode ? 'Sign In' : 'Sign Up') }}
+            {{ loading ? 'Verarbeite...' : (isLoginMode ? 'Anmelden' : 'Registrieren') }}
           </button>
         </div>
         
         <div class="mt-4 text-center">
             <a href="#" @click.prevent="toggleMode" class="text-cs-dark-red hover:underline text-sm">
-                {{ isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Sign In" }}
+                {{ isLoginMode ? "Noch kein Konto? Registrieren" : "Bereits registriert? Anmelden" }}
             </a>
         </div>
       </form>
