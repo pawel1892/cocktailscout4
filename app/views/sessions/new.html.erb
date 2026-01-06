@@ -5,12 +5,12 @@
   <%= tag.div(flash[:notice], class: "mb-4 text-green-600 bg-green-50 p-3 rounded") if flash[:notice] %>
 
   <%= form_with url: session_path do |form| %>
-    <div class="mb-4">
+    <div class="form-group">
       <%= form.label :email_address, "Email Adresse", class: "label-field" %>
       <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "name@example.com", class: "input-field", value: params[:email_address] %>
     </div>
 
-    <div class="mb-6">
+    <div class="form-group">
       <%= form.label :password, "Passwort", class: "label-field" %>
       <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Passwort eingeben", maxlength: 72, class: "input-field" %>
     </div>
