@@ -411,6 +411,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   jbuilder
   kamal
+  mini_magick (~> 5.3)
   mysql2 (~> 0.5)
   pagy (~> 9.3)
   pry-byebug

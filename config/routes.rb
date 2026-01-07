@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
   resources :recipes, path: 'rezepte', only: [:index, :show]
-  
+  resources :recipe_images, path: 'cocktailgalerie', only: [:index]
+
   post 'rate', to: 'ratings#create'
   delete 'rate', to: 'ratings#destroy'
 
