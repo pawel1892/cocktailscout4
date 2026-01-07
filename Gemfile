@@ -59,3 +59,5 @@ gem "pagy", "~> 9.3"
 gem "rails-i18n", "~> 8.1"
 
 gem "acts-as-taggable-on", "~> 13.0"
+
+gem "mini_magick", "~> 5.3"

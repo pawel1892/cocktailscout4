@@ -63,6 +63,7 @@
 - **Recipes**: Model created, imported (~1.5k), associations linked via `old_id`.
 - **Comments**: Model created, imported (~21k), linked to Recipes and Users.
 - **Ratings**: Custom 1-10 polymorphic system created, imported (~17k), cache logic on Recipes.
+- **Recipe Images**: Model created, imported (~2.2k), read-only gallery implemented (/cocktailgalerie), legacy files mapped via `folder_identifier`.
 - **Design System**: "Kitchen Sink" showcase established with global Tailwind utilities.
 
 ## Next Steps

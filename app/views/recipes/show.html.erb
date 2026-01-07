@@ -1,5 +1,17 @@
 <h1><%= @recipe.title %></h1>
 
+<% if @recipe.recipe_images.approved.any? %>
+  <div class="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+    <% @recipe.recipe_images.approved.each do |image| %>
+      <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+         <% if recipe_image_url(image, style: :medium) %>
+            <%= image_tag recipe_image_url(image, style: :medium), class: "object-cover w-full h-full", alt: @recipe.title %>
+         <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="mb-6">
   <rating-control 
     rateable-type="Recipe" 

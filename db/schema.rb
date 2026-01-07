@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_06_161322) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_07_035612) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.string "content_type"
+    t.datetime "created_at", null: false
+    t.string "filename", null: false
+    t.string "key", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.decimal "alcoholic_content", precision: 10
     t.datetime "created_at", null: false
@@ -45,6 +73,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_06_161322) do
     t.index ["old_id"], name: "index_recipe_comments_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_comments_on_recipe_id"
     t.index ["user_id"], name: "index_recipe_comments_on_user_id"
+  end
+
+  create_table "recipe_images", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "approved_at"
+    t.bigint "approved_by_id"
+    t.datetime "created_at", null: false
+    t.integer "old_id"
+    t.bigint "recipe_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["approved_by_id"], name: "index_recipe_images_on_approved_by_id"
+    t.index ["old_id"], name: "index_recipe_images_on_old_id"
+    t.index ["recipe_id"], name: "index_recipe_images_on_recipe_id"
+    t.index ["user_id"], name: "index_recipe_images_on_user_id"
   end
 
   create_table "recipe_ingredients", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -141,9 +183,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_06_161322) do
     t.index ["username"], name: "index_users_on_username"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ratings", "users"
   add_foreign_key "recipe_comments", "recipes"
   add_foreign_key "recipe_comments", "users"
+  add_foreign_key "recipe_images", "recipes"
+  add_foreign_key "recipe_images", "users"
+  add_foreign_key "recipe_images", "users", column: "approved_by_id"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"
