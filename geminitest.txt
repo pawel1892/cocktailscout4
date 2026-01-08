@@ -1,0 +1,307 @@
+```text
+# This file contains the RSpec tests for the RecipeImage model and a feature test for the /cocktailgalerie page.
+# It assumes a basic Rails application setup with RSpec, FactoryBot, Shoulda Matchers, Capybara, and Active Storage configured.
+# It also assumes the `will_paginate` gem is installed and configured for pagination.
+
+# --- Required Gems (Gemfile) ---
+# group :development, :test do
+#   gem 'rspec-rails'
+#   gem 'factory_bot_rails'
+#   gem 'shoulda-matchers'
+#   gem 'faker'
+#   gem 'capybara'
+#   gem 'selenium-webdriver' # For Capybara with a real browser
+#   gem 'webdrivers' # Automatically downloads browser drivers
+#   gem 'launchy' # For save_and_open_page
+#   gem 'active_storage_validations' # For simplified Active Storage validations
+# end
+# gem 'will_paginate', '~> 3.3'
+# ---------------------------------
+
+# --- Configuration (spec/rails_helper.rb) ---
+# require 'shoulda/matchers'
+# Shoulda::Matchers.configure do |config|
+#   config.integrate do |with|
+#     with.test_framework :rspec
+#     with.library :rails
+#   end
+# end
+#
+# # For Active Storage fixture_file_upload in factories
+# RSpec.configure do |config|
+#   config.include ActionDispatch::TestProcess::FixtureFile
+# end
+# ---------------------------------------------
+
+# --- Factory Check ---
+# Yes, a factory is definitely needed for `RecipeImage`. It has relations (belongs_to Recipe) and an associated file (Active Storage image).
+# Factories simplify test data creation, making tests more readable and maintainable.
+
+# --- File: spec/factories/recipes.rb ---
+FactoryBot.define do
+  factory :recipe do
+    sequence(:name) { |n| "Delicious Cocktail #{n}" }
+    description { "A refreshing cocktail recipe." }
+    # Add other recipe attributes as needed
+  end
+end
+
+# --- File: spec/factories/recipe_images.rb ---
+FactoryBot.define do
+  factory :recipe_image do
+    association :recipe
+    approved { false } # Default to not approved
+
+    # Attach a test image using Active Storage
+    # This requires `include ActionDispatch::TestProcess::FixtureFile` in rails_helper.rb
+    after(:build) do |recipe_image|
+      unless recipe_image.image.attached?
+        # Ensure 'spec/fixtures/files' directory exists and contains 'test_image.jpg'
+        # You can create a dummy file like:
+        # `curl -o spec/fixtures/files/test_image.jpg https://via.placeholder.com/150/0000FF/808080?text=test_image`
+        # Or create it manually with an empty file: `touch spec/fixtures/files/test_image.jpg`
+        # But for actual image rendering in feature tests, a real image is better.
+        file_path = Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')
+        unless File.exist?(file_path)
+          FileUtils.mkdir_p(File.dirname(file_path)) unless File.directory?(File.dirname(file_path))
+          File.open(file_path, 'wb') do |f|
+            f.write(Base64.decode64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="))
+          end
+        end
+
+        recipe_image.image.attach(
+          io: File.open(file_path),
+          filename: 'test_image.jpg',
+          content_type: 'image/jpeg'
+        )
+      end
+    end
+
+    # Trait for approved images
+    trait :approved do
+      approved { true }
+    end
+  end
+end
+
+# --- File: app/models/recipe.rb (for context) ---
+# This is a prerequisite model for RecipeImage.
+# class Recipe < ApplicationRecord
+#   has_many :recipe_images, dependent: :destroy
+#   validates :name, presence: true
+# end
+
+# --- File: app/models/recipe_image.rb ---
+class RecipeImage < ApplicationRecord
+  belongs_to :recipe
+  has_one_attached :image
+
+  validates :recipe, presence: true
+  validates :image, attached: true, content_type: ['image/png', 'image/jpeg'],
+                    size: { less_than: 5.megabytes, message: 'is too large (max 5MB)' }
+
+  scope :approved, -> { where(approved: true) }
+  scope :not_approved, -> { where(approved: false) }
+
+  # Example method
+  def approve!
+    update(approved: true)
+  end
+end
+
+# --- File: app/controllers/cocktail_galerie_controller.rb (for context) ---
+# This controller handles the /cocktailgalerie route.
+# class CocktailGalerieController < ApplicationController
+#   def index
+#     # Using `will_paginate` for pagination
+#     @recipe_images = RecipeImage.approved.includes(:recipe).with_attached_image.paginate(page: params[:page], per_page: 9)
+#   end
+# end
+
+# --- File: app/views/cocktail_galerie/index.html.erb (for context) ---
+# This view displays the images and pagination.
+# <h1>Cocktail Galerie</h1>
+#
+# <div class="image-grid">
+#   <% @recipe_images.each do |image| %>
+#     <div class="image-item">
+#       <% if image.image.attached? %>
+#         <%= image_tag image.image.variant(resize_to_limit: [300, 300]), alt: image.recipe.name %>
+#       <% else %>
+#         <p>No image attached</p>
+#       <% end %>
+#       <p><%= image.recipe.name %></p>
+#     </div>
+#   <% end %>
+# </div>
+#
+# <%= will_paginate @recipe_images %>
+# --------------------------------------------------------
+
+# --- File: spec/models/recipe_image_spec.rb ---
+require 'rails_helper'
+require 'fileutils' # For creating test fixture file if it doesn't exist
+
+RSpec.describe RecipeImage, type: :model do
+  # --- Relations ---
+  describe 'associations' do
+    it { should belong_to(:recipe) }
+    it { should have_one_attached(:image) }
+  end
+
+  # --- Validations ---
+  describe 'validations' do
+    let(:recipe) { create(:recipe) }
+    let(:valid_recipe_image) { build(:recipe_image, recipe: recipe) }
+
+    it 'is valid with valid attributes' do
+      expect(valid_recipe_image).to be_valid
+    end
+
+    it 'is not valid without a recipe' do
+      recipe_image = build(:recipe_image, recipe: nil)
+      expect(recipe_image).to_not be_valid
+      expect(recipe_image.errors[:recipe]).to include('must exist')
+    end
+
+    it 'is not valid without an attached image' do
+      recipe_image = build(:recipe_image)
+      recipe_image.image.detach # Detach the image provided by the factory
+      expect(recipe_image).to_not be_valid
+      expect(recipe_image.errors[:image]).to include('must be attached')
+    end
+
+    it 'is not valid with an unsupported content type' do
+      recipe_image = build(:recipe_image)
+      # Simulate attaching a file with wrong content type
+      # This requires a dummy file for the fixture
+      wrong_file_path = Rails.root.join('spec', 'fixtures', 'files', 'test.txt')
+      File.open(wrong_file_path, 'w') { |f| f.write('This is a test file.') } unless File.exist?(wrong_file_path)
+
+      recipe_image.image.attach(
+        io: File.open(wrong_file_path),
+        filename: 'test.txt',
+        content_type: 'text/plain'
+      )
+      expect(recipe_image).to_not be_valid
+      expect(recipe_image.errors[:image]).to include('has an invalid content type')
+
+      File.delete(wrong_file_path) if File.exist?(wrong_file_path) # Clean up
+    end
+
+    it 'is not valid with an image that is too large' do
+      recipe_image = build(:recipe_image)
+      # Simulate attaching a large file (e.g., 6MB)
+      large_file_path = Rails.root.join('spec', 'fixtures', 'files', 'large_test_image.jpg')
+      File.open(large_file_path, 'wb') do |f|
+        f.write("\0" * (6 * 1024 * 1024)) # 6MB of null bytes
+      end unless File.exist?(large_file_path)
+
+      recipe_image.image.attach(
+        io: File.open(large_file_path),
+        filename: 'large_test_image.jpg',
+        content_type: 'image/jpeg'
+      )
+      expect(recipe_image).to_not be_valid
+      expect(recipe_image.errors[:image]).to include('is too large (max 5MB)')
+
+      File.delete(large_file_path) if File.exist?(large_file_path) # Clean up
+    end
+  end
+
+  # --- Scopes ---
+  describe 'scopes' do
+    before do
+      @approved_image = create(:recipe_image, :approved)
+      @not_approved_image = create(:recipe_image) # Default is not approved
+      create_list(:recipe_image, 2, :approved) # More approved images
+      create_list(:recipe_image, 3) # More not approved images
+    end
+
+    describe '.approved' do
+      it 'returns only approved recipe images' do
+        expect(RecipeImage.approved).to include(@approved_image)
+        expect(RecipeImage.approved).to_not include(@not_approved_image)
+        expect(RecipeImage.approved.count).to eq(3) # Initial @approved_image + 2 more
+      end
+    end
+
+    describe '.not_approved' do
+      it 'returns only not approved recipe images' do
+        expect(RecipeImage.not_approved).to include(@not_approved_image)
+        expect(RecipeImage.not_approved).to_not include(@approved_image)
+        expect(RecipeImage.not_approved.count).to eq(4) # Initial @not_approved_image + 3 more
+      end
+    end
+  end
+
+  # --- Methods ---
+  describe '#approve!' do
+    let(:recipe_image) { create(:recipe_image, approved: false) }
+
+    it 'sets the approved attribute to true' do
+      expect { recipe_image.approve! }.to change { recipe_image.reload.approved }.from(false).to(true)
+    end
+  end
+end
+
+# --- File: spec/features/cocktail_galerie_spec.rb ---
+require 'rails_helper'
+
+RSpec.feature "Cocktail Galerie", type: :feature, js: true do # `js: true` for Capybara to handle Active Storage image rendering
+  # Assuming 9 images per page for pagination based on controller `per_page: 9`
+  let!(:approved_images_page1) { create_list(:recipe_image, 7, :approved) }
+  let!(:approved_images_page2) { create_list(:recipe_image, 3, :approved) } # Will be on the second page
+  let!(:not_approved_images) { create_list(:recipe_image, 5) } # Should not be displayed
+
+  before do
+    visit '/cocktailgalerie'
+  end
+
+  scenario 'displays only approved images' do
+    approved_images_page1.each do |image|
+      expect(page).to have_css("img[alt='#{image.recipe.name}']")
+      expect(page).to have_content(image.recipe.name)
+    end
+
+    not_approved_images.each do |image|
+      expect(page).to_not have_css("img[alt='#{image.recipe.name}']")
+      expect(page).to_not have_content(image.recipe.name)
+    end
+
+    # Check the total count of images displayed on the first page
+    expect(page).to have_css('.image-grid .image-item', count: approved_images_page1.count)
+  end
+
+  scenario 'does not display not_approved images' do
+    not_approved_images.each do |image|
+      expect(page).to_not have_content(image.recipe.name)
+      expect(page).to_not have_css("img[alt='#{image.recipe.name}']")
+    end
+  end
+
+  scenario 'has working pagination' do
+    # Check for pagination links
+    expect(page).to have_css('nav.pagination')
+    expect(page).to have_link('2', href: '/cocktailgalerie?page=2')
+
+    # Ensure images from the second page are not on the first page
+    approved_images_page2.each do |image|
+      expect(page).to_not have_css("img[alt='#{image.recipe.name}']")
+      expect(page).to_not have_content(image.recipe.name)
+    end
+
+    # Click on the next page link
+    click_link '2'
+
+    # Check if we are on the second page and it displays the correct images
+    expect(current_url).to include('/cocktailgalerie?page=2')
+    approved_images_page2.each do |image|
+      expect(page).to have_css("img[alt='#{image.recipe.name}']")
+      expect(page).to have_content(image.recipe.name)
+    end
+    # The images from the first page should no longer be visible (or at least, the count should be accurate for page 2)
+    expect(page).to have_css('.image-grid .image-item', count: approved_images_page2.count)
+  end
+end
+```
