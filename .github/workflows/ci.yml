@@ -26,7 +26,7 @@ jobs:
         run: bin/bundler-audit --update
 
       - name: Security Brakeman
-        run: bin/brakeman -q -w2 --ignore-paths legacy/
+        run: bin/brakeman -q -w2 --skip-files legacy/
 
       - name: Lint Rubocop
         run: bin/rubocop --parallel

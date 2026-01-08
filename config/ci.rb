@@ -6,7 +6,7 @@ CI.run do
   step "Style: Ruby", "bin/rubocop"
 
   step "Security: Gem audit", "bin/bundler-audit"
-  step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error --ignore-paths legacy/"
+  step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error --skip-files legacy/"
 
   step "Tests: RSpec", "bin/rspec"
   # step "Tests: System", "bin/rails test:system" # RSpec likely handles this if configured, or add separate rspec command for system specs if needed.
