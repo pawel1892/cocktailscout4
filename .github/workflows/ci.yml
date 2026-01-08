@@ -46,6 +46,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: mysql2://root:password@127.0.0.1:3307/cocktailscout4_test
+      LEGACY_DATABASE_URL: mysql2://root:password@127.0.0.1:3307/cocktailscout4_test
       # Rails 8 might default to caching via database (SolidCache), so we ensure the DB is ready.
 
     steps:
