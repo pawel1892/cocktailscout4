@@ -149,32 +149,32 @@
 }
 
 /* Pagy Pagination Styling */
-nav.pagy.nav {
+nav.pagy {
   @apply flex gap-1 items-center justify-center;
 }
 
-nav.pagy.nav a {
+nav.pagy a {
   @apply px-3 py-1.5 rounded-lg border border-gray-300 text-sm font-medium transition-colors bg-white text-gray-700 no-underline;
 }
 
 /* Hover state for clickable links (those without aria-disabled) */
-nav.pagy.nav a:not([aria-disabled="true"]):hover {
+nav.pagy a:not([aria-disabled="true"]):hover {
   @apply bg-gray-50 border-gray-400 text-black;
 }
 
 /* Current / Active Page */
-nav.pagy.nav a.current,
-nav.pagy.nav a[aria-current="page"] {
+nav.pagy a.current,
+nav.pagy a[aria-current="page"] {
   @apply bg-cs-gold text-white border-cs-gold cursor-default;
 }
 
-/* Disabled state (Previous/Next when at ends) */
-nav.pagy.nav a[aria-disabled="true"]:not(.current):not(.gap) {
+/* Disabled state (Previous/Next when at ends) - Exclude active page and gap */
+nav.pagy a[aria-disabled="true"]:not([aria-current="page"]):not([role="separator"]) {
   @apply opacity-50 cursor-not-allowed bg-gray-50 text-gray-400 border-gray-200;
 }
 
 /* Gap (...) */
-nav.pagy.nav a.gap {
+nav.pagy a[role="separator"] {
   @apply border-none bg-transparent px-1 cursor-default text-gray-400;
 }
 
