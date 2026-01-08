@@ -4,7 +4,7 @@ namespace :import do
     require 'fileutils'
 
     # Filter for approved images only
-    scope = RecipeImage.approved.where.not(folder_identifier: nil)
+    scope = RecipeImage.approved.where.not(old_id: nil)
     
     total = scope.count
     processed = 0
@@ -17,15 +17,18 @@ namespace :import do
       # Skip if already attached
       next if recipe_image.image.attached?
 
+      legacy_image = Legacy::RecipeImage.find_by(id: recipe_image.old_id)
+      next unless legacy_image
+
       # Construct path to the original legacy image
       # Structure: public/system/recipe_images/:folder_identifier/original/:filename
       legacy_path = Rails.root.join(
         "public", 
         "system", 
         "recipe_images", 
-        recipe_image.folder_identifier.to_s, 
+        recipe_image.old_id.to_s, 
         "original", 
-        recipe_image.image_file_name
+        legacy_image.image_file_name
       )
 
       if File.exist?(legacy_path)
@@ -33,8 +36,8 @@ namespace :import do
           File.open(legacy_path) do |file|
             recipe_image.image.attach(
               io: file,
-              filename: recipe_image.image_file_name,
-              content_type: recipe_image.image_content_type
+              filename: legacy_image.image_file_name,
+              content_type: legacy_image.image_content_type
             )
           end
           success += 1

@@ -97,18 +97,15 @@ namespace :import do
          approved_by_user = User.find_by(old_id: legacy_image.approved_by)
       end
 
-      image.update!(
+      image.assign_attributes(
         recipe: recipe,
         user: user,
         approved_at: approved_at,
         approved_by: approved_by_user,
-        image_file_name: legacy_image.image_file_name,
-        image_content_type: legacy_image.image_content_type,
-        image_file_size: legacy_image.image_file_size,
-        folder_identifier: legacy_image.id.to_s,
         created_at: legacy_image.created_at,
         updated_at: legacy_image.updated_at
       )
+      image.save!(validate: false)
     end
     puts "Imported #{RecipeImage.count} recipe images (metadata only)."
   end
