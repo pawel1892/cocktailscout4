@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require "pagy/extras/overflow"
-require "pagy/extras/metadata"
-require "pagy/extras/i18n"
+# Pagy configuration
+# https://ddnexus.github.io/pagy/
+Pagy.options[:limit] = 50
 
-# Pagy Variables
-# https://ddnexus.github.io/pagy/docs/api/pagy#variables
-Pagy::DEFAULT[:limit]    = 50
-Pagy::DEFAULT[:overflow] = :last_page
+# Use Rails I18n
+Pagy.translate_with_the_slower_i18n_gem!
