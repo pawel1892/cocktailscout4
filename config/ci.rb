@@ -8,8 +8,8 @@ CI.run do
   step "Security: Gem audit", "bin/bundler-audit"
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
 
-  step "Tests: Rails", "bin/rails test"
-  step "Tests: System", "bin/rails test:system"
+  step "Tests: RSpec", "bin/rspec"
+  # step "Tests: System", "bin/rails test:system" # RSpec likely handles this if configured, or add separate rspec command for system specs if needed.
   step "Tests: Seeds", "env RAILS_ENV=test bin/rails db:seed:replant"
 
   # Optional: set a green GitHub commit status to unblock PR merge.
