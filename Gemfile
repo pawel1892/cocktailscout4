@@ -54,7 +54,7 @@ gem "vite_rails", "~> 3.0"
 
 gem "acts_as_list", "~> 1.2"
 
-gem "pagy", "~> 9.3"
+gem "pagy", "~> 43.0"
 
 gem "rails-i18n", "~> 8.1"
 

@@ -1,10 +1,8 @@
 module ApplicationHelper
-  include Pagy::Frontend
-
   def pagy_seo_tags(pagy)
     tags = []
-    tags << tag.link(rel: "prev", href: pagy_url_for(pagy, pagy.prev)) if pagy.prev
-    tags << tag.link(rel: "next", href: pagy_url_for(pagy, pagy.next)) if pagy.next
+    tags << tag.link(rel: "prev", href: pagy.page_url(pagy.previous)) if pagy.previous
+    tags << tag.link(rel: "next", href: pagy.page_url(pagy.next)) if pagy.next
     safe_join(tags)
   end
 
