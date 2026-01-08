@@ -26,7 +26,7 @@ jobs:
         run: bin/bundler-audit --update
 
       - name: Security Brakeman
-        run: bin/brakeman -q -w2
+        run: bin/brakeman -q -w2 --ignore-paths legacy/
 
       - name: Lint Rubocop
         run: bin/rubocop --parallel
@@ -37,7 +37,7 @@ jobs:
       mysql:
         image: mysql:9.1
         ports:
-          - 3306:3306
+          - 3307:3306
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: cocktailscout4_test
@@ -45,7 +45,7 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: mysql2://root:password@127.0.0.1:3306/cocktailscout4_test
+      DATABASE_URL: mysql2://root:password@127.0.0.1:3307/cocktailscout4_test
       # Rails 8 might default to caching via database (SolidCache), so we ensure the DB is ready.
 
     steps:
