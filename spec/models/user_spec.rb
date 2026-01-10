@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe "Associations" do
+    it { should have_many(:sessions).dependent(:destroy) }
+    it { should have_many(:recipes).dependent(:nullify) }
+    it { should have_many(:recipe_comments).dependent(:nullify) }
+    it { should have_many(:recipe_images).dependent(:nullify) }
+    it { should have_many(:ratings).dependent(:destroy) }
+    it { should have_many(:user_roles).dependent(:destroy) }
+    it { should have_many(:roles).through(:user_roles) }
+    it { should have_one(:user_stat).dependent(:destroy) }
+  end
+
   describe "Role methods" do
     let(:user) { create(:user) }
     let(:admin) { create(:user, :admin) }
