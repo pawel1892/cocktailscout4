@@ -28,11 +28,11 @@ class RatingsController < ApplicationController
   private
 
   def find_rateable
-    # Securely finding rateable. 
+    # Securely finding rateable.
     # Whitelist allowed classes.
     allowed_types = { "Recipe" => Recipe }
     klass = allowed_types[params[:rateable_type]]
-    
+
     raise NameError, "Invalid rateable type" unless klass
     klass.find(params[:rateable_id])
   end

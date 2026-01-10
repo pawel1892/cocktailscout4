@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
 
   def index
     query = Recipe.includes(:user, :taggings, :tags)
-    
+
     # Handle specific join sorting
     query = query.left_joins(:user) if sort_column == "users.username"
 

@@ -4,6 +4,7 @@
 
 - **Time spent**: 2h
 - **Description**:
+    - **RuboCop**: Made RuboCop stricter
 	- **Test Coverage**: Built a comprehensive test suite for recipe images, ratings, and comments. Achieved **108 passing tests** with a **54.95% code coverage** baseline.
 	- **Model Testing**: Unit tests for `RecipeImage` (15), `Rating` (26), and `RecipeComment` (19) covering associations, validations, callbacks, and business logic.
 	- **API & Request Specs**:

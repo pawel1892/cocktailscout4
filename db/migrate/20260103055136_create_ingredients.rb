@@ -5,10 +5,10 @@ class CreateIngredients < ActiveRecord::Migration[8.1]
       t.string :name
       t.string :slug
       t.text :description
-      
+
       # Data
       t.decimal :alcoholic_content
-      
+
       # Legacy
       t.integer :old_id
 

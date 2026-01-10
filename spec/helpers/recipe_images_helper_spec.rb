@@ -36,7 +36,7 @@ RSpec.describe RecipeImagesHelper, type: :helper do
         recipe_image.image.attach(file)
         recipe_image.save!
 
-        [:thumb, :medium, :large].each do |style|
+        [ :thumb, :medium, :large ].each do |style|
           result = helper.recipe_image_url(recipe_image, style: style)
           expect(result).to be_present
         end

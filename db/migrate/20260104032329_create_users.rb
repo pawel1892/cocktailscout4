@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[8.1]
       t.string :email_address, null: false
       t.string :password_digest, null: false
       t.string :username
-      
+
       # Profile Data
       t.string :prename
       t.string :title
@@ -13,11 +13,11 @@ class CreateUsers < ActiveRecord::Migration[8.1]
       t.string :location
       t.string :homepage
       t.string :public_email
-      
+
       # Activity / Meta
       t.integer :sign_in_count
       t.datetime :last_active_at
-      
+
       # Legacy
       t.integer :old_id
 

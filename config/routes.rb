@@ -2,13 +2,13 @@ Rails.application.routes.draw do
   resource :session
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
-  resources :recipes, path: 'rezepte', only: [:index, :show]
-  resources :recipe_images, path: 'cocktailgalerie', only: [:index]
+  resources :recipes, path: "rezepte", only: [ :index, :show ]
+  resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
-  post 'rate', to: 'ratings#create'
-  delete 'rate', to: 'ratings#destroy'
+  post "rate", to: "ratings#create"
+  delete "rate", to: "ratings#destroy"
 
-  get 'design-system', to: 'design_system#index'
+  get "design-system", to: "design_system#index"
   root "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
