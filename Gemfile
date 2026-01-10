@@ -39,6 +39,7 @@ group :development, :test do
   gem "faker"
   gem "shoulda-matchers"
   gem "database_cleaner-active_record"
+  gem "simplecov", require: false
   gem "rubocop", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
