@@ -1,5 +1,23 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-10 20:22 — Role System Implementation & Authorization
+- **Time spent**: 30m
+- **Description**:
+	- Implemented RBAC (Role-Based Access Control) using `Role` and `UserRole` models.
+	- **Legacy Import**: Created a migration path for legacy roles, deliberately filtering out the redundant "member" role.
+	- **User Extensions**: Added helper methods to the `User` model (`#admin?`, `#forum_moderator?`, etc.).
+	- **Authorization**: Implemented helpers in `ApplicationController` (`require_admin!`, etc.) with "Super User" logic for admins.
+	- **Design System**: Restricted `/design-system` access to Admins only.
+	- **Testing**: 
+		- Created Factories with traits.
+		- Implemented model specs for roles/users.
+		- Added request specs for access control verification.
+- **Constraints & Decisions**:
+	- **Many-to-Many**: Implemented `has_many :roles, through: :user_roles`.
+	- **Clean Slate**: Discarded `member` role; used standard auth for basic access.
+- **Outcome**:
+	- Role system operational, tested, and integrated into controller layer.
+
 ## 2026-01-10 19:27 — Comprehensive Test Suite Implementation
 
 - **Time spent**: 2h

@@ -1,7 +1,45 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :recipes, :comments, :ratings, :tags ]
+  task all: [ :ingredients, :users, :roles, :recipes, :comments, :ratings, :tags ]
+
+  desc "Import roles and user roles"
+  task roles: :environment do
+    puts "Importing roles..."
+
+    legacy_roles_map = {}
+
+    Legacy::Role.find_each do |legacy_role|
+      next if legacy_role.name == "member"
+
+      role = Role.find_or_initialize_by(old_id: legacy_role.id)
+      role.name = legacy_role.name
+      role.save!
+
+      legacy_roles_map[legacy_role.id] = role.id
+    end
+    puts "Roles imported."
+
+    puts "Importing user roles..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+
+    count = 0
+    Legacy::UserRole.find_each do |legacy_ur|
+      new_user_id = user_map[legacy_ur.user_id]
+      new_role_id = legacy_roles_map[legacy_ur.role_id]
+
+      next unless new_user_id && new_role_id
+
+      UserRole.find_or_create_by!(
+        user_id: new_user_id,
+        role_id: new_role_id
+      ) do |ur|
+        ur.old_id = legacy_ur.id
+      end
+      count += 1
+    end
+    puts "User roles imported: #{count}"
+  end
 
   desc "Import tags from the legacy database"
   task tags: :environment do

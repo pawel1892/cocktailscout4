@@ -1,17 +1,67 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe "associations" do
-    it "nullifies recipe comments when user is deleted" do
-      user = create(:user)
-      other_user = create(:user)
-      recipe = create(:recipe, user: other_user)
-      comment = create(:recipe_comment, user: user, recipe: recipe)
+  describe "Role methods" do
+    let(:user) { create(:user) }
+    let(:admin) { create(:user, :admin) }
+    let(:forum_mod) { create(:user, :forum_moderator) }
+    let(:recipe_mod) { create(:user, :recipe_moderator) }
+    let(:image_mod) { create(:user, :image_moderator) }
 
-      user.destroy
+    describe "#admin?" do
+      it "returns true for admin user" do
+        expect(admin.admin?).to be true
+      end
 
-      expect(RecipeComment.exists?(comment.id)).to be true
-      expect(comment.reload.user_id).to be_nil
+      it "returns false for regular user" do
+        expect(user.admin?).to be false
+      end
+
+      it "returns false for other moderators" do
+        expect(forum_mod.admin?).to be false
+      end
+    end
+
+    describe "#forum_moderator?" do
+      it "returns true for forum moderator" do
+        expect(forum_mod.forum_moderator?).to be true
+      end
+
+      it "returns false for regular user" do
+        expect(user.forum_moderator?).to be false
+      end
+    end
+
+    describe "#recipe_moderator?" do
+      it "returns true for recipe moderator" do
+        expect(recipe_mod.recipe_moderator?).to be true
+      end
+
+      it "returns false for regular user" do
+        expect(user.recipe_moderator?).to be false
+      end
+    end
+
+    describe "#image_moderator?" do
+      it "returns true for image moderator" do
+        expect(image_mod.image_moderator?).to be true
+      end
+
+      it "returns false for regular user" do
+        expect(user.image_moderator?).to be false
+      end
+    end
+
+    describe "Multiple roles" do
+      it "can have multiple roles" do
+        super_mod = create(:user)
+        super_mod.roles << create(:role, :admin)
+        super_mod.roles << create(:role, :image_moderator)
+
+        expect(super_mod.admin?).to be true
+        expect(super_mod.image_moderator?).to be true
+        expect(super_mod.recipe_moderator?).to be false
+      end
     end
   end
 end

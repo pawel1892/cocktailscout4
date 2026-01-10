@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_07_035612) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_10_130140) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -124,6 +124,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_07_035612) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "roles", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.integer "old_id"
+    t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_roles_on_old_id"
+  end
+
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -164,6 +172,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_07_035612) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "old_id"
+    t.bigint "role_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["old_id"], name: "index_user_roles_on_old_id"
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", null: false
@@ -197,4 +216,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_07_035612) do
   add_foreign_key "recipes", "users", column: "updated_by_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end
