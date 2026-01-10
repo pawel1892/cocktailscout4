@@ -1,9 +1,29 @@
 FactoryBot.define do
   factory :recipe_image do
-    recipe { nil }
-    user { nil }
+    association :recipe
+    association :user
     approved_by { nil }
-    approved_at { "2026-01-07 10:18:00" }
-    old_id { 1 }
+    approved_at { nil }
+    old_id { nil }
+
+    trait :with_image do
+      after(:build) do |recipe_image|
+        file = fixture_file_upload(
+          Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'),
+          'image/jpeg'
+        )
+        recipe_image.image.attach(file)
+      end
+    end
+
+    trait :approved do
+      approved_at { Time.current }
+      association :approved_by, factory: :user
+    end
+
+    trait :pending do
+      approved_at { nil }
+      approved_by { nil }
+    end
   end
 end
