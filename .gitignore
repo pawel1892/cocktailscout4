@@ -42,3 +42,6 @@ node_modules
 *.local
 
 /public/system
+
+# Ignore SimpleCov coverage reports
+/coverage
