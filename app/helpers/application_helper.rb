@@ -21,5 +21,4 @@ module ApplicationHelper
       tag.span(icon, class: "ml-1 text-xs text-cs-gold")
     end
   end
-
 end
