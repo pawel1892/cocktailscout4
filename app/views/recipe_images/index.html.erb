@@ -20,11 +20,10 @@
           <h3 class="font-bold text-lg mb-1 truncate">
             <%= link_to recipe_image.recipe.title, recipe_path(recipe_image.recipe), class: "hover:text-primary-600" %>
           </h3>
-          <p class="text-sm text-gray-600">
-            von <%= recipe_image.user.username %>
-            <br>
-            <span class="text-xs text-gray-500"><%= l recipe_image.created_at.to_date %></span>
+          <p class="text-sm text-gray-600 flex items-center gap-1">
+            von <%= user_badge(recipe_image.user) %>
           </p>
+          <p class="text-xs text-gray-500"><%= l recipe_image.created_at.to_date %></p>
         </div>
       </div>
     <% end %>

@@ -50,7 +50,7 @@
             </div>
           </td>
           <td class="table-td">
-            <%= recipe.user.username %>
+            <%= user_badge(recipe.user) %>
           </td>
           <td class="table-td text-center">
             <% if recipe.alcohol_content.present? %>

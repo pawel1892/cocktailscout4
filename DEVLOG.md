@@ -1,5 +1,30 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-10 22:30 — User Ranks Reimplementation
+- **Time spent**: 1h 30m
+- **Description**:
+	- Reimplemented the legacy `user_ranks` system as a modern `UserStat` model.
+	- **Logic**: 
+		- Ranks are dynamically calculated from points (0-10 scale).
+		- Points are aggregated from user activity: Recipes (15), Images (20), Comments (2), Ratings (1).
+	- **UI**: 
+		- Ported legacy rank colors to `application.css`.
+		- Installed **FontAwesome** (local/npm) for user icons.
+		- Created `user_badge(user)` helper to display the standard "Username + Colored Icon" component.
+        - Integrated `user_badge` into Recipes (Index/Show), Comments, and Gallery views.
+        - **Fix**: Defined rank colors as standard CSS (not `@utility`) to bypass Tailwind JIT purging caused by dynamic string interpolation.
+	- **Refactoring**: 
+		- Added missing `has_many :recipes` and `has_many :recipe_images` associations to `User` model with `dependent: :nullify`.
+		- **Database**: Updated `user_stats` migration to enforce `null: false, default: 0` for `points`. Rebuilt database and re-imported all data to ensure schema integrity.
+        - **Fix**: Corrected `import:all` task to include `recipe_images`, ensuring stats calculation includes image points. Migrated 1874 legacy images.
+- **Constraints & Decisions**:
+	- **Recalculation vs Import**: Decided to *recalculate* points from current data rather than importing legacy point values, ensuring integrity with the new database state.
+	- **Missing Data**: Forum Posts and MyBar points are currently commented out until those features are migrated.
+- **Outcome**:
+	- Fully functional rank system with visual badges.
+	- 100% test coverage for point calculation logic.
+	- Database reset and cleaned.
+
 ## 2026-01-10 20:22 — Role System Implementation & Authorization
 - **Time spent**: 30m
 - **Description**:

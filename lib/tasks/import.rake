@@ -1,7 +1,7 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :roles, :recipes, :comments, :ratings, :tags ]
+  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :stats ]
 
   desc "Import roles and user roles"
   task roles: :environment do
@@ -286,5 +286,14 @@ namespace :import do
       user.save!(validate: false)
     end
     puts "Users imported!"
+  end
+
+  desc "Recalculate user stats"
+  task stats: :environment do
+    puts "Recalculating user stats..."
+    User.find_each do |user|
+      user.stat.recalculate!
+    end
+    puts "Stats updated for #{User.count} users."
   end
 end
