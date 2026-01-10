@@ -184,7 +184,6 @@ RSpec.describe Rating, type: :model do
         expect(recipe.ratings_count).to eq(0)
       end
     end
-
   end
 
   describe "polymorphic associations" do
