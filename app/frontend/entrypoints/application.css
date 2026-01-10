@@ -1,3 +1,4 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
 @import "tailwindcss";
 
 @theme {
@@ -177,6 +178,19 @@ nav.pagy a[aria-disabled="true"]:not([aria-current="page"]):not([role="separator
 nav.pagy a[role="separator"] {
   @apply border-none bg-transparent px-1 cursor-default text-gray-400;
 }
+
+/* User Ranks */
+.rank-0-color { color: #9A9A1E; }
+.rank-1-color { color: #4D9A34; }
+.rank-2-color { color: #0A9A39; }
+.rank-3-color { color: #00994C; }
+.rank-4-color { color: #049999; }
+.rank-5-color { color: #004D98; }
+.rank-6-color { color: #293377; }
+.rank-7-color { color: #472783; }
+.rank-8-color { color: #8A2D88; }
+.rank-9-color { color: #99134F; }
+.rank-10-color { color: #981915; }
 
 
 /* Tailwind 4 scans files for classes. */

@@ -34,7 +34,18 @@
 ## Workflow
 - Always propose a plan before executing shell commands.
 - Ensure all new migrations include the `old_id` field.
+- When the user ask for a commit message also update the DEVLOG.md in the style of previous entries
 - Rspec new features
+
+### Full Database & Storage Reset
+To completely reset the database and re-import all legacy data including images:
+```bash
+rm -rf storage/*
+rails db:migrate:reset
+rails import:all
+rails import:migrate_images_to_active_storage
+# Optional: rails import:stats (already included in import:all)
+```
 
 ## Technical Stack & Decisions
 - **Authentication**: Rails 8 Native Auth (User/Session/Current).

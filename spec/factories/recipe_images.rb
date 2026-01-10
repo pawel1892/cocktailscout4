@@ -8,7 +8,7 @@ FactoryBot.define do
 
     trait :with_image do
       after(:build) do |recipe_image|
-        file = fixture_file_upload(
+        file = Rack::Test::UploadedFile.new(
           Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'),
           'image/jpeg'
         )
