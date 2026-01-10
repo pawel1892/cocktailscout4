@@ -34,7 +34,6 @@
 ## Workflow
 - Always propose a plan before executing shell commands.
 - Ensure all new migrations include the `old_id` field.
-- When the user ask for a commit message also update the DEVLOG.md in the style of previous entries
 - Rspec new features
 
 ## Technical Stack & Decisions
