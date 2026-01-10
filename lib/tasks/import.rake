@@ -1,7 +1,7 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [:ingredients, :users, :recipes, :comments, :ratings, :tags]
+  task all: [ :ingredients, :users, :recipes, :comments, :ratings, :tags ]
 
   desc "Import tags from the legacy database"
   task tags: :environment do
@@ -15,7 +15,7 @@ namespace :import do
 
     puts "Grouping tags by recipe..."
     recipe_tags = Hash.new { |h, k| h[k] = [] }
-    Legacy::Tagging.where(taggable_type: 'Recipe', context: 'tags').find_each do |legacy_tagging|
+    Legacy::Tagging.where(taggable_type: "Recipe", context: "tags").find_each do |legacy_tagging|
       tag_name = legacy_tags[legacy_tagging.tag_id]
       recipe_tags[legacy_tagging.taggable_id] << tag_name if tag_name
     end
@@ -30,7 +30,7 @@ namespace :import do
       recipe = Recipe.find(new_id)
       recipe.tag_list.add(tags)
       recipe.save!(validate: false)
-      
+
       count += 1
       print "." if (count % 100).zero?
     end
@@ -46,10 +46,10 @@ namespace :import do
 
     puts "Importing ratings..."
     count = 0
-    Legacy::Rate.where(rateable_type: 'Recipe').find_each do |legacy_rate|
+    Legacy::Rate.where(rateable_type: "Recipe").find_each do |legacy_rate|
       new_recipe_id = recipe_map[legacy_rate.rateable_id]
       new_user_id = user_map[legacy_rate.rater_id]
-      
+
       next unless new_recipe_id && new_user_id
 
       # Convert stars (1-5) to score (1-10)
@@ -60,21 +60,21 @@ namespace :import do
 
       rating = Rating.find_or_initialize_by(
         user_id: new_user_id,
-        rateable_type: 'Recipe',
+        rateable_type: "Recipe",
         rateable_id: new_recipe_id
       )
-      
+
       rating.score = new_score
       rating.old_id = legacy_rate.id
       rating.created_at = legacy_rate.created_at
       rating.updated_at = legacy_rate.updated_at
-      
+
       rating.save!(validate: false)
       count += 1
       print "." if (count % 100).zero?
     end
     puts "\nRatings imported: #{count}"
-    
+
     puts "Updating recipe cache..."
     Recipe.find_each(&:update_rating_cache!)
     puts "Cache updated."
@@ -86,11 +86,11 @@ namespace :import do
     Legacy::RecipeImage.find_each do |legacy_image|
       recipe = Recipe.find_by(old_id: legacy_image.recipe_id)
       user = User.find_by(old_id: legacy_image.user_id)
-      
+
       next unless recipe && user
 
       image = RecipeImage.find_or_initialize_by(old_id: legacy_image.id)
-      
+
       approved_at = legacy_image.is_approved ? legacy_image.updated_at : nil
       approved_by_user = nil
       if legacy_image.approved_by.present?
@@ -146,7 +146,7 @@ namespace :import do
         ri.assign_attributes(
           ingredient_id: new_ingredient_id,
           amount: legacy_ri.cl_amount,
-          unit: 'cl', # Legacy seems to use cl_amount float, implies cl
+          unit: "cl", # Legacy seems to use cl_amount float, implies cl
           description: legacy_ri.description,
           position: legacy_ri.sequence,
           created_at: legacy_ri.created_at,
@@ -221,7 +221,7 @@ namespace :import do
     puts "Importing users..."
     Legacy::User.where(id: active_user_ids).includes(:user_profile).find_each do |legacy_user|
       user = User.find_or_initialize_by(old_id: legacy_user.id)
-      
+
       # Base user attributes
       user.assign_attributes(
         email_address: legacy_user.email,

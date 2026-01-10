@@ -59,7 +59,7 @@ RSpec.describe "Ratings API", type: :request do
       end
 
       it "accepts valid scores from 1 to 10" do
-        [1, 5, 10].each do |score|
+        [ 1, 5, 10 ].each do |score|
           recipe_for_score = create(:recipe)
           post rate_path, params: { rateable_type: "Recipe", rateable_id: recipe_for_score.id, score: score }
 

@@ -3,7 +3,7 @@ class Rating < ApplicationRecord
   belongs_to :rateable, polymorphic: true
 
   validates :score, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :user_id, uniqueness: { scope: [:rateable_type, :rateable_id], message: "has already rated this item" }
+  validates :user_id, uniqueness: { scope: [ :rateable_type, :rateable_id ], message: "has already rated this item" }
 
   after_save :update_rateable_cache
   after_destroy :update_rateable_cache

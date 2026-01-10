@@ -1,11 +1,11 @@
 namespace :import do
   desc "Migrate legacy recipe images to Active Storage (Approved only)"
   task migrate_images_to_active_storage: :environment do
-    require 'fileutils'
+    require "fileutils"
 
     # Filter for approved images only
     scope = RecipeImage.approved.where.not(old_id: nil)
-    
+
     total = scope.count
     processed = 0
     missing = 0
@@ -23,11 +23,11 @@ namespace :import do
       # Construct path to the original legacy image
       # Structure: public/system/recipe_images/:folder_identifier/original/:filename
       legacy_path = Rails.root.join(
-        "public", 
-        "system", 
-        "recipe_images", 
-        recipe_image.old_id.to_s, 
-        "original", 
+        "public",
+        "system",
+        "recipe_images",
+        recipe_image.old_id.to_s,
+        "original",
         legacy_image.image_file_name
       )
 
