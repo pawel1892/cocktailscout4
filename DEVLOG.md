@@ -1,5 +1,22 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-11 16:45 — Forum Model Enhancements & UserStat Point Fix
+- **Time spent**: 45min
+- **Description**:
+	- **Forum Hardening**:
+		- Added `deleted` boolean flag to `ForumThread` and `ForumPost` with default scopes to automatically exclude deleted content from UI and counts.
+		- Added `last_editor` association to `ForumPost` for edit tracking.
+		- Updated import tasks to handle `deleted` status and `last_editor` mapping from legacy data.
+	- **UserStat Fix**:
+		- **Bugfix**: Corrected `UserStat#calculate_points` to only count *approved* recipe images (20pts each), resolving a test failure where unapproved images were incorrectly granting points.
+	- **Testing**:
+		- Added comprehensive request specs for deleted forum threads and posts, verifying they return 404 or are excluded from listings.
+		- Updated `UserStat` specs to explicitly test approved vs. non-approved image point logic.
+- **Outcome**:
+	- Improved data integrity for forum content.
+	- Accurate user point/rank calculation synchronized with image moderation state.
+	- 279 passing tests.
+
 ## 2026-01-11 14:20 — Forum Read-Only Implementation
 - **Time spent**: 45min
 - **Description**:
