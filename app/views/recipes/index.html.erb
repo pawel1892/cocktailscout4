@@ -21,7 +21,7 @@
         <th class="table-th"><div class="flex justify-center"><%= sortable "average_rating", Recipe.human_attribute_name(:average_rating) %></div></th>
         <th class="table-th"><%= sortable "users.username", Recipe.human_attribute_name(:user) %></th>
         <th class="table-th"><div class="flex justify-center"><%= sortable "alcohol_content", Recipe.human_attribute_name(:alcohol_content) %></div></th>
-        <th class="table-th"><div class="flex justify-end"><%= sortable "views", Recipe.human_attribute_name(:views) %></div></th>
+        <th class="table-th"><div class="flex justify-end"><%= sortable "visits_count", Recipe.human_attribute_name(:visits_count) %></div></th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
@@ -60,7 +60,7 @@
             <% end %>
           </td>
           <td class="table-td text-right text-gray-500 font-mono">
-            <%= number_with_delimiter recipe.views %>
+            <%= number_with_delimiter recipe.visits_count %>
           </td>
         </tr>
       <% end %>
