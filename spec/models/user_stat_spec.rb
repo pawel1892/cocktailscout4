@@ -28,9 +28,16 @@ RSpec.describe UserStat, type: :model do
       expect(stat.points).to eq(30)
     end
 
-    it "calculates points correctly from images (20pts)" do
-      recipe = create(:recipe) # Image needs a recipe
-      create(:recipe_image, :with_image, user: user, recipe: recipe)
+    it "does not calculate points from non-approved images (0pts)" do
+      recipe = create(:recipe)
+      create(:recipe_image, :with_image, user: user, recipe: recipe) # Defaults to non-approved
+      stat.recalculate!
+      expect(stat.points).to eq(0)
+    end
+
+    it "calculates points correctly from approved images (20pts)" do
+      recipe = create(:recipe)
+      create(:recipe_image, :with_image, :approved, user: user, recipe: recipe)
       stat.recalculate!
       expect(stat.points).to eq(20)
     end

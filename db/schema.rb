@@ -42,17 +42,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
   create_table "forum_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
+    t.boolean "deleted", default: false, null: false
     t.bigint "forum_thread_id", null: false
+    t.bigint "last_editor_id"
     t.integer "old_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
+    t.index ["last_editor_id"], name: "index_forum_posts_on_last_editor_id"
     t.index ["old_id"], name: "index_forum_posts_on_old_id"
     t.index ["user_id"], name: "index_forum_posts_on_user_id"
   end
 
   create_table "forum_threads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.boolean "deleted", default: false, null: false
     t.bigint "forum_topic_id", null: false
     t.boolean "locked", default: false, null: false
     t.integer "old_id"
@@ -270,6 +274,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "forum_posts", "forum_threads"
   add_foreign_key "forum_posts", "users"
+  add_foreign_key "forum_posts", "users", column: "last_editor_id"
   add_foreign_key "forum_threads", "forum_topics"
   add_foreign_key "forum_threads", "users"
   add_foreign_key "ratings", "users"

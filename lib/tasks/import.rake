@@ -8,7 +8,7 @@ namespace :import do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
-    thread_map = ForumThread.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    thread_map = ForumThread.unscoped.where.not(old_id: nil).pluck(:old_id, :id).to_h
     puts "Maps loaded. Users: #{user_map.size}, Recipes: #{recipe_map.size}, Threads: #{thread_map.size}"
 
     puts "Importing visits..."
@@ -59,7 +59,7 @@ namespace :import do
     puts "Recipe cache sync complete."
 
     puts "Syncing visits_count cache for ForumThreads..."
-    ForumThread.find_each do |thread|
+    ForumThread.unscoped.find_each do |thread|
       actual_count = thread.visits.sum(:count)
       thread.update_columns(visits_count: actual_count)
     end
@@ -90,11 +90,11 @@ namespace :import do
 
     puts "Importing forum threads..."
     count = 0
-    Legacy::ForumThread.find_each do |legacy_thread|
+    Legacy::ForumThread.unscoped.find_each do |legacy_thread|
       topic_id = topic_map[legacy_thread.forum_topic_id]
       next unless topic_id
 
-      thread = ForumThread.find_or_initialize_by(old_id: legacy_thread.id)
+      thread = ForumThread.unscoped.find_or_initialize_by(old_id: legacy_thread.id)
       thread.assign_attributes(
         forum_topic_id: topic_id,
         user_id: user_map[legacy_thread.user_id],
@@ -102,6 +102,7 @@ namespace :import do
         slug: legacy_thread.slug,
         sticky: legacy_thread.sticky || false,
         locked: legacy_thread.locked || false,
+        deleted: legacy_thread.deleted || false,
         created_at: legacy_thread.created_at,
         updated_at: legacy_thread.updated_at
       )
@@ -112,20 +113,22 @@ namespace :import do
     puts "\nForum threads imported: #{count}"
 
     puts "Loading thread map..."
-    thread_map = ForumThread.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    thread_map = ForumThread.unscoped.where.not(old_id: nil).pluck(:old_id, :id).to_h
     puts "Thread map loaded: #{thread_map.size}"
 
     puts "Importing forum posts..."
     count = 0
-    Legacy::ForumPost.find_each do |legacy_post|
+    Legacy::ForumPost.unscoped.find_each do |legacy_post|
       thread_id = thread_map[legacy_post.forum_thread_id]
       next unless thread_id
 
-      post = ForumPost.find_or_initialize_by(old_id: legacy_post.id)
+      post = ForumPost.unscoped.find_or_initialize_by(old_id: legacy_post.id)
       post.assign_attributes(
         forum_thread_id: thread_id,
         user_id: user_map[legacy_post.user_id],
+        last_editor_id: user_map[legacy_post.last_editor_id],
         body: legacy_post.content,
+        deleted: legacy_post.deleted || false,
         created_at: legacy_post.created_at,
         updated_at: legacy_post.updated_at
       )

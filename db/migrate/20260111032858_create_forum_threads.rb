@@ -7,6 +7,7 @@ class CreateForumThreads < ActiveRecord::Migration[8.1]
       t.string :slug
       t.boolean :sticky, default: false, null: false
       t.boolean :locked, default: false, null: false
+      t.boolean :deleted, default: false, null: false
       t.integer :old_id
 
       t.timestamps
