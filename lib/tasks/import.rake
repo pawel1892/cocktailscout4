@@ -50,6 +50,13 @@ namespace :import do
       print "." if (count % 1000).zero?
     end
     puts "\nVisits imported: #{count}"
+
+    puts "Syncing visits_count cache for Recipes..."
+    Recipe.find_each do |recipe|
+      actual_count = recipe.visits.sum(:count)
+      recipe.update_columns(visits_count: actual_count)
+    end
+    puts "Cache sync complete."
   end
 
   desc "Import forum topics, threads and posts"
@@ -286,7 +293,6 @@ namespace :import do
         title: legacy_recipe.name,
         description: legacy_recipe.description,
         slug: legacy_recipe.slug,
-        views: legacy_recipe.views || 0,
         total_volume: legacy_recipe.cl_amount || 0,
         alcohol_content: legacy_recipe.alcoholic_content || 0,
         created_at: legacy_recipe.created_at,

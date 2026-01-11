@@ -13,6 +13,10 @@ module Visitable
       visit.increment!(:count, touch: false)
       visit.update_columns(last_visited_at: Time.current, updated_at: Time.current)
     end
+
+    if self.respond_to?(:increment!) && self.has_attribute?(:visits_count)
+       self.increment!(:visits_count, touch: false)
+    end
   end
 
   def total_visits
