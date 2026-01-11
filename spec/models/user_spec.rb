@@ -5,6 +5,8 @@ RSpec.describe User, type: :model do
     it { should have_many(:sessions).dependent(:destroy) }
     it { should have_many(:recipes).dependent(:nullify) }
     it { should have_many(:recipe_comments).dependent(:nullify) }
+    it { should have_many(:forum_threads).dependent(:nullify) }
+    it { should have_many(:forum_posts).dependent(:nullify) }
     it { should have_many(:recipe_images).dependent(:nullify) }
     it { should have_many(:ratings).dependent(:destroy) }
     it { should have_many(:user_roles).dependent(:destroy) }

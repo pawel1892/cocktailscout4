@@ -1,6 +1,30 @@
 # Cocktailscout 4 DevLog
 
-## 2026-01-10 22:30 — User Ranks Reimplementation
+## 2026-01-11 04:30 — Forum Model Implementation & Data Import
+- **Time spent**: 1h
+- **Description**:
+	- Implemented the core forum architecture: `ForumTopic`, `ForumThread`, and `ForumPost`.
+	- **Legacy Data Import**: 
+		- Created `Legacy::ForumTopic`, `Legacy::ForumThread`, and `Legacy::ForumPost` models to bridge with the old database.
+		- Developed a robust Rake task `import:forum` that migrated:
+			- 8 Topics
+			- 2,422 Threads
+			- 137,987 Posts
+	- **Data Integrity & Security**:
+		- **Thread Deletion**: Configured `dependent: :destroy` for threads -> posts.
+		- **User Deletion**: Configured `dependent: :nullify` for users -> threads/posts to ensure community content persists even if accounts are closed.
+		- **Topic Safety**: Restricted topic deletion (no cascading) to prevent accidental loss of large discussion segments.
+		- **Nullability**: Allowed `user_id` to be null on threads and posts to support deleted user content.
+	- **Testing**: 
+		- Achieved 100% test coverage for new forum model associations using RSpec and Shoulda Matchers.
+- **Constraints & Decisions**:
+	- **Old IDs**: Added `old_id` indices to all forum tables to facilitate future cross-referencing and idempotency.
+	- **Boolean Defaults**: Enforced `null: false` with `default: false` for `sticky` and `locked` flags.
+- **Outcome**:
+	- Forum backend is fully populated with legacy history and ready for controller/view implementation.
+	- 26 tests passing across models.
+
+## 2026-01-10 23:30 — User Ranks Reimplementation
 - **Time spent**: 1h 30m
 - **Description**:
 	- Reimplemented the legacy `user_ranks` system as a modern `UserStat` model.

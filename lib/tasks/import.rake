@@ -1,7 +1,77 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :stats ]
+  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :stats ]
+
+  desc "Import forum topics, threads and posts"
+  task forum: :environment do
+    puts "Importing forum topics..."
+    Legacy::ForumTopic.find_each do |legacy_topic|
+      topic = ForumTopic.find_or_initialize_by(old_id: legacy_topic.id)
+      topic.assign_attributes(
+        name: legacy_topic.name,
+        description: legacy_topic.description,
+        slug: legacy_topic.slug,
+        position: legacy_topic.sorting,
+        created_at: legacy_topic.created_at,
+        updated_at: legacy_topic.updated_at
+      )
+      topic.save!(validate: false)
+    end
+    puts "Forum topics imported."
+
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    topic_map = ForumTopic.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}, Topics: #{topic_map.size}"
+
+    puts "Importing forum threads..."
+    count = 0
+    Legacy::ForumThread.find_each do |legacy_thread|
+      topic_id = topic_map[legacy_thread.forum_topic_id]
+      next unless topic_id
+
+      thread = ForumThread.find_or_initialize_by(old_id: legacy_thread.id)
+      thread.assign_attributes(
+        forum_topic_id: topic_id,
+        user_id: user_map[legacy_thread.user_id],
+        title: legacy_thread.title,
+        slug: legacy_thread.slug,
+        sticky: legacy_thread.sticky || false,
+        locked: legacy_thread.locked || false,
+        created_at: legacy_thread.created_at,
+        updated_at: legacy_thread.updated_at
+      )
+      thread.save!(validate: false)
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nForum threads imported: #{count}"
+
+    puts "Loading thread map..."
+    thread_map = ForumThread.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Thread map loaded: #{thread_map.size}"
+
+    puts "Importing forum posts..."
+    count = 0
+    Legacy::ForumPost.find_each do |legacy_post|
+      thread_id = thread_map[legacy_post.forum_thread_id]
+      next unless thread_id
+
+      post = ForumPost.find_or_initialize_by(old_id: legacy_post.id)
+      post.assign_attributes(
+        forum_thread_id: thread_id,
+        user_id: user_map[legacy_post.user_id],
+        body: legacy_post.content,
+        created_at: legacy_post.created_at,
+        updated_at: legacy_post.updated_at
+      )
+      post.save!(validate: false)
+      count += 1
+      print "." if (count % 500).zero?
+    end
+    puts "\nForum posts imported: #{count}"
+  end
 
   desc "Import roles and user roles"
   task roles: :environment do

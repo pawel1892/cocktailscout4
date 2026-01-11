@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :recipes, dependent: :nullify
   has_many :recipe_comments, dependent: :nullify
+  has_many :forum_threads, dependent: :nullify
+  has_many :forum_posts, dependent: :nullify
   has_many :recipe_images, dependent: :nullify
 
   has_many :ratings, dependent: :destroy
