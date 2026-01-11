@@ -51,7 +51,7 @@ RSpec.describe "ForumTopics", type: :request do
         get forum_topics_path
         expect(response).to have_http_status(:success)
         # Should highlight unread topics with CSS class
-        expect(response.body).to include("unread-forum-thread")
+        expect(response.body).to include("unread-indicator")
       end
 
       it "does not highlight read topics" do

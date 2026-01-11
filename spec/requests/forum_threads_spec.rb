@@ -70,7 +70,7 @@ RSpec.describe "ForumThreads", type: :request do
         create(:forum_post, forum_thread: thread1)
 
         get forum_topic_path(forum_topic.slug)
-        expect(response.body).to include("unread-forum-thread")
+        expect(response.body).to include("unread-indicator")
       end
 
       it "does not highlight read threads" do

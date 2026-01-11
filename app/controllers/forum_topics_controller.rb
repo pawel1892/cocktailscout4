@@ -5,7 +5,7 @@ class ForumTopicsController < ApplicationController
 
   def index
     @forum_topics = ForumTopic.order(:position)
-    @unread_topics = ForumTopic.unread_by(Current.user) if Current.user.present?
+    @unread_topic_ids = ForumTopic.unread_by(Current.user).pluck("forum_topics.id") if Current.user.present?
   end
 
   private

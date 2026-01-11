@@ -1,19 +1,61 @@
 <%= render "forum/forum_header", forum_topic: @forum_topic, forum_thread: @forum_thread, active: :post %>
 
-<div class="row">
-  <div class="columns small-12">
-    <%= link_to 'Antworten', '#', class: 'button' %>
-    <%== @pagy.series_nav if @pagy.pages > 1 %>
+<div class="flex flex-col gap-6">
+  <%# Thread Title & Meta %>
+  <div class="card bg-gray-50 border-cs-gold/30">
+    <div class="card-body p-4 lg:p-6">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 mb-1">
+            <% if @forum_thread.sticky %>
+              <i class="fas fa-thumbtack text-cs-gold mr-2" title="Sticky"></i>
+            <% end %>
+            <%= @forum_thread.title %>
+          </h1>
+          <div class="text-sm text-gray-500 flex items-center gap-3">
+            <span>Gestartet von <strong><%= @forum_thread.user&.username || 'Unbekannt' %></strong></span>
+            <span>•</span>
+            <span><%= l(@forum_thread.created_at, format: :short) %></span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+           <span class="tag tag-neutral"><i class="far fa-eye mr-1"></i> <%= @forum_thread.views %> Aufrufe</span>
+           <span class="tag tag-neutral"><i class="far fa-comments mr-1"></i> <%= @forum_thread.count_posts %> Beiträge</span>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<% @forum_posts.each do |forum_post| %>
-  <%= render 'forum_posts/forum_post', forum_post: forum_post %>
-<% end %>
+  <%# Top Pagination and Actions %>
+  <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+    <%= link_to '#', class: 'btn btn-primary w-full sm:w-auto' do %>
+      <i class="fas fa-reply mr-2"></i> Antworten
+    <% end %>
+    
+    <% if @pagy.pages > 1 %>
+      <div class="w-full sm:w-auto overflow-x-auto py-2">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
+  </div>
 
-<div class="row">
-  <div class="columns small-12">
-    <%== @pagy.series_nav if @pagy.pages > 1 %>
-    <%= link_to 'Antworten', '#', class: 'button' %>
+  <%# Posts List %>
+  <div class="space-y-6">
+    <% @forum_posts.each do |forum_post| %>
+      <%= render 'forum_posts/forum_post', forum_post: forum_post %>
+    <% end %>
+  </div>
+
+  <%# Bottom Pagination and Actions %>
+  <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
+    <%= link_to '#', class: 'btn btn-primary w-full sm:w-auto' do %>
+      <i class="fas fa-reply mr-2"></i> Antworten
+    <% end %>
+    
+    <% if @pagy.pages > 1 %>
+      <div class="w-full sm:w-auto overflow-x-auto py-2">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
   </div>
 </div>
