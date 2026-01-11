@@ -1,0 +1,44 @@
+<% active = local_assigns[:active] %>
+<% forum_topic = local_assigns[:forum_topic] %>
+<% forum_thread = local_assigns[:forum_thread] %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h1>Cocktailforum</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <ul class="breadcrumbs">
+      <li class="<%= 'current' if active == :topic %>">
+        <%= link_to 'Übersicht', forum_topics_path %>
+      </li>
+      <% if forum_topic %>
+        <li class="<%= 'current' if active == :thread %>">
+          <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug) %>
+        </li>
+      <% end %>
+      <% if forum_thread %>
+        <li class="<%= 'current' if active == :post %>">
+          <%= link_to forum_thread.title, forum_thread_path(forum_thread.slug) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 medium-6 large-4 columns medium-offset-6 large-offset-8">
+    <%= form_tag '#', method: 'post', class: "row collapse" do %>
+      <div class="input-group">
+        <%= text_field_tag :forum_search_query, params[:forum_search_query], placeholder: "Forensuche", class: 'input-group-field' %>
+        <div class="input-group-button">
+          <button class="button input-group-field small" id="forum_search_button">
+            Suchen
+          </button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

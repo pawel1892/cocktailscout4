@@ -1,0 +1,37 @@
+<%= render 'forum/forum_header', active: :topic %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <table>
+      <tr>
+        <th>Cocktailforum</th>
+        <th>Beiträge</th>
+        <th>Themen</th>
+        <th>Letzter Beitrag</th>
+      </tr>
+      <% @forum_topics.each do |forum_topic| %>
+        <tr>
+          <td class="<%= 'unread-forum-thread' if (current_user && @unread_topics&.include?(forum_topic)) %>">
+            <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug) %>
+          </td>
+          <td>
+            <%= forum_topic.post_count %>
+          </td>
+          <td>
+            <%= forum_topic.thread_count %>
+          </td>
+          <td>
+            <% if forum_topic.last_post %>
+              <div>
+                <%= user_badge(forum_topic.last_post.user) %>
+              </div>
+              <div>
+                <%= time_ago_in_words(forum_topic.last_post.created_at, include_seconds: true) %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

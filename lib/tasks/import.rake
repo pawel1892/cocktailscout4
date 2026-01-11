@@ -56,7 +56,14 @@ namespace :import do
       actual_count = recipe.visits.sum(:count)
       recipe.update_columns(visits_count: actual_count)
     end
-    puts "Cache sync complete."
+    puts "Recipe cache sync complete."
+
+    puts "Syncing visits_count cache for ForumThreads..."
+    ForumThread.find_each do |thread|
+      actual_count = thread.visits.sum(:count)
+      thread.update_columns(visits_count: actual_count)
+    end
+    puts "ForumThread cache sync complete."
   end
 
   desc "Import forum topics, threads and posts"

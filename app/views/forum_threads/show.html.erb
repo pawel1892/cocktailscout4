@@ -1,0 +1,19 @@
+<%= render "forum/forum_header", forum_topic: @forum_topic, forum_thread: @forum_thread, active: :post %>
+
+<div class="row">
+  <div class="columns small-12">
+    <%= link_to 'Antworten', '#', class: 'button' %>
+    <%== @pagy.series_nav if @pagy.pages > 1 %>
+  </div>
+</div>
+
+<% @forum_posts.each do |forum_post| %>
+  <%= render 'forum_posts/forum_post', forum_post: forum_post %>
+<% end %>
+
+<div class="row">
+  <div class="columns small-12">
+    <%== @pagy.series_nav if @pagy.pages > 1 %>
+    <%= link_to 'Antworten', '#', class: 'button' %>
+  </div>
+</div>

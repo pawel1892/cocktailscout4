@@ -1,5 +1,21 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-11 14:20 — Forum Read-Only Implementation
+- **Time spent**: 45min
+- **Description**:
+	- Implemented read-only forum with `ForumTopicsController` and `ForumThreadsController` (index/show actions).
+	- **Models**: Extended `ForumTopic`, `ForumThread`, and `ForumPost` with methods for counts, last posts, pagination, and unread tracking. Made `user` associations optional to support deleted users.
+	- **Views**: Created ERB templates mirroring legacy structure with breadcrumbs, thread listings, and post display partials.
+	- **Visit Tracking**: Added `visits_count` to `forum_threads`, integrated `Visitable` trait, imported ~11k legacy visits.
+	- **Testing**: 91 passing tests (53 model + 38 request specs) covering all functionality.
+- **Constraints & Decisions**:
+	- **URL Preservation**: Kept exact legacy URLs (`/cocktailforum`, `/cocktailforum/kategorie/:id`, `/cocktailforum/thema/:id`).
+	- **RESTful Structure**: Routed thread listing to `ForumThreads#index` instead of `ForumTopics#show` for cleaner semantics.
+	- **Smart Linking**: Authenticated users jump to first unread post when clicking thread links.
+- **Outcome**:
+	- Full forum history accessible (2,422 threads, ~140k posts).
+	- Unread highlighting and visit tracking operational.
+
 ## 2026-01-11 13:13 — Schema Refinement & Test Suite Hardening
 - **Time spent**: 1h
 - **Description**:
