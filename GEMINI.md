@@ -22,6 +22,7 @@
 - **Consistency**: Avoid arbitrary Tailwind classes or custom CSS if a design system utility already exists.
 
 ### DB Migration Standards
+- **Booleans**: Columns with a default value must be `null: false` to ensure strict binary behavior (no ambiguous NULL state).
 - **Column Ordering**:
   1. Primary Key (`id`) - *Implicit*
   2. Foreign Keys (`user_id`, `category_id`, etc.)
