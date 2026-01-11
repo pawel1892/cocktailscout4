@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :forum_post do
-    forum_thread { nil }
-    user { nil }
+    association :forum_thread
+    association :user
     body { "MyText" }
     old_id { 1 }
   end

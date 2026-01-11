@@ -1,7 +1,56 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :stats ]
+  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :visits, :stats ]
+
+  desc "Import visits from the legacy database"
+  task visits: :environment do
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    thread_map = ForumThread.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}, Recipes: #{recipe_map.size}, Threads: #{thread_map.size}"
+
+    puts "Importing visits..."
+    count = 0
+    LegacyRecord.connection.select_all("SELECT * FROM visits").each do |legacy_visit|
+      # Note: select_all returns hash with string keys
+      visitable_type = legacy_visit["visitable_type"]
+      visitable_id = legacy_visit["visitable_id"]
+
+      new_visitable_id = case visitable_type
+      when "Recipe" then recipe_map[visitable_id.to_i]
+      when "ForumThread" then thread_map[visitable_id.to_i]
+      end
+
+      next unless new_visitable_id
+
+      user_id = legacy_visit["user_id"] ? user_map[legacy_visit["user_id"].to_i] : nil
+
+      # We skip if it was a user visit but we don't have that user in our system
+      # (unless it was anonymous where user_id is nil)
+      next if legacy_visit["user_id"] && !user_id
+
+      visit = Visit.find_or_initialize_by(
+        visitable_type: visitable_type,
+        visitable_id: new_visitable_id,
+        user_id: user_id
+      )
+
+      visit.assign_attributes(
+        count: legacy_visit["total_visits"].to_i,
+        last_visited_at: legacy_visit["last_visit_time"],
+        old_id: legacy_visit["id"],
+        created_at: legacy_visit["created_at"],
+        updated_at: legacy_visit["updated_at"]
+      )
+
+      visit.save!(validate: false)
+      count += 1
+      print "." if (count % 1000).zero?
+    end
+    puts "\nVisits imported: #{count}"
+  end
 
   desc "Import forum topics, threads and posts"
   task forum: :environment do
