@@ -1,5 +1,17 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-11 23:15 — Forum UI Overhaul & Responsive Design
+- **Time spent**: 1h 30m
+- **Description**:
+	- **Responsive UI**: Implemented a mobile-first card layout for forum topics and threads, switching to an optimized table view on desktop (>= 1024px).
+	- **Styling**: Standardized all forum links using a unified `link` Tailwind utility and cleaned up the post interface.
+	- **Unread Logic Fix**: Added `touch: true` to forum associations to ensure thread/topic timestamps update correctly on new posts, resolving broken unread status tracking.
+	- **Optimization**: Refactored `ForumTopicsController` to optimize unread status checks, preventing N+1 queries.
+- **Outcome**:
+	- Fully responsive, modern forum experience.
+	- Reliable unread content tracking.
+	- 100% passing test suite.
+
 ## 2026-01-11 16:45 — Forum Model Enhancements & UserStat Point Fix
 - **Time spent**: 45min
 - **Description**:
