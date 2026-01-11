@@ -29,10 +29,6 @@ namespace :import do
       recipe.total_volume = legacy_recipe.cl_amount
       recipe.alcohol_content = legacy_recipe.alcoholic_content
 
-      # recipe.views = legacy_recipe.views || 0 # views not in model yet, but in migration.
-      # Validating model... I added views to migration, but not explicitly to model. It's fine.
-      recipe.views = legacy_recipe.views || 0
-
       recipe.user_id = new_user_id
       recipe.updated_by_id = updated_by_id
 

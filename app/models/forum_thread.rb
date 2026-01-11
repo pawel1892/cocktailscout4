@@ -5,6 +5,8 @@ class ForumThread < ApplicationRecord
 
   has_many :forum_posts, dependent: :destroy
 
+  default_scope { where(deleted: false) }
+
   validates :title, presence: true
   validates :forum_topic, presence: true
   # Note: user is optional to allow for deleted users, but should be present at creation

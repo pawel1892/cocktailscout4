@@ -33,7 +33,7 @@ class UserStat < ApplicationRecord
   def calculate_points
     score = 0
     score += user.recipes.count * 15
-    score += user.recipe_images.count * 20
+    score += user.recipe_images.approved.count * 20
     score += user.recipe_comments.count * 2
     score += user.ratings.where(rateable_type: "Recipe").count * 1
     score += user.forum_posts.count * 3

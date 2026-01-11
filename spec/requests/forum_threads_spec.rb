@@ -101,6 +101,33 @@ RSpec.describe "ForumThreads", type: :request do
       get forum_topic_path("non-existent-topic")
       expect(response).to have_http_status(:not_found)
     end
+
+    context "with deleted threads" do
+      it "does not display deleted threads" do
+        deleted_thread = create(:forum_thread, forum_topic: forum_topic, title: "Deleted Thread", deleted: true)
+
+        get forum_topic_path(forum_topic.slug)
+        expect(response).to have_http_status(:success)
+        expect(response.body).not_to include("Deleted Thread")
+      end
+
+      it "only counts non-deleted threads in statistics" do
+        create(:forum_thread, forum_topic: forum_topic, deleted: true)
+        create(:forum_thread, forum_topic: forum_topic, deleted: true)
+
+        get forum_topic_path(forum_topic.slug)
+        expect(response).to have_http_status(:success)
+        # Should only show the 2 non-deleted threads (thread1 and thread2)
+        expect(forum_topic.forum_threads.count).to eq(2)
+      end
+
+      it "returns 404 when trying to access deleted thread directly" do
+        deleted_thread = create(:forum_thread, forum_topic: forum_topic, title: "Deleted Thread", slug: "deleted-thread", deleted: true)
+
+        get forum_thread_path("deleted-thread")
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
   describe "GET /cocktailforum/thema/:id (thread show)" do
@@ -236,6 +263,48 @@ RSpec.describe "ForumThreads", type: :request do
         expect(response).to have_http_status(:success)
         expect(response.body).to include("Orphaned post")
         expect(response.body).to include("Gelöschter Benutzer")
+      end
+    end
+
+    context "with deleted posts" do
+      it "does not display deleted posts" do
+        deleted_post = create(:forum_post, forum_thread: forum_thread, body: "This post is deleted", deleted: true)
+
+        get forum_thread_path(forum_thread.slug)
+        expect(response).to have_http_status(:success)
+        expect(response.body).not_to include("This post is deleted")
+      end
+
+      it "still displays non-deleted posts when some posts are deleted" do
+        create(:forum_post, forum_thread: forum_thread, body: "Visible post", deleted: false)
+        create(:forum_post, forum_thread: forum_thread, body: "Deleted post", deleted: true)
+
+        get forum_thread_path(forum_thread.slug)
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Visible post")
+        expect(response.body).not_to include("Deleted post")
+      end
+
+      it "only counts non-deleted posts in thread statistics" do
+        create(:forum_post, forum_thread: forum_thread, deleted: true)
+        create(:forum_post, forum_thread: forum_thread, deleted: true)
+
+        get forum_thread_path(forum_thread.slug)
+        expect(response).to have_http_status(:success)
+        # Should only count the 2 non-deleted posts (post1 and post2)
+        expect(forum_thread.forum_posts.count).to eq(2)
+      end
+
+      it "excludes deleted posts from user post count" do
+        user = create(:user)
+        create(:forum_post, forum_thread: forum_thread, user: user, deleted: false)
+        create(:forum_post, forum_thread: forum_thread, user: user, deleted: false)
+        create(:forum_post, forum_thread: forum_thread, user: user, deleted: true)
+
+        get forum_thread_path(forum_thread.slug)
+        expect(response).to have_http_status(:success)
+        # User should show 2 posts, not 3
+        expect(user.forum_posts.count).to eq(2)
       end
     end
   end
