@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   post "rate", to: "ratings#create"
   delete "rate", to: "ratings#destroy"
 
+  # Forum routes (legacy URLs)
+  get "cocktailforum", to: "forum_topics#index", as: :forum_topics
+  get "cocktailforum/kategorie/:id", to: "forum_threads#index", as: :forum_topic
+  get "cocktailforum/thema/:id", to: "forum_threads#show", as: :forum_thread
+
   get "design-system", to: "design_system#index"
   root "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

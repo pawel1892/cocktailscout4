@@ -1,0 +1,62 @@
+<%= render "forum/forum_header", forum_topic: @forum_topic, active: :thread %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= link_to 'Neuen Beitrag erstellen', '#', class: 'button' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%== @pagy.series_nav if @pagy.pages > 1 %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <table>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Aufrufe</th>
+        <th>Beiträge</th>
+        <th>Letzter Beitrag</th>
+      </tr>
+
+      <% @forum_threads.each do |forum_thread| %>
+        <tr>
+          <td class="<%= 'unread-forum-thread' if (current_user && forum_thread.last_post_created_at && forum_thread.last_post_created_at > (1.week.ago) && !forum_thread.read_by?(current_user)) %>">
+            <%= link_to forum_thread.title, link_to_forum_thread(forum_thread) %>
+          </td>
+          <td>
+            <%= link_to forum_thread.views, link_to_forum_thread(forum_thread) %>
+          </td>
+          <td>
+            <%= link_to forum_thread.count_posts, link_to_forum_thread(forum_thread) %>
+          </td>
+          <td>
+            <% if forum_thread.last_post_user %>
+              <div>
+                <%= user_badge(forum_thread.last_post_user) %>
+              </div>
+              <div>
+                <%= time_ago_in_words(forum_thread.last_post_created_at, include_seconds: true) %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%== @pagy.series_nav if @pagy.pages > 1 %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= link_to 'Neuen Beitrag erstellen', '#', class: 'button' %>
+  </div>
+</div>

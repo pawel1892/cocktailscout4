@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_11_055553) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -61,6 +61,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_055553) do
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.integer "visits_count", default: 0, null: false
     t.index ["forum_topic_id"], name: "index_forum_threads_on_forum_topic_id"
     t.index ["old_id"], name: "index_forum_threads_on_old_id"
     t.index ["slug"], name: "index_forum_threads_on_slug"
