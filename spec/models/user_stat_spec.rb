@@ -48,11 +48,20 @@ RSpec.describe UserStat, type: :model do
       expect(stat.points).to eq(1)
     end
 
+    it "calculates points correctly from forum posts (3pts)" do
+      thread = create(:forum_thread)
+      create(:forum_post, user: user, forum_thread: thread)
+      stat.recalculate!
+      expect(stat.points).to eq(3)
+    end
+
     it "sums up all activities" do
       create(:recipe, user: user) # 15
       create(:recipe_comment, user: user, recipe: create(:recipe)) # 2
+      thread = create(:forum_thread)
+      create(:forum_post, user: user, forum_thread: thread) # 3
       stat.recalculate!
-      expect(stat.points).to eq(17)
+      expect(stat.points).to eq(20)
     end
   end
 end
