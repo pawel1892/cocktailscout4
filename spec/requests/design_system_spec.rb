@@ -13,7 +13,7 @@ RSpec.describe "DesignSystem", type: :request do
       let(:user) { create(:user) }
 
       before do
-        post session_url, params: { email_address: user.email_address, password: user.password }
+        sign_in(user)
       end
 
       it "redirects to root with access denied" do
@@ -27,7 +27,7 @@ RSpec.describe "DesignSystem", type: :request do
       let(:admin) { create(:user, :admin) }
 
       before do
-        post session_url, params: { email_address: admin.email_address, password: admin.password }
+        sign_in(admin)
       end
 
       it "allows access" do
