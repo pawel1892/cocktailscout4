@@ -1,5 +1,21 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-11 13:13 — Schema Refinement & Test Suite Hardening
+- **Time spent**: 1h
+- **Description**:
+	- **Naming Standardization**: Renamed `Recipe#views` to `Recipe#visits_count` to align with the `Visitable` trait and Rails counter-cache conventions.
+	- **Schema Integrity**: 
+		- Enforced `utf8mb4_0900_ai_ci` collation project-wide to resolve CI environment mismatches.
+		- Corrected column ordering in the `recipes` table to comply with established standards (moving cache/legacy columns relative to timestamps).
+	- **Test Refactoring**: 
+		- Centralized authentication stubs into a reusable `AuthenticationHelpers` module for request specs.
+		- Replaced brittle manual session/cookie stubs with a robust `sign_in` helper.
+		- Enhanced `Recipes` request specs with comprehensive sorting (by rating, count, title) and pagination verification.
+	- **Maintenance**: Performed a full database reset and re-import to apply collation and column order changes across the entire dataset.
+- **Outcome**:
+	- 100% consistent and standardized database schema.
+	- Cleaner, more maintainable test suite with improved coverage for core listing features.
+
 ## 2026-01-11 11:20 — Forum Models & Visitable Trait Implementation
 - **Time spent**: 1h
 - **Description**:
