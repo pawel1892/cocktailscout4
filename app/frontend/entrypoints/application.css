@@ -1,5 +1,5 @@
-@import "@fortawesome/fontawesome-free/css/all.css";
 @import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.css";
 
 @theme {
   --color-cs-dark-red: #360D0C;
@@ -138,11 +138,11 @@
 }
 
 @utility table-th {
-  @apply px-6 py-3 bg-gray-50 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider;
+  @apply px-4 py-3 bg-gray-50 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider;
 }
 
 @utility table-td {
-  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+  @apply px-4 py-4 text-sm text-gray-900;
 }
 
 @utility table-tr-hover {

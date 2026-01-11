@@ -1,5 +1,5 @@
 class ForumPost < ApplicationRecord
-  belongs_to :forum_thread
+  belongs_to :forum_thread, touch: true
   belongs_to :user, optional: true
   belongs_to :last_editor, class_name: "User", optional: true
 

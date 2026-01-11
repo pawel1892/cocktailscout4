@@ -1,37 +1,103 @@
 <%= render 'forum/forum_header', active: :topic %>
 
-<div class="row">
-  <div class="small-12 columns">
-    <table>
-      <tr>
-        <th>Cocktailforum</th>
-        <th>Beiträge</th>
-        <th>Themen</th>
-        <th>Letzter Beitrag</th>
-      </tr>
-      <% @forum_topics.each do |forum_topic| %>
+<div class="space-y-4">
+  <%# Mobile View (Cards) - Shown on mobile up to lg, hidden on lg and up %>
+  <div class="lg:hidden space-y-3">
+    <% @forum_topics.each do |forum_topic| %>
+      <% is_unread = @unread_topic_ids&.include?(forum_topic.id) %>
+      <div class="card">
+        <div class="card-body p-4">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-bold">
+              <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link hover:underline" %>
+              <% if is_unread %>
+                <span class="unread-indicator ml-2 inline-block w-2 h-2 bg-cs-dark-red rounded-full" title="Ungelesen"></span>
+              <% end %>
+            </h3>
+            <span class="tag tag-neutral"><%= forum_topic.thread_count %> Themen</span>
+          </div>
+          
+          <div class="text-sm text-gray-600 mb-3">
+            <div class="flex gap-4">
+              <span><i class="fas fa-comment-alt mr-1 text-gray-400"></i> <%= forum_topic.post_count %> Beiträge</span>
+            </div>
+          </div>
+
+          <% if forum_topic.last_post %>
+            <div class="mt-3 pt-3 border-t border-gray-100 flex items-center text-xs text-gray-500">
+              <span class="mr-2">Letzter Beitrag:</span>
+              <div class="flex items-center gap-2">
+                 <%= user_badge(forum_topic.last_post.user) %>
+                 <span><%= time_ago_in_words(forum_topic.last_post.created_at) %></span>
+              </div>
+            </div>
+          <% else %>
+             <div class="mt-3 pt-3 border-t border-gray-100 text-xs text-gray-400 italic">
+               Keine Beiträge
+             </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Desktop View (Table) - Hidden on mobile/tablet, shown on lg and up %>
+  <div class="hidden lg:block table-container">
+    <table class="table-standard">
+      <thead>
         <tr>
-          <td class="<%= 'unread-forum-thread' if (current_user && @unread_topics&.include?(forum_topic)) %>">
-            <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug) %>
-          </td>
-          <td>
-            <%= forum_topic.post_count %>
-          </td>
-          <td>
-            <%= forum_topic.thread_count %>
-          </td>
-          <td>
-            <% if forum_topic.last_post %>
-              <div>
-                <%= user_badge(forum_topic.last_post.user) %>
-              </div>
-              <div>
-                <%= time_ago_in_words(forum_topic.last_post.created_at, include_seconds: true) %>
-              </div>
-            <% end %>
-          </td>
+          <th class="table-th w-1/2">Forum</th>
+          <th class="table-th text-center">Themen</th>
+          <th class="table-th text-center">Beiträge</th>
+          <th class="table-th w-1/4">Letzter Beitrag</th>
         </tr>
-      <% end %>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% @forum_topics.each do |forum_topic| %>
+          <% is_unread = @unread_topic_ids&.include?(forum_topic.id) %>
+          <tr class="table-tr-hover">
+            <td class="table-td">
+              <div class="flex items-center">
+                <% if is_unread %>
+                  <div class="unread-indicator mr-3 text-cs-dark-red" title="Neue Beiträge">
+                    <i class="fas fa-comments text-xl"></i>
+                  </div>
+                <% else %>
+                  <div class="mr-3 text-gray-300">
+                    <i class="fas fa-comments text-xl"></i>
+                  </div>
+                <% end %>
+                <div>
+                  <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link font-bold text-lg hover:underline" %>
+                  <% if forum_topic.description.present? %>
+                    <p class="text-gray-500 text-sm mt-0.5"><%= forum_topic.description %></p>
+                  <% end %>
+                </div>
+              </div>
+            </td>
+            <td class="table-td text-center text-gray-600 font-medium">
+              <%= forum_topic.thread_count %>
+            </td>
+            <td class="table-td text-center text-gray-600 font-medium">
+              <%= forum_topic.post_count %>
+            </td>
+            <td class="table-td">
+              <% if forum_topic.last_post %>
+                <div class="flex flex-col gap-1 text-sm">
+                  <div class="flex items-center gap-2">
+                    <%= user_badge(forum_topic.last_post.user) %>
+                  </div>
+                  <div class="text-gray-500 text-xs">
+                    <i class="far fa-clock mr-1"></i> <%= time_ago_in_words(forum_topic.last_post.created_at) %>
+                  </div>
+                </div>
+              <% else %>
+                <span class="text-gray-400 text-sm italic">Keine Beiträge</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>

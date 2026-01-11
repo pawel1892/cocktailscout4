@@ -1,50 +1,53 @@
-<div class="row">
-  <div class="columns small-12">
-    <div class="forum-post">
-      <div class="heading">
-        <div class="row">
-          <div class="columns small-12 medium-6">
-            <%= l(forum_post.created_at) %>
-          </div>
-          <div class="columns small-12 medium-6 text-right">
-            <%= link_to "##{forum_post.id}", {}, { name: forum_post.id } %>
-            |
-            <%= link_to 'Beitrag melden', '#' %>
-          </div>
+<div class="card scroll-mt-24" id="post-<%= forum_post.id %>">
+  <%# Post Header (Mobile & Desktop) %>
+  <div class="card-header flex justify-between items-center py-2 px-4 bg-gray-50 text-xs text-gray-500">
+    <div class="flex items-center gap-2">
+      <span class="font-medium"><%= forum_post.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
+      <a href="#post-<%= forum_post.id %>" class="link hover:underline">#<%= forum_post.id %></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <%= link_to '#', class: 'link flex items-center gap-1 hover:underline' do %>
+        <i class="fas fa-flag text-[10px]"></i> Beitrag melden
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex flex-col lg:flex-row">
+    <%# User Sidebar %>
+    <aside class="w-full lg:w-48 lg:flex-shrink-0 bg-gray-50/50 p-4 border-b lg:border-b-0 lg:border-r border-gray-100 flex flex-row lg:flex-col items-center lg:items-start gap-4 lg:gap-3">
+      <div class="flex-1 min-w-0">
+        <div class="mb-1">
+          <%= user_badge(forum_post.user) %>
+        </div>
+        <div class="text-[11px] text-gray-500 space-y-0.5">
+          <p><%= forum_post.user_post_count %> Beiträge</p>
+          <p class="hidden lg:block">Dabei seit: <%= forum_post.user&.created_at&.strftime("%m.%Y") %></p>
         </div>
       </div>
-      <div class="content">
-        <div class="row">
-          <div class="columns small-12 medium-4 large-3">
-            <%= user_badge(forum_post.user) %>
-            <div>
-              <small>
-                <%= "#{forum_post.user_post_count} Beiträge" %>
-              </small>
-            </div>
-            <div class="show-for-small-only">
-              <hr>
-            </div>
-          </div>
-          <div class="columns small-12 medium-8 large-9">
-            <%= sanitize(forum_post.body) %>
-            <hr>
-            <div class="row">
-              <div class="columns small-6">
-                <%# TODO: Add authorization checks %>
-                <%# if can? :update, forum_post %>
-                  <%#= link_to 'Bearbeiten', edit_forum_post_path(forum_post.id) %>
-                <%# end %>
-                <%# if can? :destroy, ForumPost %>
-                  <%#= link_to 'Löschen', forum_post_path(forum_post.id), method: :delete, data: { confirm: 'Diesen Beitrag wirklich löschen?' } %>
-                <%# end %>
-              </div>
-              <div class="columns small-6 text-right">
-                <%= link_to 'Zitieren', '#', class: 'button small' %>
-              </div>
-            </div>
-          </div>
+    </aside>
+
+    <%# Post Body %>
+    <div class="flex-1 p-4 lg:p-6 min-w-0 flex flex-col">
+      <div class="prose prose-sm max-w-none text-gray-800 flex-1">
+        <%= simple_format(sanitize(forum_post.body)) %>
+      </div>
+
+      <% if forum_post.last_editor %>
+        <div class="mt-6 pt-2 border-t border-gray-100 text-[10px] italic text-gray-400">
+          Zuletzt bearbeitet von <%= forum_post.last_editor.username %> am <%= forum_post.updated_at.strftime("%d.%m.%Y, %H:%M") %>
         </div>
+      <% end %>
+
+      <%# Post Actions %>
+      <div class="mt-6 flex justify-end gap-2">
+        <%# if can? :update, forum_post %>
+          <%= link_to '#', class: 'btn btn-sm btn-outline' do %>
+            <i class="fas fa-edit mr-1"></i> Bearbeiten
+          <% end %>
+        <%# end %>
+        <%= link_to '#', class: 'btn btn-sm btn-gold' do %>
+          <i class="fas fa-quote-left mr-1"></i> Zitieren
+        <% end %>
       </div>
     </div>
   </div>

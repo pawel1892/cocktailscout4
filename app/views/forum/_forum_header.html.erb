@@ -2,43 +2,45 @@
 <% forum_topic = local_assigns[:forum_topic] %>
 <% forum_thread = local_assigns[:forum_thread] %>
 
-<div class="row">
-  <div class="small-12 columns">
-    <h1>Cocktailforum</h1>
-  </div>
-</div>
-
-<div class="row">
-  <div class="small-12 columns">
-    <ul class="breadcrumbs">
-      <li class="<%= 'current' if active == :topic %>">
-        <%= link_to 'Übersicht', forum_topics_path %>
-      </li>
-      <% if forum_topic %>
-        <li class="<%= 'current' if active == :thread %>">
-          <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug) %>
-        </li>
-      <% end %>
-      <% if forum_thread %>
-        <li class="<%= 'current' if active == :post %>">
-          <%= link_to forum_thread.title, forum_thread_path(forum_thread.slug) %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-
-<div class="row">
-  <div class="small-12 medium-6 large-4 columns medium-offset-6 large-offset-8">
-    <%= form_tag '#', method: 'post', class: "row collapse" do %>
-      <div class="input-group">
-        <%= text_field_tag :forum_search_query, params[:forum_search_query], placeholder: "Forensuche", class: 'input-group-field' %>
-        <div class="input-group-button">
-          <button class="button input-group-field small" id="forum_search_button">
-            Suchen
-          </button>
-        </div>
+<header class="mb-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+    <h1 class="text-3xl font-bold text-cs-dark-red">Cocktailforum</h1>
+    
+    <%= form_tag '#', method: 'post', class: "w-full md:w-auto" do %>
+      <div class="flex gap-2">
+        <%= text_field_tag :forum_search_query, params[:forum_search_query], placeholder: "Forensuche", class: 'input-field' %>
+        <button class="btn btn-primary" id="forum_search_button">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
     <% end %>
   </div>
-</div>
+
+  <nav class="flex" aria-label="Breadcrumb">
+    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+      <li class="inline-flex items-center">
+        <%= link_to forum_topics_path, class: "link inline-flex items-center text-sm font-medium hover:underline #{'font-bold' if active == :topic}" do %>
+          <i class="fas fa-comments mr-2"></i>
+          Übersicht
+        <% end %>
+      </li>
+      <% if forum_topic %>
+        <li>
+          <div class="flex items-center">
+            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+            <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link ml-1 text-sm font-medium hover:underline md:ml-2 #{'font-bold' if active == :thread}" %>
+          </div>
+        </li>
+      <% end %>
+      <% if forum_thread %>
+        <li>
+          <div class="flex items-center">
+            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 truncate max-w-[200px]"><%= forum_thread.title %></span>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+</header>
+
