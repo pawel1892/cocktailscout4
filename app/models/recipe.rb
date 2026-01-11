@@ -1,5 +1,6 @@
 class Recipe < ApplicationRecord
   include Rateable
+  include Visitable
   acts_as_taggable_on :tags
 
   belongs_to :user
@@ -13,6 +14,7 @@ class Recipe < ApplicationRecord
   has_many :ratings, as: :rateable, dependent: :destroy
 
   validates :title, presence: true
+  validates :slug, uniqueness: true, allow_blank: true
 
   def to_param
     slug

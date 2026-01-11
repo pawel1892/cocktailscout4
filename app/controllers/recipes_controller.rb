@@ -13,6 +13,7 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.includes(recipe_ingredients: :ingredient, recipe_comments: :user).find_by!(slug: params[:id])
+    @recipe.track_visit(Current.user)
   end
 
   private

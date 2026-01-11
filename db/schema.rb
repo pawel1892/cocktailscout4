@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_11_032859) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_11_040829) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -250,6 +250,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_032859) do
     t.index ["username"], name: "index_users_on_username"
   end
 
+  create_table "visits", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "last_visited_at"
+    t.integer "old_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "visitable_id", null: false
+    t.string "visitable_type", null: false
+    t.index ["old_id"], name: "index_visits_on_old_id"
+    t.index ["user_id"], name: "index_visits_on_user_id"
+    t.index ["visitable_type", "visitable_id", "user_id"], name: "index_visits_on_visitable_and_user_id", unique: true
+    t.index ["visitable_type", "visitable_id"], name: "index_visits_on_visitable"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "forum_posts", "forum_threads"
@@ -271,4 +286,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_032859) do
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_stats", "users"
+  add_foreign_key "visits", "users"
 end

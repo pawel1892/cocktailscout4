@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :forum_thread do
-    forum_topic { nil }
-    user { nil }
+    association :forum_topic
+    association :user
     title { "MyString" }
     slug { "MyString" }
     sticky { false }

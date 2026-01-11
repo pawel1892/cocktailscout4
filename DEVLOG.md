@@ -1,28 +1,23 @@
 # Cocktailscout 4 DevLog
 
-## 2026-01-11 04:30 — Forum Model Implementation & Data Import
+## 2026-01-11 11:20 — Forum Models & Visitable Trait Implementation
 - **Time spent**: 1h
 - **Description**:
-	- Implemented the core forum architecture: `ForumTopic`, `ForumThread`, and `ForumPost`.
-	- **Legacy Data Import**: 
-		- Created `Legacy::ForumTopic`, `Legacy::ForumThread`, and `Legacy::ForumPost` models to bridge with the old database.
-		- Developed a robust Rake task `import:forum` that migrated:
-			- 8 Topics
-			- 2,422 Threads
-			- 137,987 Posts
-	- **Data Integrity & Security**:
-		- **Thread Deletion**: Configured `dependent: :destroy` for threads -> posts.
-		- **User Deletion**: Configured `dependent: :nullify` for users -> threads/posts to ensure community content persists even if accounts are closed.
-		- **Topic Safety**: Restricted topic deletion (no cascading) to prevent accidental loss of large discussion segments.
-		- **Nullability**: Allowed `user_id` to be null on threads and posts to support deleted user content.
+	- **Forum Architecture**: Implemented `ForumTopic`, `ForumThread`, and `ForumPost` with legacy data import (~140k records).
+	- **Visitable Trait**:
+		- Created a polymorphic `Visitable` concern to track view counts and last visit timestamps.
+		- **Aggregated Tracking**: Implemented an optimized aggregation strategy (one row per User/visitable, one row for Anonymous/visitable) to balance detail and performance.
+		- **Atomic Increments**: Used `increment!` with locking to ensure accurate counts under concurrency.
+	- **Integration**:
+		- Added `track_visit` to `RecipesController#show`.
+		- Standardized database collation to `utf8mb4_0900_ai_ci` project-wide to resolve CI issues.
 	- **Testing**: 
-		- Achieved 100% test coverage for new forum model associations using RSpec and Shoulda Matchers.
-- **Constraints & Decisions**:
-	- **Old IDs**: Added `old_id` indices to all forum tables to facilitate future cross-referencing and idempotency.
-	- **Boolean Defaults**: Enforced `null: false` with `default: false` for `sticky` and `locked` flags.
+		- Created shared examples for `Visitable` and integrated them into `Recipe` and `ForumThread` specs.
+		- Added request specs to verify visit tracking for both anonymous and authenticated users.
 - **Outcome**:
-	- Forum backend is fully populated with legacy history and ready for controller/view implementation.
-	- 26 tests passing across models.
+	- Forum history fully migrated.
+	- Universal visit tracking system operational and tested.
+	- Database schema standardized and re-imported.
 
 ## 2026-01-10 23:30 — User Ranks Reimplementation
 - **Time spent**: 1h 30m
