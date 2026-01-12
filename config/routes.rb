@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resource :session
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
-  resources :recipes, path: "rezepte", only: [ :index, :show ]
+  resources :recipes, path: "rezepte", only: [ :index, :show ] do
+    resources :recipe_comments, path: "kommentare", only: [ :create ]
+  end
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
   post "rate", to: "ratings#create"

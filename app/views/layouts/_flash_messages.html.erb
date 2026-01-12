@@ -1,0 +1,29 @@
+<% if flash.any? %>
+  <div class="container mx-auto px-4 pt-4">
+    <% flash.each do |type, message| %>
+      <%
+        case type.to_sym
+        when :notice
+          classes = "bg-green-50 border-l-4 border-green-500 text-green-800"
+          icon = "fa-check-circle"
+        when :alert
+          classes = "bg-red-50 border-l-4 border-red-500 text-red-800"
+          icon = "fa-exclamation-circle"
+        when :warning
+          classes = "bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800"
+          icon = "fa-exclamation-triangle"
+        else
+          classes = "bg-blue-50 border-l-4 border-blue-500 text-blue-800"
+          icon = "fa-info-circle"
+        end
+      %>
+      <div class="<%= classes %> p-4 rounded-r-md mb-4 flex items-start gap-3 shadow-sm" role="alert">
+        <i class="fas <%= icon %> mt-0.5 flex-shrink-0"></i>
+        <p class="flex-1"><%= message %></p>
+        <button onclick="this.parentElement.remove()" class="flex-shrink-0 opacity-50 hover:opacity-100 transition">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
+<% end %>

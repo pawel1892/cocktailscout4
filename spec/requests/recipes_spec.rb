@@ -64,8 +64,8 @@ RSpec.describe "Recipes", type: :request do
         expect(response).to have_http_status(:success)
 
         # Should show 30 comments on first page (plus 1 from let! above = 36 total, 30 displayed)
-        # Count comment containers
-        expect(response.body.scan(/class="bg-gray-50 rounded-lg/).count).to eq(30)
+        # Count comment containers by their id attribute (more specific than class)
+        expect(response.body.scan(/id="comment-\d+"/).count).to eq(30)
 
         # Should have pagination controls with pagy_id parameter
         expect(response.body).to include('comments=2')
@@ -76,7 +76,63 @@ RSpec.describe "Recipes", type: :request do
         expect(response).to have_http_status(:success)
 
         # Should show remaining 6 comments (36 total - 30 on page 1)
-        expect(response.body.scan(/class="bg-gray-50 rounded-lg/).count).to eq(6)
+        expect(response.body.scan(/id="comment-\d+"/).count).to eq(6)
+      end
+    end
+
+    context "with images" do
+      it "displays approved recipe images in gallery" do
+        approved_image = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Check for the Vue component
+        expect(response.body).to include('<recipe-image-gallery>')
+        # Check for the JavaScript data with the image ID
+        expect(response.body).to include('window.recipeImages')
+        expect(response.body).to include("\"id\":#{approved_image.id}")
+      end
+
+      it "does not display non-approved recipe images" do
+        pending_image = create(:recipe_image, :with_image, :pending, recipe: recipe, user: recipe.user)
+
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Should not show the gallery component
+        expect(response.body).not_to include('<recipe-image-gallery>')
+        # Should not include the JavaScript data
+        expect(response.body).not_to include('window.recipeImages')
+        # Should not include the pending image ID
+        expect(response.body).not_to include("\"id\":#{pending_image.id}")
+      end
+
+      it "shows only approved images when both approved and pending exist" do
+        approved_image = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+        pending_image = create(:recipe_image, :with_image, :pending, recipe: recipe, user: recipe.user)
+
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Should show the gallery component
+        expect(response.body).to include('<recipe-image-gallery>')
+        # Should include the approved image ID
+        expect(response.body).to include("\"id\":#{approved_image.id}")
+        # Should NOT include the pending image ID
+        expect(response.body).not_to include("\"id\":#{pending_image.id}")
+      end
+
+      it "displays multiple approved images in gallery" do
+        approved_image1 = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+        approved_image2 = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Should include both approved image IDs in the JavaScript data
+        expect(response.body).to include("\"id\":#{approved_image1.id}")
+        expect(response.body).to include("\"id\":#{approved_image2.id}")
       end
     end
   end
