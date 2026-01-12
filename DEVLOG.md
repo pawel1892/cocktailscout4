@@ -1,5 +1,25 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-12 11:30 — Recipe Index Redesign & Mobile Optimization
+- **Time spent**: 1h
+- **Description**:
+	- **UI/UX**: Replaced the legacy table-based recipe index with a modern, mobile-friendly card layout.
+	- **Image Handling**:
+		- Implemented `recipe_thumbnail` helper with support for random image selection from approved images.
+		- Added SVG placeholder fallback for recipes without approved images.
+		- Optimized performance by eager loading `approved_recipe_images` and their attachments (preventing N+1 queries).
+	- **Rating Display**:
+		- Enhanced rating visibility with a larger, color-coded badge.
+		- Moved rating counts outside the badge and standardized layout across screen sizes (larger badges on desktop).
+	- **Internationalization**: Added German translations for `visits_count`.
+	- **Testing**:
+		- Added `RecipesHelperSpec` to verify image selection logic (approved vs. pending vs. placeholder).
+		- Updated request specs to align with the new card-based DOM structure.
+- **Outcome**:
+	- Modern, responsive recipe browsing experience.
+	- Reliable image display logic ensuring only moderated content is shown.
+	- Improved performance and test coverage.
+
 ## 2026-01-11 23:15 — Forum UI Overhaul & Responsive Design
 - **Time spent**: 1h 30m
 - **Description**:
