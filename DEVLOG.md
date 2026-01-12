@@ -1,5 +1,22 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-12 19:30 — Recipe Image Gallery with Modal & Responsive Layout
+- **Time spent**: 40m
+- **Description**:
+	- Created **RecipeImageGallery** Vue component with navigable modal for recipe images.
+	- Features: arrow navigation (← →), keyboard support, thumbnail strip, image counter.
+	- Added white background and border around images to handle transparent backgrounds properly.
+	- Display author info (user badge) and upload date below modal images.
+	- Randomize image order on page load for variety across visits.
+	- Responsive layout: vertical (image above ingredients) on sm, horizontal (image right of ingredients) on md+.
+	- Fixed horizontal scroll bug in header by making navigation responsive (hidden search on mobile, smaller spacing).
+	- Enhanced BaseModal component with configurable `maxWidth` prop.
+	- Eager loaded image users to prevent N+1 queries.
+- **Outcome**:
+	- Interactive image gallery with professional modal viewer.
+	- Clean image presentation handling all image formats (transparent, extreme aspect ratios).
+	- Mobile-optimized header preventing horizontal overflow.
+
 ## 2026-01-12 18:55 — Recipe Show Page Redesign & Comment Pagination
 - **Time spent**: 45m
 - **Description**:

@@ -16,7 +16,7 @@ class RecipesController < ApplicationController
       :taggings,
       :tags,
       recipe_ingredients: :ingredient,
-      approved_recipe_images: { image_attachment: :blob }
+      approved_recipe_images: [ :user, { image_attachment: :blob } ]
     ).find_by!(slug: params[:id])
 
     @comments_pagy, @comments = pagy(

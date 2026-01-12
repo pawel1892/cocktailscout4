@@ -54,54 +54,54 @@
   </div>
 </div>
 
-<!-- Image Gallery -->
-<% if @recipe.approved_recipe_images.any? %>
-  <% max_display = 6 %>
-  <% images = @recipe.approved_recipe_images %>
-  <% visible_images = images.take(max_display) %>
-  <% remaining_count = [images.count - max_display, 0].max %>
-
-  <div class="mb-6">
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-<%= [visible_images.count, 3].min %> gap-2 sm:gap-3">
-      <% visible_images.each do |image| %>
-        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
-          <% if recipe_image_url(image, style: :medium) %>
-            <%= image_tag recipe_image_url(image, style: :medium), class: "object-cover w-full h-full", alt: @recipe.title %>
-          <% end %>
-        </div>
-      <% end %>
+<!-- Image & Ingredients Section -->
+<div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- Image (1 column on md+, above on sm) -->
+  <% if @recipe.approved_recipe_images.any? %>
+    <div class="md:col-span-1 md:order-2">
+      <recipe-image-gallery></recipe-image-gallery>
     </div>
+  <% end %>
 
-    <% if remaining_count > 0 %>
-      <div class="mt-2 text-sm text-gray-500 text-center">
-        + <%= remaining_count %> weitere <%= remaining_count == 1 ? 'Foto' : 'Fotos' %>
+  <!-- Ingredients (2 columns on md+ when image present, full width otherwise) -->
+  <div class="<%= @recipe.approved_recipe_images.any? ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
+    <div class="card h-full">
+      <div class="card-body p-4 sm:p-6">
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+          <i class="fas fa-list text-cs-gold"></i>
+          Zutaten
+        </h2>
+        <ul class="space-y-2">
+          <% @recipe.recipe_ingredients.each do |ri| %>
+            <li class="flex items-start gap-2">
+              <span class="text-cs-gold mt-1">•</span>
+              <span>
+                <strong><%= ri.amount %> <%= ri.unit %></strong> <%= ri.ingredient.name %>
+                <% if ri.description.present? %>
+                  <span class="text-gray-600 text-sm">(<%= ri.description %>)</span>
+                <% end %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
       </div>
-    <% end %>
-  </div>
-<% end %>
-
-<!-- Ingredients -->
-<div class="card mb-6">
-  <div class="card-body p-4 sm:p-6">
-    <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-      <i class="fas fa-list text-cs-gold"></i>
-      Zutaten
-    </h2>
-    <ul class="space-y-2">
-      <% @recipe.recipe_ingredients.each do |ri| %>
-        <li class="flex items-start gap-2">
-          <span class="text-cs-gold mt-1">•</span>
-          <span>
-            <strong><%= ri.amount %> <%= ri.unit %></strong> <%= ri.ingredient.name %>
-            <% if ri.description.present? %>
-              <span class="text-gray-600 text-sm">(<%= ri.description %>)</span>
-            <% end %>
-          </span>
-        </li>
-      <% end %>
-    </ul>
+    </div>
   </div>
 </div>
+
+<% if @recipe.approved_recipe_images.any? %>
+  <script>
+    window.recipeImages = <%= raw @recipe.approved_recipe_images.shuffle.map { |image|
+      {
+        id: image.id,
+        mediumUrl: url_for(recipe_image_url(image, style: :medium)),
+        largeUrl: url_for(recipe_image_url(image, style: :large)),
+        userBadge: user_badge(image.user),
+        uploadDate: l(image.created_at.to_date)
+      }
+    }.to_json %>;
+  </script>
+<% end %>
 
 <!-- Preparation / Description -->
 <% if @recipe.description.present? %>

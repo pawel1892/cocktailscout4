@@ -11,6 +11,7 @@ const components = {
   UserSession: () => import('../components/UserSession.vue'),
   RatingControl: () => import('../components/RatingControl.vue'),
   GalleryViewer: () => import('../components/GalleryViewer.vue'),
+  RecipeImageGallery: () => import('../components/RecipeImageGallery.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
