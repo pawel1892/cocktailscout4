@@ -10,6 +10,7 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipe_ingredients
   has_many :recipe_comments, dependent: :destroy
   has_many :recipe_images, dependent: :destroy
+  has_many :approved_recipe_images, -> { approved }, class_name: "RecipeImage"
 
   has_many :ratings, as: :rateable, dependent: :destroy
 
