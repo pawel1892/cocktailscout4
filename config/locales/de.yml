@@ -13,6 +13,7 @@ de:
         user: "Benutzer"
         created_at: "Erstellt am"
         views: "Aufrufe"
+        visits_count: "Aufrufe"
   pagy:
     item_name:
       one: "Eintrag"

@@ -86,7 +86,7 @@ RSpec.describe "Recipes", type: :request do
       get recipes_path
       expect(response).to have_http_status(:success)
       # Should show 50 recipes (limit)
-      expect(response.body.scan(/<tr class="table-tr-hover">/).count).to eq(50)
+      expect(response.body.scan(/class="card-body/).count).to eq(50)
       # Should have link to next page
       expect(response.body).to include('rel="next"')
     end
@@ -97,7 +97,7 @@ RSpec.describe "Recipes", type: :request do
       # Should show remaining recipes (1 + 50 = 51 total, so 1 on page 2)
       # Wait, let!(:recipe) at top creates 1. create_list creates 50. Total 51.
       # Page 1 has 50. Page 2 has 1.
-      expect(response.body.scan(/<tr class="table-tr-hover">/).count).to eq(1)
+      expect(response.body.scan(/class="card-body/).count).to eq(1)
     end
   end
 end
