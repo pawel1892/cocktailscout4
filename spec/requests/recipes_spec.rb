@@ -52,6 +52,33 @@ RSpec.describe "Recipes", type: :request do
       get "/rezepte/non-existent"
       expect(response).to have_http_status(:not_found)
     end
+
+    context "with many comments" do
+      before do
+        # Create 35 comments to trigger pagination (30 per page)
+        create_list(:recipe_comment, 35, recipe: recipe, user: recipe.user)
+      end
+
+      it "paginates comments when there are more than 30" do
+        get recipe_path(recipe)
+        expect(response).to have_http_status(:success)
+
+        # Should show 30 comments on first page (plus 1 from let! above = 36 total, 30 displayed)
+        # Count comment containers
+        expect(response.body.scan(/class="bg-gray-50 rounded-lg/).count).to eq(30)
+
+        # Should have pagination controls with pagy_id parameter
+        expect(response.body).to include('comments=2')
+      end
+
+      it "shows remaining comments on second page" do
+        get recipe_path(recipe), params: { comments: 2 }
+        expect(response).to have_http_status(:success)
+
+        # Should show remaining 6 comments (36 total - 30 on page 1)
+        expect(response.body.scan(/class="bg-gray-50 rounded-lg/).count).to eq(6)
+      end
+    end
   end
 
   describe "Sorting" do

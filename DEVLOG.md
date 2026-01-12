@@ -1,5 +1,32 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-12 18:55 — Recipe Show Page Redesign & Comment Pagination
+- **Time spent**: 45m
+- **Description**:
+	- Redesigned recipe show page with mobile-first responsive layout.
+	- Implemented stats card with rating control, author badge, views, alcohol content, and volume.
+	- Added responsive image gallery showing up to 6 approved images with "+ X weitere Fotos" indicator.
+	- Reorganized content hierarchy: title with tags → stats → images → ingredients → preparation → comments.
+	- Implemented comment pagination (30 per page) using Pagy's `page_key` option for independent pagination.
+	- Enhanced comment styling with gray background boxes and proper date formatting (including year).
+	- Updated `user_badge` helper to consistently style deleted users with icon and proper formatting.
+	- Added SEO tags for comment pagination with rel="prev"/rel="next".
+- **Outcome**:
+	- Clean, mobile-friendly recipe detail pages with better information hierarchy.
+	- Independent pagination for comments that doesn't conflict with potential future recipe pagination.
+
+## 2026-01-12 17:10 — Cocktail Gallery Redesign & Vue Modal System
+- **Time spent**: 20m
+- **Description**:
+	- Redesigned `/cocktailgalerie` with responsive grid (2-6 columns across breakpoints).
+	- Created **BaseModal** component: reusable modal with dark backdrop, close via X/click-outside/Escape.
+	- Implemented **ImageModal** and **GalleryViewer**: click images to view large versions (1200x1200) in modal.
+	- Recipe title in modal links to full recipe, integrated `user_badge` helper.
+	- Increased pagination from 50 to 60 items (divisible by all column counts).
+- **Outcome**:
+	- Interactive gallery with modal image viewer.
+	- Reusable BaseModal for future features.
+
 ## 2026-01-12 11:30 — Recipe Index Redesign & Mobile Optimization
 - **Time spent**: 1h
 - **Description**:
