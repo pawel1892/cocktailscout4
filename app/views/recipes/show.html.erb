@@ -1,65 +1,162 @@
-<h1><%= @recipe.title %></h1>
-
-<% if @recipe.recipe_images.approved.any? %>
-  <div class="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-    <% @recipe.recipe_images.approved.each do |image| %>
-      <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-         <% if recipe_image_url(image, style: :medium) %>
-            <%= image_tag recipe_image_url(image, style: :medium), class: "object-cover w-full h-full", alt: @recipe.title %>
-         <% end %>
-      </div>
-    <% end %>
-  </div>
+<% content_for :head do %>
+  <%= pagy_seo_tags(@comments_pagy) if @comments_pagy.pages > 1 %>
 <% end %>
 
+<!-- Title -->
 <div class="mb-6">
-  <rating-control 
-    rateable-type="Recipe" 
-    :rateable-id="<%= @recipe.id %>" 
-    :initial-average="<%= @recipe.average_rating || 0 %>"
-    :initial-count="<%= @recipe.ratings_count || 0 %>"
-    :user-rating="<%= (Current.user && @recipe.ratings.find_by(user: Current.user)&.score) || 'null' %>"
-  ></rating-control>
+  <h1 class="text-3xl md:text-4xl font-bold mb-2"><%= @recipe.title %></h1>
+
+  <!-- Tags -->
+  <% if @recipe.tag_list.any? %>
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      <% @recipe.tag_list.each do |tag| %>
+        <span class="tag-mini"><%= tag %></span>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
-<p>
-  <strong>Autor:</strong> <%= @recipe.user.username %>
-</p>
+<!-- Stats Bar -->
+<div class="card mb-6">
+  <div class="card-body p-4">
+    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:justify-between">
+      <!-- Left: Rating Control -->
+      <div class="flex-1 w-full sm:w-auto min-w-0">
+        <rating-control
+          rateable-type="Recipe"
+          :rateable-id="<%= @recipe.id %>"
+          :initial-average="<%= @recipe.average_rating || 0 %>"
+          :initial-count="<%= @recipe.ratings_count || 0 %>"
+          :user-rating="<%= (Current.user && @recipe.ratings.find_by(user: Current.user)&.score) || 'null' %>"
+        ></rating-control>
+      </div>
 
-<% if @recipe.description.present? %>
-  <div class="description">
-    <%= simple_format @recipe.description %>
+      <!-- Right: All Stats -->
+      <div class="text-left sm:text-right text-sm space-y-2 w-full sm:w-auto">
+        <!-- Author -->
+        <div class="flex items-center sm:justify-end gap-1 text-gray-600">
+          <span>von</span>
+          <%= user_badge(@recipe.user) %>
+        </div>
+
+        <!-- Views, Alcohol & Volume in one row -->
+        <div class="text-xs text-gray-400 flex items-center sm:justify-end gap-3">
+          <span><i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %></span>
+          <% if @recipe.alcohol_content.present? %>
+            <span><i class="fas fa-wine-glass-alt"></i> <%= number_to_percentage(@recipe.alcohol_content, precision: 1) %></span>
+          <% end %>
+          <% if @recipe.total_volume.present? %>
+            <span><i class="fas fa-flask"></i> <%= @recipe.total_volume %> cl</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Gallery -->
+<% if @recipe.approved_recipe_images.any? %>
+  <% max_display = 6 %>
+  <% images = @recipe.approved_recipe_images %>
+  <% visible_images = images.take(max_display) %>
+  <% remaining_count = [images.count - max_display, 0].max %>
+
+  <div class="mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-<%= [visible_images.count, 3].min %> gap-2 sm:gap-3">
+      <% visible_images.each do |image| %>
+        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
+          <% if recipe_image_url(image, style: :medium) %>
+            <%= image_tag recipe_image_url(image, style: :medium), class: "object-cover w-full h-full", alt: @recipe.title %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if remaining_count > 0 %>
+      <div class="mt-2 text-sm text-gray-500 text-center">
+        + <%= remaining_count %> weitere <%= remaining_count == 1 ? 'Foto' : 'Fotos' %>
+      </div>
+    <% end %>
   </div>
 <% end %>
 
-<h2>Zutaten</h2>
-<ul>
-  <% @recipe.recipe_ingredients.each do |ri| %>
-    <li>
-      <%= ri.amount %> <%= ri.unit %> <%= ri.ingredient.name %>
-      <% if ri.description.present? %>
-        (<%= ri.description %>)
+<!-- Ingredients -->
+<div class="card mb-6">
+  <div class="card-body p-4 sm:p-6">
+    <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+      <i class="fas fa-list text-cs-gold"></i>
+      Zutaten
+    </h2>
+    <ul class="space-y-2">
+      <% @recipe.recipe_ingredients.each do |ri| %>
+        <li class="flex items-start gap-2">
+          <span class="text-cs-gold mt-1">•</span>
+          <span>
+            <strong><%= ri.amount %> <%= ri.unit %></strong> <%= ri.ingredient.name %>
+            <% if ri.description.present? %>
+              <span class="text-gray-600 text-sm">(<%= ri.description %>)</span>
+            <% end %>
+          </span>
+        </li>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+    </ul>
+  </div>
+</div>
 
-<p>
-  <strong>Alkoholgehalt:</strong> <%= @recipe.alcohol_content %>%<br>
-  <strong>Gesamtvolumen:</strong> <%= @recipe.total_volume %> cl
-</p>
-
-<% if @recipe.recipe_comments.any? %>
-  <div id="comments">
-    <h2>Kommentare</h2>
-    <% @recipe.recipe_comments.each do |comment| %>
-      <div class="comment">
-        <p class="flex items-center gap-2">
-          <%= user_badge(comment.user) %>
-          <small><%= l comment.created_at, format: :short %></small>
-        </p>
-        <%= simple_format comment.body %>
+<!-- Preparation / Description -->
+<% if @recipe.description.present? %>
+  <div class="card mb-6">
+    <div class="card-body p-4 sm:p-6">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+        <i class="fas fa-cocktail text-cs-gold"></i>
+        Zubereitung
+      </h2>
+      <div class="prose prose-sm sm:prose max-w-none text-gray-700">
+        <%= simple_format(@recipe.description) %>
       </div>
-    <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Comments -->
+<% if @recipe.recipe_comments.any? %>
+  <div class="card">
+    <div class="card-body p-4 sm:p-6">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+        <i class="fas fa-comments text-cs-gold"></i>
+        Kommentare
+        <span class="text-base font-normal text-gray-500">(<%= @recipe.recipe_comments.count %>)</span>
+      </h2>
+
+      <!-- Pagination Top -->
+      <% if @comments_pagy.pages > 1 %>
+        <div class="mb-4 flex justify-center">
+          <%== @comments_pagy.series_nav %>
+        </div>
+      <% end %>
+
+      <div class="space-y-3">
+        <% @comments.each do |comment| %>
+          <div class="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200">
+            <div class="flex items-center gap-2 mb-2">
+              <%= user_badge(comment.user) %>
+              <span class="text-xs text-gray-400">
+                <%= l comment.created_at.to_date %>
+              </span>
+            </div>
+            <div class="text-gray-700 text-sm">
+              <%= simple_format(comment.body) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Pagination Bottom -->
+      <% if @comments_pagy.pages > 1 %>
+        <div class="mt-6 flex justify-center">
+          <%== @comments_pagy.series_nav %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>

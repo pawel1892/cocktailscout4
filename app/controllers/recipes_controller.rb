@@ -12,7 +12,19 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.includes(recipe_ingredients: :ingredient, recipe_comments: :user).find_by!(slug: params[:id])
+    @recipe = Recipe.includes(
+      :taggings,
+      :tags,
+      recipe_ingredients: :ingredient,
+      approved_recipe_images: { image_attachment: :blob }
+    ).find_by!(slug: params[:id])
+
+    @comments_pagy, @comments = pagy(
+      @recipe.recipe_comments.includes(:user).order(created_at: :desc),
+      limit: 30,
+      page_key: "comments"
+    )
+
     @recipe.track_visit(Current.user)
   end
 
