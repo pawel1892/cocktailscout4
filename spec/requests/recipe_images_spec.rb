@@ -66,9 +66,9 @@ RSpec.describe "RecipeImages", type: :request do
       expect(response.body).to include("jane_smith")
     end
 
-    it "paginates recipe images when there are more than 50" do
-      # Create 51 approved images to trigger pagination
-      51.times do |i|
+    it "paginates recipe images when there are more than 60" do
+      # Create 61 approved images to trigger pagination
+      61.times do |i|
         recipe_for_image = create(:recipe, title: "Cocktail #{i}", user: user)
         image = RecipeImage.new(
           recipe: recipe_for_image,
@@ -81,7 +81,7 @@ RSpec.describe "RecipeImages", type: :request do
         image.save!
       end
 
-      # First page should show 50 items
+      # First page should show 60 items
       get recipe_images_path
 
       expect(response).to have_http_status(:success)

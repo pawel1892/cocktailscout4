@@ -10,6 +10,7 @@ const components = {
   AuthForm: () => import('../components/AuthForm.vue'),
   UserSession: () => import('../components/UserSession.vue'),
   RatingControl: () => import('../components/RatingControl.vue'),
+  GalleryViewer: () => import('../components/GalleryViewer.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
