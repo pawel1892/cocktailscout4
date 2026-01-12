@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
   resources :recipes, path: "rezepte", only: [ :index, :show ] do
-    resources :recipe_comments, path: "kommentare", only: [ :create ]
+    member do
+      post :comment, to: "recipe_comments#create"
+    end
   end
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
