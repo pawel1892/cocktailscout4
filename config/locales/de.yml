@@ -5,6 +5,9 @@ de:
       recipe:
         one: "Rezept"
         other: "Rezepte"
+      recipe_comment:
+        one: "Kommentar"
+        other: "Kommentare"
     attributes:
       recipe:
         title: "Name"
@@ -14,6 +17,8 @@ de:
         created_at: "Erstellt am"
         views: "Aufrufe"
         visits_count: "Aufrufe"
+      recipe_comment:
+        body: "Kommentar"
   pagy:
     item_name:
       one: "Eintrag"

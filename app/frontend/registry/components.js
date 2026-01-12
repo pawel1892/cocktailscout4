@@ -12,6 +12,7 @@ const components = {
   RatingControl: () => import('../components/RatingControl.vue'),
   GalleryViewer: () => import('../components/GalleryViewer.vue'),
   RecipeImageGallery: () => import('../components/RecipeImageGallery.vue'),
+  CommentForm: () => import('../components/CommentForm.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
