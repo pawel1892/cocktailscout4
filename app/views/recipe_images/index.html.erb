@@ -1,35 +1,30 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6 text-gray-900">Cocktailgalerie</h1>
-
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <% @recipe_images.each do |recipe_image| %>
-      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-        <div class="aspect-square bg-gray-200 relative group">
-          <% if recipe_image_url(recipe_image, style: :medium) %>
-            <%= image_tag recipe_image_url(recipe_image, style: :medium), class: "object-cover w-full h-full", loading: "lazy" %>
-          <% else %>
-            <div class="flex items-center justify-center h-full w-full text-gray-400 bg-gray-100">
-              <span class="text-sm">Kein Bild</span>
-            </div>
-          <% end %>
-          
-          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-        </div>
-        
-        <div class="p-4">
-          <h3 class="font-bold text-lg mb-1 truncate">
-            <%= link_to recipe_image.recipe.title, recipe_path(recipe_image.recipe), class: "hover:text-primary-600" %>
-          </h3>
-          <p class="text-sm text-gray-600 flex items-center gap-1">
-            von <%= user_badge(recipe_image.user) %>
-          </p>
-          <p class="text-xs text-gray-500"><%= l recipe_image.created_at.to_date %></p>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="mt-8 flex justify-center">
-    <%== @pagy.series_nav if @pagy.pages > 1 %>
+<div class="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+  <h1 class="text-3xl font-bold">Cocktailgalerie</h1>
+  <div class="text-sm text-gray-500">
+    <%= @pagy.count %> <%= RecipeImage.model_name.human(count: @pagy.count) %> gefunden
   </div>
 </div>
+
+<div class="flex justify-center mb-6">
+  <%== @pagy.series_nav %>
+</div>
+
+<gallery-viewer id="gallery-viewer"></gallery-viewer>
+
+<div class="flex justify-center py-8">
+  <%== @pagy.series_nav %>
+</div>
+
+<script>
+  window.galleryImages = <%= raw @recipe_images.map { |image|
+    {
+      id: image.id,
+      thumbnailUrl: url_for(recipe_image_url(image, style: :medium)),
+      largeUrl: url_for(recipe_image_url(image, style: :large)),
+      recipeTitle: image.recipe.title,
+      recipeUrl: recipe_path(image.recipe),
+      userBadge: user_badge(image.user),
+      uploadDate: l(image.created_at.to_date)
+    }
+  }.to_json %>;
+</script>
