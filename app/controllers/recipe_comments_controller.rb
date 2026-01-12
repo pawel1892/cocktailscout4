@@ -5,7 +5,7 @@ class RecipeCommentsController < ApplicationController
       :tags,
       recipe_ingredients: :ingredient,
       approved_recipe_images: [ :user, { image_attachment: :blob } ]
-    ).find_by!(slug: params[:recipe_id])
+    ).find_by!(slug: params[:id])
 
     @comment = @recipe.recipe_comments.build(comment_params)
     @comment.user = Current.user
@@ -17,7 +17,8 @@ class RecipeCommentsController < ApplicationController
       @comments_pagy, @comments = pagy(
         @recipe.recipe_comments.includes(:user).order(created_at: :desc),
         limit: 30,
-        page_key: "comments"
+        page_key: "comments",
+        url: recipe_path(@recipe)
       )
       flash.now[:alert] = "Kommentar konnte nicht gespeichert werden. Bitte korrigiere die Fehler."
       render "recipes/show", status: :unprocessable_content
