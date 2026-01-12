@@ -14,7 +14,7 @@
 
         <!-- Modal Container -->
         <div
-          class="relative bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col"
+          :class="['relative bg-white rounded-lg shadow-xl w-full max-h-[90vh] overflow-hidden flex flex-col', maxWidth]"
           @click.stop
         >
           <!-- Header -->
@@ -69,6 +69,10 @@ const props = defineProps({
   modelValue: {
     type: Boolean,
     required: true
+  },
+  maxWidth: {
+    type: String,
+    default: 'max-w-lg'
   }
 })
 
