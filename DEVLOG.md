@@ -1,5 +1,16 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-12 22:30 — User Comment System
+- **Time spent**: 1h
+- **Description**:
+	- Implemented authenticated comment creation on recipe pages.
+	- Vue-based character counter (3000 chars) with color-coded feedback.
+	- Inline validation errors (red label/border, preserved input) + flash message system (green/yellow/red).
+	- Set 3000 char limit after validating all 21,801 legacy comments (one 2629-char comment from 2012 required accommodation).
+- **Outcome**:
+	- Fully functional with 30 passing tests.
+	- Reusable flash message partial for future features.
+
 ## 2026-01-12 19:30 — Recipe Image Gallery with Modal & Responsive Layout
 - **Time spent**: 40m
 - **Description**:
