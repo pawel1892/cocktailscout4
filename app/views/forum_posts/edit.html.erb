@@ -1,0 +1,18 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-4">
+    <%= link_to forum_thread_path(@forum_post.forum_thread), class: "link flex items-center gap-1 text-sm mb-4" do %>
+      <i class="fas fa-chevron-left"></i>
+      Zurück zum Thema
+    <% end %>
+    
+    <h1 class="text-2xl font-bold mb-2">Beitrag bearbeiten</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <%= form_with model: @forum_post, url: forum_post_path(@forum_post), method: :patch, local: true do |f| %>
+        <%= render "form", form: f, forum_post: @forum_post %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ const components = {
   GalleryViewer: () => import('../components/GalleryViewer.vue'),
   RecipeImageGallery: () => import('../components/RecipeImageGallery.vue'),
   CommentForm: () => import('../components/CommentForm.vue'),
+  BbcodeEditor: () => import('../components/BbcodeEditor.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

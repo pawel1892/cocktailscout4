@@ -3,7 +3,7 @@ FactoryBot.define do
     association :forum_topic
     association :user
     title { "MyString" }
-    slug { "MyString" }
+    sequence(:slug) { |n| "my-string-#{n}" }
     sticky { false }
     locked { false }
     old_id { 1 }

@@ -4,6 +4,10 @@ class ForumTopic < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  def to_param
+    slug
+  end
+
   scope :unread_by, ->(user) {
     forum_threads = ForumThread.arel_table
     visits = Visit.arel_table

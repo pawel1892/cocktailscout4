@@ -28,7 +28,7 @@
 
     <%# Post Body %>
     <div class="flex-1 p-4 lg:p-6 min-w-0 flex flex-col">
-      <div class="prose prose-sm max-w-none text-gray-800 flex-1">
+      <div class="prose prose-sm [&_p]:mb-4 max-w-none text-gray-800 flex-1">
         <%= render_bbcode(forum_post.body) %>
       </div>
 
@@ -40,13 +40,16 @@
 
       <%# Post Actions %>
       <div class="mt-6 flex justify-end gap-2">
-        <%# if can? :update, forum_post %>
-          <%= link_to '#', class: 'btn btn-sm btn-outline' do %>
+        <% if Current.user && (forum_post.user == Current.user || Current.user.admin? || Current.user.try(:forum_moderator?)) %>
+          <%= link_to edit_forum_post_path(forum_post), class: 'btn btn-sm btn-outline' do %>
             <i class="fas fa-edit mr-1"></i> Bearbeiten
           <% end %>
-        <%# end %>
-        <%= link_to '#', class: 'btn btn-sm btn-gold' do %>
-          <i class="fas fa-quote-left mr-1"></i> Zitieren
+        <% end %>
+        
+        <% if Current.user %>
+          <%= link_to new_forum_post_path(forum_post.forum_thread, quote: forum_post.id), class: 'btn btn-sm btn-gold' do %>
+            <i class="fas fa-quote-left mr-1"></i> Zitieren
+          <% end %>
         <% end %>
       </div>
     </div>

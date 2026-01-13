@@ -15,7 +15,19 @@ Rails.application.routes.draw do
   # Forum routes (legacy URLs)
   get "cocktailforum", to: "forum_topics#index", as: :forum_topics
   get "cocktailforum/kategorie/:id", to: "forum_threads#index", as: :forum_topic
+
+  get "cocktailforum/kategorie/:topic_id/themen/neu", to: "forum_threads#new", as: :new_forum_thread
+  post "cocktailforum/kategorie/:topic_id/themen", to: "forum_threads#create", as: :create_forum_thread
+
   get "cocktailforum/thema/:id", to: "forum_threads#show", as: :forum_thread
+
+  # Forum Posts
+  get "cocktailforum/thema/:thread_id/beitrag/neu", to: "forum_posts#new", as: :new_forum_post
+  post "cocktailforum/thema/:thread_id/beitrag", to: "forum_posts#create", as: :forum_posts
+
+  get "cocktailforum/beitrag/:id/bearbeiten", to: "forum_posts#edit", as: :edit_forum_post
+  patch "cocktailforum/beitrag/:id", to: "forum_posts#update", as: :forum_post
+  delete "cocktailforum/beitrag/:id", to: "forum_posts#destroy"
 
   get "design-system", to: "design_system#index"
   root "home#index"
