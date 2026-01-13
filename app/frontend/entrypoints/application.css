@@ -88,6 +88,18 @@
   @apply callout bg-red-50 border-cs-dark-red text-red-900;
 }
 
+@utility quote {
+  @apply bg-gray-50 border-l-4 border-cs-gold p-4 my-4 rounded-r;
+}
+
+@utility quote-author {
+  @apply font-bold text-sm text-cs-dark-red mb-1 block;
+}
+
+@utility quote-content {
+  @apply italic text-gray-700;
+}
+
 /* Tags / Labels */
 @utility tag {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border;
