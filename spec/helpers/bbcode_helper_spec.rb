@@ -50,7 +50,7 @@ RSpec.describe BbcodeHelper, type: :helper do
       expect(html).to include('Outer')
       expect(html).to include('Tail')
     end
-    
+
     it "renders smileys" do
       expect(helper.render_bbcode(":) text")).to include('<img')
       expect(helper.render_bbcode(":) text")).to include('alt="fröhlich"')

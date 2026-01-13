@@ -1,5 +1,19 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-13 11:30 — Forum BBCode & Legacy Data Modernization
+- **Time spent**: 1h
+- **Description**:
+	- **Data Modernization**: Critical update to `import:forum` and `import:comments` tasks to replace legacy `<br />` tags with newlines (`\n`). This ensures a "state-of-the-art" clean data storage while allowing Rails' `simple_format` to handle safe HTML rendering.
+	- **BBCode Implementation**: Created a robust `BbcodeHelper` from scratch.
+		- **Recursive Quotes**: Implemented an iterative regex parser to correctly handle nested `[quote]` tags, which previously broke with standard non-greedy matching.
+		- **XSS Protection**: Integrated `ERB::Util.html_escape` at the start of the pipeline to ensure all user input is safe before BBCode transformation.
+		- **Smileys**: Migrated 25 legacy smileys to `/public/images/smileys` for reliable serving and updated the helper to map shortcuts (e.g., `:)`, `:D`) to these assets.
+		- **Standard Tags**: Support for `[b]`, `[i]`, `[u]`, `[color]`, `[url]`, and `[img]`.
+	- **UI/UX**: Added Tailwind utilities for quotes (`quote`, `quote-author`, `quote-content`) in `application.css` and integrated the helper into forum post views.
+- **Outcome**:
+	- 137,987 forum posts and 21,800 comments cleaned and re-imported.
+	- 14 passing RSpec tests for the BBCode helper covering nesting, safety, and all tags.
+
 ## 2026-01-12 22:55 — User Comment System
 - **Time spent**: 1h 15min
 - **Description**:
