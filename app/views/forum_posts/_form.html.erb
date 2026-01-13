@@ -1,0 +1,20 @@
+<div class="space-y-4">
+  <div class="form-group">
+    <%= form.label :body, "Dein Beitrag", class: "label-field" %>
+    <% if forum_post.errors[:body].any? %>
+      <div class="text-cs-error text-sm mb-2"><%= forum_post.errors.full_messages_for(:body).join(", ") %></div>
+    <% end %>
+    
+    <bbcode-editor
+      model-value="<%= forum_post.body %>"
+      textarea-id="forum_post_body"
+      textarea-name="<%= form.object_name %>[body]"
+      :smileys="<%= BbcodeHelper::SMILEYS.to_json %>"
+    ></bbcode-editor>
+  </div>
+  
+  <div class="flex justify-end gap-2">
+    <%= link_to "Abbrechen", :back, class: "btn btn-outline" %>
+    <%= form.submit "Speichern", class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,5 +1,28 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-13 12:45 — Forum Creation, Editing & UI Polishing
+- **Time spent**: 1h 30m
+- **Description**:
+	- **Forum Interaction**: Implemented full CRUD functionality for Forum Threads and Posts.
+		- Created `ForumPostsController` and `ForumThreadsController` (create/new actions) with proper routing.
+		- Implemented `ForumThreadForm` form object (though simplistic for now) to handle thread creation.
+	- **Quoting System**: Implemented "Quote" feature that pre-fills the editor with the original post content wrapped in nested `[quote]` tags.
+	- **UI Enhancements**: 
+		- Improved forum post typography with increased paragraph spacing (`mb-4`).
+		- Integrated `BbcodeEditor` Vue component (though not fully wired in backend yet, UI is ready).
+		- Wired up "New Thread" and "Reply" buttons in views.
+	- **Bug Fixes**: 
+		- Resolved `ForumThread` model visibility issues (moved methods out of `private`).
+		- Fixed syntax error in `ForumThread`.
+		- Addressed Rails 8 deprecation warning by using `status: :unprocessable_content`.
+	- **Testing**:
+		- Added comprehensive `ForumPosts` request specs covering auth, quoting, and CRUD.
+		- Fixed `ForumThread` factory to generate unique slugs, resolving flaky tests.
+- **Outcome**:
+	- Users can now create new threads, reply to topics, and quote other posts.
+	- robust test coverage for all new interactions.
+	- Clean, readable typography for long-form content.
+
 ## 2026-01-13 11:30 — Forum BBCode & Legacy Data Modernization
 - **Time spent**: 1h
 - **Description**:
@@ -269,7 +292,7 @@
 ## 2026-01-07 11:20 — Recipe Images & Active Storage Migration 
 - **Time spent**: 1h 
 - **Description**: 
-	- Implemented a unified image management system using **Rails 8 Active Storage**. 
+	- Implemented a unified image management system using **Rails 8 Active Storage**.
 	- Migrated ~1.9k legacy approved images from the old physical folder structure into the managed storage system. 
 	- Created a public cocktail gallery and integrated dynamic image display into the recipe detail pages. 
 - **Constraints & Decisions**: 

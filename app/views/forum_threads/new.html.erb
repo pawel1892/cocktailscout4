@@ -1,0 +1,45 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-4">
+    <%= link_to forum_topic_path(@forum_topic), class: "link flex items-center gap-1 text-sm mb-4" do %>
+      <i class="fas fa-chevron-left"></i>
+      Zurück zur Übersicht
+    <% end %>
+    
+    <h1 class="text-2xl font-bold mb-2">Neues Thema in "<%= @forum_topic.name %>"</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <%= form_with model: @forum_thread_form, url: create_forum_thread_path(@forum_topic), local: true do |f| %>
+        
+        <div class="form-group mb-6">
+          <%= f.label :thread_title, "Titel", class: "label-field" %>
+          <%= f.text_field :thread_title, class: "input-field #{'input-error' if @forum_thread_form.errors[:thread_title].any?}" %>
+          <% if @forum_thread_form.errors[:thread_title].any? %>
+            <div class="form-error-message"><%= @forum_thread_form.errors.full_messages_for(:thread_title).join(", ") %></div>
+          <% end %>
+        </div>
+
+        <div class="form-group mb-6">
+          <%= f.label :post_content, "Beitrag", class: "label-field" %>
+          <% if @forum_thread_form.errors[:post_content].any? %>
+             <div class="text-cs-error text-sm mb-2"><%= @forum_thread_form.errors.full_messages_for(:post_content).join(", ") %></div>
+          <% end %>
+          
+          <bbcode-editor
+            model-value="<%= @forum_thread_form.post_content %>"
+            textarea-id="forum_thread_form_post_content"
+            textarea-name="forum_thread_form[post_content]"
+            :smileys="<%= BbcodeHelper::SMILEYS.to_json %>"
+          ></bbcode-editor>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <%= link_to "Abbrechen", forum_topic_path(@forum_topic), class: "btn btn-outline" %>
+          <%= f.submit "Thema erstellen", class: "btn btn-primary" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

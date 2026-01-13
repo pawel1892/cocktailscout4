@@ -26,9 +26,7 @@
     </div>
   </div>
 
-  <%# Top Pagination and Actions %>
-  <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-    <%= link_to '#', class: 'btn btn-primary w-full sm:w-auto' do %>
+    <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
       <i class="fas fa-reply mr-2"></i> Antworten
     <% end %>
     
@@ -48,7 +46,7 @@
 
   <%# Bottom Pagination and Actions %>
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-    <%= link_to '#', class: 'btn btn-primary w-full sm:w-auto' do %>
+    <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
       <i class="fas fa-reply mr-2"></i> Antworten
     <% end %>
     

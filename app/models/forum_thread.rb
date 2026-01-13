@@ -8,10 +8,16 @@ class ForumThread < ApplicationRecord
   default_scope { where(deleted: false) }
 
   validates :title, presence: true
+  validates :slug, presence: true, uniqueness: true
   validates :forum_topic, presence: true
-  # Note: user is optional to allow for deleted users, but should be present at creation
+
+  before_validation :generate_slug, if: -> { slug.blank? && title.present? }
 
   scope :last_active_threads, -> { order(updated_at: :desc) }
+
+  def to_param
+    slug
+  end
 
   def views
     visits_count || total_visits
@@ -55,5 +61,19 @@ class ForumThread < ApplicationRecord
 
   def last_post_created_at
     last_post&.created_at
+  end
+
+  private
+
+  def generate_slug
+    base_slug = title.parameterize
+    self.slug = base_slug
+
+    # Simple conflict resolution
+    count = 1
+    while ForumThread.exists?(slug: self.slug)
+      self.slug = "#{base_slug}-#{count}"
+      count += 1
+    end
   end
 end
