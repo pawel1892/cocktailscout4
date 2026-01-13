@@ -122,12 +122,15 @@ namespace :import do
       thread_id = thread_map[legacy_post.forum_thread_id]
       next unless thread_id
 
+      # Convert <br /> to newlines for cleaner storage
+      clean_body = legacy_post.content&.gsub(/<br\s*\/?>/i, "\n")
+
       post = ForumPost.unscoped.find_or_initialize_by(old_id: legacy_post.id)
       post.assign_attributes(
         forum_thread_id: thread_id,
         user_id: user_map[legacy_post.user_id],
         last_editor_id: user_map[legacy_post.last_editor_id],
-        body: legacy_post.content,
+        body: clean_body,
         deleted: legacy_post.deleted || false,
         created_at: legacy_post.created_at,
         updated_at: legacy_post.updated_at
@@ -347,11 +350,14 @@ namespace :import do
       new_recipe_id = recipe_map[legacy_comment.recipe_id]
       next unless new_recipe_id # Skip if recipe doesn't exist
 
+      # Convert <br /> to newlines for cleaner storage
+      clean_body = legacy_comment.comment&.gsub(/<br\s*\/?>/i, "\n")
+
       comment = RecipeComment.find_or_initialize_by(old_id: legacy_comment.id)
       comment.assign_attributes(
         recipe_id: new_recipe_id,
         user_id: user_map[legacy_comment.user_id], # Nil if user not found
-        body: legacy_comment.comment,
+        body: clean_body,
         created_at: legacy_comment.created_at,
         updated_at: legacy_comment.updated_at
       )
