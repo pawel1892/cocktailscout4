@@ -80,7 +80,7 @@ module BbcodeHelper
         found = true
         params = Regexp.last_match(1)
         content = Regexp.last_match(2)
-        
+
         render_quote_box(params, content)
       end
       break unless found
