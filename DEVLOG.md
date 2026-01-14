@@ -1,5 +1,15 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-14 22:30 — User Activity Tracking
+- **Time spent**: 10m
+- **Description**:
+	- **Login Tracking**: Implemented atomic increment of `sign_in_count` upon successful authentication.
+	- **Activity Tracking**: Added a global `before_action` to track user activity (`last_active_at`).
+	- **Performance**: Throttled activity updates to once every 10 minutes to minimize database writes.
+	- **Testing**: Added `UserActivity` request specs to verify login counting and activity tracking logic/throttling.
+- **Outcome**:
+	- Accurate user engagement metrics.
+
 ## 2026-01-14 21:50 — Forum Administration & Polish
 - **Time spent**: 45m
 - **Description**:
