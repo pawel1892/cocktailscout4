@@ -1,5 +1,23 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-14 21:50 — Forum Administration & Polish
+- **Time spent**: 45m
+- **Description**:
+	- **Post Actions UI**: Redesigned post action buttons.
+		- Edit: Moved to the left, now an unobtrusive pencil icon (Author/Admin/Mod).
+		- Delete: Added trash icon (Admin/Mod only) with confirmation dialog.
+		- Quote: Kept as primary action on the right.
+	- **Authorization**: Split authorization logic in `ForumPostsController`.
+		- `authorize_edit!`: Allows Authors, Admins, and Moderators.
+		- `authorize_delete!`: Strict check for Admins and Moderators only (Authors cannot delete their own posts).
+	- **Safety**: Added standard JS confirmation (`confirm()`) for deletions since Turbo is not enabled.
+	- **Logic**: Implemented `soft_delete_empty_thread` callback in `ForumPost` to automatically hide threads when their last visible post is deleted.
+	- **Navigation**: Updated controller to redirect to the Topic view if the Thread was deleted along with the post.
+- **Outcome**:
+	- Improved moderation tools and safety checks.
+	- Self-cleaning forum structure (no empty threads).
+	- Robust authorization preventing accidental or unauthorized deletions.
+
 ## 2026-01-13 12:45 — Forum Creation, Editing & UI Polishing
 - **Time spent**: 1h 30m
 - **Description**:

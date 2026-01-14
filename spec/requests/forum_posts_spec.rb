@@ -84,6 +84,16 @@ RSpec.describe "ForumPosts", type: :request do
         expect(response.body).to include("Du hast keine Berechtigung")
       end
     end
+
+    context "with deleted post" do
+      before { sign_in(user) }
+      let!(:deleted_post) { create(:forum_post, forum_thread: forum_thread, user: user, deleted: true) }
+
+      it "returns 404" do
+        get edit_forum_post_path(deleted_post)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
   describe "PATCH /cocktailforum/beitrag/:id" do
@@ -98,17 +108,52 @@ RSpec.describe "ForumPosts", type: :request do
         expect(response).to redirect_to(forum_thread_path(forum_thread, page: 1, anchor: "post-#{forum_post.id}"))
       end
     end
+
+    context "with deleted post" do
+      before { sign_in(user) }
+      let!(:deleted_post) { create(:forum_post, forum_thread: forum_thread, user: user, deleted: true) }
+
+      it "returns 404" do
+        patch forum_post_path(deleted_post), params: { forum_post: { body: "Updated body" } }
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
   describe "DELETE /cocktailforum/beitrag/:id" do
     context "when authenticated as author" do
       before { sign_in(user) }
 
+      it "denies deletion" do
+        delete forum_post_path(forum_post)
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        follow_redirect!
+        expect(response.body).to include("Du hast keine Berechtigung, diesen Beitrag zu löschen")
+
+        forum_post.reload
+        expect(forum_post.deleted).to be(false)
+      end
+    end
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+      before { sign_in(admin) }
+
       it "soft deletes the post" do
+        create(:forum_post, forum_thread: forum_thread) # Ensure thread has another post
         delete forum_post_path(forum_post)
         forum_post.reload
         expect(forum_post.deleted).to be(true)
         expect(response).to redirect_to(forum_thread_path(forum_thread))
+      end
+
+      it "soft deletes the thread if it was the last post" do
+        # forum_post is the only post in forum_thread
+        delete forum_post_path(forum_post)
+
+        forum_thread.reload
+        expect(forum_thread.deleted).to be(true)
+        expect(response).to redirect_to(forum_topic_path(forum_thread.forum_topic))
       end
     end
   end

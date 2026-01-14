@@ -2,7 +2,8 @@ class ForumPostsController < ApplicationController
   # Standard CRUD actions require auth
 
   before_action :set_forum_post, only: %i[edit update destroy]
-  before_action :authorize_user!, only: %i[edit update destroy]
+  before_action :authorize_edit!, only: %i[edit update]
+  before_action :authorize_delete!, only: %i[destroy]
 
   def new
     @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
@@ -49,11 +50,17 @@ class ForumPostsController < ApplicationController
 
   def destroy
     forum_thread = @forum_post.forum_thread
+    forum_topic = forum_thread.forum_topic
 
     # Soft delete
     @forum_post.update(deleted: true)
 
-    redirect_to forum_thread_path(forum_thread), notice: "Beitrag gelöscht."
+    # Check if thread is still visible (not deleted)
+    if ForumThread.exists?(id: forum_thread.id)
+      redirect_to forum_thread_path(forum_thread), notice: "Beitrag gelöscht."
+    else
+      redirect_to forum_topic_path(forum_topic), notice: "Das Thema wurde gelöscht, da es keine sichtbaren Beiträge mehr enthielt."
+    end
   end
 
   private
@@ -62,9 +69,15 @@ class ForumPostsController < ApplicationController
     @forum_post = ForumPost.find(params[:id])
   end
 
-  def authorize_user!
+  def authorize_edit!
     unless @forum_post.user == Current.user || Current.user&.admin? || Current.user&.forum_moderator?
       redirect_to forum_thread_path(@forum_post.forum_thread), alert: "Du hast keine Berechtigung, diesen Beitrag zu bearbeiten."
+    end
+  end
+
+  def authorize_delete!
+    unless Current.user&.admin? || Current.user&.forum_moderator?
+      redirect_to forum_thread_path(@forum_post.forum_thread), alert: "Du hast keine Berechtigung, diesen Beitrag zu löschen."
     end
   end
 
