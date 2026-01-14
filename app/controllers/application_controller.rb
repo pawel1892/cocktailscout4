@@ -4,7 +4,15 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  before_action :track_user_activity
+
   private
+
+  def track_user_activity
+    if Current.user && (Current.user.last_active_at.nil? || Current.user.last_active_at < 10.minutes.ago)
+      Current.user.touch(:last_active_at)
+    end
+  end
 
   def require_admin!
     authorization_redirect unless Current.user&.admin?

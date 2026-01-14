@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
 
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
+      user.increment!(:sign_in_count)
       start_new_session_for user
       respond_to do |format|
         format.html { redirect_to after_authentication_url }
