@@ -28,40 +28,7 @@
 
   <body>
     <div id="app">
-      <header>
-        <!-- Top Bar: Dark Red -->
-        <div class="bg-cs-dark-red text-white py-2">
-          <div class="container mx-auto px-4 flex items-center justify-between gap-2">
-            <!-- Left: Logo -->
-            <div class="flex-shrink-0">
-              <a href="/">
-                <img src="/logo.svg" class="h-10 sm:h-12 w-auto" alt="CocktailScout">
-              </a>
-            </div>
-
-            <!-- Middle: Navigation -->
-            <nav class="flex space-x-3 sm:space-x-6 text-base sm:text-lg font-medium">
-              <a href="/rezepte" class="hover:text-cs-gold transition">Rezepte</a>
-              <a href="/cocktailforum" class="hover:text-cs-gold transition">Community</a>
-            </nav>
-
-            <!-- Right: Search -->
-            <div class="hidden md:block">
-              <div class="relative">
-                <input type="text" placeholder="Suche..." class="bg-white/10 border border-white/20 rounded-full px-4 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-cs-gold placeholder-white/50 w-40 lg:w-auto">
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Secondary Bar: Black -->
-        <%= render "layouts/secondary_nav" %>
-      </header>
+      <%= render "layouts/header" %>
 
       <%= render "layouts/flash_messages" %>
 
