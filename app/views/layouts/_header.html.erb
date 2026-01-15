@@ -1,0 +1,128 @@
+<header class="relative z-50">
+  <!-- Top Bar: Dark Red -->
+  <div class="bg-cs-dark-red text-white py-2 relative z-50">
+    <div class="container mx-auto px-4 flex items-center justify-between gap-2">
+      <!-- Left: Logo -->
+      <div class="flex-shrink-0">
+        <a href="/">
+          <img src="/logo.svg" class="h-10 sm:h-12 w-auto" alt="CocktailScout">
+        </a>
+      </div>
+
+      <!-- Middle: Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-6 text-base sm:text-lg font-medium">
+        <% main_navigation_items.each do |item| %>
+          <% if item[:dropdown] %>
+            <!-- Dropdown Item -->
+            <div class="relative group">
+              <button class="flex items-center gap-1 hover:text-cs-gold transition focus:outline-none py-2">
+                <%= item[:label] %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 group-hover:rotate-180 transition-transform duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              
+              <!-- Dropdown Menu -->
+              <div class="absolute left-1/2 -translate-x-1/2 mt-0 pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 transform origin-top">
+                <div class="bg-white text-gray-800 rounded shadow-xl ring-1 ring-black ring-opacity-5 overflow-hidden">
+                  <% item[:dropdown].each do |subitem| %>
+                    <%= link_to subitem[:label], subitem[:path], class: "block px-4 py-2 hover:bg-gray-100 hover:text-cs-dark-red transition text-sm sm:text-base" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <!-- Single Link -->
+            <%= link_to item[:label], item[:path], class: "hover:text-cs-gold transition py-2" %>
+          <% end %>
+        <% end %>
+      </nav>
+
+      <!-- Right: Desktop Search -->
+      <div class="hidden md:block">
+        <div class="relative">
+          <input type="text" placeholder="Suche..." class="bg-white/10 border border-white/20 rounded-full px-4 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-cs-gold placeholder-white/50 w-40 lg:w-auto">
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" onclick="toggleMobileMenu(event)" class="md:hidden text-white hover:text-cs-gold focus:outline-none p-2" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (Hidden by default) -->
+  <div id="mobile-menu" class="hidden md:hidden bg-cs-dark-red border-t border-white/10 absolute w-full shadow-xl z-40 origin-top animate-in slide-in-from-top-2 duration-200">
+    <div class="container mx-auto px-4 py-4 space-y-4">
+      
+      <!-- Mobile Search -->
+      <div class="relative">
+        <input type="text" placeholder="Suche..." class="w-full bg-white/10 border border-white/20 rounded-full px-4 py-2 text-base text-white focus:outline-none focus:ring-1 focus:ring-cs-gold placeholder-white/50">
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+        </span>
+      </div>
+
+      <!-- Mobile Links -->
+      <nav class="flex flex-col space-y-2 text-white text-lg font-medium">
+        <% main_navigation_items.each do |item| %>
+          <% if item[:dropdown] %>
+            <!-- Accordion -->
+            <details class="group">
+              <summary class="flex items-center justify-between cursor-pointer py-2 hover:text-cs-gold select-none list-none [&::-webkit-details-marker]:hidden">
+                <%= item[:label] %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-open:rotate-180">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </summary>
+              <div class="pl-4 border-l-2 border-white/10 mt-1 space-y-1">
+                <% item[:dropdown].each do |subitem| %>
+                  <%= link_to subitem[:label], subitem[:path], class: "block py-2 hover:text-cs-gold text-base" %>
+                <% end %>
+              </div>
+            </details>
+          <% else %>
+            <%= link_to item[:label], item[:path], class: "block py-2 hover:text-cs-gold" %>
+          <% end %>
+        <% end %>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Secondary Bar: Black -->
+  <%= render "layouts/secondary_nav" %>
+</header>
+
+<script>
+  window.toggleMobileMenu = function(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+      menu.classList.toggle('hidden');
+    }
+  };
+
+  if (!window.mobileMenuClickOutsideAttached) {
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+    window.mobileMenuClickOutsideAttached = true;
+  }
+</script>

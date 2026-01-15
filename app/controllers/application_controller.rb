@@ -1,12 +1,29 @@
 class ApplicationController < ActionController::Base
   include Authentication
   include Pagy::Method
+  helper BreadcrumbsHelper
+  helper NavigationHelper
+  helper_method :breadcrumbs
+
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  before_action :set_initial_breadcrumbs
   before_action :track_user_activity
 
+  def add_breadcrumb(name, path = nil)
+    breadcrumbs << { name: name, path: path }
+  end
+
+  def breadcrumbs
+    @breadcrumbs ||= []
+  end
+
   private
+
+  def set_initial_breadcrumbs
+    add_breadcrumb "Startseite", root_path
+  end
 
   def track_user_activity
     if Current.user && (Current.user.last_active_at.nil? || Current.user.last_active_at < 10.minutes.ago)

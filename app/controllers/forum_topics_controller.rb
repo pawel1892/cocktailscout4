@@ -4,6 +4,7 @@ class ForumTopicsController < ApplicationController
   helper_method :current_user
 
   def index
+    add_breadcrumb "Forum"
     @forum_topics = ForumTopic.order(:position)
     @unread_topic_ids = ForumTopic.unread_by(Current.user).pluck("forum_topics.id") if Current.user.present?
   end

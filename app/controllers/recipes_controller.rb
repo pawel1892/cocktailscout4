@@ -3,6 +3,7 @@ class RecipesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
+    add_breadcrumb "Rezepte"
     query = Recipe.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
 
     # Handle specific join sorting
@@ -18,6 +19,9 @@ class RecipesController < ApplicationController
       recipe_ingredients: :ingredient,
       approved_recipe_images: [ :user, { image_attachment: :blob } ]
     ).find_by!(slug: params[:id])
+
+    add_breadcrumb "Rezepte", recipes_path
+    add_breadcrumb @recipe.title
 
     @comments_pagy, @comments = pagy(
       @recipe.recipe_comments.includes(:user).order(created_at: :desc),

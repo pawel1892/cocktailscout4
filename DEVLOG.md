@@ -1,5 +1,21 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-15 20:20 — Responsive Navigation & Breadcrumbs
+- **Time spent**: 1h
+- **Description**:
+	- **Responsive Navigation**: Refactored the application header into a `_header` partial backed by a `NavigationHelper`.
+		- **Desktop**: Implemented a hover-based dropdown for "Rezepte" with keyboard/touch support (`group-focus-within`).
+		- **Mobile**: Added a robust hamburger menu with an overlay design, featuring nested accordions (using native `<details>`) and an integrated search bar.
+		- **Logic**: Used vanilla JavaScript for menu toggling to ensure reliability independent of Turbo/Vue lifecycles.
+	- **Breadcrumbs**: Created a comprehensive breadcrumb system.
+		- **Architecture**: `BreadcrumbsHelper` for rendering and `ApplicationController` integration for data build-up.
+		- **Integration**: Added breadcrumbs to Recipe (Index/Show), Gallery, and full Forum hierarchy (Topics, Threads, Posts).
+		- **Mobile Layout**: Stacked breadcrumbs vertically above the user session controls on small screens for better readability.
+	- **Forum Navigation**: Updated all forum-related controllers to provide a consistent "Forum" breadcrumb root.
+- **Outcome**:
+	- Significantly improved mobile usability and wayfinding across the application.
+	- Maintainable and flexible navigation structure.
+
 ## 2026-01-15 10:47 — Authentication Refinement
 - **Time spent**: 1h
 - **Description**:
