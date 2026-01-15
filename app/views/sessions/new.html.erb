@@ -6,8 +6,8 @@
 
   <%= form_with url: session_path do |form| %>
     <div class="form-group">
-      <%= form.label :email_address, "Email Adresse", class: "label-field" %>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "name@example.com", class: "input-field", value: params[:email_address] %>
+      <%= form.label :email_address, "Email oder Benutzername", class: "label-field" %>
+      <%= form.text_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Email oder Benutzername", class: "input-field", value: params[:email_address] %>
     </div>
 
     <div class="form-group">
@@ -20,7 +20,12 @@
     </div>
   <% end %>
 
-  <div class="mt-4 text-center text-sm">
-    <%= link_to "Passwort vergessen?", new_password_path, class: "text-gray-500 hover:text-cs-dark-red" %>
+  <div class="mt-4 text-center text-sm space-y-2">
+    <div>
+      <%= link_to "Passwort vergessen?", new_password_path, class: "text-gray-500 hover:text-cs-dark-red" %>
+    </div>
+    <div class="pt-2 border-t border-gray-100">
+      Noch kein Konto? <%= link_to "Jetzt registrieren", new_registration_path, class: "text-cs-dark-red font-medium hover:underline" %>
+    </div>
   </div>
 </div>

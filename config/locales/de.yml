@@ -1,5 +1,10 @@
 de:
   hello: "Hallo Welt"
+  errors:
+    messages:
+      confirmation: "stimmt nicht mit %{attribute} überein"
+      taken: "ist bereits vergeben"
+      blank: "muss ausgefüllt werden"
   activerecord:
     models:
       recipe:
@@ -8,7 +13,15 @@ de:
       recipe_comment:
         one: "Kommentar"
         other: "Kommentare"
+      user:
+        one: "Benutzer"
+        other: "Benutzer"
     attributes:
+      user:
+        email_address: "Email Adresse"
+        username: "Benutzername"
+        password: "Passwort"
+        password_confirmation: "Passwort Bestätigung"
       recipe:
         title: "Name"
         alcohol_content: "Alkoholgehalt"

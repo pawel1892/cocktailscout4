@@ -34,6 +34,11 @@
 
 ## Workflow
 - Always propose a plan before executing shell commands.
+- **Commits & DevLog**: Do NOT auto-commit or write to `DEVLOG.md` unless explicitly requested. The user may want to verify or add features first. 
+    - Never change existing entries in `DEVLOG.md`, only append new ones.
+    - Before writing to the devlog, check the system time and ask the user for the time spent.
+    - Use `git status` and `git diff` to summarize changes briefly.
+    - When ready, propose a comprehensive commit message.
 - Ensure all new migrations include the `old_id` field.
 - Rspec new features
 

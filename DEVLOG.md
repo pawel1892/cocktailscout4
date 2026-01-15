@@ -1,5 +1,12 @@
 # Cocktailscout 4 DevLog
 
+## 2026-01-15 10:47 — Authentication Refinement
+- **Time spent**: 1h
+- **Description**:
+	- Unified login (email/username), hardened registration (mandatory username, email uniqueness), and polished UI/UX (AJAX forms, localized errors, fixed @user initialization).
+- **Outcome**:
+	- Robust and user-friendly authentication system.
+
 ## 2026-01-14 22:30 — User Activity Tracking
 - **Time spent**: 10m
 - **Description**:
@@ -323,12 +330,12 @@
 	- Implemented a unified image management system using **Rails 8 Active Storage**.
 	- Migrated ~1.9k legacy approved images from the old physical folder structure into the managed storage system. 
 	- Created a public cocktail gallery and integrated dynamic image display into the recipe detail pages. 
-- **Constraints & Decisions**: 
+- **Constraints & Decisions**:
 	- **Active Storage**: Switched to the native Rails solution to future-proof the app for user-generated content and cloud storage options. 
 	- **Image Processing**: Configured **MiniMagick** as the variant processor (fallback due to missing libvips on the local dev system). 
 	- **Migration Logic**: Developed a Rake task to map the legacy ID-based folder structure to Active Storage Blobs while preserving metadata (user ownership, approval status). 
 	- **Database Schema**: Retained the `RecipeImage` table as a join/metadata entity to support future moderation workflows and community features.
-- **Outcome**: 
+- **Outcome**:
 	- Unified image handling for both legacy assets and future uploads. 
 	- Functional cocktail gallery live at `/cocktailgalerie` with automated thumbnail generation. 
 
@@ -464,7 +471,7 @@
 - **Description**: 
 	- Initialized Rails 8.0 with Tailwind CSS and Vue.js 3.
 	- Configured Importmaps and Propshaft to avoid a Node.js build step.
-- **Constraints & Decisions**: 
+- **Constraints & Decisions**:
 	- Styling: Tailwind CSS (JIT) for utility-first design. 
 	- JS: Vue.js 3 via Importmaps (DHH "No-Build" approach). 
 	- Architecture: Hybrid setup: Turbo for navigation, Vue for reactive UI logic. 

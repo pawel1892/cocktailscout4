@@ -14,7 +14,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate_by(params.permit(:email_address, :password))
+    login = params[:email_address]
+    user = User.find_by(email_address: login) || User.find_by(username: login)
+
+    if user && user.authenticate(params[:password])
       user.increment!(:sign_in_count)
       start_new_session_for user
       respond_to do |format|

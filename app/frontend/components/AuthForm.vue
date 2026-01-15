@@ -1,27 +1,43 @@
 <template>
   <div class="auth-form max-w-sm mx-auto">
     <div v-if="isAuthenticated" class="text-center">
-      <p class="mb-4 text-green-600">Angemeldet als <strong>{{ user.email_address }}</strong></p>
+      <p class="mb-4 text-green-600">Angemeldet als <strong>{{ user.username || user.email_address }}</strong></p>
       <button @click="logout" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-full">
         Abmelden
       </button>
     </div>
 
     <div v-else>
-      <h2 class="text-xl font-bold mb-6 text-center text-black">{{ isLoginMode ? 'Anmelden' : 'Registrieren' }}</h2>
+      <h2 class="text-xl font-bold mb-6 text-center text-cs-dark-red">{{ isLoginMode ? 'Anmelden' : 'Registrieren' }}</h2>
       
       <form @submit.prevent="handleSubmit">
+        <div v-if="!isLoginMode" class="form-group">
+          <label class="label-field" for="username">
+            Benutzername
+          </label>
+          <input 
+            v-model="form.username"
+            id="username" 
+            type="text" 
+            required
+            autocomplete="username"
+            class="input-field"
+            placeholder="Benutzername"
+          >
+        </div>
+
         <div class="form-group">
           <label class="label-field" for="email">
-            Email Adresse
+            {{ isLoginMode ? 'Email oder Benutzername' : 'Email Adresse' }}
           </label>
           <input 
             v-model="form.email_address"
             id="email" 
-            type="email" 
+            :type="isLoginMode ? 'text' : 'email'" 
             required
-            autocomplete="username"
+            :autocomplete="isLoginMode ? 'username' : 'email'"
             class="input-field"
+            :placeholder="isLoginMode ? 'Email oder Benutzername' : 'name@example.com'"
           >
         </div>
 
@@ -51,7 +67,7 @@
             autocomplete="new-password"
             class="input-field"
           >
-          <p class="form-hint">Mindestens 8 Zeichen.</p>
+          <p class="form-hint">Mindestens 6 Zeichen.</p>
         </div>
 
         <div v-if="error" class="callout-red mb-4">
@@ -110,6 +126,7 @@ const errors = ref([])
 
 const form = reactive({
   email_address: '',
+  username: '',
   password: '',
   password_confirmation: ''
 })
@@ -120,6 +137,8 @@ const toggleMode = () => {
   errors.value = []
   form.password = ''
   form.password_confirmation = ''
+  // Keep email/username for convenience or clear? Let's keep email, but clear new username field if switching
+  if (isLoginMode.value) form.username = '' 
 }
 
 const handleSubmit = async () => {
@@ -131,6 +150,11 @@ const handleSubmit = async () => {
   if (isLoginMode.value) {
     result = await login({ email_address: form.email_address, password: form.password })
   } else {
+    if (form.password !== form.password_confirmation) {
+      error.value = "Die Passwörter stimmen nicht überein."
+      loading.value = false
+      return
+    }
     result = await register(form)
   }
 
@@ -146,6 +170,7 @@ const handleSubmit = async () => {
   } else {
       // Clear form on success
       form.email_address = ''
+      form.username = ''
       form.password = ''
       form.password_confirmation = ''
       
