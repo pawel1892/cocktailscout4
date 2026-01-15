@@ -15,6 +15,11 @@ class User < ApplicationRecord
   has_one :user_stat, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+  normalizes :username, with: ->(u) { u.strip }
+
+  validates :email_address, presence: true, uniqueness: { case_sensitive: false }
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates :password, length: { minimum: 6 }, allow_nil: true
 
   delegate :rank, :points, to: :stat
 
