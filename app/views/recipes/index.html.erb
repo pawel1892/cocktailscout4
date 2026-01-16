@@ -9,6 +9,59 @@
   </div>
 </div>
 
+<!-- Filter Bar -->
+<% if active_filters.any? %>
+  <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex flex-wrap items-center gap-3">
+    <span class="font-medium text-green-900">Aktive Filter:</span>
+    <% active_filters.each do |filter| %>
+      <span class="bg-white text-green-800 border border-green-200 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
+        <%= filter[:label] %>
+        <%= link_to recipes_path(params.permit(:sort, :direction, :min_rating, :tag, :ingredient_id).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
+          <i class="fas fa-times"></i>
+        <% end %>
+      </span>
+    <% end %>
+    <%= link_to "Alle Filter zurücksetzen", recipes_path(params.permit(:sort, :direction)), class: "text-sm text-green-700 hover:text-green-900 underline ml-auto" %>
+  </div>
+<% end %>
+
+<div class="mb-6 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+  <%= form_with url: recipes_path, method: :get, class: "flex flex-wrap gap-4 items-end", data: { turbo_frame: "_top" } do |f| %>
+    <%# Preserve sort params %>
+    <%= f.hidden_field :sort, value: params[:sort] if params[:sort] %>
+    <%= f.hidden_field :direction, value: params[:direction] if params[:direction] %>
+
+    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
+      <%= f.label :min_rating, "Mindestbewertung", class: "label-field mb-0" %>
+      <%= f.select :min_rating, 
+          options_for_select([["Alle", ""], ["5+", 5], ["6+", 6], ["7+", 7], ["8+", 8], ["9+", 9]], params[:min_rating]), 
+          {}, 
+          class: "input-field py-1.5 text-sm" 
+      %>
+    </div>
+
+    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
+      <%= f.label :tag, "Kategorie / Tag", class: "label-field mb-0" %>
+      <%= f.collection_select :tag, @tags, :name, :name, 
+          { include_blank: "Alle" }, 
+          { class: "input-field py-1.5 text-sm", value: params[:tag] } 
+      %>
+    </div>
+
+    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
+      <%= f.label :ingredient_id, "Zutat", class: "label-field mb-0" %>
+      <%= f.collection_select :ingredient_id, @ingredients, :id, :name, 
+          { include_blank: "Alle" }, 
+          { class: "input-field py-1.5 text-sm", value: params[:ingredient_id] } 
+      %>
+    </div>
+
+    <div class="flex gap-2">
+      <%= f.submit "Filtern", class: "btn btn-primary btn-sm h-[34px]" %>
+    </div>
+  <% end %>
+</div>
+
 <!-- Sort Bar -->
 <div class="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
   <span class="font-medium text-gray-900">Sortieren:</span>
@@ -19,67 +72,75 @@
   <%= sortable "visits_count", Recipe.human_attribute_name(:visits_count) %>
 </div>
 
-<div class="flex justify-center mb-6">
-  <%== @pagy.series_nav %>
-</div>
+<% if @pagy.pages > 1 %>
+  <div class="flex justify-center mb-6">
+    <%== @pagy.series_nav %>
+  </div>
+<% end %>
 
 <div class="space-y-4">
-  <% @recipes.each do |recipe| %>
-    <div class="card hover:shadow-md transition-all duration-200 group">
-      <div class="card-body p-4">
-        <div class="flex gap-4">
-          <!-- Thumbnail -->
-          <div class="flex-shrink-0">
-             <%= link_to recipe_path(recipe) do %>
-               <%= recipe_thumbnail(recipe, size_class: "w-20 h-20 sm:w-24 sm:h-24") %>
-             <% end %>
-          </div>
-
-          <!-- Content -->
-          <div class="flex-1 min-w-0">
-            <div class="flex justify-between items-start gap-2">
-               <div class="min-w-0">
-                  <%= link_to recipe.title, recipe_path(recipe), class: "link font-bold text-lg leading-tight block mb-1 truncate group-hover:text-cs-gold transition-colors" %>
-                  <div class="text-xs text-gray-500 mb-2 flex flex-wrap items-center gap-1">
-                    <span>von</span>
-                    <%= user_badge(recipe.user) %>
-                  </div>
-               </div>
-               <div class="flex flex-col items-center gap-1">
-                 <div class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center">
-                    <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
-                 </div>
-                 <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>)</span>
-               </div>
+  <% if @recipes.any? %>
+    <% @recipes.each do |recipe| %>
+      <div class="card hover:shadow-md transition-all duration-200 group">
+        <div class="card-body p-4">
+          <div class="flex gap-4">
+            <!-- Thumbnail -->
+            <div class="flex-shrink-0">
+               <%= link_to recipe_path(recipe) do %>
+                 <%= recipe_thumbnail(recipe, size_class: "w-20 h-20 sm:w-24 sm:h-24") %>
+               <% end %>
             </div>
 
-            <% if recipe.tag_list.any? %>
-                <div class="flex flex-wrap gap-1.5 mb-2">
-                  <% recipe.tag_list.each do |tag| %>
-                    <span class="tag-mini">
-                      <%= tag %>
-                    </span>
-                  <% end %>
-                </div>
-            <% end %>
+            <!-- Content -->
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-start gap-2">
+                 <div class="min-w-0">
+                    <%= link_to recipe.title, recipe_path(recipe), class: "link font-bold text-lg leading-tight block mb-1 truncate group-hover:text-cs-gold transition-colors" %>
+                    <div class="text-xs text-gray-500 mb-2 flex flex-wrap items-center gap-1">
+                      <span>von</span>
+                      <%= user_badge(recipe.user) %>
+                    </div>
+                 </div>
+                 <div class="flex flex-col items-center gap-1">
+                   <div class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center">
+                      <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
+                   </div>
+                   <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>)</span>
+                 </div>
+              </div>
 
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-400 mt-2">
-               <% if recipe.alcohol_content.present? %>
-                 <span title="<%= Recipe.human_attribute_name(:alcohol_content) %>" class="flex items-center gap-1">
-                   <i class="fas fa-wine-glass-alt"></i> <%= number_to_percentage recipe.alcohol_content, precision: 1 %>
+                          <% if recipe.tag_list.any? %>
+                              <%= render "recipes/tag_list", tags: recipe.tags %>
+                          <% end %>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-400 mt-2">
+                 <% if recipe.alcohol_content.present? %>
+                   <span title="<%= Recipe.human_attribute_name(:alcohol_content) %>" class="flex items-center gap-1">
+                     <i class="fas fa-wine-glass-alt"></i> <%= number_to_percentage recipe.alcohol_content, precision: 1 %>
+                   </span>
+                 <% end %>
+                 <span title="<%= Recipe.human_attribute_name(:visits_count) %>" class="flex items-center gap-1">
+                   <i class="far fa-eye"></i> <%= number_with_delimiter recipe.visits_count %>
                  </span>
-               <% end %>
-               <span title="<%= Recipe.human_attribute_name(:visits_count) %>" class="flex items-center gap-1">
-                 <i class="far fa-eye"></i> <%= number_with_delimiter recipe.visits_count %>
-               </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    <% end %>
+  <% else %>
+    <div class="card p-12 text-center bg-gray-50 border-dashed border-2 border-gray-200">
+      <div class="text-gray-300 mb-4">
+        <i class="fas fa-search text-5xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Keine Rezepte gefunden</h3>
+      <p class="text-gray-500 mb-8 max-w-md mx-auto">Leider konnten wir keine Rezepte finden, die deinen Filtereinstellungen entsprechen. Versuche es mit weniger Filtern oder anderen Kriterien.</p>
+      <%= link_to "Alle Filter zurücksetzen", recipes_path(params.permit(:sort, :direction)), class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
 
-<div class="flex justify-center py-8">
-  <%== @pagy.series_nav %>
-</div>
+<% if @pagy.pages > 1 %>
+  <div class="flex justify-center py-8">
+    <%== @pagy.series_nav %>
+  </div>
+<% end %>

@@ -183,4 +183,57 @@ RSpec.describe "Recipes", type: :request do
       expect(response.body.scan(/class="card-body/).count).to eq(1)
     end
   end
+
+  describe "Filtering" do
+    let!(:recipe1) { create(:recipe, title: "Strong Drink", average_rating: 9.5) }
+    let!(:recipe2) { create(:recipe, title: "Weak Drink", average_rating: 4.5) }
+    let!(:recipe3) { create(:recipe, title: "Fruity Drink", average_rating: 8.0) }
+    let!(:ingredient) { create(:ingredient, name: "Lemon") }
+    let!(:other_ingredient) { create(:ingredient, name: "Vodka") }
+
+    before do
+      recipe1.tag_list.add("Strong")
+      recipe1.save
+      recipe3.tag_list.add("Fruity")
+      recipe3.save
+      create(:recipe_ingredient, recipe: recipe3, ingredient: ingredient)
+      create(:recipe_ingredient, recipe: recipe2, ingredient: other_ingredient)
+    end
+
+    it "filters by min_rating" do
+      get recipes_path(min_rating: 8)
+      expect(response.body).to include(recipe1.title)
+      expect(response.body).to include(recipe3.title)
+      expect(response.body).not_to include(recipe2.title)
+    end
+
+    it "filters by tag" do
+      get recipes_path(tag: "Strong")
+      expect(response.body).to include(recipe1.title)
+      expect(response.body).not_to include(recipe2.title)
+      expect(response.body).not_to include(recipe3.title)
+    end
+
+    it "filters by ingredient" do
+      get recipes_path(ingredient_id: ingredient.id)
+      expect(response.body).to include(recipe3.title)
+      expect(response.body).not_to include(recipe1.title)
+      expect(response.body).not_to include(recipe2.title)
+    end
+
+    it "combines filters" do
+      # Recipe 3 is Fruity (Tag) and has Lemon (Ingredient) and Rating 8.0
+      # Recipe 1 is Strong (Tag) and Rating 9.5, but no Lemon
+      get recipes_path(min_rating: 8, ingredient_id: ingredient.id)
+      expect(response.body).to include(recipe3.title)
+      expect(response.body).not_to include(recipe1.title)
+      expect(response.body).not_to include(recipe2.title)
+    end
+
+    it "shows no recipes found message" do
+      get recipes_path(tag: "NonExistentTag")
+      expect(response.body).to include("Keine Rezepte gefunden")
+      expect(response.body).to include("Alle Filter zurücksetzen")
+    end
+  end
 end

@@ -39,4 +39,40 @@ RSpec.describe RecipesHelper, type: :helper do
       end
     end
   end
+
+  describe "#active_filters" do
+    let(:ingredient) { create(:ingredient, name: "Lemon") }
+
+    it "returns empty array when no params present" do
+      expect(helper.active_filters).to be_empty
+    end
+
+    it "returns min_rating filter" do
+      helper.controller.params = { min_rating: "5" }
+      expect(helper.active_filters).to contain_exactly({ label: "Bewertung: 5+", param: :min_rating })
+    end
+
+    it "returns tag filter" do
+      helper.controller.params = { tag: "Rum" }
+      expect(helper.active_filters).to contain_exactly({ label: "Tag: Rum", param: :tag })
+    end
+
+    it "returns ingredient filter" do
+      helper.controller.params = { ingredient_id: ingredient.id }
+      expect(helper.active_filters).to contain_exactly({ label: "Zutat: Lemon", param: :ingredient_id })
+    end
+
+    it "returns multiple filters" do
+      helper.controller.params = { min_rating: "5", tag: "Rum" }
+      expect(helper.active_filters).to include(
+        { label: "Bewertung: 5+", param: :min_rating },
+        { label: "Tag: Rum", param: :tag }
+      )
+    end
+
+    it "ignores invalid ingredient_id" do
+      helper.controller.params = { ingredient_id: -1 }
+      expect(helper.active_filters).to be_empty
+    end
+  end
 end

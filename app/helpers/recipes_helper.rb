@@ -20,4 +20,19 @@ module RecipesHelper
       content_tag(:i, nil, class: "fas fa-cocktail text-2xl")
     end
   end
+
+  def active_filters
+    filters = []
+    if params[:min_rating].present?
+      filters << { label: "Bewertung: #{params[:min_rating]}+", param: :min_rating }
+    end
+    if params[:tag].present?
+      filters << { label: "Tag: #{params[:tag]}", param: :tag }
+    end
+    if params[:ingredient_id].present?
+      ingredient = Ingredient.find_by(id: params[:ingredient_id])
+      filters << { label: "Zutat: #{ingredient.name}", param: :ingredient_id } if ingredient
+    end
+    filters
+  end
 end

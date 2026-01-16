@@ -1,0 +1,7 @@
+<% if tags.any? %>
+  <div class="flex flex-wrap gap-1.5 mb-2">
+    <% tags.each do |tag| %>
+      <%= link_to tag.name, tag_path(tag.name), class: "tag-mini hover:bg-gray-200 transition-colors cursor-pointer" %>
+    <% end %>
+  </div>
+<% end %>

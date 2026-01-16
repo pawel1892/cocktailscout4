@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
+  get "tag/:tag", to: "recipes#index", as: :tag
+
   post "rate", to: "ratings#create"
   delete "rate", to: "ratings#destroy"
 
