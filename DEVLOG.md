@@ -1,3 +1,28 @@
+---
+## 2026-01-16 17:56 — Recipe Filtering & Tag Navigation
+- **Time spent**: 1h
+- **Description**:
+	- **Filtering Logic**:
+		- Added `by_min_rating` (1-10 scale) and `by_ingredient` scopes to the `Recipe` model.
+		- Updated `RecipesController#index` to apply filters for ratings, tags, and ingredients.
+	- **UI/UX Enhancements**:
+		- **Filter Bar**: Added a dedicated section with dropdowns for filtering recipes.
+		- **Active Filters Badge**: Implemented a green callout box that lists active filters as removable badges, including an "Alle Filter zurücksetzen" (Reset All) option.
+		- **Empty State**: Created a "Keine Rezepte gefunden" view with a reset button for when filters return no results.
+		- **Conditional Pagination**: Optimized all paginated views (Recipes, Gallery, Forum) to hide the paginator when content fits on a single page.
+	- **Tag System**:
+		- **Legacy Routing**: Implemented `/tag/:tag` route for legacy URL compatibility and improved SEO.
+		- **DRY Views**: Refactored tag rendering into a reusable `_tag_list` partial with clickable badges.
+	- **Testing**:
+		- Added model specs for new scopes.
+		- Added helper specs for active filter logic.
+		- Added request specs covering filtering combinations and the new tag route.
+- **Outcome**:
+	- Modern, robust filtering system with clear user feedback on active states.
+	- Improved navigation through clickable tags and legacy URL support.
+	- 100% test coverage for new logic.
+
+---
 # Cocktailscout 4 DevLog
 
 ## 2026-01-15 20:20 — Responsive Navigation & Breadcrumbs

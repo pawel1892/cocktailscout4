@@ -6,6 +6,15 @@ class RecipesController < ApplicationController
     add_breadcrumb "Rezepte"
     query = Recipe.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
 
+    # Filters
+    query = query.by_min_rating(params[:min_rating])
+    query = query.by_ingredient(params[:ingredient_id])
+    query = query.tagged_with(params[:tag]) if params[:tag].present?
+
+    # Filter data
+    @tags = ActsAsTaggableOn::Tag.order(:name)
+    @ingredients = Ingredient.order(:name)
+
     # Handle specific join sorting
     query = query.left_joins(:user) if sort_column == "users.username"
 

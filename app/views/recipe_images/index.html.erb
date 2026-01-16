@@ -5,15 +5,19 @@
   </div>
 </div>
 
-<div class="flex justify-center mb-6">
-  <%== @pagy.series_nav %>
-</div>
+<% if @pagy.pages > 1 %>
+  <div class="flex justify-center mb-6">
+    <%== @pagy.series_nav %>
+  </div>
+<% end %>
 
 <gallery-viewer id="gallery-viewer"></gallery-viewer>
 
-<div class="flex justify-center py-8">
-  <%== @pagy.series_nav %>
-</div>
+<% if @pagy.pages > 1 %>
+  <div class="flex justify-center py-8">
+    <%== @pagy.series_nav %>
+  </div>
+<% end %>
 
 <script>
   window.galleryImages = <%= raw @recipe_images.map { |image|

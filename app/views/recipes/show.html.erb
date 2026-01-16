@@ -7,13 +7,7 @@
   <h1 class="text-3xl md:text-4xl font-bold mb-2"><%= @recipe.title %></h1>
 
   <!-- Tags -->
-  <% if @recipe.tag_list.any? %>
-    <div class="flex flex-wrap gap-1.5 mb-4">
-      <% @recipe.tag_list.each do |tag| %>
-        <span class="tag-mini"><%= tag %></span>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render "recipes/tag_list", tags: @recipe.tags %>
 </div>
 
 <!-- Stats Bar -->
