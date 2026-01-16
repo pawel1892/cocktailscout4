@@ -16,7 +16,7 @@
     <% active_filters.each do |filter| %>
       <span class="bg-white text-green-800 border border-green-200 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
         <%= filter[:label] %>
-        <%= link_to recipes_path(params.permit(:sort, :direction, :min_rating, :tag, :ingredient_id).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
+        <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
           <i class="fas fa-times"></i>
         <% end %>
       </span>
@@ -30,6 +30,14 @@
     <%# Preserve sort params %>
     <%= f.hidden_field :sort, value: params[:sort] if params[:sort] %>
     <%= f.hidden_field :direction, value: params[:direction] if params[:direction] %>
+
+    <div class="flex flex-col gap-1 min-w-[200px] flex-1">
+      <%= f.label :q, "Suche", class: "label-field mb-0" %>
+      <div class="relative">
+        <%= f.text_field :q, value: params[:q], placeholder: "Rezeptname...", class: "input-field py-1.5 text-sm pl-8" %>
+        <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+      </div>
+    </div>
 
     <div class="flex flex-col gap-1 min-w-[150px] flex-1">
       <%= f.label :min_rating, "Mindestbewertung", class: "label-field mb-0" %>

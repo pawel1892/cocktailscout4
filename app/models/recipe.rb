@@ -16,6 +16,14 @@ class Recipe < ApplicationRecord
 
   scope :by_min_rating, ->(rating) { where("average_rating >= ?", rating) if rating.present? }
   scope :by_ingredient, ->(ingredient_id) { joins(:ingredients).where(ingredients: { id: ingredient_id }) if ingredient_id.present? }
+  scope :search_by_title, ->(query) {
+    return all if query.blank?
+    if Rails.env.test?
+      where("title LIKE ?", "%#{query}%")
+    else
+      where("MATCH(title) AGAINST(? IN BOOLEAN MODE)", "#{query}*")
+    end
+  }
 
   validates :title, presence: true
   validates :slug, uniqueness: true, allow_blank: true

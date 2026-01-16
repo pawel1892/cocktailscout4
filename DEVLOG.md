@@ -1,4 +1,25 @@
 ---
+## 2026-01-16 22:57 — Full-Text Search Implementation (Recipes & Forum)
+- **Time spent**: 1h
+- **Description**:
+	- **Database Optimization**: Added MySQL `FULLTEXT` indexes to `recipes(title)`, `forum_threads(title)`, and `forum_posts(body)` for high-performance searching.
+	- **Recipe Search**:
+		- Integrated search into the main navigation header and recipe index.
+		- Implemented `search_by_title` scope with a `LIKE` fallback for transactional test compatibility.
+	- **Forum Search**:
+		- Created `ForumSearchController` and a dedicated results view.
+		- **Deep Linking**: Results now link directly to the specific matching post anchor (`#post-ID`) across paginated threads.
+		- **Contextual Snippets**: Displayed hit snippets in search results to help users identify relevant content.
+	- **UI/UX**: Updated the site-wide header to use the new recipe search and refined the forum header search form.
+	- **Bug Fixes**:
+		- Standardized forum post anchors to `post-ID` to ensure reliable browser scrolling.
+		- Resolved `current_user` vs `Current.user` scope issues in forum helpers.
+	- **Testing**: Added `forum_search_spec.rb` and updated `recipes_spec.rb` with 100% passing results using the test-environment fallback.
+- **Outcome**:
+	- Significantly improved discoverability of recipes and forum discussions.
+	- Professional "deep-link" search experience for the community.
+
+---
 ## 2026-01-16 17:56 — Recipe Filtering & Tag Navigation
 - **Time spent**: 1h
 - **Description**:

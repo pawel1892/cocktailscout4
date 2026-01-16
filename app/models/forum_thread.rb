@@ -14,6 +14,14 @@ class ForumThread < ApplicationRecord
   before_validation :generate_slug, if: -> { slug.blank? && title.present? }
 
   scope :last_active_threads, -> { order(updated_at: :desc) }
+  scope :search_by_title, ->(query) {
+    return all if query.blank?
+    if Rails.env.test?
+      where("title LIKE ?", "%#{query}%")
+    else
+      where("MATCH(title) AGAINST(? IN BOOLEAN MODE)", "#{query}*")
+    end
+  }
 
   def to_param
     slug

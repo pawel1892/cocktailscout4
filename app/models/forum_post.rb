@@ -8,6 +8,15 @@ class ForumPost < ApplicationRecord
   validates :body, presence: true
   # Note: user is optional to allow for deleted users, but should be present at creation
 
+  scope :search_by_body, ->(query) {
+    return all if query.blank?
+    if Rails.env.test?
+      where("body LIKE ?", "%#{query}%")
+    else
+      where("MATCH(body) AGAINST(? IN BOOLEAN MODE)", "#{query}*")
+    end
+  }
+
   after_save :soft_delete_empty_thread, if: -> { saved_change_to_deleted? && deleted? }
 
   def page(per_page = 20)
