@@ -235,5 +235,11 @@ RSpec.describe "Recipes", type: :request do
       expect(response.body).to include("Keine Rezepte gefunden")
       expect(response.body).to include("Alle Filter zurücksetzen")
     end
-  end
-end
+
+        it "searches by title" do
+          get recipes_path(q: "Strong")
+          expect(response.body).to include(recipe1.title)
+          expect(response.body).not_to include(recipe2.title)
+        end
+      end
+    end

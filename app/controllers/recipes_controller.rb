@@ -7,6 +7,7 @@ class RecipesController < ApplicationController
     query = Recipe.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
 
     # Filters
+    query = query.search_by_title(params[:q])
     query = query.by_min_rating(params[:min_rating])
     query = query.by_ingredient(params[:ingredient_id])
     query = query.tagged_with(params[:tag]) if params[:tag].present?

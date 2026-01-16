@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_16_151409) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -48,6 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
     t.integer "old_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.index ["body"], name: "index_forum_posts_on_body", type: :fulltext
     t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
     t.index ["last_editor_id"], name: "index_forum_posts_on_last_editor_id"
     t.index ["old_id"], name: "index_forum_posts_on_old_id"
@@ -69,6 +70,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
     t.index ["forum_topic_id"], name: "index_forum_threads_on_forum_topic_id"
     t.index ["old_id"], name: "index_forum_threads_on_old_id"
     t.index ["slug"], name: "index_forum_threads_on_slug"
+    t.index ["title"], name: "index_forum_threads_on_title", type: :fulltext
     t.index ["user_id"], name: "index_forum_threads_on_user_id"
   end
 
@@ -165,6 +167,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_11_065138) do
     t.integer "visits_count", default: 0
     t.index ["old_id"], name: "index_recipes_on_old_id"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
+    t.index ["title"], name: "index_recipes_on_title", type: :fulltext
     t.index ["updated_by_id"], name: "index_recipes_on_updated_by_id"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end

@@ -23,6 +23,9 @@ module RecipesHelper
 
   def active_filters
     filters = []
+    if params[:q].present?
+      filters << { label: "Suche: #{params[:q]}", param: :q }
+    end
     if params[:min_rating].present?
       filters << { label: "Bewertung: #{params[:min_rating]}+", param: :min_rating }
     end

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   post "cocktailforum/kategorie/:topic_id/themen", to: "forum_threads#create", as: :create_forum_thread
 
   get "cocktailforum/thema/:id", to: "forum_threads#show", as: :forum_thread
+  get "cocktailforum/suche", to: "forum_search#index", as: :forum_search
 
   # Forum Posts
   get "cocktailforum/thema/:thread_id/beitrag/neu", to: "forum_posts#new", as: :new_forum_post

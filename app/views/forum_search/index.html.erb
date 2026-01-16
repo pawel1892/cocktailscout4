@@ -1,0 +1,140 @@
+<%= render "forum/forum_header", active: :search %>
+
+<div class="mb-6">
+  <h1 class="text-2xl font-bold mb-2">Suchergebnisse für "<%= @query %>"</h1>
+  <div class="text-sm text-gray-500">
+    <%= @pagy.count %> Themen gefunden
+  </div>
+</div>
+
+<% if @forum_threads.any? %>
+  <%# Pagination Top %>
+  <% if @pagy.pages > 1 %>
+    <div class="flex justify-center mb-6">
+      <%== @pagy.series_nav %>
+    </div>
+  <% end %>
+
+  <%# Thread List %>
+  <div class="space-y-4">
+    <%# Mobile View (Cards) %>
+    <div class="lg:hidden space-y-3">
+      <% @forum_threads.each do |forum_thread| %>
+        <% hit_post = @search_hits[forum_thread.id] %>
+        <% target_link = hit_post ? link_to_forum_post(hit_post) : link_to_forum_thread(forum_thread) %>
+        
+        <div class="card">
+          <div class="card-body p-4">
+            <div class="flex items-start gap-3">
+               <div class="text-gray-300 mt-1">
+                 <i class="fas fa-comment text-lg"></i>
+               </div>
+               <div class="flex-1 min-w-0">
+                  <div class="text-xs text-cs-gold font-bold uppercase mb-1">
+                    <%= forum_thread.forum_topic.name %>
+                  </div>
+                  <h3 class="text-base font-bold leading-tight mb-1">
+                    <%= link_to forum_thread.title, target_link, class: "link hover:underline break-words" %>
+                  </h3>
+                  <div class="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1 mb-2">
+                    <span>Von <%= forum_thread.user&.username || 'Unbekannt' %></span>
+                    <span><i class="far fa-eye mr-1"></i> <%= forum_thread.views %></span>
+                    <span><i class="far fa-comments mr-1"></i> <%= forum_thread.count_posts %></span>
+                  </div>
+                  
+                  <% if hit_post %>
+                    <div class="text-xs text-gray-600 bg-yellow-50 p-2 rounded border border-yellow-100">
+                      <span class="font-bold text-gray-500 uppercase block mb-0.5">Treffer:</span>
+                      <%= truncate(strip_tags(hit_post.body), length: 100) %>
+                    </div>
+                  <% end %>
+               </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Desktop View (Table) %>
+    <div class="hidden lg:block table-container">
+      <table class="table-standard">
+        <thead>
+          <tr>
+            <th class="table-th w-40">Kategorie</th>
+            <th class="table-th w-auto">Thema / Treffer</th>
+            <th class="table-th text-center w-24">Aufrufe</th>
+            <th class="table-th text-center w-24">Beiträge</th>
+            <th class="table-th w-56">Letzter Beitrag</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% @forum_threads.each do |forum_thread| %>
+            <% hit_post = @search_hits[forum_thread.id] %>
+            <% target_link = hit_post ? link_to_forum_post(hit_post) : link_to_forum_thread(forum_thread) %>
+            
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <%= link_to forum_thread.forum_topic.name, forum_topic_path(forum_thread.forum_topic), class: "text-xs font-bold text-gray-500 uppercase hover:text-cs-gold transition-colors" %>
+              </td>
+              <td class="table-td">
+                <div class="flex flex-col gap-1">
+                  <div class="flex items-center gap-4">
+                    <div class="min-w-0">
+                      <%= link_to forum_thread.title, target_link, class: "link font-bold hover:underline block truncate max-w-md" %>
+                      <div class="text-xs text-gray-500 mt-0.5">
+                        Erstellt von <%= forum_thread.user&.username || 'Unbekannt' %> • <%= forum_thread.created_at.strftime("%d.%m.%Y") %>
+                      </div>
+                    </div>
+                  </div>
+                  <% if hit_post %>
+                    <div class="text-sm text-gray-600 bg-yellow-50 p-2 rounded border border-yellow-100 mt-1 max-w-xl">
+                      <span class="text-xs font-bold text-gray-500 uppercase block mb-0.5">Treffer in Beitrag #<%= hit_post.id %>:</span>
+                      <i class="fas fa-quote-left text-cs-gold/50 mr-1 text-xs"></i>
+                      <%= truncate(strip_tags(hit_post.body), length: 150) %>
+                    </div>
+                  <% end %>
+                </div>
+              </td>
+              <td class="table-td text-center text-gray-600 font-medium">
+                <%= forum_thread.views %>
+              </td>
+              <td class="table-td text-center text-gray-600 font-medium">
+                <%= forum_thread.count_posts %>
+              </td>
+              <td class="table-td">
+                <% if forum_thread.last_post_user %>
+                  <div class="flex flex-col gap-1 text-sm">
+                    <div class="flex items-center gap-2">
+                      <%= user_badge(forum_thread.last_post_user) %>
+                    </div>
+                    <div class="text-gray-500 text-xs">
+                      <i class="far fa-clock mr-1"></i> <%= time_ago_in_words(forum_thread.last_post_created_at) %>
+                    </div>
+                  </div>
+                <% else %>
+                  <span class="text-gray-400 text-sm italic">Keine Beiträge</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%# Pagination Bottom %>
+  <% if @pagy.pages > 1 %>
+    <div class="flex justify-center mt-4">
+      <%== @pagy.series_nav %>
+    </div>
+  <% end %>
+
+<% else %>
+  <div class="card p-12 text-center bg-gray-50 border-dashed border-2 border-gray-200">
+    <div class="text-gray-300 mb-4">
+      <i class="fas fa-search text-5xl"></i>
+    </div>
+    <h3 class="text-xl font-bold text-gray-800 mb-2">Keine Themen gefunden</h3>
+    <p class="text-gray-500">Leider gab es keine Treffer für deine Suchanfrage.</p>
+  </div>
+<% end %>

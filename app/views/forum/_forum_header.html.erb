@@ -6,10 +6,10 @@
   <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
     <h1 class="text-3xl font-bold text-cs-dark-red">Cocktailforum</h1>
     
-    <%= form_tag '#', method: 'post', class: "w-full md:w-auto" do %>
+    <%= form_tag forum_search_path, method: :get, class: "w-full md:w-auto" do %>
       <div class="flex gap-2">
-        <%= text_field_tag :forum_search_query, params[:forum_search_query], placeholder: "Forensuche", class: 'input-field' %>
-        <button class="btn btn-primary" id="forum_search_button">
+        <%= text_field_tag :q, params[:q], placeholder: "Forensuche", class: 'input-field' %>
+        <button class="btn btn-primary" type="submit">
           <i class="fas fa-search"></i>
         </button>
       </div>
