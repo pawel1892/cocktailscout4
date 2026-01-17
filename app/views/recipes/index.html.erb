@@ -16,7 +16,7 @@
     <% active_filters.each do |filter| %>
       <span class="bg-white text-green-800 border border-green-200 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
         <%= filter[:label] %>
-        <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
+        <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id, :collection_id).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
           <i class="fas fa-times"></i>
         <% end %>
       </span>
@@ -58,11 +58,21 @@
 
     <div class="flex flex-col gap-1 min-w-[150px] flex-1">
       <%= f.label :ingredient_id, "Zutat", class: "label-field mb-0" %>
-      <%= f.collection_select :ingredient_id, @ingredients, :id, :name, 
-          { include_blank: "Alle" }, 
-          { class: "input-field py-1.5 text-sm", value: params[:ingredient_id] } 
+      <%= f.collection_select :ingredient_id, @ingredients, :id, :name,
+          { include_blank: "Alle" },
+          { class: "input-field py-1.5 text-sm", value: params[:ingredient_id] }
       %>
     </div>
+
+    <% if @collections.any? %>
+      <div class="flex flex-col gap-1 min-w-[200px] flex-1">
+        <%= f.label :collection_id, "Meine Liste", class: "label-field mb-0" %>
+        <%= f.collection_select :collection_id, @collections, :id, :name,
+            { include_blank: "Alle Rezepte" },
+            { class: "input-field py-1.5 text-sm", value: params[:collection_id] }
+        %>
+      </div>
+    <% end %>
 
     <div class="flex gap-2">
       <%= f.submit "Filtern", class: "btn btn-primary btn-sm h-[34px]" %>

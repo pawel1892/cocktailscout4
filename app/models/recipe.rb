@@ -16,6 +16,16 @@ class Recipe < ApplicationRecord
 
   scope :by_min_rating, ->(rating) { where("average_rating >= ?", rating) if rating.present? }
   scope :by_ingredient, ->(ingredient_id) { joins(:ingredients).where(ingredients: { id: ingredient_id }) if ingredient_id.present? }
+  scope :by_collection, ->(collection_id) {
+    if collection_id.present?
+      collection = IngredientCollection.find_by(id: collection_id)
+      if collection
+        where(id: collection.doable_recipes.select(:id))
+      else
+        none
+      end
+    end
+  }
   scope :search_by_title, ->(query) {
     return all if query.blank?
     if Rails.env.test?

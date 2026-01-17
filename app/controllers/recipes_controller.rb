@@ -11,10 +11,13 @@ class RecipesController < ApplicationController
     query = query.by_min_rating(params[:min_rating])
     query = query.by_ingredient(params[:ingredient_id])
     query = query.tagged_with(params[:tag]) if params[:tag].present?
+    query = query.by_collection(params[:collection_id])
 
     # Filter data
     @tags = ActsAsTaggableOn::Tag.order(:name)
     @ingredients = Ingredient.order(:name)
+    @collections = authenticated? ? Current.user.ingredient_collections.order(is_default: :desc, name: :asc) : []
+    @selected_collection = @collections.find { |c| c.id == params[:collection_id].to_i } if params[:collection_id].present?
 
     # Handle specific join sorting
     query = query.left_joins(:user) if sort_column == "users.username"

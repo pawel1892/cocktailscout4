@@ -36,6 +36,10 @@ module RecipesHelper
       ingredient = Ingredient.find_by(id: params[:ingredient_id])
       filters << { label: "Zutat: #{ingredient.name}", param: :ingredient_id } if ingredient
     end
+    if params[:collection_id].present?
+      collection = IngredientCollection.find_by(id: params[:collection_id])
+      filters << { label: "Liste: #{collection.name}", param: :collection_id } if collection
+    end
     filters
   end
 end

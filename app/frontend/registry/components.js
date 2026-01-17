@@ -14,6 +14,7 @@ const components = {
   RecipeImageGallery: () => import('../components/RecipeImageGallery.vue'),
   CommentForm: () => import('../components/CommentForm.vue'),
   BbcodeEditor: () => import('../components/BbcodeEditor.vue'),
+  IngredientCollections: () => import('../components/IngredientCollections.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

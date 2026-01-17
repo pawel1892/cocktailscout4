@@ -113,6 +113,7 @@ class IngredientCollections::IngredientsController < ApplicationController
       notes: collection.notes,
       is_default: collection.is_default,
       ingredient_count: collection.ingredients.count,
+      doable_recipes_count: collection.doable_recipes.length,
       ingredients: collection.ingredients.map { |i| ingredient_json(i) },
       created_at: collection.created_at,
       updated_at: collection.updated_at
