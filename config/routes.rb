@@ -14,6 +14,12 @@ Rails.application.routes.draw do
   post "rate", to: "ratings#create"
   delete "rate", to: "ratings#destroy"
 
+  # My Bar (Ingredient Collections UI)
+  get "meine-bar", to: "my_bar#index", as: :my_bar
+
+  # Ingredients API (for search)
+  resources :ingredients, only: [ :index ]
+
   # Ingredient Collections API
   resources :ingredient_collections, only: [ :index, :show, :create, :update, :destroy ] do
     resources :ingredients, only: [ :create, :destroy ], controller: "ingredient_collections/ingredients" do

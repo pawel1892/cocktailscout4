@@ -12,7 +12,7 @@ class IngredientCollectionsController < ApplicationController
 
     render json: {
       success: true,
-      collections: collections.map { |c| collection_json(c) }
+      collections: collections.map { |c| collection_json(c, include_ingredients: true) }
     }
   end
 
@@ -32,7 +32,7 @@ class IngredientCollectionsController < ApplicationController
     if collection.save
       render json: {
         success: true,
-        collection: collection_json(collection)
+        collection: collection_json(collection, include_ingredients: true)
       }, status: :created
     else
       render json: {
@@ -48,7 +48,7 @@ class IngredientCollectionsController < ApplicationController
     if @collection.update(collection_params)
       render json: {
         success: true,
-        collection: collection_json(@collection)
+        collection: collection_json(@collection, include_ingredients: true)
       }
     else
       render json: {
@@ -88,6 +88,7 @@ class IngredientCollectionsController < ApplicationController
       notes: collection.notes,
       is_default: collection.is_default,
       ingredient_count: collection.ingredients.count,
+      doable_recipes_count: collection.doable_recipes.length,
       created_at: collection.created_at,
       updated_at: collection.updated_at
     }

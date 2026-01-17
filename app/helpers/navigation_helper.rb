@@ -13,6 +13,11 @@ module NavigationHelper
         label: "Forum",
         path: forum_topics_path,
         dropdown: nil
+      },
+      {
+        label: "Meine Bar",
+        path: my_bar_path,
+        dropdown: nil
       }
     ]
   end
