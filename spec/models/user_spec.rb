@@ -12,6 +12,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:user_roles).dependent(:destroy) }
     it { should have_many(:roles).through(:user_roles) }
     it { should have_one(:user_stat).dependent(:destroy) }
+    it { should have_many(:ingredient_collections).dependent(:destroy) }
   end
 
   describe "Role methods" do
@@ -74,6 +75,47 @@ RSpec.describe User, type: :model do
         expect(super_mod.admin?).to be true
         expect(super_mod.image_moderator?).to be true
         expect(super_mod.recipe_moderator?).to be false
+      end
+    end
+  end
+
+  describe "#default_collection" do
+    let(:user) { create(:user) }
+
+    context "when user has no collections" do
+      it "returns nil" do
+        expect(user.default_collection).to be_nil
+      end
+    end
+
+    context "when user has one collection" do
+      it "returns that collection" do
+        collection = create(:ingredient_collection, user: user)
+        expect(user.default_collection).to eq(collection)
+      end
+    end
+
+    context "when user has multiple collections" do
+      it "returns the default collection" do
+        first = create(:ingredient_collection, user: user)
+        first.update_column(:is_default, false)
+
+        default_collection = create(:ingredient_collection, user: user, is_default: true)
+
+        another = create(:ingredient_collection, user: user)
+        another.update_column(:is_default, false)
+
+        expect(user.default_collection).to eq(default_collection)
+      end
+
+      it "returns first collection if none are marked as default" do
+        first = create(:ingredient_collection, user: user)
+        first.update_column(:is_default, false)
+
+        second = create(:ingredient_collection, user: user)
+        second.update_column(:is_default, false)
+
+        expect(user.default_collection).to eq(first)
       end
     end
   end

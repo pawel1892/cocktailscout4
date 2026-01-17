@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_16_151409) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_17_100001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -37,6 +37,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_16_151409) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "collection_ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "ingredient_collection_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_collection_id", "ingredient_id"], name: "index_collection_ingredients_on_collection_and_ingredient", unique: true
+    t.index ["ingredient_collection_id"], name: "index_collection_ingredients_on_ingredient_collection_id"
+    t.index ["ingredient_id", "ingredient_collection_id"], name: "index_collection_ingredients_on_ingredient_and_collection"
+    t.index ["ingredient_id"], name: "index_collection_ingredients_on_ingredient_id"
   end
 
   create_table "forum_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -84,6 +95,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_16_151409) do
     t.datetime "updated_at", null: false
     t.index ["old_id"], name: "index_forum_topics_on_old_id"
     t.index ["slug"], name: "index_forum_topics_on_slug"
+  end
+
+  create_table "ingredient_collections", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "is_default", default: false, null: false
+    t.string "name", null: false
+    t.text "notes"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_ingredient_collections_on_user_and_name", unique: true
+    t.index ["user_id"], name: "index_ingredient_collections_on_user_id"
   end
 
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -275,11 +297,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_16_151409) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "collection_ingredients", "ingredient_collections"
+  add_foreign_key "collection_ingredients", "ingredients"
   add_foreign_key "forum_posts", "forum_threads"
   add_foreign_key "forum_posts", "users"
   add_foreign_key "forum_posts", "users", column: "last_editor_id"
   add_foreign_key "forum_threads", "forum_topics"
   add_foreign_key "forum_threads", "users"
+  add_foreign_key "ingredient_collections", "users"
   add_foreign_key "ratings", "users"
   add_foreign_key "recipe_comments", "recipes"
   add_foreign_key "recipe_comments", "users"

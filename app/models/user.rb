@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
   has_one :user_stat, dependent: :destroy
 
+  has_many :ingredient_collections, dependent: :destroy
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   normalizes :username, with: ->(u) { u.strip }
 
@@ -45,5 +47,9 @@ class User < ApplicationRecord
 
   def role?(role_name)
     roles.exists?(name: role_name)
+  end
+
+  def default_collection
+    ingredient_collections.find_by(is_default: true) || ingredient_collections.first
   end
 end
