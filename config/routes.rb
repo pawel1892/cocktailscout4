@@ -14,6 +14,15 @@ Rails.application.routes.draw do
   post "rate", to: "ratings#create"
   delete "rate", to: "ratings#destroy"
 
+  # Ingredient Collections API
+  resources :ingredient_collections, only: [ :index, :show, :create, :update, :destroy ] do
+    resources :ingredients, only: [ :create, :destroy ], controller: "ingredient_collections/ingredients" do
+      collection do
+        put "", action: :update  # PUT /ingredient_collections/:id/ingredients (replace all)
+      end
+    end
+  end
+
   # Forum routes (legacy URLs)
   get "cocktailforum", to: "forum_topics#index", as: :forum_topics
   get "cocktailforum/kategorie/:id", to: "forum_threads#index", as: :forum_topic
