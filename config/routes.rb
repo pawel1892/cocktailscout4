@@ -51,6 +51,14 @@ Rails.application.routes.draw do
   patch "cocktailforum/beitrag/:id", to: "forum_posts#update", as: :forum_post
   delete "cocktailforum/beitrag/:id", to: "forum_posts#destroy"
 
+  # Private Messages
+  resources :private_messages, path: "nachrichten", only: [ :index, :show, :new, :create, :destroy ] do
+    collection do
+      get :sent
+      get :unread_count
+    end
+  end
+
   get "design-system", to: "design_system#index"
 
   get "impressum", to: "pages#impressum"

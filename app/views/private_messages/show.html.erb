@@ -1,0 +1,50 @@
+<div class="flex flex-col gap-6">
+  <%# Back Button %>
+  <%= link_to @role == :receiver ? private_messages_path : sent_private_messages_path,
+    class: "link flex items-center gap-1 text-sm" do %>
+    <i class="fas fa-chevron-left"></i>
+    Zurück
+  <% end %>
+
+  <%# Message Card %>
+  <div class="card">
+    <div class="card-header bg-gray-50 border-b border-gray-200 p-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <h1 class="text-2xl font-bold"><%= @message.subject %></h1>
+        <span class="tag tag-neutral">
+          <%= @message.created_at.strftime("%d.%m.%Y, %H:%M") %>
+        </span>
+      </div>
+
+      <div class="mt-2 flex items-center gap-2 text-sm text-gray-600">
+        <span>Von:</span>
+        <%= user_badge(@message.sender) %>
+        <span class="mx-2">•</span>
+        <span>An:</span>
+        <%= user_badge(@message.receiver) %>
+      </div>
+    </div>
+
+    <div class="card-body p-6">
+      <div class="prose prose-sm max-w-none whitespace-pre-wrap">
+        <%= simple_format(@message.body) %>
+      </div>
+    </div>
+  </div>
+
+  <%# Action Buttons %>
+  <div class="flex gap-2">
+    <% if @role == :receiver %>
+      <%= link_to new_private_message_path(receiver_id: @message.sender_id),
+        class: 'btn btn-primary' do %>
+        <i class="fas fa-reply mr-2"></i> Antworten
+      <% end %>
+    <% end %>
+
+    <%= button_to private_message_path(@message), method: :delete,
+      form: { data: { turbo_confirm: 'Nachricht wirklich löschen?' } },
+      class: 'btn btn-outline text-red-600 hover:bg-red-50' do %>
+      <i class="fas fa-trash mr-2"></i> Löschen
+    <% end %>
+  </div>
+</div>

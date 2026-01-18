@@ -1,0 +1,78 @@
+<div class="max-w-4xl mx-auto">
+  <%= link_to private_messages_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
+    <i class="fas fa-chevron-left"></i>
+    Zurück zum Posteingang
+  <% end %>
+
+  <h1 class="text-2xl font-bold mb-6">
+    <% if @receiver %>
+      Nachricht an <%= @receiver.username %> verfassen
+    <% else %>
+      Neue Nachricht
+    <% end %>
+  </h1>
+
+  <div class="card">
+    <div class="card-body p-6">
+      <%= form_with model: @message, url: private_messages_path, local: true do |f| %>
+
+        <% if @receiver %>
+          <%= f.hidden_field :receiver_id, value: @receiver.id %>
+
+          <div class="mb-6">
+            <label class="label-field">Empfänger</label>
+            <div class="p-3 bg-gray-50 rounded border border-gray-200">
+              <%= user_badge(@receiver) %>
+            </div>
+          </div>
+        <% else %>
+          <div class="mb-6">
+            <%= f.label :receiver_id, "Empfänger ID", class: "label-field" %>
+            <%= f.number_field :receiver_id,
+              class: "input-field #{'input-error' if @message.errors[:receiver_id].any?}",
+              placeholder: "Benutzer-ID eingeben" %>
+            <% if @message.errors[:receiver_id].any? %>
+              <div class="form-error-message">
+                <%= @message.errors.full_messages_for(:receiver_id).join(", ") %>
+              </div>
+            <% end %>
+            <p class="text-sm text-gray-500 mt-1">
+              Hinweis: Klicken Sie auf das Profil eines Benutzers, um ihm eine Nachricht zu senden.
+            </p>
+          </div>
+        <% end %>
+
+        <div class="mb-6">
+          <%= f.label :subject, "Betreff", class: "label-field" %>
+          <%= f.text_field :subject,
+            class: "input-field #{'input-error' if @message.errors[:subject].any?}",
+            placeholder: "Betreff der Nachricht" %>
+          <% if @message.errors[:subject].any? %>
+            <div class="form-error-message">
+              <%= @message.errors.full_messages_for(:subject).join(", ") %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="mb-6">
+          <%= f.label :body, "Nachricht", class: "label-field" %>
+          <%= f.text_area :body,
+            rows: 10,
+            class: "input-field #{'input-error' if @message.errors[:body].any?}",
+            placeholder: "Ihre Nachricht..." %>
+          <% if @message.errors[:body].any? %>
+            <div class="form-error-message">
+              <%= @message.errors.full_messages_for(:body).join(", ") %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <%= link_to "Abbrechen", private_messages_path, class: "btn btn-outline" %>
+          <%= f.submit "Nachricht senden", class: "btn btn-primary" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

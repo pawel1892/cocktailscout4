@@ -13,6 +13,8 @@ RSpec.describe User, type: :model do
     it { should have_many(:roles).through(:user_roles) }
     it { should have_one(:user_stat).dependent(:destroy) }
     it { should have_many(:ingredient_collections).dependent(:destroy) }
+    it { should have_many(:sent_private_messages).class_name('PrivateMessage').with_foreign_key('sender_id').dependent(:destroy) }
+    it { should have_many(:received_private_messages).class_name('PrivateMessage').with_foreign_key('receiver_id').dependent(:destroy) }
   end
 
   describe "Role methods" do
@@ -117,6 +119,36 @@ RSpec.describe User, type: :model do
 
         expect(user.default_collection).to eq(first)
       end
+    end
+  end
+
+  describe "#unread_messages_count" do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+
+    it "returns 0 when user has no messages" do
+      expect(user.unread_messages_count).to eq(0)
+    end
+
+    it "returns count of unread received messages" do
+      create(:private_message, sender: other_user, receiver: user, read: false)
+      create(:private_message, sender: other_user, receiver: user, read: false)
+      create(:private_message, sender: other_user, receiver: user, read: true)
+
+      expect(user.unread_messages_count).to eq(2)
+    end
+
+    it "excludes messages deleted by receiver" do
+      create(:private_message, sender: other_user, receiver: user, read: false)
+      create(:private_message, :deleted_by_receiver, sender: other_user, receiver: user, read: false)
+
+      expect(user.unread_messages_count).to eq(1)
+    end
+
+    it "does not count sent messages" do
+      create(:private_message, sender: user, receiver: other_user, read: false)
+
+      expect(user.unread_messages_count).to eq(0)
     end
   end
 end
