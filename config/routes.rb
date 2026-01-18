@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   delete "cocktailforum/beitrag/:id", to: "forum_posts#destroy"
 
   get "design-system", to: "design_system#index"
+
+  get "impressum", to: "pages#impressum"
+  get "datenschutz", to: "pages#datenschutz"
+
   root "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
