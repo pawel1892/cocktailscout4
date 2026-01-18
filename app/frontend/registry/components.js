@@ -16,6 +16,7 @@ const components = {
   BbcodeEditor: () => import('../components/BbcodeEditor.vue'),
   IngredientCollections: () => import('../components/IngredientCollections.vue'),
   ManageCollectionIngredients: () => import('../components/ManageCollectionIngredients.vue'),
+  UserProfileModal: () => import('../components/UserProfileModal.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

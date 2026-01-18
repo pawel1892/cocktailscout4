@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resource :session
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
+  resources :user_profiles, only: [ :show, :update ]
   resources :recipes, path: "rezepte", only: [ :index, :show ] do
     member do
       post :comment, to: "recipe_comments#create"
