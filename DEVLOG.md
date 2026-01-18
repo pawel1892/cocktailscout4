@@ -1,5 +1,17 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-18 23:55 — Footer, Legal Pages & Private Messages Backend
+- **Time spent**: 45 min
+- **Description**:
+	- **Footer Implementation**: Created a clean, centered footer containing only "Impressum" and "Datenschutz" links (no year, no branding).
+	- **Legal Pages**: Created `PagesController` (`impressum`, `datenschutz`), configured public routes, and added views with non-commercial disclaimer.
+	- **Private Messages (Backend)**:
+		- Created `PrivateMessage` model, migration, and associations (`sender`, `receiver`).
+		- Implemented `import:private_messages` task to migrate legacy messages, preserving timestamps and read status.
+	- **Testing**: Added view/request specs for legal pages (passing).
+- **Outcome**: Legal pages are live and compliant. Private messaging backend is established and populated with legacy data.
+
+---
 ## 2026-01-18 16:30 — User Profile Modal Integration & Stats Auto-Update
 - **Time spent**: 45 min
 - **Description**:
@@ -171,11 +183,11 @@
 		- Created `ForumPostsController` and `ForumThreadsController` (create/new actions) with proper routing.
 		- Implemented `ForumThreadForm` form object (though simplistic for now) to handle thread creation.
 	- **Quoting System**: Implemented "Quote" feature that pre-fills the editor with the original post content wrapped in nested `[quote]` tags.
-	- **UI Enhancements**: 
+	- **UI Enhancements**:
 		- Improved forum post typography with increased paragraph spacing (`mb-4`).
 		- Integrated `BbcodeEditor` Vue component (though not fully wired in backend yet, UI is ready).
 		- Wired up "New Thread" and "Reply" buttons in views.
-	- **Bug Fixes**: 
+	- **Bug Fixes**:
 		- Resolved `ForumThread` model visibility issues (moved methods out of `private`).
 		- Fixed syntax error in `ForumThread`.
 		- Addressed Rails 8 deprecation warning by using `status: :unprocessable_content`.
@@ -326,10 +338,10 @@
 - **Time spent**: 1h
 - **Description**:
 	- **Naming Standardization**: Renamed `Recipe#views` to `Recipe#visits_count` to align with the `Visitable` trait and Rails counter-cache conventions.
-	- **Schema Integrity**: 
+	- **Schema Integrity**:
 		- Enforced `utf8mb4_0900_ai_ci` collation project-wide to resolve CI environment mismatches.
 		- Corrected column ordering in the `recipes` table to comply with established standards (moving cache/legacy columns relative to timestamps).
-	- **Test Refactoring**: 
+	- **Test Refactoring**:
 		- Centralized authentication stubs into a reusable `AuthenticationHelpers` module for request specs.
 		- Replaced brittle manual session/cookie stubs with a robust `sign_in` helper.
 		- Enhanced `Recipes` request specs with comprehensive sorting (by rating, count, title) and pagination verification.
@@ -349,7 +361,7 @@
 	- **Integration**:
 		- Added `track_visit` to `RecipesController#show`.
 		- Standardized database collation to `utf8mb4_0900_ai_ci` project-wide to resolve CI issues.
-	- **Testing**: 
+	- **Testing**:
 		- Created shared examples for `Visitable` and integrated them into `Recipe` and `ForumThread` specs.
 		- Added request specs to verify visit tracking for both anonymous and authenticated users.
 - **Outcome**:
@@ -361,16 +373,16 @@
 - **Time spent**: 1h 30m
 - **Description**:
 	- Reimplemented the legacy `user_ranks` system as a modern `UserStat` model.
-	- **Logic**: 
+	- **Logic**:
 		- Ranks are dynamically calculated from points (0-10 scale).
 		- Points are aggregated from user activity: Recipes (15), Images (20), Comments (2), Ratings (1).
-	- **UI**: 
+	- **UI**:
 		- Ported legacy rank colors to `application.css`.
 		- Installed **FontAwesome** (local/npm) for user icons.
 		- Created `user_badge(user)` helper to display the standard "Username + Colored Icon" component.
         - Integrated `user_badge` into Recipes (Index/Show), Comments, and Gallery views.
         - **Fix**: Defined rank colors as standard CSS (not `@utility`) to bypass Tailwind JIT purging caused by dynamic string interpolation.
-	- **Refactoring**: 
+	- **Refactoring**:
 		- Added missing `has_many :recipes` and `has_many :recipe_images` associations to `User` model with `dependent: :nullify`.
 		- **Database**: Updated `user_stats` migration to enforce `null: false, default: 0` for `points`. Rebuilt database and re-imported all data to ensure schema integrity.
         - **Fix**: Corrected `import:all` task to include `recipe_images`, ensuring stats calculation includes image points. Migrated 1874 legacy images.
@@ -390,7 +402,7 @@
 	- **User Extensions**: Added helper methods to the `User` model (`#admin?`, `#forum_moderator?`, etc.).
 	- **Authorization**: Implemented helpers in `ApplicationController` (`require_admin!`, etc.) with "Super User" logic for admins.
 	- **Design System**: Restricted `/design-system` access to Admins only.
-	- **Testing**: 
+	- **Testing**:
 		- Created Factories with traits.
 		- Implemented model specs for roles/users.
 		- Added request specs for access control verification.
@@ -410,7 +422,7 @@
 	- **API & Request Specs**:
 		- Ratings API: 23 tests covering authentication, user isolation, and CRUD.
 		- Gallery: 5 tests for approval filtering and pagination.
-	- **Refactoring**: 
+	- **Refactoring**:
 		- Moved `rating_badge_class` to a dedicated `RatingsHelper`.
 		- Purged empty helpers (`RecipesHelper`, `DesignSystemHelper`).
 		- Added 13 helper-specific tests.
