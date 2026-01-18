@@ -237,7 +237,7 @@ RSpec.describe "User Profiles API", type: :request do
           user: { prename: "Test" }
         }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         json = JSON.parse(response.body)
         expect(json["errors"]).to eq([ "Validation error" ])
       end
