@@ -343,6 +343,46 @@ RSpec.describe "Ingredient Collections API", type: :request do
     end
   end
 
+  describe "GET /ingredient_collections/:id/edit" do
+    let(:collection) { create(:ingredient_collection, user: user, name: "Home Bar") }
+
+    context "when authenticated" do
+      before { sign_in(user) }
+
+      it "renders the edit page" do
+        get edit_ingredient_collection_path(collection)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('manage-collection-ingredients')
+        expect(response.body).to include(collection.id.to_s)
+        expect(response.body).to include(collection.name)
+      end
+
+      it "returns 404 for non-existent collection" do
+        get edit_ingredient_collection_path(id: 99999)
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "returns 404 for other user's collection" do
+        other_collection = create(:ingredient_collection, user: other_user)
+
+        get edit_ingredient_collection_path(other_collection)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when not authenticated" do
+      it "redirects to login page" do
+        get edit_ingredient_collection_path(collection)
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+  end
+
   describe "user isolation" do
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }

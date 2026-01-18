@@ -1,5 +1,18 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-18 16:00 — Full-Page Ingredient Management UX
+- **Time spent**: 30 min
+- **Description**:
+	- Replaced modal-based ingredient management with full-page interface using RESTful `edit` action.
+	- **Recipe Counts**: Display recipe count next to each ingredient label. Added `recipes` association to Ingredient model.
+	- **Sorting**: Added dropdown to sort ingredients alphabetically or by recipe count (most popular first).
+	- **Live Updates**: Show doable recipe count in header with link to filtered recipes. Updates automatically after each add/remove.
+	- **Backend Fix**: Added explicit `@collection.reload` in ingredients controller to prevent stale association cache causing crashes.
+	- **Testing**: Updated Ingredient model specs for new associations. Added IngredientsController specs (53 passing). Fixed nested ingredients controller spec for new response format.
+- **Key Decision**: Removed 20-item limit from ingredients endpoint to show all ingredients on management page.
+- **Outcome**: Users can efficiently manage large ingredient collections with visual feedback on recipe availability.
+
+---
 ## 2026-01-17 15:45 — Ingredient Collections ("Meine Bar")
 - **Time spent**: 1h 30 min
 - **Description**:

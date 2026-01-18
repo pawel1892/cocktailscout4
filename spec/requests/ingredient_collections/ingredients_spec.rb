@@ -153,8 +153,8 @@ RSpec.describe "Ingredient Collections::Ingredients API", type: :request do
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
         expect(json["success"]).to be true
-        expect(json["removed"]["name"]).to eq("Vodka")
         expect(json["collection"]["ingredient_count"]).to eq(1)
+        expect(json["collection"]["doable_recipes_count"]).to be_an(Integer)
         expect(collection.reload.ingredients).not_to include(vodka)
         expect(collection.reload.ingredients).to include(gin)
       end

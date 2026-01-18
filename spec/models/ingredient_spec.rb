@@ -4,6 +4,8 @@ RSpec.describe Ingredient, type: :model do
   describe "Associations" do
     it { should have_many(:collection_ingredients).dependent(:destroy) }
     it { should have_many(:ingredient_collections).through(:collection_ingredients) }
+    it { should have_many(:recipe_ingredients).dependent(:destroy) }
+    it { should have_many(:recipes).through(:recipe_ingredients) }
   end
 
   describe "Validations" do
