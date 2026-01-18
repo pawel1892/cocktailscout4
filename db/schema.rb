@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_17_100001) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_18_160609) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -116,6 +116,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_100001) do
     t.integer "old_id"
     t.string "slug"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "private_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.boolean "deleted_by_receiver", default: false, null: false
+    t.boolean "deleted_by_sender", default: false, null: false
+    t.integer "old_id"
+    t.boolean "read", default: false, null: false
+    t.bigint "receiver_id"
+    t.bigint "sender_id"
+    t.string "subject"
+    t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_private_messages_on_old_id"
+    t.index ["receiver_id"], name: "index_private_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_private_messages_on_sender_id"
   end
 
   create_table "ratings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -305,6 +321,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_100001) do
   add_foreign_key "forum_threads", "forum_topics"
   add_foreign_key "forum_threads", "users"
   add_foreign_key "ingredient_collections", "users"
+  add_foreign_key "private_messages", "users", column: "receiver_id"
+  add_foreign_key "private_messages", "users", column: "sender_id"
   add_foreign_key "ratings", "users"
   add_foreign_key "recipe_comments", "recipes"
   add_foreign_key "recipe_comments", "users"

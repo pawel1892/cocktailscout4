@@ -1,7 +1,7 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :visits, :stats ]
+  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :private_messages, :visits, :stats ]
 
   desc "Import visits from the legacy database"
   task visits: :environment do
@@ -140,6 +140,43 @@ namespace :import do
       print "." if (count % 500).zero?
     end
     puts "\nForum posts imported: #{count}"
+  end
+
+  desc "Import private messages"
+  task private_messages: :environment do
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}"
+
+    puts "Importing private messages..."
+    count = 0
+    Legacy::PrivateMessage.find_each do |legacy_message|
+      sender_id = user_map[legacy_message.sender_id]
+      receiver_id = user_map[legacy_message.receiver_id]
+
+      # Skip if sender or receiver not found
+      next unless sender_id && receiver_id
+
+      # Convert <br /> to newlines for cleaner storage
+      clean_body = legacy_message.message&.gsub(/<br\s*\/?>/i, "\n")
+
+      message = PrivateMessage.find_or_initialize_by(old_id: legacy_message.id)
+      message.assign_attributes(
+        sender_id: sender_id,
+        receiver_id: receiver_id,
+        subject: legacy_message.subject,
+        body: clean_body,
+        read: legacy_message.read || false,
+        deleted_by_receiver: legacy_message.deleted_by_receiver || false,
+        deleted_by_sender: legacy_message.deleted_by_sender || false,
+        created_at: legacy_message.created_at,
+        updated_at: legacy_message.updated_at
+      )
+      message.save!(validate: false)
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nPrivate messages imported: #{count}"
   end
 
   desc "Import roles and user roles"
