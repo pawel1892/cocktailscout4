@@ -1,5 +1,14 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-18 14:28 — Legacy MyBar Import
+- **Time spent**: 15 min
+- **Description**:
+	- Created Legacy::UserIngredient model to access legacy user_ingredients table (dimension='mybar').
+	- Implemented import:mybars rake task to create 'Meine Hausbar' collections from legacy data.
+	- Successfully imported 1,144 collections with ingredient counts ranging from 4 to 269 per user.
+- **Outcome**: All active users with legacy mybar data now have their ingredients available in the new system.
+
+---
 ## 2026-01-18 16:00 — Full-Page Ingredient Management UX
 - **Time spent**: 30 min
 - **Description**:
