@@ -1,8 +1,8 @@
 class IngredientCollectionsController < ApplicationController
-  # API only, no views
+  # API only, no views (except edit which is a UI page)
   allow_unauthenticated_access only: [] # Must be logged in
 
-  before_action :set_collection, only: [ :show, :update, :destroy ]
+  before_action :set_collection, only: [ :show, :edit, :update, :destroy ]
 
   # GET /ingredient_collections
   def index
@@ -22,6 +22,12 @@ class IngredientCollectionsController < ApplicationController
       success: true,
       collection: collection_json(@collection, include_ingredients: true)
     }
+  end
+
+  # GET /ingredient_collections/:id/edit
+  def edit
+    add_breadcrumb "Meine Bar", my_bar_path
+    add_breadcrumb @collection.name
   end
 
   # POST /ingredient_collections
@@ -94,16 +100,21 @@ class IngredientCollectionsController < ApplicationController
     }
 
     if include_ingredients
-      json[:ingredients] = collection.ingredients.map { |i| ingredient_json(i) }
+      # Eager load recipe counts to avoid N+1
+      ingredients_with_counts = collection.ingredients
+        .left_joins(:recipe_ingredients)
+        .select("ingredients.*, COUNT(DISTINCT recipe_ingredients.recipe_id) as recipes_count")
+        .group("ingredients.id")
+
+      json[:ingredients] = ingredients_with_counts.map { |i|
+        {
+          id: i.id,
+          name: i.name,
+          recipes_count: i.recipes_count.to_i
+        }
+      }
     end
 
     json
-  end
-
-  def ingredient_json(ingredient)
-    {
-      id: ingredient.id,
-      name: ingredient.name
-    }
   end
 end

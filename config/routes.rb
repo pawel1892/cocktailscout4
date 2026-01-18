@@ -22,6 +22,9 @@ Rails.application.routes.draw do
 
   # Ingredient Collections API
   resources :ingredient_collections, only: [ :index, :show, :create, :update, :destroy ] do
+    member do
+      get :edit  # HTML page for managing ingredients
+    end
     resources :ingredients, only: [ :create, :destroy ], controller: "ingredient_collections/ingredients" do
       collection do
         put "", action: :update  # PUT /ingredient_collections/:id/ingredients (replace all)

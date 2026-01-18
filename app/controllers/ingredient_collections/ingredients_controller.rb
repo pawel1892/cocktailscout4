@@ -38,22 +38,24 @@ class IngredientCollections::IngredientsController < ApplicationController
       added << ingredient
     end
 
+    @collection.reload
+
     render json: {
       success: errors.empty?,
-      added: added.map { |i| ingredient_json(i) },
+      added: added.map { |i| { id: i.id, name: i.name } },
       errors: errors.presence,
-      collection: collection_json(@collection.reload)
+      collection: collection_json(@collection)
     }, status: (errors.empty? ? :created : :unprocessable_content)
   end
 
   # DELETE /ingredient_collections/:ingredient_collection_id/ingredients/:id
   def destroy
     @collection.ingredients.delete(@ingredient)
+    @collection.reload
 
     render json: {
       success: true,
-      removed: ingredient_json(@ingredient),
-      collection: collection_json(@collection.reload)
+      collection: collection_json(@collection)
     }
   end
 
@@ -75,10 +77,11 @@ class IngredientCollections::IngredientsController < ApplicationController
     end
 
     @collection.ingredients = ingredients
+    @collection.reload
 
     render json: {
       success: true,
-      collection: collection_json(@collection.reload)
+      collection: collection_json(@collection)
     }
   end
 
@@ -107,6 +110,12 @@ class IngredientCollections::IngredientsController < ApplicationController
   end
 
   def collection_json(collection)
+    # Eager load recipe counts to avoid N+1
+    ingredients_with_counts = collection.ingredients
+      .left_joins(:recipe_ingredients)
+      .select("ingredients.*, COUNT(DISTINCT recipe_ingredients.recipe_id) as recipes_count")
+      .group("ingredients.id")
+
     {
       id: collection.id,
       name: collection.name,
@@ -114,16 +123,15 @@ class IngredientCollections::IngredientsController < ApplicationController
       is_default: collection.is_default,
       ingredient_count: collection.ingredients.count,
       doable_recipes_count: collection.doable_recipes.length,
-      ingredients: collection.ingredients.map { |i| ingredient_json(i) },
+      ingredients: ingredients_with_counts.map { |i|
+        {
+          id: i.id,
+          name: i.name,
+          recipes_count: i.recipes_count.to_i
+        }
+      },
       created_at: collection.created_at,
       updated_at: collection.updated_at
-    }
-  end
-
-  def ingredient_json(ingredient)
-    {
-      id: ingredient.id,
-      name: ingredient.name
     }
   end
 end

@@ -14,13 +14,6 @@
       @deleted="handleCollectionDeleted"
     />
 
-    <ManageIngredientsModal
-      :show="showIngredientsModal"
-      :collection="managingCollection"
-      @close="showIngredientsModal = false"
-      @updated="handleIngredientsUpdated"
-    />
-
     <!-- Empty State -->
     <div v-if="collections.length === 0" class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
       <div class="max-w-sm mx-auto">
@@ -130,12 +123,12 @@
 
             <!-- Actions -->
             <div class="pt-4 border-t border-gray-100">
-              <button
-                @click="openIngredientsModal(collection)"
-                class="w-full bg-cs-dark-red hover:bg-cs-dark-red/90 text-white px-4 py-2 rounded-lg transition text-sm font-medium"
+              <a
+                :href="`/ingredient_collections/${collection.id}/edit`"
+                class="block w-full bg-cs-dark-red hover:bg-cs-dark-red/90 text-white px-4 py-2 rounded-lg transition text-sm font-medium text-center"
               >
                 Zutaten verwalten
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -149,15 +142,12 @@ import { ref, onMounted } from 'vue'
 import { useIngredientCollections } from '../composables/useIngredientCollections'
 import CreateCollectionModal from './CreateCollectionModal.vue'
 import EditCollectionModal from './EditCollectionModal.vue'
-import ManageIngredientsModal from './ManageIngredientsModal.vue'
 
 const { collections, loading, fetchCollections } = useIngredientCollections()
 
 const showCreateModal = ref(false)
 const showEditModal = ref(false)
-const showIngredientsModal = ref(false)
 const editingCollection = ref(null)
-const managingCollection = ref(null)
 
 onMounted(() => {
   fetchCollections()
@@ -166,11 +156,6 @@ onMounted(() => {
 const openEditModal = (collection) => {
   editingCollection.value = collection
   showEditModal.value = true
-}
-
-const openIngredientsModal = (collection) => {
-  managingCollection.value = collection
-  showIngredientsModal.value = true
 }
 
 const handleCollectionCreated = () => {
@@ -185,10 +170,6 @@ const handleCollectionUpdated = () => {
 
 const handleCollectionDeleted = () => {
   showEditModal.value = false
-  fetchCollections()
-}
-
-const handleIngredientsUpdated = () => {
   fetchCollections()
 }
 
