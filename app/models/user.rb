@@ -16,6 +16,11 @@ class User < ApplicationRecord
 
   has_many :ingredient_collections, dependent: :destroy
 
+  has_many :sent_private_messages, -> { where(deleted_by_sender: false) },
+    class_name: "PrivateMessage", foreign_key: "sender_id", dependent: :destroy
+  has_many :received_private_messages, -> { where(deleted_by_receiver: false) },
+    class_name: "PrivateMessage", foreign_key: "receiver_id", dependent: :destroy
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   normalizes :username, with: ->(u) { u.strip }
 
@@ -51,5 +56,9 @@ class User < ApplicationRecord
 
   def default_collection
     ingredient_collections.find_by(is_default: true) || ingredient_collections.first
+  end
+
+  def unread_messages_count
+    PrivateMessage.unread_by_user(self).count
   end
 end

@@ -1,5 +1,16 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-19 06:55 — Private Messaging System Frontend & Testing
+- **Time spent**: 30 min
+- **Description**:
+	- **Frontend Implementation**: Created complete private messaging UI with inbox/sent views, message detail, and compose form (plain text, no BBCode).
+	- **User Integration**: Added "Nachricht senden" button to user profile modal for direct messaging from profiles.
+	- **Navigation**: Implemented dropdown menu on username in navbar showing "Mein Profil" and "Meine Nachrichten" with unread badge.
+	- **Authorization**: Enforced privacy with scopes ensuring users only see their own messages. Messages deleted by one participant remain visible to the other.
+	- **Testing**: Comprehensive test suite with 96 passing specs covering model scopes, associations, authorization, soft deletion, and privacy isolation.
+- **Outcome**: Fully functional private messaging system with complete privacy protection and excellent test coverage.
+
+---
 ## 2026-01-18 23:55 — Footer, Legal Pages & Private Messages Backend
 - **Time spent**: 45 min
 - **Description**:

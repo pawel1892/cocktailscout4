@@ -118,15 +118,25 @@ const getGenderText = (gender) => {
     <template #header>
       <div class="flex items-center justify-between">
         <h3 class="text-xl font-bold text-gray-900">Benutzerprofil</h3>
-        <button
-          v-if="isOwnProfile && !isEditing && !loading"
-          @click="startEditing"
-          type="button"
-          class="px-3 py-1.5 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
-        >
-          <i class="fa-solid fa-pen mr-2"></i>
-          Bearbeiten
-        </button>
+        <div class="flex gap-2">
+          <a
+            v-if="!isOwnProfile && !loading && profile && currentUser"
+            :href="`/nachrichten/new?receiver_id=${profile.id}`"
+            class="px-3 py-1.5 text-sm text-white bg-cs-dark-red rounded-lg hover:bg-opacity-90 transition"
+          >
+            <i class="fa-solid fa-envelope mr-2"></i>
+            Nachricht senden
+          </a>
+          <button
+            v-if="isOwnProfile && !isEditing && !loading"
+            @click="startEditing"
+            type="button"
+            class="px-3 py-1.5 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+          >
+            <i class="fa-solid fa-pen mr-2"></i>
+            Bearbeiten
+          </button>
+        </div>
       </div>
     </template>
 
