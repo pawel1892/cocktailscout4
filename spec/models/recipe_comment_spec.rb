@@ -196,4 +196,30 @@ RSpec.describe RecipeComment, type: :model do
       expect(recipe.recipe_comments).to include(comment1, comment2)
     end
   end
+
+  describe "user stats update" do
+    let(:user) { create(:user) }
+    let(:recipe) { create(:recipe) }
+
+    it "updates user stats after creating a comment" do
+      expect {
+        RecipeComment.create!(body: "Great cocktail!", recipe: recipe, user: user)
+      }.to change { user.stat.reload.points }.by(2)
+    end
+
+    it "updates user stats after destroying a comment" do
+      comment = RecipeComment.create!(body: "Great cocktail!", recipe: recipe, user: user)
+      initial_points = user.stat.reload.points
+
+      comment.destroy
+
+      expect(user.stat.reload.points).to eq(initial_points - 2)
+    end
+
+    it "does not raise error when user is nil" do
+      expect {
+        RecipeComment.create!(body: "Anonymous comment", recipe: recipe, user: nil)
+      }.not_to raise_error
+    end
+  end
 end

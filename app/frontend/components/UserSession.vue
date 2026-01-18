@@ -1,7 +1,11 @@
 <template>
   <div class="flex space-x-4">
     <template v-if="isAuthenticated">
-      <span class="text-white">Willkommen, {{ user.username }}</span>
+      <span class="text-white">Willkommen,
+        <button class="hover:underline bg-transparent border-0 p-0 text-white cursor-pointer user-profile-trigger" :data-user-id="user.id">
+          {{ user.username }}
+        </button>
+      </span>
       <button @click="logout" class="hover:underline bg-transparent border-0 p-0 text-cs-gold cursor-pointer">
         Logout
       </button>

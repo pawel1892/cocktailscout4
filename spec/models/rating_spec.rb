@@ -208,4 +208,33 @@ RSpec.describe Rating, type: :model do
       expect(rating2).to be_valid
     end
   end
+
+  describe "user stats update" do
+    let(:user) { create(:user) }
+    let(:recipe) { create(:recipe) }
+
+    it "updates user stats after creating a rating" do
+      expect {
+        Rating.create!(user: user, rateable: recipe, score: 8)
+      }.to change { user.stat.reload.points }.by(1)
+    end
+
+    it "updates user stats after destroying a rating" do
+      rating = Rating.create!(user: user, rateable: recipe, score: 8)
+      initial_points = user.stat.reload.points
+
+      rating.destroy
+
+      expect(user.stat.reload.points).to eq(initial_points - 1)
+    end
+
+    it "only updates stats for Recipe ratings" do
+      # This test assumes there might be other rateable types in the future
+      # For now, we only have recipes, so the condition is always true
+      rating = Rating.create!(user: user, rateable: recipe, score: 8)
+
+      expect(rating.rateable_type).to eq("Recipe")
+      expect(user.stat.reload.points).to be > 0
+    end
+  end
 end

@@ -64,4 +64,30 @@ RSpec.describe ForumPost, type: :model do
       expect(post.user_post_count).to eq(0)
     end
   end
+
+  describe "user stats update" do
+    let(:user) { create(:user) }
+    let(:forum_thread) { create(:forum_thread) }
+
+    it "updates user stats after creating a post" do
+      expect {
+        create(:forum_post, forum_thread: forum_thread, user: user)
+      }.to change { user.stat.reload.points }.by(3)
+    end
+
+    it "updates user stats when post is soft deleted" do
+      post = create(:forum_post, forum_thread: forum_thread, user: user)
+      initial_points = user.stat.reload.points
+
+      post.update(deleted: true)
+
+      expect(user.stat.reload.points).to eq(initial_points - 3)
+    end
+
+    it "does not raise error when user is nil" do
+      expect {
+        create(:forum_post, forum_thread: forum_thread, user: nil)
+      }.not_to raise_error
+    end
+  end
 end

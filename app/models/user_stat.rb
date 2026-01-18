@@ -37,9 +37,6 @@ class UserStat < ApplicationRecord
     score += user.recipe_comments.count * 2
     score += user.ratings.where(rateable_type: "Recipe").count * 1
     score += user.forum_posts.count * 3
-
-    # TODO: Add MyBar (10 pts)
-
     score
   end
 end

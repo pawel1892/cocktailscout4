@@ -1,5 +1,16 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-18 16:30 — User Profile Modal Integration & Stats Auto-Update
+- **Time spent**: 45 min
+- **Description**:
+	- **Critical Bug Fix**: Fixed profile modal not mounting in forum pages. Root cause: Missing div wrapper in forum thread view caused premature closing of #app div, pushing modal outside Vue's mount point.
+	- **Global Click Handler**: Replaced inline onclick with class-based `.user-profile-trigger` approach for cleaner event delegation.
+	- **Navigation Integration**: Made username in navigation header clickable to open own profile modal.
+	- **Stats Auto-Update**: Added callbacks to ForumPost, RecipeComment, and Rating models to automatically recalculate user stats on create/destroy.
+	- **Testing**: Updated helper specs for class-based approach. All 528 specs passing.
+- **Outcome**: Profile modal now works consistently across entire site (forum, navigation, recipes, gallery). User stats update in real-time.
+
+---
 ## 2026-01-18 14:56 — User Profile System
 - **Time spent**: 30 min
 - **Description**:

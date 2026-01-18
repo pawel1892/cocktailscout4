@@ -34,7 +34,7 @@
 
       <% if forum_post.last_editor %>
         <div class="mt-6 pt-2 border-t border-gray-100 text-[10px] italic text-gray-400">
-          Zuletzt bearbeitet von <%= forum_post.last_editor.username %> am <%= forum_post.updated_at.strftime("%d.%m.%Y, %H:%M") %>
+          Zuletzt bearbeitet von <%= user_badge(forum_post.last_editor) %> am <%= forum_post.updated_at.strftime("%d.%m.%Y, %H:%M") %>
         </div>
       <% end %>
 
