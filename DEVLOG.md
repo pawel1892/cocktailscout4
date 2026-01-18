@@ -1,5 +1,22 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-18 14:56 — User Profile System
+- **Time spent**: 30 min
+- **Description**:
+	- Recreated user profile from legacy system with modal-based interface.
+	- **Backend**: Implemented `UserProfilesController` with JSON API for show/update actions. Profile data merged into users table (prename, gender, location, homepage, title).
+	- **Frontend**: Created `UserProfileModal` (Vue) using `BaseModal` pattern, loaded via AJAX when clicking username badges.
+	- **Profile Display**: Shows username with rank-colored icon, points, profile data, statistics (recipes, images, comments, ratings, forum posts, sign-in count), and account info (member since, last active).
+	- **Edit Functionality**: Separate `ProfileEditForm` component for own profile only. Authorization prevents editing other users' profiles.
+	- **User Badge**: Updated `user_badge` helper to dispatch CustomEvent opening modal instead of linking to #.
+	- **Testing**: 23 new RSpec examples covering controller (show/update, authorization, security) and helper (badge rendering, deleted users).
+- **Constraints & Decisions**:
+	- **No Public Email**: Explicitly removed public email display as requested (privacy-first approach).
+	- **Modal vs Page**: Chose modal interface for quick profile access without navigation disruption.
+	- **Authorization**: Returns 403 for unauthorized edits (authenticated users), redirects to login for anonymous users.
+- **Outcome**: Functional user profiles accessible from any username throughout the site. Secure edit functionality with proper user isolation.
+
+---
 ## 2026-01-18 14:28 — Legacy MyBar Import
 - **Time spent**: 15 min
 - **Description**:
