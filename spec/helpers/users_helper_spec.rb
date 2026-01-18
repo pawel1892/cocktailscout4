@@ -24,12 +24,10 @@ RSpec.describe UsersHelper, type: :helper do
         expect(result).to include('testuser')
       end
 
-      it "includes JavaScript to open profile modal" do
+      it "includes trigger class for profile modal" do
         result = helper.user_badge(user)
 
-        expect(result).to include('window.dispatchEvent')
-        expect(result).to include('open-user-profile')
-        expect(result).to include('userId: 123')
+        expect(result).to include('user-profile-trigger')
       end
 
       it "includes rank-based color class on user icon" do
@@ -86,8 +84,8 @@ RSpec.describe UsersHelper, type: :helper do
       it "does not include interactive elements for deleted users" do
         result = helper.user_badge(nil)
 
-        expect(result).not_to include('onclick')
-        expect(result).not_to include('open-user-profile')
+        expect(result).not_to include('user-profile-trigger')
+        expect(result).not_to include('data-user-id')
       end
     end
 

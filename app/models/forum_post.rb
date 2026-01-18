@@ -8,6 +8,9 @@ class ForumPost < ApplicationRecord
   validates :body, presence: true
   # Note: user is optional to allow for deleted users, but should be present at creation
 
+  after_create :update_user_stats
+  after_save :update_user_stats_if_deleted, if: -> { saved_change_to_deleted? }
+
   scope :search_by_body, ->(query) {
     return all if query.blank?
     if Rails.env.test?
@@ -34,5 +37,13 @@ class ForumPost < ApplicationRecord
     if forum_thread.forum_posts.count == 0
       forum_thread.update(deleted: true)
     end
+  end
+
+  def update_user_stats
+    user&.stat&.recalculate!
+  end
+
+  def update_user_stats_if_deleted
+    update_user_stats if deleted?
   end
 end

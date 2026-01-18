@@ -9,9 +9,8 @@ module UsersHelper
 
     tag.button(
       type: "button",
-      class: "link inline-flex items-center gap-1 font-medium hover:underline cursor-pointer",
-      data: { user_id: user.id },
-      onclick: "window.dispatchEvent(new CustomEvent('open-user-profile', { detail: { userId: #{user.id} } }))"
+      class: "link inline-flex items-center gap-1 font-medium hover:underline cursor-pointer user-profile-trigger",
+      data: { user_id: user.id }
     ) do
       concat tag.span(user.username, class: "text-zinc-900")
       concat tag.i(class: "fa-solid fa-user rank-#{user.rank}-color")

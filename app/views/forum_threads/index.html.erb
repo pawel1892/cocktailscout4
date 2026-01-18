@@ -31,7 +31,7 @@
                     <%= link_to forum_thread.title, link_to_forum_thread(forum_thread), class: "link hover:underline break-words" %>
                   </h3>
                   <div class="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
-                    <span>Von <%= forum_thread.user&.username || 'Unbekannt' %></span>
+                    <span>Von <%= user_badge(forum_thread.user) %></span>
                     <span><i class="far fa-eye mr-1"></i> <%= forum_thread.views %></span>
                     <span><i class="far fa-comments mr-1"></i> <%= forum_thread.count_posts %></span>
                   </div>
@@ -81,7 +81,7 @@
                   <div class="min-w-0">
                     <%= link_to forum_thread.title, link_to_forum_thread(forum_thread), class: "link font-bold hover:underline block truncate max-w-md", title: forum_thread.title %>
                     <div class="text-xs text-gray-500 mt-0.5">
-                      Erstellt von <%= forum_thread.user&.username || 'Unbekannt' %> • <%= forum_thread.created_at.strftime("%d.%m.%Y") %>
+                      Erstellt von <%= user_badge(forum_thread.user) %> • <%= forum_thread.created_at.strftime("%d.%m.%Y") %>
                     </div>
                   </div>
                 </div>
