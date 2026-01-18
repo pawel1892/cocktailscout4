@@ -1,3 +1,20 @@
+# Cocktailscout4 Dev Log
+
+## 2026-01-17 15:45 — Ingredient Collections ("Meine Bar")
+- **Time spent**: 1h 30 min
+- **Description**:
+	- Implemented multi-collection ingredient management system replacing legacy single "mybar".
+	- **Database**: `ingredient_collections` (user-scoped, name/notes/is_default) and `collection_ingredients` join table.
+	- **Backend**: RESTful API with nested ingredient management. Includes `doable_recipes` calculation using SQL HAVING clause.
+	- **Frontend**: Vue components (IngredientCollections, Create/Edit/ManageIngredientsModal) with reactive composable.
+	- **Recipe Filtering**: Added `by_collection` scope using subquery pattern (`WHERE id IN`) to ensure compatibility with existing filters (rating, tag, ingredient, search).
+	- **Testing**: 195 passing tests covering CRUD, filtering combinations, and order independence.
+- **Key Decision**:
+	- Named "ingredient_collections" (not "mybars") to avoid future conflict with real-life bar locations.
+	- Fixed grouped query `.count` issue (returns hash) by using `.length` instead.
+	- Subquery approach in scope ensures all filters chain together correctly.
+- **Outcome**: Users can manage multiple ingredient lists and filter recipes by what they can make.
+
 ---
 ## 2026-01-16 22:57 — Full-Text Search Implementation (Recipes & Forum)
 - **Time spent**: 1h
