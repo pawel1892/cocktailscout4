@@ -237,9 +237,40 @@ RSpec.describe "Recipes", type: :request do
     end
 
         it "searches by title" do
-          get recipes_path(q: "Strong")
-          expect(response.body).to include(recipe1.title)
-          expect(response.body).not_to include(recipe2.title)
-        end
+      get recipes_path(q: "Strong")
+      expect(response.body).to include(recipe1.title)
+      expect(response.body).not_to include(recipe2.title)
+    end
+
+    describe "Favorites filter" do
+      let(:user) { create(:user) }
+      let!(:fav_recipe) { create(:recipe, title: "My Fav") }
+      let!(:other_recipe) { create(:recipe, title: "Not Fav") }
+
+      before do
+        Favorite.create!(user: user, favoritable: fav_recipe)
+      end
+
+      it "shows only favorited recipes when authenticated and filter is active" do
+        sign_in(user)
+        get recipes_path(filter: "favorites")
+        expect(response.body).to include("My Fav")
+        expect(response.body).not_to include("Not Fav")
+      end
+
+      it "ignores favorites filter when not authenticated" do
+        get recipes_path(filter: "favorites")
+        # Should show all (default sort logic applies, usually visits/desc)
+        expect(response.body).to include("My Fav")
+        expect(response.body).to include("Not Fav")
+      end
+
+      it "shows all recipes when filter is not active" do
+        sign_in(user)
+        get recipes_path
+        expect(response.body).to include("My Fav")
+        expect(response.body).to include("Not Fav")
       end
     end
+  end
+end

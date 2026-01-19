@@ -13,6 +13,11 @@ class RecipesController < ApplicationController
     query = query.tagged_with(params[:tag]) if params[:tag].present?
     query = query.by_collection(params[:collection_id])
 
+    # Filter by favorites
+    if params[:filter] == "favorites" && authenticated?
+      query = query.joins(:favorites).where(favorites: { user_id: Current.user.id })
+    end
+
     # Filter data
     @tags = ActsAsTaggableOn::Tag.order(:name)
     @ingredients = Ingredient.order(:name)
@@ -23,6 +28,7 @@ class RecipesController < ApplicationController
     query = query.left_joins(:user) if sort_column == "users.username"
 
     @pagy, @recipes = pagy(query.order("#{sort_column} #{sort_direction}"))
+    @favorite_recipe_ids = Current.user ? Current.user.favorites.where(favoritable_type: "Recipe", favoritable_id: @recipes.map(&:id)).pluck(:favoritable_id) : []
   end
 
   def show
