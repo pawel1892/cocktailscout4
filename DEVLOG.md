@@ -1,5 +1,14 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-19 22:25 — Favorites UI & Filtering
+- **Time spent**: 20 min
+- **Description**:
+	- **Frontend**: Added `FavoriteToggle` to recipe index (next to title) and show pages.
+	- **Filtering**: Implemented "Favorites only" filter in recipe index.
+	- **Bugfix**: Fixed persistence of the favorites filter when removing other active filters.
+
+---
+
 ## 2026-01-19 12:05 — Favorites Feature (Backend & Import)
 - **Time spent**: 30 min
 - **Description**:

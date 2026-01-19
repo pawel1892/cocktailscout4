@@ -17,6 +17,7 @@ const components = {
   IngredientCollections: () => import('../components/IngredientCollections.vue'),
   ManageCollectionIngredients: () => import('../components/ManageCollectionIngredients.vue'),
   UserProfileModal: () => import('../components/UserProfileModal.vue'),
+  FavoriteToggle: () => import('../components/FavoriteToggle.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

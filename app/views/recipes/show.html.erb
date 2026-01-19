@@ -3,11 +3,20 @@
 <% end %>
 
 <!-- Title -->
-<div class="mb-6">
-  <h1 class="text-3xl md:text-4xl font-bold mb-2"><%= @recipe.title %></h1>
+<div class="mb-6 flex items-start justify-between gap-4">
+  <div class="min-w-0 flex-1">
+    <h1 class="text-3xl md:text-4xl font-bold mb-2 break-words"><%= @recipe.title %></h1>
+    <!-- Tags -->
+    <%= render "recipes/tag_list", tags: @recipe.tags %>
+  </div>
 
-  <!-- Tags -->
-  <%= render "recipes/tag_list", tags: @recipe.tags %>
+  <div class="flex-shrink-0 pt-1">
+    <favorite-toggle
+      favoritable-type="Recipe"
+      :favoritable-id="<%= @recipe.id %>"
+      :initial-favorited="<%= (Current.user && Current.user.favorites.exists?(favoritable: @recipe)) ? 'true' : 'false' %>"
+    ></favorite-toggle>
+  </div>
 </div>
 
 <!-- Stats Bar -->
