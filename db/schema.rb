@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_18_160609) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_19_115626) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -48,6 +48,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_18_160609) do
     t.index ["ingredient_collection_id"], name: "index_collection_ingredients_on_ingredient_collection_id"
     t.index ["ingredient_id", "ingredient_collection_id"], name: "index_collection_ingredients_on_ingredient_and_collection"
     t.index ["ingredient_id"], name: "index_collection_ingredients_on_ingredient_id"
+  end
+
+  create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "favoritable_id", null: false
+    t.string "favoritable_type", null: false
+    t.integer "old_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable"
+    t.index ["old_id"], name: "index_favorites_on_old_id"
+    t.index ["user_id", "favoritable_type", "favoritable_id"], name: "index_favorites_unique_user_favoritable", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "forum_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -315,6 +328,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_18_160609) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "collection_ingredients", "ingredient_collections"
   add_foreign_key "collection_ingredients", "ingredients"
+  add_foreign_key "favorites", "users"
   add_foreign_key "forum_posts", "forum_threads"
   add_foreign_key "forum_posts", "users"
   add_foreign_key "forum_posts", "users", column: "last_editor_id"

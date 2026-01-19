@@ -28,12 +28,12 @@
   </head>
 
   <body>
-    <div id="app">
+    <div id="app" class="min-h-screen flex flex-col">
       <%= render "layouts/header" %>
 
       <%= render "layouts/flash_messages" %>
 
-      <div class="container mx-auto px-4 py-6">
+      <div class="container mx-auto px-4 py-6 grow">
         <%= yield %>
       </div>
 

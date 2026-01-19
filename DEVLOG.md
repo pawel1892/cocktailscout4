@@ -1,5 +1,18 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-19 12:05 — Favorites Feature (Backend & Import)
+- **Time spent**: 30 min
+- **Description**:
+	- **Layout**: Fixed sticky footer implementation (using flex-col/grow) and reduced its height.
+	- **Backend**: Implemented polymorphic `Favorite` model (replacing legacy `UserRecipe`) with uniqueness constraints and proper indexing.
+	- **Concerns**: Created `Favoritable` concern for easy attachment to models (added to `Recipe`).
+	- **Legacy Import**: Added and executed `import:favorites` rake task, successfully migrating 9747 records from `user_recipes`.
+	- **API**: Implemented `FavoritesController` with RESTful `create`/`destroy` endpoints paralleling the Rating system.
+	- **Testing**: Added comprehensive model specs (associations, uniqueness) and request specs (authentication, isolation).
+- **Outcome**: Robust backend foundation for the favorites feature, fully populated with legacy data and ready for frontend integration.
+
+---
+
 ## 2026-01-19 06:55 — Private Messaging System Frontend & Testing
 - **Time spent**: 30 min
 - **Description**:

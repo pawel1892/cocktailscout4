@@ -10,6 +10,8 @@ RSpec.describe Recipe, type: :model do
     it { should have_many(:recipe_comments).dependent(:destroy) }
     it { should have_many(:recipe_images).dependent(:destroy) }
     it { should have_many(:ratings).dependent(:destroy) }
+    it { should have_many(:favorites).dependent(:destroy) }
+    it { should have_many(:favorited_by_users).through(:favorites) }
   end
 
   describe "Validations" do
