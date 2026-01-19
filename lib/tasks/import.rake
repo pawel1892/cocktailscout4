@@ -1,7 +1,7 @@
 # lib/tasks/import.rake
 namespace :import do
   desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :private_messages, :visits, :stats ]
+  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :private_messages, :visits, :favorites, :stats ]
 
   desc "Import visits from the legacy database"
   task visits: :environment do
@@ -473,5 +473,39 @@ namespace :import do
       user.stat.recalculate!
     end
     puts "Stats updated for #{User.count} users."
+  end
+
+  desc "Import favorites (user_recipes) from the legacy database"
+  task favorites: :environment do
+    puts "Loading maps..."
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    puts "Maps loaded. Users: #{user_map.size}, Recipes: #{recipe_map.size}"
+
+    puts "Importing favorites..."
+    count = 0
+    Legacy::UserRecipe.find_each do |legacy_favorite|
+      new_user_id = user_map[legacy_favorite.user_id]
+      new_recipe_id = recipe_map[legacy_favorite.recipe_id]
+
+      next unless new_user_id && new_recipe_id
+
+      favorite = Favorite.find_or_initialize_by(
+        user_id: new_user_id,
+        favoritable_type: "Recipe",
+        favoritable_id: new_recipe_id
+      )
+
+      favorite.assign_attributes(
+        old_id: legacy_favorite.id,
+        created_at: legacy_favorite.created_at,
+        updated_at: legacy_favorite.updated_at
+      )
+
+      favorite.save!(validate: false)
+      count += 1
+      print "." if (count % 100).zero?
+    end
+    puts "\nFavorites imported: #{count}"
   end
 end

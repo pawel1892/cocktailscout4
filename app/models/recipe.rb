@@ -1,4 +1,5 @@
 class Recipe < ApplicationRecord
+  include Favoritable
   include Rateable
   include Visitable
   acts_as_taggable_on :tags

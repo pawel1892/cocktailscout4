@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   post "rate", to: "ratings#create"
   delete "rate", to: "ratings#destroy"
 
+  post "favorite", to: "favorites#create"
+  delete "favorite", to: "favorites#destroy"
+
   # My Bar (Ingredient Collections UI)
   get "meine-bar", to: "my_bar#index", as: :my_bar
 

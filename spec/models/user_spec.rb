@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:roles).through(:user_roles) }
     it { should have_one(:user_stat).dependent(:destroy) }
     it { should have_many(:ingredient_collections).dependent(:destroy) }
+    it { should have_many(:favorites).dependent(:destroy) }
     it { should have_many(:sent_private_messages).class_name('PrivateMessage').with_foreign_key('sender_id').dependent(:destroy) }
     it { should have_many(:received_private_messages).class_name('PrivateMessage').with_foreign_key('receiver_id').dependent(:destroy) }
   end
