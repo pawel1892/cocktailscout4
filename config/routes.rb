@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resource :session
   resource :registration, only: %i[new create]
+  resources :confirmations, only: %i[new create edit], param: :token
   resources :passwords, param: :token
   resources :user_profiles, only: [ :show, :update ]
   resources :recipes, path: "rezepte", only: [ :index, :show ] do

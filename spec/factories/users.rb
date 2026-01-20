@@ -3,6 +3,11 @@ FactoryBot.define do
     sequence(:email_address) { |n| "user#{n}@example.com" }
     sequence(:username) { |n| "user#{n}" }
     password { "password" }
+    confirmed_at { Time.current }
+
+    trait :unconfirmed do
+      confirmed_at { nil }
+    end
 
     trait :admin do
       after(:create) do |user|

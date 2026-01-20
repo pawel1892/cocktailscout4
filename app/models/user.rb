@@ -26,11 +26,32 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   normalizes :username, with: ->(u) { u.strip }
 
+  before_create :generate_confirmation_token
+
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   delegate :rank, :points, to: :stat
+
+  def confirm!
+    update!(confirmed_at: Time.current, confirmation_token: nil)
+  end
+
+  def confirmed?
+    confirmed_at.present?
+  end
+
+  def generate_confirmation_token
+    self.confirmation_token = SecureRandom.urlsafe_base64
+    self.confirmation_sent_at = Time.current
+  end
+
+  def send_confirmation_email!
+    generate_confirmation_token
+    save!
+    UserMailer.confirmation_instructions(self).deliver_later
+  end
 
   def stat
     user_stat || create_user_stat

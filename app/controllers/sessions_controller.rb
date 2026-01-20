@@ -18,6 +18,14 @@ class SessionsController < ApplicationController
     user = User.find_by(email_address: login) || User.find_by(username: login)
 
     if user && user.authenticate(params[:password])
+      unless user.confirmed?
+        respond_to do |format|
+          format.html { redirect_to new_session_path, alert: "Bitte bestätige zuerst deine E-Mail-Adresse." }
+          format.json { render json: { error: "Bitte bestätige zuerst deine E-Mail-Adresse." }, status: :unauthorized }
+        end
+        return
+      end
+
       user.increment!(:sign_in_count)
       start_new_session_for user
       respond_to do |format|
