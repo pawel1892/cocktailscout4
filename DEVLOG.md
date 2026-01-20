@@ -1,5 +1,21 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-20 22:24 — Account Confirmation & Mailer Implementation
+- **Time spent**: 1h
+- **Description**:
+	- **Mailer**: Implemented `UserMailer` with multipart (HTML/Text) templates in German. Styled with project colors (#360D0C, #CBB859) and embedded brand logo.
+	- **Infrastructure**: Configured `letter_opener` for zero-setup local email previewing.
+	- **Confirmation Flow**:
+		- Added mandatory email confirmation for new registrations.
+		- Implemented `ConfirmationsController` for token verification and resending instructions.
+		- Hardened `SessionsController` to block unconfirmed logins with proper format negotiation (HTML/JSON).
+	- **UI**: Added "Bestätigung erneut senden" links to both Rails login page and Vue-based `AuthForm`. Added success feedback for AJAX registrations.
+	- **Import**: Updated `import:users` to preserve legacy `confirmed_at` status and filter for confirmed users.
+	- **Testing**: Added model and request specs covering the full confirmation lifecycle.
+- **Outcome**: Secure, professional account activation flow with full support for both traditional and AJAX-based authentication.
+
+---
+
 ## 2026-01-19 22:25 — Favorites UI & Filtering
 - **Time spent**: 20 min
 - **Description**:
