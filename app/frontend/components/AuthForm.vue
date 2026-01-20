@@ -73,6 +73,10 @@
         <div v-if="error" class="callout-red mb-4">
           <p class="text-sm">{{ error }}</p>
         </div>
+
+        <div v-if="successMessage" class="rounded-md bg-green-50 p-4 mb-4">
+          <p class="text-sm text-green-800">{{ successMessage }}</p>
+        </div>
         
         <div v-if="errors.length" class="callout-red mb-4">
           <ul class="list-disc pl-5 text-sm">
@@ -88,6 +92,15 @@
           >
             {{ loading ? 'Verarbeite...' : (isLoginMode ? 'Anmelden' : 'Registrieren') }}
           </button>
+        </div>
+
+        <div v-if="isLoginMode" class="mt-4 text-center space-y-1">
+          <div>
+            <a href="/passwords/new" class="text-gray-500 hover:text-cs-dark-red text-xs">Passwort vergessen?</a>
+          </div>
+          <div>
+            <a href="/confirmations/new" class="text-gray-500 hover:text-cs-dark-red text-xs">Bestätigungs-E-Mail nicht erhalten?</a>
+          </div>
         </div>
         
         <div class="mt-4 text-center">
@@ -122,6 +135,7 @@ watch(() => props.initialMode, (newMode) => {
 
 const loading = ref(false)
 const error = ref(null)
+const successMessage = ref(null)
 const errors = ref([])
 
 const form = reactive({
@@ -134,6 +148,7 @@ const form = reactive({
 const toggleMode = () => {
   isLoginMode.value = !isLoginMode.value
   error.value = null
+  successMessage.value = null
   errors.value = []
   form.password = ''
   form.password_confirmation = ''
@@ -144,6 +159,7 @@ const toggleMode = () => {
 const handleSubmit = async () => {
   loading.value = true
   error.value = null
+  successMessage.value = null
   errors.value = []
 
   let result
@@ -174,7 +190,11 @@ const handleSubmit = async () => {
       form.password = ''
       form.password_confirmation = ''
       
-      emit('success')
+      if (isAuthenticated.value) {
+        emit('success')
+      } else {
+        successMessage.value = result.message || "Registrierung erfolgreich! Bitte überprüfe deine E-Mails."
+      }
   }
 }
 </script>

@@ -65,3 +65,5 @@ gem "rails-i18n", "~> 8.1"
 gem "acts-as-taggable-on", "~> 13.0"
 
 gem "mini_magick", "~> 5.3"
+
+gem "letter_opener", "~> 1.10", group: :development

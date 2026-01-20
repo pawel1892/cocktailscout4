@@ -46,20 +46,10 @@ export function useAuth() {
 
   const register = async (formData) => {
     try {
-      const response = await fetch('/registration.json', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({ user: formData })
-      })
-
       const data = await response.json()
       if (response.ok) {
         state.user = data.user
-        return { success: true, user: data.user }
+        return { success: true, user: data.user, message: data.message }
       } else {
         return { success: false, errors: data.errors }
       }

@@ -1,0 +1,12 @@
+Willkommen bei CocktailScout!
+==================================================
+
+Hallo <%= @user.username %>,
+
+vielen Dank für deine Registrierung. Bitte bestätige deine E-Mail-Adresse, um dein Konto zu aktivieren.
+
+Klicke dazu bitte auf folgenden Link:
+<%= edit_confirmation_url(token: @token) %>
+
+Prost,
+Dein CocktailScout Team

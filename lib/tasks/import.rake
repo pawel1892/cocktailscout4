@@ -435,7 +435,7 @@ namespace :import do
     puts "Found #{active_user_ids.count} active users."
 
     puts "Importing users..."
-    Legacy::User.where(id: active_user_ids).includes(:user_profile).find_each do |legacy_user|
+    Legacy::User.where(id: active_user_ids).where.not(confirmed_at: nil).includes(:user_profile).find_each do |legacy_user|
       user = User.find_or_initialize_by(old_id: legacy_user.id)
 
       # Base user attributes
@@ -445,6 +445,7 @@ namespace :import do
         username: legacy_user.login,
         sign_in_count: legacy_user.sign_in_count,
         last_active_at: legacy_user.last_active_at,
+        confirmed_at: legacy_user.confirmed_at,
         created_at: legacy_user.created_at,
         updated_at: legacy_user.updated_at
       )
