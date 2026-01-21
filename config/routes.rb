@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resources :confirmations, only: %i[new create edit], param: :token
   resources :passwords, param: :token
+  get "email_aendern", to: "email_changes#new", as: :new_email_change
+  resource :email_change, only: [ :create, :edit ], path: "email_aendern"
   resources :user_profiles, only: [ :show, :update ]
   resources :recipes, path: "rezepte", only: [ :index, :show ] do
     member do

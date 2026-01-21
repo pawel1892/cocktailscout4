@@ -43,6 +43,13 @@
                   {{ unreadCount }}
                 </span>
               </a>
+              <a
+                href="/email_aendern"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-at"></i>
+                E-Mail ändern
+              </a>
             </div>
           </div>
         </div>
