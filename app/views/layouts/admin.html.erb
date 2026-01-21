@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CocktailScout Admin</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'application' %>
+    <%= vite_stylesheet_tag 'application' %>
+  </head>
+
+  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="flex flex-col min-h-screen">
+      <!-- Admin Header -->
+      <nav class="bg-cs-dark-red text-white p-4 shadow-md">
+        <div class="container mx-auto flex items-center justify-between">
+          <!-- Logo & Brand -->
+          <div class="flex items-center gap-4">
+            <a href="/admin/reports" class="flex items-center gap-2 font-bold text-xl tracking-tight">
+              <img src="/logo.svg" class="h-8 w-auto bg-white rounded-full p-1" alt="CocktailScout Admin">
+              <span>Admin Bereich</span>
+            </a>
+            
+            <!-- Navigation -->
+            <div class="hidden md:flex ml-8 space-x-6">
+              <%= link_to admin_reports_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'reports'}" do %>
+                Meldungen
+                <% if Report.pending.count > 0 %>
+                  <span class="ml-1 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                    <%= Report.pending.count %>
+                  </span>
+                <% end %>
+              <% end %>
+              
+              <%= link_to "Zurück zur Seite", root_path, class: "hover:text-cs-gold transition opacity-70" %>
+            </div>
+          </div>
+
+          <!-- User Info -->
+          <div class="text-sm opacity-80">
+            Angemeldet als <%= Current.user&.username %>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="container mx-auto px-4 py-8 flex-grow">
+        <%= render "layouts/flash_messages" %>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

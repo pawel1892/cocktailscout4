@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_21_113211) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_21_121914) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -223,6 +223,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_113211) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "reports", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "old_id"
+    t.integer "reason", default: 0, null: false
+    t.bigint "reportable_id", null: false
+    t.string "reportable_type", null: false
+    t.bigint "reporter_id", null: false
+    t.text "resolution_notes"
+    t.bigint "resolved_by_id"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
+    t.index ["resolved_by_id"], name: "index_reports_on_resolved_by_id"
+    t.index ["status"], name: "index_reports_on_status"
+  end
+
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -352,6 +370,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_113211) do
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipes", "users"
   add_foreign_key "recipes", "users", column: "updated_by_id"
+  add_foreign_key "reports", "users", column: "reporter_id"
+  add_foreign_key "reports", "users", column: "resolved_by_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "user_roles", "roles"

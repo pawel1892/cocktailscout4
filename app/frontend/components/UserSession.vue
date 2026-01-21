@@ -9,10 +9,10 @@
           >
             {{ user.username }}
             <span
-              v-if="unreadCount > 0"
+              v-if="totalNotifications > 0"
               class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
             >
-              {{ unreadCount }}
+              {{ totalNotifications }}
             </span>
           </button>
 
@@ -57,6 +57,20 @@
                 <i class="fa-solid fa-key"></i>
                 Passwort ändern
               </a>
+              <a
+                v-if="user.is_moderator"
+                href="/admin/reports"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 border-t border-gray-100 mt-1 pt-2"
+              >
+                <i class="fa-solid fa-shield-halved"></i>
+                Admin Bereich
+                <span
+                  v-if="reportCount > 0"
+                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
+                >
+                  {{ reportCount }}
+                </span>
+              </a>
             </div>
           </div>
         </div>
@@ -85,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useAuth } from '../composables/useAuth'
 import AuthForm from './AuthForm.vue'
 
@@ -94,6 +108,9 @@ const showModal = ref(false)
 const initialMode = ref('login') // 'login' or 'register'
 const showUserMenu = ref(false)
 const unreadCount = ref(0)
+const reportCount = ref(0)
+
+const totalNotifications = computed(() => unreadCount.value + reportCount.value)
 
 const openLogin = () => {
   initialMode.value = 'login'
@@ -139,12 +156,28 @@ const fetchUnreadCount = async () => {
   }
 }
 
+const fetchReportCount = async () => {
+  if (!isAuthenticated.value || !user.value?.is_moderator) return
+
+  try {
+    const response = await fetch('/admin/reports/count')
+    if (response.ok) {
+      const data = await response.json()
+      reportCount.value = data.count
+    }
+  } catch (error) {
+    console.error('Failed to fetch report count:', error)
+  }
+}
+
 // Fetch unread count on mount and when authentication status changes
 watch(isAuthenticated, (newValue) => {
   if (newValue) {
     fetchUnreadCount()
+    if (user.value?.is_moderator) fetchReportCount()
   } else {
     unreadCount.value = 0
+    reportCount.value = 0
   }
 }, { immediate: true })
 
@@ -152,7 +185,12 @@ watch(isAuthenticated, (newValue) => {
 onMounted(() => {
   if (isAuthenticated.value) {
     fetchUnreadCount()
-    setInterval(fetchUnreadCount, 60000)
+    if (user.value?.is_moderator) fetchReportCount()
+    
+    setInterval(() => {
+      fetchUnreadCount()
+      if (user.value?.is_moderator) fetchReportCount()
+    }, 60000)
   }
 })
 
