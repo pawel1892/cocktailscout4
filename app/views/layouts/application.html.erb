@@ -24,7 +24,7 @@
     <%= vite_stylesheet_tag 'application' %>
 
     <% authenticated? %>
-    <meta name="current-user" content="<%= (Current.user ? Current.user.as_json(only: [:id, :email_address, :username]) : nil).to_json %>">
+    <meta name="current-user" content="<%= (Current.user ? Current.user.as_json(only: [:id, :email_address, :username]).merge(is_moderator: Current.user.moderator?) : nil).to_json %>">
   </head>
 
   <body>
@@ -40,6 +40,7 @@
       <%= render "layouts/footer" %>
 
       <user-profile-modal></user-profile-modal>
+      <content-report-modal></content-report-modal>
     </div>
   </body>
 </html>

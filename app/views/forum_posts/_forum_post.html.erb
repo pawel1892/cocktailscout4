@@ -6,8 +6,10 @@
       <a href="#post-<%= forum_post.id %>" class="link hover:underline">#<%= forum_post.id %></a>
     </div>
     <div class="flex items-center gap-3">
-      <%= link_to '#', class: 'link flex items-center gap-1 hover:underline' do %>
-        <i class="fas fa-flag text-[10px]"></i> Beitrag melden
+      <% if Current.user %>
+        <button onclick="window.dispatchEvent(new CustomEvent('open-report-modal', { detail: { type: 'ForumPost', id: <%= forum_post.id %> } }))" class="link flex items-center gap-1 hover:underline bg-transparent border-0 p-0 cursor-pointer">
+          <i class="fas fa-flag text-[10px]"></i> Beitrag melden
+        </button>
       <% end %>
     </div>
   </div>

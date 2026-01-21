@@ -85,6 +85,10 @@ class User < ApplicationRecord
     role?("image_moderator")
   end
 
+  def moderator?
+    admin? || forum_moderator? || recipe_moderator? || image_moderator?
+  end
+
   def role?(role_name)
     roles.exists?(name: role_name)
   end

@@ -46,5 +46,11 @@
       class: 'btn btn-outline text-red-600 hover:bg-red-50' do %>
       <i class="fas fa-trash mr-2"></i> Löschen
     <% end %>
+
+    <% if @role == :receiver %>
+      <button type="button" onclick="window.dispatchEvent(new CustomEvent('open-report-modal', { detail: { type: 'PrivateMessage', id: <%= @message.id %> } }))" class="btn btn-outline text-gray-500 hover:text-red-500 hover:bg-gray-50 flex items-center">
+        <i class="fas fa-flag mr-2"></i> Melden
+      </button>
+    <% end %>
   </div>
 </div>

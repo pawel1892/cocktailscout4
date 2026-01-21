@@ -9,6 +9,16 @@ Rails.application.routes.draw do
   get "passwort_aendern", to: "password_changes#new", as: :new_password_change
   resource :password_change, only: [ :create ], path: "passwort_aendern"
 
+  resources :reports, only: [ :create ]
+
+  namespace :admin do
+    resources :reports, only: [ :index, :update ] do
+      collection do
+        get :count
+      end
+    end
+  end
+
   resources :user_profiles, only: [ :show, :update ]
   resources :recipes, path: "rezepte", only: [ :index, :show ] do
     member do

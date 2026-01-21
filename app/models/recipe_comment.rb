@@ -1,4 +1,5 @@
 class RecipeComment < ApplicationRecord
+  include Reportable
   belongs_to :user, optional: true
   belongs_to :recipe
 

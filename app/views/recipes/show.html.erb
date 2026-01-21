@@ -140,12 +140,17 @@
 
       <div class="space-y-3 mb-6">
         <% @comments.each do |comment| %>
-          <div id="comment-<%= comment.id %>" class="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200">
-            <div class="flex items-center gap-2 mb-2">
-              <%= user_badge(comment.user) %>
-              <span class="text-xs text-gray-400">
-                <%= l comment.created_at.to_date %>
-              </span>
+          <div id="comment-<%= comment.id %>" class="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200 relative group">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex items-center gap-2">
+                <%= user_badge(comment.user) %>
+                <span class="text-xs text-gray-400">
+                  <%= l comment.created_at.to_date %>
+                </span>
+              </div>
+              <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-2 right-2">
+                <%= report_button(comment) %>
+              </div>
             </div>
             <div class="text-gray-700 text-sm">
               <%= simple_format(comment.body) %>
