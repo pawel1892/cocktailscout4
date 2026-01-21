@@ -1,5 +1,16 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-21 19:10 — Account Security Features
+- **Time spent**: 1h
+- **Description**:
+	- **Forgot Password**: Re-implemented with native Rails 8 auth, styling, and German localization. Enforced 6-char minimum.
+	- **Email Change**: Added unauthenticated confirmation flow (token-based) to support cross-browser verification.
+	- **Password Change**: Added secure password change requiring current password verification.
+	- **Testing**: Comprehensive request specs for all flows including edge cases.
+- **Outcome**: Full self-service account security management.
+
+---
+
 ## 2026-01-20 22:24 — Account Confirmation & Mailer Implementation
 - **Time spent**: 1h
 - **Description**:
