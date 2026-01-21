@@ -1,5 +1,19 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-21 21:30 — Content Reporting System
+- **Time spent**: 1h
+- **Description**:
+	- **Report System**: Implemented a polymorphic `Report` model to handle flagging of any content type (`ForumPost`, `RecipeComment`, `PrivateMessage`).
+	- **Admin Dashboard**: Created a dedicated Moderation Queue (`/admin/reports`) for reviewing, resolving, or dismissing reports.
+	- **Frontend**:
+		- Built `ContentReportModal` (Vue) for a unified reporting UX.
+		- Integrated report buttons into Forum Posts, Recipe Comments, and Private Messages.
+		- Added dynamic "Admin" link with "Pending Reports" badge to the user profile menu for moderators.
+	- **Security**: Restricted admin/report access to users with moderator roles.
+- **Outcome**: robust, scalable moderation system without email spam.
+
+---
+
 ## 2026-01-21 19:10 — Account Security Features
 - **Time spent**: 1h
 - **Description**:
