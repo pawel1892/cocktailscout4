@@ -19,4 +19,12 @@ class UserMailer < ApplicationMailer
     attachments.inline["logo.svg"] = File.read(Rails.root.join("public/logo.svg"))
     mail to: @user.email_address, subject: "Bestätigung deines CocktailScout Kontos"
   end
+
+  def password_reset(user)
+    @user = user
+    @token = user.password_reset_token
+
+    attachments.inline["logo.svg"] = File.read(Rails.root.join("public/logo.svg"))
+    mail to: @user.email_address, subject: "Passwort zurücksetzen"
+  end
 end
