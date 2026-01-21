@@ -1,0 +1,14 @@
+Hallo <%= @user.username %>,
+
+du hast eine Änderung deiner Email-Adresse auf <%= @user.unconfirmed_email %> beantragt.
+
+Bitte bestätige diese Änderung, indem du auf den folgenden Link klickst:
+
+<%= edit_email_change_url(token: @token) %>
+
+Dieser Link ist 2 Stunden gültig.
+
+Wenn du diese Änderung nicht beantragt hast, kannst du diese Email ignorieren. Deine bisherige Email-Adresse bleibt gültig.
+
+Prost,
+Dein CocktailScout Team

@@ -27,4 +27,12 @@ class UserMailer < ApplicationMailer
     attachments.inline["logo.svg"] = File.read(Rails.root.join("public/logo.svg"))
     mail to: @user.email_address, subject: "Passwort zurücksetzen"
   end
+
+  def email_change_confirmation(user)
+    @user = user
+    @token = user.generate_token_for(:email_change)
+
+    attachments.inline["logo.svg"] = File.read(Rails.root.join("public/logo.svg"))
+    mail to: @user.unconfirmed_email, subject: "Bestätige deine neue Email-Adresse"
+  end
 end

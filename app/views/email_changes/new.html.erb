@@ -1,0 +1,30 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto bg-white rounded shadow-md border border-gray-200 p-6">
+    <h1 class="text-2xl font-bold mb-6 text-cs-dark-red">E-Mail Adresse ändern</h1>
+
+    <%= tag.div(flash[:alert], class: "mb-4 text-red-600 bg-red-50 p-3 rounded") if flash[:alert] %>
+    <%= tag.div(flash[:notice], class: "mb-4 text-green-600 bg-green-50 p-3 rounded") if flash[:notice] %>
+
+    <div class="mb-6">
+      <label class="label-field">Aktuelle E-Mail Adresse</label>
+      <div class="text-gray-600 font-medium bg-gray-50 p-3 rounded border border-gray-200">
+        <%= @user.email_address %>
+      </div>
+    </div>
+
+    <%= form_with model: @user, url: email_change_path, method: :post, class: "space-y-6" do |form| %>
+      <div class="form-group">
+        <%= form.label :unconfirmed_email, "Neue E-Mail Adresse", class: "label-field" %>
+        <%= form.email_field :unconfirmed_email, required: true, autocomplete: "email", placeholder: "neue@email.de", class: "input-field #{'input-error' if @user.errors[:unconfirmed_email].any?}" %>
+        <% if @user.errors[:unconfirmed_email].any? %>
+          <p class="form-error-message"><%= @user.errors[:unconfirmed_email].to_sentence %></p>
+        <% end %>
+      </div>
+
+      <div class="flex items-center justify-between pt-4">
+        <%= link_to "Abbrechen", root_path, class: "text-gray-500 hover:text-cs-dark-red" %>
+        <%= form.submit "Bestätigungslink senden", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

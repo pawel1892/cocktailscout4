@@ -31,6 +31,12 @@ class User < ApplicationRecord
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, allow_nil: true
+  validates :unconfirmed_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
+  validate :unconfirmed_email_available
+
+  generates_token_for :email_change, expires_in: 2.hours do
+    unconfirmed_email
+  end
 
   delegate :rank, :points, to: :stat
 
@@ -51,6 +57,12 @@ class User < ApplicationRecord
     generate_confirmation_token
     save!
     UserMailer.confirmation_instructions(self).deliver_later
+  end
+
+  def unconfirmed_email_available
+    if unconfirmed_email.present? && User.where.not(id: id).exists?(email_address: unconfirmed_email)
+      errors.add(:unconfirmed_email, "ist bereits vergeben")
+    end
   end
 
   def stat
