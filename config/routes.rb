@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   get "email_aendern", to: "email_changes#new", as: :new_email_change
   resource :email_change, only: [ :create, :edit ], path: "email_aendern"
+
+  get "passwort_aendern", to: "password_changes#new", as: :new_password_change
+  resource :password_change, only: [ :create ], path: "passwort_aendern"
+
   resources :user_profiles, only: [ :show, :update ]
   resources :recipes, path: "rezepte", only: [ :index, :show ] do
     member do

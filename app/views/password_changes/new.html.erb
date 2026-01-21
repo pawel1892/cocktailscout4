@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto bg-white rounded shadow-md border border-gray-200 p-6">
+    <h1 class="text-2xl font-bold mb-6 text-cs-dark-red">Passwort ändern</h1>
+
+    <%= tag.div(flash[:alert], class: "mb-4 text-red-600 bg-red-50 p-3 rounded") if flash[:alert] %>
+    <%= tag.div(flash[:notice], class: "mb-4 text-green-600 bg-green-50 p-3 rounded") if flash[:notice] %>
+
+    <%= form_with url: password_change_path, method: :post, class: "space-y-6" do |form| %>
+      <div class="form-group">
+        <%= form.label :current_password, "Aktuelles Passwort", class: "label-field" %>
+        <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: "input-field" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password, "Neues Passwort", class: "label-field" %>
+        <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Mind. 6 Zeichen", maxlength: 72, class: "input-field #{'input-error' if @user.errors[:password].any?}" %>
+        <% if @user.errors[:password].any? %>
+          <p class="form-error-message"><%= @user.errors[:password].to_sentence %></p>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password_confirmation, "Passwort wiederholen", class: "label-field" %>
+        <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Passwort erneut eingeben", maxlength: 72, class: "input-field #{'input-error' if @user.errors[:password_confirmation].any?}" %>
+        <% if @user.errors[:password_confirmation].any? %>
+          <p class="form-error-message"><%= @user.errors[:password_confirmation].to_sentence %></p>
+        <% end %>
+      </div>
+
+      <div class="flex items-center justify-between pt-4">
+        <%= link_to "Abbrechen", root_path, class: "text-gray-500 hover:text-cs-dark-red" %>
+        <%= form.submit "Passwort ändern", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
