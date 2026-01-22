@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       post :comment, to: "recipe_comments#create"
     end
   end
+  resources :recipe_comments, only: [ :edit, :update, :destroy ]
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
   get "tag/:tag", to: "recipes#index", as: :tag
