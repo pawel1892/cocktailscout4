@@ -1,17 +1,91 @@
-<div class="container mx-auto mt-10">
-  <h1 class="text-3xl font-bold mb-6 text-center">Cocktail Scout 4</h1>
+<div class="relative bg-stone-50 overflow-hidden">
+  <!-- Background Decoration -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-80 bg-gradient-to-b from-stone-100 to-stone-50 -z-10"></div>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div>
-        <h2 class="text-xl mb-4">Vue Component Area</h2>
-        <!-- This component will show the auth status reactively -->
-        <test-component></test-component>
+  <div class="container mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold tracking-tight text-cs-dark-red sm:text-5xl mb-4 font-serif">
+        Willkommen bei CocktailScout
+      </h1>
+      <p class="mt-4 text-lg leading-7 text-gray-700 max-w-xl mx-auto">
+        Entdecke die Welt der Cocktails. Finde neue Rezepte, verwalte deine Bar und tausche dich mit der Community aus.
+      </p>
     </div>
 
-    <div>
-        <h2 class="text-xl mb-4">Authentication</h2>
-        <!-- This is our new Ajax Auth Form -->
-        <auth-form></auth-form>
+    <!-- Highlighted Feature: Meine Bar -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <div class="callout-gold shadow-lg p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden bg-white border border-cs-gold/30">
+        <!-- Decorative background icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute -right-12 -bottom-12 w-64 h-64 text-cs-gold/10 pointer-events-none transform rotate-12">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+        </svg>
+        
+        <div class="flex-shrink-0 bg-stone-50 p-5 rounded-full border border-cs-gold/20 text-cs-gold z-10">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+          </svg>
+        </div>
+        
+        <div class="flex-1 z-10 text-center md:text-left">
+          <h2 class="text-3xl font-bold mb-3 text-cs-dark-red font-serif">Meine Bar</h2>
+          <p class="text-base text-gray-700 mb-6 leading-relaxed">
+            Die zentrale Funktion von CocktailScout. Sag uns, welche Zutaten du zu Hause hast, 
+            und wir zeigen dir sofort, welche Cocktails du mixen kannst.
+          </p>
+          <%= link_to "Zu Meiner Bar", my_bar_path, class: "btn btn-primary px-6 py-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <!-- Community -->
+      <div class="card h-full hover:shadow-lg transition-shadow duration-300 border-t-4 border-t-cs-dark-red group">
+        <div class="card-body flex flex-col items-center text-center p-6">
+          <div class="w-16 h-16 bg-stone-100 text-cs-dark-red rounded-xl flex items-center justify-center mb-4 group-hover:bg-red-50 transition-colors">
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+             </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-cs-dark-red">Community</h3>
+          <p class="mb-6 flex-grow text-sm text-gray-600 leading-relaxed">
+            Tausche dich im Forum mit anderen Cocktail-Begeisterten aus, diskutiere Trends und teile dein Wissen.
+          </p>
+          <%= link_to "Zum Forum", forum_topics_path, class: "btn btn-outline btn-sm w-full" %>
+        </div>
+      </div>
+
+      <!-- Rezepte -->
+      <div class="card h-full hover:shadow-lg transition-shadow duration-300 border-t-4 border-t-cs-gold group">
+        <div class="card-body flex flex-col items-center text-center p-6">
+           <div class="w-16 h-16 bg-stone-100 text-cs-gold rounded-xl flex items-center justify-center mb-4 group-hover:bg-yellow-50 transition-colors">
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+             </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-cs-dark-red">Rezepte</h3>
+          <p class="mb-6 flex-grow text-sm text-gray-600 leading-relaxed">
+            Durchsuche unsere umfangreiche Datenbank nach tausenden von Rezepten. Von Klassikern bis Modern.
+          </p>
+          <%= link_to "Rezepte finden", recipes_path, class: "btn btn-outline btn-sm w-full" %>
+        </div>
+      </div>
+
+      <!-- Galerie -->
+      <div class="card h-full hover:shadow-lg transition-shadow duration-300 border-t-4 border-t-cs-dark-red group">
+        <div class="card-body flex flex-col items-center text-center p-6">
+           <div class="w-16 h-16 bg-stone-100 text-cs-dark-red rounded-xl flex items-center justify-center mb-4 group-hover:bg-red-50 transition-colors">
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+             </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-cs-dark-red">Galerie</h3>
+          <p class="mb-6 flex-grow text-sm text-gray-600 leading-relaxed">
+            Lass dich inspirieren! Sieh dir an, wie Cocktails serviert werden und teile deine eigenen Fotos.
+          </p>
+          <%= link_to "Zur Galerie", recipe_images_path, class: "btn btn-outline btn-sm w-full" %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
