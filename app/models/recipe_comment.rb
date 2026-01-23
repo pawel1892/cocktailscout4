@@ -2,6 +2,7 @@ class RecipeComment < ApplicationRecord
   include Reportable
   belongs_to :user, optional: true
   belongs_to :recipe
+  belongs_to :last_editor, class_name: "User", optional: true
 
   validates :body, presence: true, length: { maximum: 3000 }
 

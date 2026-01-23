@@ -144,15 +144,17 @@
             <div class="flex justify-between items-start mb-2">
               <div class="flex items-center gap-2">
                 <%= user_badge(comment.user) %>
-                <span class="text-xs text-gray-400">
+                <span class="text-xs text-gray-500">
                   <%= l comment.created_at.to_date %>
                 </span>
               </div>
               <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-2 right-2 flex items-center gap-2">
-                <% if can_modify_comment?(comment) %>
+                <% if can_edit_comment?(comment) %>
                   <%= link_to edit_recipe_comment_path(comment), class: "text-gray-400 hover:text-cs-gold transition-colors", title: "Bearbeiten" do %>
                     <i class="fas fa-pencil-alt text-xs"></i>
                   <% end %>
+                <% end %>
+                <% if can_delete_comment?(comment) %>
                   <%= button_to recipe_comment_path(comment), method: :delete, onclick: "return confirm('Kommentar wirklich löschen?')", class: "text-gray-400 hover:text-cs-error transition-colors cursor-pointer", title: "Löschen" do %>
                     <i class="fas fa-trash text-xs"></i>
                   <% end %>
@@ -163,6 +165,11 @@
             <div class="text-gray-700 text-sm">
               <%= simple_format(comment.body) %>
             </div>
+            <% if comment.last_editor_id.present? %>
+              <div class="text-xs text-gray-400 mt-2 text-right">
+                Zuletzt bearbeitet von <%= comment.last_editor&.username || "Unbekannt" %> am <%= l comment.updated_at.to_date %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>

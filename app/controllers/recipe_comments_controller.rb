@@ -1,7 +1,8 @@
 class RecipeCommentsController < ApplicationController
   include RecipeCommentsHelper
   before_action :set_comment, only: [ :edit, :update, :destroy ]
-  before_action :authorize_action!, only: [ :edit, :update, :destroy ]
+  before_action :authorize_edit!, only: [ :edit, :update ]
+  before_action :authorize_delete!, only: [ :destroy ]
 
   def create
     @recipe = Recipe.includes(
@@ -39,6 +40,7 @@ class RecipeCommentsController < ApplicationController
   end
 
   def update
+    @comment.last_editor = Current.user
     if @comment.update(comment_params)
       redirect_to recipe_path(@comment.recipe, anchor: "comment-#{@comment.id}"), notice: "Kommentar aktualisiert."
     else
@@ -61,8 +63,14 @@ class RecipeCommentsController < ApplicationController
     params.require(:recipe_comment).permit(:body)
   end
 
-  def authorize_action!
-    unless can_modify_comment?(@comment)
+  def authorize_edit!
+    unless can_edit_comment?(@comment)
+      redirect_to recipe_path(@comment.recipe), alert: "Keine Berechtigung."
+    end
+  end
+
+  def authorize_delete!
+    unless can_delete_comment?(@comment)
       redirect_to recipe_path(@comment.recipe), alert: "Keine Berechtigung."
     end
   end
