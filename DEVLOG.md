@@ -1,5 +1,14 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-22 23:00 — Recipe Comment Editing & Permissions
+- **Time spent**: 1h
+- **Description**:
+	- **Recipe Comments**: Implemented Edit, Update, and Destroy functionality.
+	- **Permissions**: Refactored authorization to allow authors to Edit only, while Moderators/Admins can both Edit and Delete.
+	- **History**: Added `last_editor_id` tracking to comments and updated the import task to map legacy edit history.
+	- **UI**: Added "Last edited by" metadata display at the bottom of comments and integrated management buttons in the Recipe Show view.
+	- **Testing**: Added request and model specs covering the new granular permission logic and editor tracking.
+
 ## 2026-01-21 21:30 — Content Reporting System
 - **Time spent**: 1h
 - **Description**:
