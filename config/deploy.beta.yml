@@ -1,0 +1,94 @@
+# Beta deployment configuration for beta.cocktailscout.de
+# Deploy with: kamal deploy -d beta
+service: cocktailscout4
+
+# Name of the container image
+image: jpzoidberg/cocktailscout4
+
+# Deploy to these servers
+servers:
+  web:
+    - 23.88.50.20
+  # Uncomment if you want a separate job server later
+  # job:
+  #   hosts:
+  #     - 23.88.50.20
+  #   cmd: bin/jobs
+
+# Enable SSL auto certification via Let's Encrypt for beta.cocktailscout.de
+proxy:
+  ssl: true
+  host: beta.cocktailscout.de
+
+# Docker Hub registry configuration
+registry:
+  # For Docker Hub, leave server empty (uses default registry.hub.docker.com)
+  username: jpzoidberg
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# Environment variables
+env:
+  secret:
+    - RAILS_MASTER_KEY
+    - COCKTAILSCOUT4_DATABASE_PASSWORD
+  clear:
+    # Run the Solid Queue Supervisor inside the web server's Puma process
+    SOLID_QUEUE_IN_PUMA: true
+
+    # Database configuration for MySQL accessory
+    DB_HOST: cocktailscout4-db
+
+    # Use beta-specific database names
+    DATABASE_NAME: cocktailscout4_beta
+    CACHE_DATABASE_NAME: cocktailscout4_beta_cache
+    QUEUE_DATABASE_NAME: cocktailscout4_beta_queue
+    CABLE_DATABASE_NAME: cocktailscout4_beta_cable
+
+    # Rails environment
+    RAILS_ENV: production
+
+    # Application host for mailer URLs
+    APP_HOST: beta.cocktailscout.de
+
+    # Optional: Set log level
+    # RAILS_LOG_LEVEL: info
+
+# Aliases for common commands
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole --include-password"
+
+# Persistent storage volume for Active Storage files
+volumes:
+  - "cocktailscout4_storage:/rails/storage"
+
+# Bridge fingerprinted assets between versions (Vite uses public/vite)
+asset_path: /rails/public/vite
+
+# Configure the image builder
+builder:
+  arch: amd64
+
+# SSH configuration - connect as user pawel with restricted sudo
+ssh:
+  user: pawel
+
+# MySQL database as an accessory
+accessories:
+  db:
+    image: mysql:8.0
+    host: 23.88.50.20
+    port: "127.0.0.1:3306:3306"
+    env:
+      clear:
+        MYSQL_ROOT_HOST: '%'
+      secret:
+        - MYSQL_ROOT_PASSWORD
+        - COCKTAILSCOUT4_DATABASE_PASSWORD
+    files:
+      - config/mysql/init-beta.sh:/docker-entrypoint-initdb.d/setup.sh
+    directories:
+      - data:/var/lib/mysql
