@@ -1,5 +1,10 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-23 09:05 — Session cleanup
+- **Time spent**: 10min
+- **Description**:
+	- Sessions will be deleted after 30 days of inactivity by cron
+
 ## 2026-01-23 08:30 — Startpage
 - **Time spent**: 15min
 - **Description**:
