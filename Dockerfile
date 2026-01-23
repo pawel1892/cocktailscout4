@@ -20,6 +20,12 @@ RUN apt-get update -qq && \
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Install Node.js for Vite
+ARG NODE_VERSION=20.11.0
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
 # Set production environment variables and enable jemalloc for reduced memory usage and latency.
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
@@ -43,12 +49,28 @@ RUN bundle install && \
     # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
     bundle exec bootsnap precompile -j 1 --gemfile
 
+# Install node modules first (before copying all code for better caching)
+COPY package.json package-lock.json ./
+RUN npm ci
+
 # Copy application code
 COPY . .
 
 # Precompile bootsnap code for faster boot times.
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
+
+# Precompile assets (this will run vite build via vite_rails gem)
+# Set dummy database env vars to avoid database.yml errors during asset compilation
+RUN SECRET_KEY_BASE_DUMMY=1 \
+    DATABASE_URL=nulldb://localhost/dummy \
+    DATABASE_NAME=dummy \
+    CACHE_DATABASE_NAME=dummy \
+    QUEUE_DATABASE_NAME=dummy \
+    CABLE_DATABASE_NAME=dummy \
+    DB_HOST=localhost \
+    RAILS_ENV=production \
+    ./bin/rails assets:precompile
 
 
 

@@ -33,6 +33,10 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Ignore Kamal secret files (they contain actual passwords)
+/.kamal/secrets*
+!/.kamal/secrets.example
+
 
 # Vite Ruby
 /public/vite*
@@ -45,3 +49,6 @@ node_modules
 
 # Ignore SimpleCov coverage reports
 /coverage
+# Ignore key files for decrypting credentials and more.
+/config/credentials/*.key
+

@@ -62,18 +62,19 @@ legacy:
 production:
   primary: &primary_production
     <<: *default
-    database: cocktailscout4_production
+    database: <%= ENV.fetch("DATABASE_NAME") %>
     username: cocktailscout4
     password: <%= ENV["COCKTAILSCOUT4_DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DB_HOST") %>
   cache:
     <<: *primary_production
-    database: cocktailscout4_production_cache
+    database: <%= ENV.fetch("CACHE_DATABASE_NAME") %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: cocktailscout4_production_queue
+    database: <%= ENV.fetch("QUEUE_DATABASE_NAME") %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: cocktailscout4_production_cable
+    database: <%= ENV.fetch("CABLE_DATABASE_NAME") %>
     migrations_paths: db/cable_migrate
