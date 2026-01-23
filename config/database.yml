@@ -78,3 +78,24 @@ production:
     <<: *primary_production
     database: <%= ENV.fetch("CABLE_DATABASE_NAME") %>
     migrations_paths: db/cable_migrate
+
+# Beta environment - uses same structure as production but different database names
+beta:
+  primary: &primary_beta
+    <<: *default
+    database: <%= ENV.fetch("DATABASE_NAME") %>
+    username: cocktailscout4
+    password: <%= ENV["COCKTAILSCOUT4_DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DB_HOST") %>
+  cache:
+    <<: *primary_beta
+    database: <%= ENV.fetch("CACHE_DATABASE_NAME") %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_beta
+    database: <%= ENV.fetch("QUEUE_DATABASE_NAME") %>
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_beta
+    database: <%= ENV.fetch("CABLE_DATABASE_NAME") %>
+    migrations_paths: db/cable_migrate
