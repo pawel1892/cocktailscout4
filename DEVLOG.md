@@ -1,5 +1,10 @@
 # Cocktailscout4 Dev Log
 
+## 2026-01-23 08:30 — Startpage
+- **Time spent**: 15min
+- **Description**:
+	- Added new startpage from scratch with 4 boxes pointing to the content.
+
 ## 2026-01-22 23:00 — Recipe Comment Editing & Permissions
 - **Time spent**: 1h
 - **Description**:
