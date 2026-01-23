@@ -394,6 +394,7 @@ namespace :import do
       comment.assign_attributes(
         recipe_id: new_recipe_id,
         user_id: user_map[legacy_comment.user_id], # Nil if user not found
+        last_editor_id: user_map[legacy_comment.last_editor_id],
         body: clean_body,
         created_at: legacy_comment.created_at,
         updated_at: legacy_comment.updated_at

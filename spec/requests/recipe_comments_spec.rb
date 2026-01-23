@@ -13,6 +13,14 @@ RSpec.describe "RecipeComments", type: :request do
         get edit_recipe_comment_path(comment)
         expect(response).to have_http_status(:success)
       end
+
+      it "updates the comment and sets last_editor" do
+        patch recipe_comment_path(comment), params: { recipe_comment: { body: "Updated body" } }
+        expect(response).to redirect_to(recipe_path(recipe, anchor: "comment-#{comment.id}"))
+        comment.reload
+        expect(comment.body).to eq("Updated body")
+        expect(comment.last_editor).to eq(user)
+      end
     end
 
     context "as other user" do
@@ -46,11 +54,12 @@ RSpec.describe "RecipeComments", type: :request do
   describe "DELETE /recipe_comments/:id" do
     context "as author" do
       before { sign_in user }
-      it "deletes the comment" do
+      it "does not delete the comment" do
         expect {
           delete recipe_comment_path(comment)
-        }.to change(RecipeComment, :count).by(-1)
-        expect(response).to redirect_to(recipe_path(recipe, anchor: "comments"))
+        }.not_to change(RecipeComment, :count)
+        expect(response).to redirect_to(recipe_path(recipe))
+        expect(flash[:alert]).to eq("Keine Berechtigung.")
       end
     end
 

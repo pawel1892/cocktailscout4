@@ -4,6 +4,7 @@ RSpec.describe RecipeComment, type: :model do
   describe "associations" do
     it { should belong_to(:recipe) }
     it { should belong_to(:user).optional }
+    it { should belong_to(:last_editor).class_name('User').optional }
   end
 
   describe "validations" do
