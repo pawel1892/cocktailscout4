@@ -45,8 +45,8 @@ env:
     QUEUE_DATABASE_NAME: cocktailscout4_beta_queue
     CABLE_DATABASE_NAME: cocktailscout4_beta_cable
 
-    # Rails environment
-    RAILS_ENV: production
+    # Rails environment - use beta to load config/credentials/beta.yml.enc
+    RAILS_ENV: beta
 
     # Application host for mailer URLs
     APP_HOST: beta.cocktailscout.de
