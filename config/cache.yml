@@ -14,3 +14,7 @@ test:
 production:
   database: cache
   <<: *default
+
+beta:
+  database: cache
+  <<: *default
