@@ -36,6 +36,8 @@ class ForumPost < ApplicationRecord
   private
 
   def soft_delete_empty_thread
+    return unless forum_thread
+
     if forum_thread.forum_posts.count == 0
       forum_thread.update(deleted: true)
     end
