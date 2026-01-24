@@ -1,10 +1,54 @@
-# lib/tasks/import.rake
 namespace :import do
-  desc "Import all data from the legacy database"
-  task all: [ :ingredients, :users, :roles, :recipes, :recipe_images, :comments, :ratings, :tags, :forum, :private_messages, :visits, :favorites, :stats ]
+  desc "Ensure we are not in production"
+  task :ensure_development do
+    if Rails.env.production?
+      abort "⚠️  DANGER: This task is destructive and cannot be run in production!"
+    end
+  end
+
+  desc "Import all data from the legacy database (Resets DB and Storage first)"
+  task all: :ensure_development do
+    puts "⚠️  WARNING: This will delete all data in the current database and local storage!"
+    puts "5 seconds to cancel (Ctrl+C)..."
+    sleep 5
+
+    # 1. Clear Storage
+    puts "Cleaning storage/ directory..."
+    storage_path = Rails.root.join("storage")
+    if Dir.exist?(storage_path)
+      # Delete all subdirectories in storage, keeping .keep or similar if needed
+      # But usually blowing it away is fine.
+      FileUtils.rm_rf(Dir.glob("#{storage_path}/*"))
+    end
+    puts "Storage cleaned."
+
+    # 2. Reset Database
+    puts "Resetting database..."
+    Rake::Task["db:reset"].invoke
+    puts "Database reset complete."
+
+    # 3. Run Imports
+    Rake::Task["import:ingredients"].invoke
+    Rake::Task["import:users"].invoke
+    Rake::Task["import:roles"].invoke
+    Rake::Task["import:recipes"].invoke
+    Rake::Task["import:recipe_images"].invoke
+    Rake::Task["import:comments"].invoke
+    Rake::Task["import:ratings"].invoke
+    Rake::Task["import:tags"].invoke
+    Rake::Task["import:forum"].invoke
+    Rake::Task["import:private_messages"].invoke
+    Rake::Task["import:visits"].invoke
+    Rake::Task["import:favorites"].invoke
+    Rake::Task["import:stats"].invoke
+    Rake::Task["import:mybars"].invoke
+    Rake::Task["import:migrate_images_to_active_storage"].invoke
+
+    puts "\n✅ Full Import Complete!"
+  end
 
   desc "Import visits from the legacy database"
-  task visits: :environment do
+  task visits: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
@@ -67,7 +111,7 @@ namespace :import do
   end
 
   desc "Import forum topics, threads and posts"
-  task forum: :environment do
+  task forum: [ :environment, :ensure_development ] do
     puts "Importing forum topics..."
     Legacy::ForumTopic.find_each do |legacy_topic|
       topic = ForumTopic.find_or_initialize_by(old_id: legacy_topic.id)
@@ -143,7 +187,7 @@ namespace :import do
   end
 
   desc "Import private messages"
-  task private_messages: :environment do
+  task private_messages: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     puts "Maps loaded. Users: #{user_map.size}"
@@ -180,7 +224,7 @@ namespace :import do
   end
 
   desc "Import roles and user roles"
-  task roles: :environment do
+  task roles: [ :environment, :ensure_development ] do
     puts "Importing roles..."
 
     legacy_roles_map = {}
@@ -218,7 +262,7 @@ namespace :import do
   end
 
   desc "Import tags from the legacy database"
-  task tags: :environment do
+  task tags: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
     puts "Maps loaded. Recipes: #{recipe_map.size}"
@@ -252,7 +296,7 @@ namespace :import do
   end
 
   desc "Import ratings from the legacy database"
-  task ratings: :environment do
+  task ratings: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
@@ -295,7 +339,7 @@ namespace :import do
   end
 
   desc "Import recipe images"
-  task recipe_images: :environment do
+  task recipe_images: [ :environment, :ensure_development ] do
     puts "Importing recipe images..."
     Legacy::RecipeImage.find_each do |legacy_image|
       recipe = Recipe.find_by(old_id: legacy_image.recipe_id)
@@ -325,7 +369,7 @@ namespace :import do
   end
 
   desc "Import recipes from the legacy database"
-  task recipes: :environment do
+  task recipes: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     ingredient_map = Ingredient.where.not(old_id: nil).pluck(:old_id, :id).to_h
@@ -337,9 +381,12 @@ namespace :import do
       user_id = user_map[legacy_recipe.user_id]
       next unless user_id # Skip if user not found
 
+      updated_by_id = legacy_recipe.last_edit_user_id ? user_map[legacy_recipe.last_edit_user_id] : nil
+
       recipe = Recipe.find_or_initialize_by(old_id: legacy_recipe.id)
       recipe.assign_attributes(
         user_id: user_id,
+        updated_by_id: updated_by_id,
         title: legacy_recipe.name,
         description: legacy_recipe.description,
         slug: legacy_recipe.slug,
@@ -375,7 +422,7 @@ namespace :import do
   end
 
   desc "Import comments from the legacy database"
-  task comments: :environment do
+  task comments: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
@@ -407,7 +454,7 @@ namespace :import do
   end
 
   desc "Import ingredients from the legacy database"
-  task ingredients: :environment do
+  task ingredients: [ :environment, :ensure_development ] do
     puts "Importing ingredients..."
     Legacy::Ingredient.find_each do |legacy_ingredient|
       ingredient = Ingredient.find_or_initialize_by(old_id: legacy_ingredient.id)
@@ -424,14 +471,15 @@ namespace :import do
   end
 
   desc "Import users from the legacy database"
-  task users: :environment do
+  task users: [ :environment, :ensure_development ] do
     puts "Identify active users..."
     active_user_ids = (
       Legacy::Recipe.pluck(:user_id) +
       Legacy::RecipeComment.pluck(:user_id) +
       Legacy::ForumPost.pluck(:user_id) +
       Legacy::UserRecipe.pluck(:user_id) +
-      Legacy::RecipeImage.pluck(:user_id)
+      Legacy::RecipeImage.pluck(:user_id) +
+      Legacy::UserIngredient.pluck(:user_id)
     ).uniq.compact
     puts "Found #{active_user_ids.count} active users."
 
@@ -469,7 +517,7 @@ namespace :import do
   end
 
   desc "Recalculate user stats"
-  task stats: :environment do
+  task stats: [ :environment, :ensure_development ] do
     puts "Recalculating user stats..."
     User.find_each do |user|
       user.stat.recalculate!
@@ -478,7 +526,7 @@ namespace :import do
   end
 
   desc "Import favorites (user_recipes) from the legacy database"
-  task favorites: :environment do
+  task favorites: [ :environment, :ensure_development ] do
     puts "Loading maps..."
     user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
     recipe_map = Recipe.where.not(old_id: nil).pluck(:old_id, :id).to_h
@@ -509,5 +557,127 @@ namespace :import do
       print "." if (count % 100).zero?
     end
     puts "\nFavorites imported: #{count}"
+  end
+
+  desc "Import user mybars from legacy database as 'Meine Hausbar' collections"
+  task mybars: [ :environment, :ensure_development ] do
+    puts "Starting MyBar Import..."
+
+    # Pre-load user and ingredient mappings
+    user_map = User.where.not(old_id: nil).pluck(:old_id, :id).to_h
+    ingredient_map = Ingredient.where.not(old_id: nil).pluck(:old_id, :id).to_h
+
+    # Group mybar ingredients by user
+    mybar_data = {}
+    Legacy::UserIngredient.where(dimension: "mybar").find_each do |legacy_ui|
+      new_user_id = user_map[legacy_ui.user_id]
+      new_ingredient_id = ingredient_map[legacy_ui.ingredient_id]
+
+      # Skip if user or ingredient not found
+      unless new_user_id && new_ingredient_id
+        puts "Skipping user_ingredient #{legacy_ui.id}: User or ingredient not found."
+        next
+      end
+
+      mybar_data[new_user_id] ||= []
+      mybar_data[new_user_id] << new_ingredient_id
+    end
+
+    puts "Found #{mybar_data.keys.size} users with mybar data."
+
+    # Create collections for users
+    created = 0
+    skipped = 0
+
+    mybar_data.each do |user_id, ingredient_ids|
+      user = User.find(user_id)
+
+      # Check if user already has a "Meine Hausbar" collection
+      collection = user.ingredient_collections.find_by(name: "Meine Hausbar")
+
+      if collection
+        puts "User #{user.username} (#{user_id}) already has 'Meine Hausbar' collection. Skipping."
+        skipped += 1
+        next
+      end
+
+      # Create the collection
+      collection = user.ingredient_collections.create!(
+        name: "Meine Hausbar",
+        notes: "Importiert aus dem alten System",
+        is_default: user.ingredient_collections.count == 0
+      )
+
+      # Add ingredients
+      ingredients = Ingredient.where(id: ingredient_ids)
+      collection.ingredients << ingredients
+
+      puts "Created 'Meine Hausbar' for #{user.username} (#{user_id}) with #{ingredients.count} ingredients."
+      created += 1
+    end
+
+    puts "\nMyBar Import Complete!"
+  end
+
+  desc "Migrate legacy recipe images to Active Storage (Approved only)"
+  task migrate_images_to_active_storage: [ :environment, :ensure_development ] do
+    require "fileutils"
+
+    # Filter for approved images only
+    scope = RecipeImage.approved.where.not(old_id: nil)
+
+    total = scope.count
+    processed = 0
+    missing = 0
+    success = 0
+
+    puts "Starting migration of #{total} APPROVED images..."
+
+    scope.find_each do |recipe_image|
+      # Skip if already attached
+      next if recipe_image.image.attached?
+
+      legacy_image = Legacy::RecipeImage.find_by(id: recipe_image.old_id)
+      next unless legacy_image
+
+      # Construct path to the original legacy image
+      # Structure: public/system/recipe_images/:folder_identifier/original/:filename
+      legacy_path = Rails.root.join(
+        "public",
+        "system",
+        "recipe_images",
+        recipe_image.old_id.to_s,
+        "original",
+        legacy_image.image_file_name
+      )
+
+      if File.exist?(legacy_path)
+        begin
+          File.open(legacy_path) do |file|
+            recipe_image.image.attach(
+              io: file,
+              filename: legacy_image.image_file_name,
+              content_type: legacy_image.image_content_type
+            )
+          end
+          success += 1
+          print "."
+          STDOUT.flush if processed % 10 == 0
+        rescue => e
+          puts "\nFailed to attach image for ID #{recipe_image.id}: #{e.message}"
+        end
+      else
+        missing += 1
+        # Uncomment for debugging missing files
+        # puts "\nMissing file for ID #{recipe_image.id}: #{legacy_path}"
+      end
+
+      processed += 1
+    end
+
+    puts "\nMigration complete!"
+    puts "Processed: #{processed}"
+    puts "Successfully attached: #{success}"
+    puts "Missing files: #{missing}"
   end
 end
