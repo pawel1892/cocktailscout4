@@ -32,6 +32,7 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - COCKTAILSCOUT4_DATABASE_PASSWORD
+    - RESEND_API_KEY
   clear:
     # Run the Solid Queue Supervisor inside the web server's Puma process
     SOLID_QUEUE_IN_PUMA: true
