@@ -63,7 +63,7 @@ aliases:
 
 # Persistent storage volume for Active Storage files
 volumes:
-  - "/home/pawel/cocktailscout4-storage:/rails/storage"
+  - "/home/pawel/cocktailscout4-storage-beta:/rails/storage"
 
 # Bridge fingerprinted assets between versions (Vite uses public/vite)
 asset_path: /rails/public/vite
