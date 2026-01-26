@@ -23,7 +23,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
-  
+
   # Use Vips for image processing (available in Docker image)
   config.active_storage.variant_processor = :vips
 
