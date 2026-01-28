@@ -230,7 +230,7 @@ GEM
     nokogiri (1.19.0-x86_64-linux-musl)
       racc (~> 1.4)
     ostruct (0.6.3)
-    pagy (43.2.7)
+    pagy (43.2.8)
       json
       yaml
     parallel (1.27.0)
@@ -457,7 +457,7 @@ DEPENDENCIES
   letter_opener (~> 1.10)
   mini_magick (~> 5.3)
   mysql2 (~> 0.5)
-  pagy (~> 43.0)
+  pagy (~> 43.2)
   pry-byebug
   puma (>= 5.0)
   rails (~> 8.1.1)
