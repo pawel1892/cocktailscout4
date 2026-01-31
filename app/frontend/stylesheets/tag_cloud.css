@@ -1,0 +1,22 @@
+/* Tag Cloud - sizes based on recipe count */
+.tag-cloud a {
+  padding: 0.5rem;
+  white-space: nowrap;
+  transition: all 0.2s ease-in-out;
+}
+
+.tag-cloud a:hover {
+  color: #360D0C;
+  transform: scale(1.05);
+}
+
+.tag-cloud a.tag-level-10 { font-size: 2rem; font-weight: 700; color: rgb(203 184 89 / 1); }
+.tag-cloud a.tag-level-9 { font-size: 1.75rem; font-weight: 600; color: rgb(203 184 89 / 0.95); }
+.tag-cloud a.tag-level-8 { font-size: 1.6rem; font-weight: 600; color: rgb(54 13 12 / 0.8); }
+.tag-cloud a.tag-level-7 { font-size: 1.4rem; font-weight: 500; color: rgb(54 13 12 / 0.75); }
+.tag-cloud a.tag-level-6 { font-size: 1.2rem; font-weight: 500; color: rgb(54 13 12 / 0.7); }
+.tag-cloud a.tag-level-5 { font-size: 1.1rem; font-weight: 500; color: rgb(54 13 12 / 0.65); }
+.tag-cloud a.tag-level-4 { font-size: 1rem; font-weight: 400; color: rgb(54 13 12 / 0.6); }
+.tag-cloud a.tag-level-3 { font-size: 0.9rem; font-weight: 400; color: rgb(54 13 12 / 0.55); }
+.tag-cloud a.tag-level-2 { font-size: 0.85rem; font-weight: 400; color: rgb(54 13 12 / 0.5); }
+.tag-cloud a.tag-level-1 { font-size: 0.8rem; font-weight: 400; color: rgb(54 13 12 / 0.45); }

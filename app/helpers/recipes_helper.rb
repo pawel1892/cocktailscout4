@@ -45,4 +45,39 @@ module RecipesHelper
     end
     filters
   end
+
+  def tag_cloud_class(count)
+    # Cache tag stats for this request to avoid repeated queries
+    @tag_cloud_stats ||= begin
+      all_tags = @tags || Recipe.tag_counts
+      if all_tags.empty?
+        { min: 0, max: 0 }
+      else
+        counts = all_tags.map(&:taggings_count)
+        { min: counts.min, max: counts.max }
+      end
+    end
+
+    return "tag-level-1" if @tag_cloud_stats[:min] == 0 && @tag_cloud_stats[:max] == 0
+
+    # Avoid division by zero
+    return "tag-level-5" if @tag_cloud_stats[:min] == @tag_cloud_stats[:max]
+
+    # Use logarithmic scale for better distribution with power-law data
+    # (many tags with few recipes, few tags with many recipes)
+    min_count = @tag_cloud_stats[:min]
+    max_count = @tag_cloud_stats[:max]
+
+    # Add 1 to avoid log(0) and ensure positive values
+    log_count = Math.log(count + 1)
+    log_min = Math.log(min_count + 1)
+    log_max = Math.log(max_count + 1)
+
+    # Calculate level (1-10) based on logarithmic distribution
+    log_spread = log_max - log_min
+    level = ((log_count - log_min) / log_spread * 9).ceil + 1
+    level = [ [ level, 1 ].max, 10 ].min # Clamp between 1 and 10
+
+    "tag-level-#{level}"
+  end
 end

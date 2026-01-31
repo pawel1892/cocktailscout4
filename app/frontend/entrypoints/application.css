@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import "../stylesheets/tag_cloud.css";
 
 @theme {
   --color-cs-dark-red: #360D0C;
@@ -203,7 +204,6 @@ nav.pagy a[role="separator"] {
 .rank-8-color { color: #8A2D88; }
 .rank-9-color { color: #99134F; }
 .rank-10-color { color: #981915; }
-
 
 /* Tailwind 4 scans files for classes. */
 @source "../../../app/views/**/*.html.erb";

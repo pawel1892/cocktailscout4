@@ -4,10 +4,11 @@ module NavigationHelper
       {
         label: "Rezepte",
         path: recipes_path,
-        controllers: [ "recipes", "recipe_images" ],
+        controllers: [ "recipes", "recipe_images", "recipe_categories" ],
         dropdown: [
           { label: "Alle Rezepte", path: recipes_path, controllers: [ "recipes" ] },
-          { label: "Cocktailgalerie", path: recipe_images_path, controllers: [ "recipe_images" ] }
+          { label: "Cocktailgalerie", path: recipe_images_path, controllers: [ "recipe_images" ] },
+          { label: "Rezept-Kategorien", path: recipe_categories_path, controllers: [ "recipe_categories" ] }
         ]
       },
       {

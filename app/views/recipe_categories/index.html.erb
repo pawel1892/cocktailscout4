@@ -1,0 +1,18 @@
+<div class="mb-8">
+  <h1 class="text-3xl font-bold">Rezept-Kategorien</h1>
+</div>
+
+<div class="card p-8">
+  <div class="tag-cloud flex flex-wrap gap-3 justify-center items-center">
+    <% if @tags.any? %>
+      <% @tags.each do |tag| %>
+        <%= link_to tag.name,
+                    tag_path(tag: tag.name),
+                    class: tag_cloud_class(tag.taggings_count),
+                    title: "#{tag.taggings_count} #{tag.taggings_count == 1 ? 'Rezept' : 'Rezepte'}" %>
+      <% end %>
+    <% else %>
+      <p class="text-gray-500">Keine Kategorien gefunden.</p>
+    <% end %>
+  </div>
+</div>
