@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # HTTP Basic Auth for beta environment
   if Rails.env.beta?
     http_basic_authenticate_with(
-      name: "hemmingay",
+      name: "hemingway",
       password: "sour"
     )
   end
