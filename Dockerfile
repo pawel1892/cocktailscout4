@@ -51,7 +51,7 @@ RUN bundle install && \
 
 # Install node modules first (before copying all code for better caching)
 COPY package.json package-lock.json ./
-RUN npm ci --retry=3 --fetch-retries=3 --fetch-retry-mintimeout=20000 --fetch-retry-maxtimeout=120000
+RUN for i in 1 2 3; do npm ci --fetch-retries=5 --fetch-retry-mintimeout=20000 --fetch-retry-maxtimeout=120000 && break || sleep 10; done
 
 # Copy application code
 COPY . .
