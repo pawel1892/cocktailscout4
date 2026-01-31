@@ -1,14 +1,3 @@
-<style>
-  /* Show dropdown when toggled via JavaScript (for touch devices) */
-  .nav-dropdown-container.dropdown-open .nav-dropdown-menu {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-  .nav-dropdown-container.dropdown-open .nav-dropdown-toggle svg {
-    transform: rotate(180deg);
-  }
-</style>
-
 <header class="relative z-50">
   <!-- Top Bar: Dark Red -->
   <div class="bg-cs-dark-red text-white py-2 relative z-50">
@@ -23,34 +12,7 @@
       <!-- Middle: Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-6 text-base sm:text-lg font-medium">
         <% main_navigation_items.each do |item| %>
-          <% if item[:dropdown] %>
-            <!-- Split-Button Dropdown -->
-            <div class="relative group nav-dropdown-container">
-              <div class="flex items-center">
-                <!-- Main Link (Clickable Navigation) -->
-                <%= link_to item[:label], item[:path], class: "hover:text-cs-gold transition py-2 pr-1" %>
-
-                <!-- Chevron (Dropdown Trigger) - Larger touch target -->
-                <button class="nav-dropdown-toggle flex items-center justify-center hover:text-cs-gold transition focus:outline-none p-2 min-w-[44px] min-h-[44px]" aria-label="Toggle dropdown" type="button">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 group-hover:rotate-180 transition-transform duration-200">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </button>
-              </div>
-
-              <!-- Dropdown Menu -->
-              <div class="nav-dropdown-menu absolute left-1/2 -translate-x-1/2 mt-0 pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 transform origin-top">
-                <div class="bg-white text-gray-800 rounded shadow-xl ring-1 ring-black ring-opacity-5 overflow-hidden">
-                  <% item[:dropdown].each do |subitem| %>
-                    <%= link_to subitem[:label], subitem[:path], class: "block px-4 py-2 hover:bg-gray-100 hover:text-cs-dark-red transition text-sm sm:text-base" %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% else %>
-            <!-- Single Link -->
-            <%= link_to item[:label], item[:path], class: "hover:text-cs-gold transition py-2" %>
-          <% end %>
+          <%= link_to item[:label], item[:path], class: "hover:text-cs-gold transition py-2" %>
         <% end %>
       </nav>
 
@@ -114,6 +76,18 @@
       </nav>
     </div>
   </div>
+
+  <!-- Recipes Sub-Navigation (shown when in recipes section, desktop only) -->
+  <% if controller_name.in?(['recipes', 'recipe_images']) || controller_path.start_with?('recipes') %>
+    <div class="hidden md:block bg-black border-t border-b border-white/10">
+      <div class="container mx-auto px-4">
+        <nav class="flex items-center space-x-6 text-white text-sm font-medium overflow-x-auto">
+          <%= link_to "Alle Rezepte", recipes_path, class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{controller_name == 'recipes' && action_name == 'index' ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
+          <%= link_to "Cocktailgalerie", recipe_images_path, class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{controller_name == 'recipe_images' ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
+        </nav>
+      </div>
+    </div>
+  <% end %>
 
   <!-- Secondary Bar: Black -->
   <%= render "layouts/secondary_nav" %>
