@@ -39,6 +39,7 @@ env:
 
     # Database configuration for MySQL accessory
     DB_HOST: cocktailscout4-db
+    DATABASE_USERNAME: cocktailscout4_beta
 
     # Use beta-specific database names
     DATABASE_NAME: cocktailscout4_beta

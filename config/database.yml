@@ -63,7 +63,7 @@ production:
   primary: &primary_production
     <<: *default
     database: <%= ENV.fetch("DATABASE_NAME", nil) %>
-    username: cocktailscout4
+    username: <%= ENV.fetch("DATABASE_USERNAME", "cocktailscout4") %>
     password: <%= ENV.fetch("COCKTAILSCOUT4_DATABASE_PASSWORD", nil) %>
     host: <%= ENV.fetch("DB_HOST", nil) %>
   cache:
@@ -84,7 +84,7 @@ beta:
   primary: &primary_beta
     <<: *default
     database: <%= ENV.fetch("DATABASE_NAME", nil) %>
-    username: cocktailscout4
+    username: <%= ENV.fetch("DATABASE_USERNAME", "cocktailscout4") %>
     password: <%= ENV.fetch("COCKTAILSCOUT4_DATABASE_PASSWORD", nil) %>
     host: <%= ENV.fetch("DB_HOST", nil) %>
   cache:
