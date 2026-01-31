@@ -3,7 +3,7 @@ module NavigationHelper
     [
       {
         label: "Rezepte",
-        path: "#",
+        path: recipes_path,
         dropdown: [
           { label: "Alle Rezepte", path: recipes_path },
           { label: "Cocktailgalerie", path: recipe_images_path }

@@ -19,6 +19,7 @@ const components = {
   UserProfileModal: () => import('../components/UserProfileModal.vue'),
   FavoriteToggle: () => import('../components/FavoriteToggle.vue'),
   ContentReportModal: () => import('../components/ContentReportModal.vue'),
+  NavigationDropdown: () => import('../components/NavigationDropdown.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
