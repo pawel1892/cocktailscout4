@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  # HTTP Basic Auth for beta environment
+  if Rails.env.beta?
+    http_basic_authenticate_with(
+      name: "hemmingay",
+      password: "sour"
+    )
+  end
+
   before_action :set_initial_breadcrumbs
   before_action :track_user_activity
 
