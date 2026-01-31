@@ -77,13 +77,14 @@
     </div>
   </div>
 
-  <!-- Recipes Sub-Navigation (shown when in recipes section, desktop only) -->
-  <% if controller_name.in?(['recipes', 'recipe_images']) || controller_path.start_with?('recipes') %>
+  <!-- Dynamic Sub-Navigation (shown when current section has dropdown, desktop only) -->
+  <% if show_subnav? %>
     <div class="hidden md:block bg-black border-t border-b border-white/10">
       <div class="container mx-auto px-4">
         <nav class="flex items-center space-x-6 text-white text-sm font-medium overflow-x-auto">
-          <%= link_to "Alle Rezepte", recipes_path, class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{controller_name == 'recipes' && action_name == 'index' ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
-          <%= link_to "Cocktailgalerie", recipe_images_path, class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{controller_name == 'recipe_images' ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
+          <% subnav_items.each do |item| %>
+            <%= link_to item[:label], item[:path], class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{subnav_item_active?(item) ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
+          <% end %>
         </nav>
       </div>
     </div>
