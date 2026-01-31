@@ -42,10 +42,11 @@ RSpec.describe NavigationHelper, type: :helper do
       items = helper.main_navigation_items
       rezepte_item = items.find { |item| item[:label] == "Rezepte" }
 
-      expect(rezepte_item[:dropdown].length).to eq(3)
+      expect(rezepte_item[:dropdown].length).to eq(4)
       expect(rezepte_item[:dropdown][0][:label]).to eq("Alle Rezepte")
       expect(rezepte_item[:dropdown][1][:label]).to eq("Cocktailgalerie")
-      expect(rezepte_item[:dropdown][2][:label]).to eq("Rezept-Kategorien")
+      expect(rezepte_item[:dropdown][2][:label]).to eq("Toplisten")
+      expect(rezepte_item[:dropdown][3][:label]).to eq("Rezept-Kategorien")
     end
 
     it "Community dropdown includes correct items" do
@@ -89,6 +90,19 @@ RSpec.describe NavigationHelper, type: :helper do
       before do
         allow(helper).to receive(:controller_name).and_return('recipe_categories')
         allow(helper).to receive(:controller_path).and_return('recipe_categories')
+      end
+
+      it "returns the Rezepte navigation item" do
+        item = helper.current_nav_item
+
+        expect(item[:label]).to eq("Rezepte")
+      end
+    end
+
+    context "when on top_lists controller" do
+      before do
+        allow(helper).to receive(:controller_name).and_return('top_lists')
+        allow(helper).to receive(:controller_path).and_return('top_lists')
       end
 
       it "returns the Rezepte navigation item" do
@@ -195,10 +209,11 @@ RSpec.describe NavigationHelper, type: :helper do
         items = helper.subnav_items
 
         expect(items).to be_an(Array)
-        expect(items.length).to eq(3)
+        expect(items.length).to eq(4)
         expect(items[0][:label]).to eq("Alle Rezepte")
         expect(items[1][:label]).to eq("Cocktailgalerie")
-        expect(items[2][:label]).to eq("Rezept-Kategorien")
+        expect(items[2][:label]).to eq("Toplisten")
+        expect(items[3][:label]).to eq("Rezept-Kategorien")
       end
     end
 
@@ -291,6 +306,25 @@ RSpec.describe NavigationHelper, type: :helper do
 
       it "does not mark 'Cocktailgalerie' as active" do
         item = { label: "Cocktailgalerie", controllers: [ 'recipe_images' ] }
+
+        expect(helper.subnav_item_active?(item)).to be false
+      end
+    end
+
+    context "when on top_lists controller" do
+      before do
+        allow(helper).to receive(:controller_name).and_return('top_lists')
+        allow(helper).to receive(:controller_path).and_return('top_lists')
+      end
+
+      it "marks 'Toplisten' as active" do
+        item = { label: "Toplisten", controllers: [ 'top_lists' ] }
+
+        expect(helper.subnav_item_active?(item)).to be true
+      end
+
+      it "does not mark 'Alle Rezepte' as active" do
+        item = { label: "Alle Rezepte", controllers: [ 'recipes' ] }
 
         expect(helper.subnav_item_active?(item)).to be false
       end

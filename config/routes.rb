@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
   end
   resources :recipe_categories, path: "rezept-kategorien", only: [ :index ]
+  resources :top_lists, path: "toplisten", only: [ :index ]
   resources :recipe_comments, only: [ :edit, :update, :destroy ]
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 

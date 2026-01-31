@@ -1,0 +1,40 @@
+<div class="mb-8">
+  <h1 class="text-3xl font-bold">Toplisten</h1>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @lists.each do |list| %>
+    <div class="card">
+      <div class="card-header bg-cs-dark-red text-white">
+        Top 10 <%= list[:name] %>
+      </div>
+      <div class="card-body p-0">
+        <% if list[:recipes].any? %>
+          <table class="w-full">
+            <tbody>
+              <% list[:recipes].each_with_index do |recipe, index| %>
+                <tr class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors">
+                  <td class="px-4 py-3 text-gray-500 font-medium w-12 text-center">
+                    <%= index + 1 %>
+                  </td>
+                  <td class="px-4 py-3">
+                    <%= link_to recipe.title, recipe_path(recipe), class: "link font-medium" %>
+                  </td>
+                  <td class="px-4 py-3 text-right w-24">
+                    <span class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 rounded text-sm font-bold">
+                      <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
+                    </span>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="p-8 text-center text-gray-500">
+            Keine Rezepte gefunden
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
