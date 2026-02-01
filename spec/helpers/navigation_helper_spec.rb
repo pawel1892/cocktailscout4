@@ -24,7 +24,7 @@ RSpec.describe NavigationHelper, type: :helper do
       community_item = items.find { |item| item[:label] == "Community" }
 
       expect(community_item).to be_present
-      expect(community_item[:path]).to eq(forum_topics_path)
+      expect(community_item[:path]).to eq(community_path)
       expect(community_item[:dropdown]).to be_present
       expect(community_item[:controllers]).to include('users', 'forum_topics', 'forum_threads', 'forum_posts')
     end
@@ -53,9 +53,10 @@ RSpec.describe NavigationHelper, type: :helper do
       items = helper.main_navigation_items
       community_item = items.find { |item| item[:label] == "Community" }
 
-      expect(community_item[:dropdown].length).to eq(2)
-      expect(community_item[:dropdown][0][:label]).to eq("Forum")
-      expect(community_item[:dropdown][1][:label]).to eq("Benutzer")
+      expect(community_item[:dropdown].length).to eq(3)
+      expect(community_item[:dropdown][0][:label]).to eq("Übersicht")
+      expect(community_item[:dropdown][1][:label]).to eq("Forum")
+      expect(community_item[:dropdown][2][:label]).to eq("Benutzer")
     end
   end
 
@@ -227,9 +228,10 @@ RSpec.describe NavigationHelper, type: :helper do
         items = helper.subnav_items
 
         expect(items).to be_an(Array)
-        expect(items.length).to eq(2)
-        expect(items[0][:label]).to eq("Forum")
-        expect(items[1][:label]).to eq("Benutzer")
+        expect(items.length).to eq(3)
+        expect(items[0][:label]).to eq("Übersicht")
+        expect(items[1][:label]).to eq("Forum")
+        expect(items[2][:label]).to eq("Benutzer")
       end
     end
 
