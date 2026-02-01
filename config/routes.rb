@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
   # Forum routes (legacy URLs)
   get "cocktailforum", to: "forum_topics#index", as: :forum_topics
+  get "community", to: "community#index", as: :community
   get "cocktailforum/kategorie/:id", to: "forum_threads#index", as: :forum_topic
 
   get "cocktailforum/kategorie/:topic_id/themen/neu", to: "forum_threads#new", as: :new_forum_thread

@@ -1,0 +1,119 @@
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="lg:col-span-2 space-y-8">
+    
+    <%# Forum Section %>
+    <section>
+      <div class="flex justify-between items-center mb-6">
+        <div>
+           <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Cocktailforum</h2>
+           <p class="mt-2 text-gray-600 dark:text-gray-400">Plaudere mit Gleichgesinnten über Cocktails, Zutaten, Bars, das Leben, das Universum und den ganzen Rest.</p>
+        </div>
+        <%= link_to 'Zum Forum', forum_topics_path, class: "shrink-0 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500" %>
+      </div>
+
+      <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Zuletzt aktive Themen</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Titel</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Letzter Beitrag</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                          <% @last_forum_threads.each do |thread| %>
+                            <tr class="<%= 'bg-blue-50 dark:bg-blue-900/20' if Current.user && !thread.read_by?(Current.user) %>">
+                              <td class="px-6 py-4">
+                                <div class="text-sm font-medium">                        <%= link_to thread.title, forum_thread_path(thread), class: "text-primary-600 dark:text-primary-400 hover:underline" %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <% if thread.last_post_user %>
+                        <div class="flex flex-col items-start">
+                          <%= user_badge(thread.last_post_user) %>
+                          <span class="text-xs text-gray-400 mt-1"><%= time_ago_in_words(thread.last_post_created_at) %></span>
+                        </div>
+                    <% else %>
+                        -
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <%# Comments Section %>
+    <section>
+      <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Neuste Kommentare</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" colspan="2">Rezept</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">User</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+              <% @last_recipe_comments.each do |comment| %>
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap w-16">
+                    <%= link_to recipe_path(comment.recipe) do %>
+                        <% if comment.recipe.recipe_images.approved.any? && comment.recipe.recipe_images.approved.first.image.attached? %>
+                            <%= image_tag comment.recipe.recipe_images.approved.first.image.variant(:thumb), class: "rounded object-cover w-[50px] h-[50px]" %>
+                        <% else %>
+                            <div class="w-[50px] h-[50px] bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center text-gray-400 dark:text-gray-300">
+                              <i class="fa-solid fa-martini-glass"></i>
+                            </div>
+                        <% end %>
+                    <% end %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium">
+                        <%= link_to comment.recipe.title, recipe_path(comment.recipe), class: "text-primary-600 dark:text-primary-400 hover:underline" %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <div class="flex flex-col items-start">
+                        <%= user_badge(comment.user) %>
+                        <span class="text-xs text-gray-400 mt-1"><%= time_ago_in_words(comment.created_at) %></span>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <%# Sidebar %>
+  <div class="lg:col-span-1 space-y-8">
+     <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Gerade aktive User</h3>
+        </div>
+        <div class="p-6">
+           <% if @online_users.any? %>
+              <div class="flex flex-wrap gap-3">
+                 <% @online_users.each do |user| %>
+                    <%= user_badge(user) %>
+                 <% end %>
+              </div>
+           <% else %>
+              <p class="text-gray-500 dark:text-gray-400 italic">Derzeit sind keine User aktiv</p>
+           <% end %>
+        </div>
+     </div>
+  </div>
+</div>

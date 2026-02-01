@@ -26,6 +26,8 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   normalizes :username, with: ->(u) { u.strip }
 
+  scope :online, -> { where("last_active_at > ?", 15.minutes.ago) }
+
   before_create :generate_confirmation_token
 
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }
