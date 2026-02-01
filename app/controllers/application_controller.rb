@@ -5,9 +5,6 @@ class ApplicationController < ActionController::Base
   helper NavigationHelper
   helper_method :breadcrumbs
 
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
-
   # HTTP Basic Auth for beta environment
   if Rails.env.beta?
     http_basic_authenticate_with(
