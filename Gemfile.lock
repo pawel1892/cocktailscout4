@@ -91,7 +91,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.21.1)
       msgpack (~> 1.2)
-    brakeman (7.1.2)
+    brakeman (8.0.1)
       racc
     builder (3.3.0)
     bundler-audit (0.9.3)
@@ -230,7 +230,7 @@ GEM
     nokogiri (1.19.0-x86_64-linux-musl)
       racc (~> 1.4)
     ostruct (0.6.3)
-    pagy (43.2.7)
+    pagy (43.2.8)
       json
       yaml
     parallel (1.27.0)
@@ -240,7 +240,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.8.0)
+    prism (1.9.0)
     pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -326,8 +326,8 @@ GEM
       rspec-expectations (~> 3.13)
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
-    rspec-support (3.13.6)
-    rubocop (1.82.1)
+    rspec-support (3.13.7)
+    rubocop (1.84.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -335,7 +335,7 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.48.0, < 2.0)
+      rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.49.0)
