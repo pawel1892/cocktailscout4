@@ -2,6 +2,7 @@ class ForumSearchController < ApplicationController
   allow_unauthenticated_access only: %i[index]
 
   def index
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     add_breadcrumb "Suche"
 

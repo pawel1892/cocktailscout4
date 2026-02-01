@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    add_breadcrumb "Community"
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Benutzer"
 
     query = User.left_joins(:user_stat)

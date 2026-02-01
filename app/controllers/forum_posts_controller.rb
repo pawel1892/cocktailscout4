@@ -6,6 +6,7 @@ class ForumPostsController < ApplicationController
   before_action :authorize_delete!, only: %i[destroy]
 
   def new
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
     @forum_post = @forum_thread.forum_posts.new
@@ -22,6 +23,7 @@ class ForumPostsController < ApplicationController
   end
 
   def create
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
     @forum_post = @forum_thread.forum_posts.new(forum_post_params)
@@ -38,11 +40,13 @@ class ForumPostsController < ApplicationController
   end
 
   def edit
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     # @forum_post is set by before_action
   end
 
   def update
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     if @forum_post.update(forum_post_params.merge(last_editor: Current.user))
       page = @forum_post.page

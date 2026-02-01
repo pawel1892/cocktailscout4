@@ -14,9 +14,10 @@ module NavigationHelper
       },
       {
         label: "Community",
-        path: forum_topics_path,
-        controllers: [ "users", "forum_topics", "forum_threads", "forum_posts", "forum_search" ],
+        path: community_path,
+        controllers: [ "community", "users", "forum_topics", "forum_threads", "forum_posts", "forum_search" ],
         dropdown: [
+          { label: "Übersicht", path: community_path, controllers: [ "community" ] },
           { label: "Forum", path: forum_topics_path, controllers: [ "forum_topics", "forum_threads", "forum_posts", "forum_search" ] },
           { label: "Benutzer", path: users_path, controllers: [ "users" ] }
         ]

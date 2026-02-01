@@ -4,12 +4,14 @@ class ForumThreadsController < ApplicationController
   helper_method :current_user
 
   def index
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_topic = ForumTopic.find_by!(slug: params[:id])
     @pagy, @forum_threads = pagy(@forum_topic.forum_threads.order(updated_at: :desc), limit: 20)
   end
 
   def show
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_thread = ForumThread.find_by!(slug: params[:id])
     @forum_thread.track_visit(Current.user)
@@ -18,12 +20,14 @@ class ForumThreadsController < ApplicationController
   end
 
   def new
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_topic = find_forum_topic
     @forum_thread_form = ForumThreadForm.new
   end
 
   def create
+    add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_topic = find_forum_topic
 
