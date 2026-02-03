@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Authentication
   include Pagy::Method
+  include MetaTagsHelper
   helper BreadcrumbsHelper
   helper NavigationHelper
   helper_method :breadcrumbs

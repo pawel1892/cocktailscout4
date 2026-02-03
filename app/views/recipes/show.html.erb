@@ -1,5 +1,6 @@
 <% content_for :head do %>
   <%= pagy_seo_tags(@comments_pagy) if @comments_pagy.pages > 1 %>
+  <%= recipe_structured_data(@recipe) %>
 <% end %>
 
 <!-- Title -->

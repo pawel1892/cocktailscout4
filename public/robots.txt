@@ -1,1 +1,10 @@
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+User-agent: *
+Disallow: /admin/
+Disallow: /session/
+Disallow: /registration/
+Disallow: /passwort_aendern
+Disallow: /email_aendern
+
+Sitemap: https://www.cocktailscout.de/sitemap.xml.gz

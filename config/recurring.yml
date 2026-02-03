@@ -18,3 +18,8 @@ production:
     class: SessionCleanupJob
     queue: default
     schedule: every day at 4am
+
+  sitemap_refresh:
+    command: "SitemapGenerator::Interpreter.run"
+    queue: default
+    schedule: every day at 3am

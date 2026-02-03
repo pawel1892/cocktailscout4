@@ -4,6 +4,10 @@ class RecipesController < ApplicationController
 
   def index
     add_breadcrumb "Rezepte"
+    set_meta_tags(
+      title: "Cocktail-Rezepte",
+      description: "Entdecke die besten Cocktail-Rezepte unserer Community. Filtere nach Bewertung, Zutaten und Tags."
+    )
     query = Recipe.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
 
     # Filters
@@ -41,6 +45,7 @@ class RecipesController < ApplicationController
 
     add_breadcrumb "Rezepte", recipes_path
     add_breadcrumb @recipe.title
+    set_recipe_meta_tags(@recipe)
 
     @comments_pagy, @comments = pagy(
       @recipe.recipe_comments.includes(:user).order(created_at: :desc),

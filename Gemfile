@@ -69,3 +69,6 @@ gem "mini_magick", "~> 5.3"
 gem "letter_opener", "~> 1.10", group: :development
 
 gem "resend", "~> 1.0"
+
+gem "meta-tags", "~> 2.22"
+gem "sitemap_generator", "~> 6.3"

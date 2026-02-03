@@ -188,6 +188,8 @@ GEM
       net-pop
       net-smtp
     marcel (1.1.0)
+    meta-tags (2.22.3)
+      actionpack (>= 6.0.0)
     method_source (1.1.0)
     mini_magick (5.3.1)
       logger
@@ -371,6 +373,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
+    sitemap_generator (6.3.0)
+      builder (~> 3.0)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -455,6 +459,7 @@ DEPENDENCIES
   jbuilder
   kamal
   letter_opener (~> 1.10)
+  meta-tags (~> 2.22)
   mini_magick (~> 5.3)
   mysql2 (~> 0.5)
   pagy (~> 43.0)
@@ -471,6 +476,7 @@ DEPENDENCIES
   rubocop-rspec
   shoulda-matchers
   simplecov
+  sitemap_generator (~> 6.3)
   solid_cable
   solid_cache
   solid_queue

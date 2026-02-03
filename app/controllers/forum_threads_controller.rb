@@ -17,6 +17,7 @@ class ForumThreadsController < ApplicationController
     @forum_thread.track_visit(Current.user)
     @forum_topic = @forum_thread.forum_topic
     @pagy, @forum_posts = pagy(@forum_thread.ordered_posts, limit: 20)
+    set_forum_thread_meta_tags(@forum_thread)
   end
 
   def new

@@ -47,6 +47,9 @@ node_modules
 
 /public/system
 
+# Ignore generated sitemaps
+/public/sitemaps
+
 # Ignore SimpleCov coverage reports
 /coverage
 # Ignore key files for decrypting credentials and more.
