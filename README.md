@@ -1,55 +1,30 @@
-<p align="center">
-  <img src="public/logo_red.svg" alt="CocktailScout Logo" width="400">
-</p>
-
 # CocktailScout
 
+<p align="center">
+  <img src="public/logo_red.svg" alt="CocktailScout Logo" width="300">
+</p>
+
 This is the source code for [cocktailscout.de](https://www.cocktailscout.de), a modern cocktail recipe database and community platform.
+
+**Note:** This is a non-commercial, community-driven project.
 
 ## Features
 
 - **Recipe Database**: Thousands of cocktail recipes with ratings, images, and ingredient lists.
 - **Community**: Forum, user profiles, and interactive features.
 - **"Meine Bar"**: Ingredient-based recipe matching.
+- **SEO Optimized**: Full meta tag support, structured data (JSON-LD), and automated sitemaps.
 - **Modern Stack**: Built with the latest Rails conventions.
 
 ## Tech Stack
 
 - **Framework**: Ruby on Rails 8
 - **Database**: MySQL 8.0
-- **Frontend**: Tailwind CSS 4.x / Vue 3.x + Vite
+- **Frontend**: Tailwind CSS + Vite
 - **Background Jobs**: Solid Queue
 - **Caching**: Solid Cache
 - **Testing**: RSpec, FactoryBot, Shoulda Matchers
 - **Deployment**: Kamal
-
-## Installation
-
-Getting started with a Rails 8 application is straightforward. Ensure you have Ruby 3.3+ and MySQL installed.
-
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/jpzoidberg/cocktailscout4.git
-    cd cocktailscout4
-    ```
-
-2.  **Install dependencies**:
-    ```bash
-    bundle install
-    npm install
-    ```
-
-3.  **Setup the database**:
-    ```bash
-    bin/rails db:setup
-    ```
-
-4.  **Run the development server**:
-    ```bash
-    bin/dev
-    ```
-
-For detailed guides on running Rails 8, refer to the [official Rails guides](https://guides.rubyonrails.org/getting_started.html).
 
 ## Contributing
 
@@ -66,7 +41,13 @@ If you find a bug or have an idea for a new feature, please open an issue.
 5.  Open a Pull Request.
 
 ### Design, UX & Copywriting
-If you are skilled in **Design, UX, SEO or Writing** but don't know how to program, I would still love your help! Please contact me if you'd like to contribute in these areas.
+If you are skilled in **Design, UX, or Writing** but don't know how to program, I would still love your help! Please contact me if you'd like to contribute in these areas.
+
+## Installation
+
+This is a standard Ruby on Rails 8 project. For detailed setup instructions, please refer to the [official Rails guides](https://guides.rubyonrails.org/getting_started.html) or the `README` documentation for standard Rails applications.
+
+If you need help with the installation or have questions about the setup, please feel free to contact me.
 
 ## License
 
