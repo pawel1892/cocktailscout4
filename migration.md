@@ -1,73 +1,204 @@
-# Migration & Deployment Guide
+# Migration Plan: cocktailscout3 → cocktailscout4 (Production)
 
-This document outlines the steps required to deploy the new Rails 8 application (`cocktailscout4`) and migrate data from the legacy system (`cocktailscout3`).
+This document is the step-by-step plan for migrating data from the legacy system
+(`cocktailscout3`) to the new Rails 8 application (`cocktailscout4`) and switching
+the live domains over.
 
-## 1. Prerequisites
+The import runs locally in development. The `import:*` rake tasks are guarded by
+`ensure_development` and will abort if `RAILS_ENV=production`. The production
+MySQL accessory runs in a Docker container managed by Kamal, accessible on
+`127.0.0.1:3306` on the server. Active Storage files are persisted via a volume
+mount at `/home/pawel/cocktailscout4-storage-production:/rails/storage`.
 
-### Databases
-*   **New Database**: The application uses a standard Rails database (e.g., MySQL/MariaDB).
-*   **Legacy Database**: The application requires read access to the legacy `cocktailscout3` database to perform imports.
-    *   Ensure `config/database.yml` is configured to connect to the legacy DB (usually via a `legacy` entry or abstract class connection).
+---
 
-### File System (Images)
-*   **Legacy Images**: The original image files from the legacy project must be present on the server for the migration to work.
-    *   **Destination**: `/public/system/recipe_images` (in the new project root).
-    *   *Note*: These files are only needed temporarily for the migration task. Once migrated to Active Storage, they can be removed.
+## Phase 0 — Preparation
 
-### System Dependencies
-*   **Image Processing**: Ensure `imagemagick` or `libvips` is installed on the server for Active Storage variants.
-    *   Current config uses `mini_magick` (requires ImageMagick).
+Do these before starting the migration:
 
-## 2. Initial Setup
+- **Reduce DNS TTL.** Lower the TTL on the `cocktailscout.de` and
+  `www.cocktailscout.de` DNS records so the switch in Phase 7 propagates quickly.
+- **Legacy database.** Confirm that `cocktailscout3` is accessible on your local
+  machine via the `legacy` connection in `config/database.yml`.
+- **Legacy images.** Locate the image files from the old project on disk. You will
+  need to copy them locally in Phase 2.
 
-```bash
-# Install dependencies
-bundle install
+---
 
-# Setup the new database
-bin/rails db:create
-bin/rails db:schema:load
-```
+## Phase 1 — Take down the old site
 
-## 3. Data Import (Order Matters)
+Replace `cocktailscout.de` / `www.cocktailscout.de` with a maintenance page.
 
-Run the following rake tasks in sequence to import data from the legacy database. These tasks are idempotent (using `find_or_initialize_by` with `old_id`) and safely handle the legacy schema reference.
+No new data can be written to the legacy system from this point on.
 
-```bash
-# 1. Base Data
-bin/rake import:ingredients
-bin/rake import:users
-bin/rake import:recipes
+---
 
-# 2. Associations & Content
-bin/rake import:recipe_ingredients
-bin/rake import:ratings
-bin/rake import:comments
+## Phase 2 — Import locally
 
-# 3. Image Metadata
-# This imports the database records for images (ownership, approval status, old_id)
-bin/rake import:recipe_images
-```
+The import needs two things on the local machine, not just the database:
 
-## 4. Image Migration (Active Storage)
+1. **Legacy database** — accessible via the `legacy` connection (already configured
+   in `config/database.yml`).
+2. **Legacy images** — copy the image files from the old project into
+   `public/system/recipe_images/` in the local cocktailscout4 checkout. The task
+   `import:migrate_images_to_active_storage` reads from exactly that path
+   (`public/system/recipe_images/{old_id}/original/{filename}`). Without these
+   files the task will report all images as missing.
 
-Once the database records are imported, you must migrate the physical image files into Rails Active Storage.
-
-**Pre-check**: Ensure legacy images are located at `public/system/recipe_images`.
+Then run the full import:
 
 ```bash
-# Migrate approved images to Active Storage
-# This reads from public/system and writes to storage/ (AWS S3 or Disk)
-bin/rake import:migrate_images_to_active_storage
+bin/rake import:all
 ```
 
-**Verification**:
-*   Check `/cocktailgalerie` to see if images appear.
-*   Verify the `storage/` directory (or S3 bucket) contains the new files.
+`import:all` resets the local development database, runs all 14 import tasks in
+the correct order, and finishes by migrating approved images into Active Storage
+(`storage/`). Only approved images are migrated — this is by design.
 
-## 5. Post-Migration Cleanup
+### What `import:all` runs (in order)
 
-After verifying that all images are correctly serving from Active Storage:
+| # | Task | What it does |
+|---|------|--------------|
+| 1 | `import:ingredients` | Imports ingredients with old_id tracking |
+| 2 | `import:users` | Imports confirmed, active users with profiles |
+| 3 | `import:roles` | Imports roles and user-role associations |
+| 4 | `import:recipes` | Imports recipes with user and ingredient mappings |
+| 5 | `import:recipe_images` | Imports image *metadata* (ownership, approval, old_id) |
+| 6 | `import:comments` | Imports recipe comments |
+| 7 | `import:ratings` | Converts 1–5 star ratings to 1–10 scores |
+| 8 | `import:tags` | Imports tags via acts-as-taggable |
+| 9 | `import:forum` | Imports forum topics, threads, and posts |
+| 10 | `import:private_messages` | Imports private messages |
+| 11 | `import:visits` | Imports visits and updates visit counts |
+| 12 | `import:favorites` | Imports favorites as polymorphic records |
+| 13 | `import:stats` | Recalculates user stats |
+| 14 | `import:mybars` | Imports user ingredient collections ("Meine Hausbar") |
+| 15 | `import:migrate_images_to_active_storage` | Attaches approved image *files* to Active Storage |
 
-1.  Delete the temporary `public/system/recipe_images` directory.
-2.  The `legacy` database connection is no longer strictly required for runtime (unless new syncs are needed).
+---
+
+## Phase 3 — Verify
+
+```bash
+bin/rake verify:all
+```
+
+This runs 11 verification tasks that sample and cross-check the imported data
+against the legacy database: ingredients, users, recipes, comments, forum,
+messages, ratings, tags, visits, favorites, images, roles, mybars.
+
+Then do a manual spot-check in the browser: recipes, images (check
+`/cocktailgalerie`), forum, login, etc.
+
+---
+
+## Phase 4 — Deploy data to production
+
+Three things need to get to the production server (`23.88.50.20`). Only the
+primary application database is transferred — the cache, queue, and cable
+databases are runtime-only and should stay empty.
+
+### 4a — Database
+
+Dump the local development database and import it into the production MySQL
+container.
+
+```bash
+# On your local machine — dump the development database
+mysqldump cocktailscout4_development > cocktailscout4_production.sql
+
+# Copy the file to the server (adjust path as needed)
+scp cocktailscout4_production.sql pawel@23.88.50.20:/home/pawel/
+
+# On the server — import into the production database
+# Use the root password from .kamal/secrets (MYSQL_ROOT_PASSWORD)
+mysql -h 127.0.0.1 -u root -p cocktailscout4_production < /home/pawel/cocktailscout4_production.sql
+```
+
+### 4b — Images
+
+Archive the local `storage/` directory (the Active Storage blobs written by the
+import) and copy it to the production persistent volume.
+
+```bash
+# On your local machine — archive the storage directory
+tar czf storage.tar.gz -C storage .
+
+# Copy to the server
+scp storage.tar.gz pawel@23.88.50.20:/home/pawel/
+
+# On the server — extract into the production storage volume
+cd /home/pawel/cocktailscout4-storage-production
+tar xzf /home/pawel/storage.tar.gz
+```
+
+### 4c — Restart the app
+
+```bash
+kamal app restart
+```
+
+---
+
+## Phase 5 — Verify on prod.cocktailscout.de
+
+Before touching any DNS, confirm the new server works end-to-end at
+`https://prod.cocktailscout.de`. Check recipes, images, forum, login — anything
+that matters. This is the last opportunity to catch issues without affecting users.
+
+---
+
+## Phase 6 — Reconfigure for the new hostname
+
+Update `config/deploy.yml` — two values need to change:
+
+| Key | From | To |
+|-----|------|----|
+| `proxy.host` | `prod.cocktailscout.de` | `www.cocktailscout.de` |
+| `env.clear.APP_HOST` | `prod.cocktailscout.de` | `www.cocktailscout.de` |
+
+`APP_HOST` controls URLs in mailer templates (signup confirmation, password
+reset, etc.).
+
+Redeploy:
+
+```bash
+kamal deploy
+```
+
+This reconfigures kamal-proxy for the new hostname and kicks off Let's Encrypt
+cert provisioning for `www.cocktailscout.de`. The cert will only actually issue
+once DNS points to the server (Phase 7), but the application container stays
+running.
+
+---
+
+## Phase 7 — DNS switch
+
+- Point `www.cocktailscout.de` to `23.88.50.20` (A-record). Kamal handles the
+  rest for this domain.
+- Set up a **301-Headerweiterleitung** for `cocktailscout.de` → `https://www.cocktailscout.de`
+  in the do.de control panel (Domains → Einstellungen). This is a proper HTTP 301
+  redirect handled by do.de before traffic reaches your server — no CNAME, no
+  code changes needed.
+- Let's Encrypt will auto-provision the SSL cert for `www.cocktailscout.de` once
+  the A-record resolves.
+
+---
+
+## Phase 8 — Remove prod subdomain
+
+- Delete the `prod.cocktailscout.de` DNS record.
+
+---
+
+## Phase 9 — Cleanup
+
+Once everything is stable:
+
+- Delete the temporary legacy image files from `public/system/recipe_images/`
+  locally.
+- The `legacy` database connection in `config/database.yml` is no longer needed at
+  runtime unless a re-import is planned.
+- Remove the local dump file (`cocktailscout4_production.sql`) and archive
+  (`storage.tar.gz`) from the server.
