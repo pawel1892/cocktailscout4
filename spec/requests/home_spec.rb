@@ -24,6 +24,10 @@ RSpec.describe "Home Page", type: :request do
 
       expect(response.body).to include("Galerie")
       expect(response.body).to include(recipe_images_path)
+
+      # Meta Tags
+      expect(response.body).to include('<title>Home | CocktailScout</title>')
+      expect(response.body).to include('name="description" content="Willkommen bei CocktailScout.de')
     end
   end
 end

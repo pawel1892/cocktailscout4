@@ -56,7 +56,7 @@ module MetaTagsHelper
     description = if thread.first_post&.body.present?
       sanitize_and_truncate(thread.first_post.body, 160)
     else
-      "#{thread.topic.name} - Diskussion in der CocktailScout Community"
+      "#{thread.forum_topic.name} - Diskussion in der CocktailScout Community"
     end
 
     set_meta_tags(

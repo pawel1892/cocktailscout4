@@ -8,6 +8,10 @@ RSpec.describe "Recipes", type: :request do
       get recipes_path
       expect(response).to have_http_status(:success)
       expect(response.body).to include(recipe.title)
+
+      # Meta Tags
+      expect(response.body).to include('<title>Cocktail-Rezepte | CocktailScout</title>')
+      expect(response.body).to include('name="description" content="Entdecke die besten Cocktail-Rezepte')
     end
   end
 
@@ -23,6 +27,14 @@ RSpec.describe "Recipes", type: :request do
       expect(response.body).to include("Gin")
       expect(response.body).to include("4.0 cl")
       expect(response.body).to include("Yummy!")
+
+      # Meta Tags
+      expect(response.body).to include("<title>#{recipe.title} | CocktailScout</title>")
+
+      # Structured Data
+      expect(response.body).to include('<script type="application/ld+json">')
+      expect(response.body).to include('"@type":"Recipe"')
+      expect(response.body).to include("\"name\":\"#{recipe.title}\"")
     end
 
     it "tracks an anonymous visit" do

@@ -155,6 +155,10 @@ RSpec.describe "ForumThreads", type: :request do
       get forum_thread_path(forum_thread.slug)
       expect(response.body).to include("First post")
       expect(response.body).to include("Second post")
+
+      # Meta Tags
+      expect(response.body).to include("<title>#{forum_thread.title} | CocktailScout</title>")
+      expect(response.body).to include('name="description" content="First post"')
     end
 
     it "displays posts ordered by created_at ascending" do
