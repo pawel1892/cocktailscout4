@@ -43,6 +43,10 @@ class ForumThread < ApplicationRecord
     ordered_posts.offset((page.to_i - 1) * per_page).limit(per_page)
   end
 
+  def first_post
+    forum_posts.order(created_at: :asc).first
+  end
+
   def last_post
     forum_posts.order("forum_posts.created_at DESC, id DESC").first
   end

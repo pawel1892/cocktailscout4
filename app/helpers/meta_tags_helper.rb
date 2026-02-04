@@ -11,7 +11,7 @@ module MetaTagsHelper
         site_name: "CocktailScout",
         type: "website",
         locale: "de_DE",
-        image: asset_url("icon.png")
+        image: resolve_asset_url("icon.png")
       },
       twitter: {
         card: "summary_large_image",
@@ -105,7 +105,17 @@ module MetaTagsHelper
       url_for(recipe.approved_recipe_images.first.image.variant(resize_to_limit: [ 800, 600 ]))
     else
       # Fall back to default icon
-      asset_url("icon.png")
+      resolve_asset_url("icon.png")
+    end
+  end
+
+  def resolve_asset_url(path)
+    if respond_to?(:asset_url)
+      asset_url(path)
+    elsif respond_to?(:helpers) && helpers.respond_to?(:asset_url)
+      helpers.asset_url(path)
+    else
+      path
     end
   end
 end
