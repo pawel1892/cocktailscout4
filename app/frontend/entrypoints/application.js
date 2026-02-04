@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import ComponentRegistry from '../registry/components'
+import '@fortawesome/fontawesome-free/css/all.css'
 import './application.css'
 
 const startApp = () => {
