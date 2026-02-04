@@ -4,7 +4,6 @@ SimpleCov.start 'rails' do
   add_filter '/spec/'
   add_filter '/config/'
   add_filter '/vendor/'
-  add_filter '/legacy/'
   add_filter '/app/models/legacy/'
 
   add_group 'Models', 'app/models'
