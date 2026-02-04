@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo_red.svg" alt="CocktailScout Logo" width="400">
+</p>
+
 # CocktailScout
 
 This is the source code for [cocktailscout.de](https://www.cocktailscout.de), a modern cocktail recipe database and community platform.
