@@ -24,7 +24,13 @@
           <div class="card-body p-4">
             <div class="flex items-start gap-3">
                <div class="<%= is_unread ? 'unread-indicator text-cs-dark-red' : 'text-gray-300' %> mt-1">
-                 <i class="fas <%= forum_thread.sticky ? 'fa-thumbtack' : 'fa-comment' %> text-lg"></i>
+                 <% if forum_thread.sticky %>
+                   <i class="fas fa-thumbtack text-lg" title="Sticky"></i>
+                 <% elsif forum_thread.locked %>
+                   <i class="fas fa-lock text-lg" title="Gesperrt"></i>
+                 <% else %>
+                   <i class="fas fa-comment text-lg"></i>
+                 <% end %>
                </div>
                <div class="flex-1 min-w-0">
                   <h3 class="text-base font-bold leading-tight mb-1">

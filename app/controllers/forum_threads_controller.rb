@@ -7,7 +7,7 @@ class ForumThreadsController < ApplicationController
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_topic = ForumTopic.find_by!(slug: params[:id])
-    @pagy, @forum_threads = pagy(@forum_topic.forum_threads.order(updated_at: :desc), limit: 20)
+    @pagy, @forum_threads = pagy(@forum_topic.forum_threads.order(sticky: :desc, updated_at: :desc), limit: 20)
   end
 
   def show
