@@ -88,7 +88,6 @@ Rails.application.configure do
   config.hosts = [
     ENV.fetch("APP_HOST", "cocktailscout.de"),
     "beta.cocktailscout.de",
-    "prod.cocktailscout.de",
     "www.cocktailscout.de",
     "cocktailscout.de"
   ]
