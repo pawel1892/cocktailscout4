@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       # When using distinct, we need to explicitly select the ORDER BY columns
       # to satisfy MySQL's ONLY_FULL_GROUP_BY requirement
       query = query.joins(:roles)
-                   .select('users.*, user_stats.points')
+                   .select("users.*, user_stats.points")
                    .distinct
     end
 
