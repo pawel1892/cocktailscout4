@@ -116,8 +116,8 @@ namespace :import do
     Legacy::ForumTopic.find_each do |legacy_topic|
       topic = ForumTopic.find_or_initialize_by(old_id: legacy_topic.id)
       topic.assign_attributes(
-        name: legacy_topic.name,
-        description: legacy_topic.description,
+        name: Nokogiri::HTML.fragment(legacy_topic.name || "").text,
+        description: Nokogiri::HTML.fragment(legacy_topic.description || "").text,
         slug: legacy_topic.slug,
         position: legacy_topic.sorting,
         created_at: legacy_topic.created_at,
@@ -142,7 +142,7 @@ namespace :import do
       thread.assign_attributes(
         forum_topic_id: topic_id,
         user_id: user_map[legacy_thread.user_id],
-        title: legacy_thread.title,
+        title: Nokogiri::HTML.fragment(legacy_thread.title || "").text,
         slug: legacy_thread.slug,
         sticky: legacy_thread.sticky || false,
         locked: legacy_thread.locked || false,
