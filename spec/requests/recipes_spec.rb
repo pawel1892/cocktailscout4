@@ -37,6 +37,62 @@ RSpec.describe "Recipes", type: :request do
       expect(response.body).to include("\"name\":\"#{recipe.title}\"")
     end
 
+    context "ingredient display" do
+      it "shows only the description when present" do
+        ingredient_with_desc = create(:ingredient, name: "Tequila")
+        create(:recipe_ingredient,
+          recipe: recipe,
+          ingredient: ingredient_with_desc,
+          amount: 1.0,
+          unit: "cl",
+          description: "1,5cl Tequila (weiss)"
+        )
+
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Should show the description
+        expect(response.body).to include("1,5cl Tequila (weiss)")
+        # Should NOT show the calculated amount + ingredient name
+        expect(response.body).not_to match(/<strong>1\.0 cl<\/strong>\s+Tequila/)
+      end
+
+      it "shows amount + unit + ingredient name when description is missing" do
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Should show the calculated values (from the let! recipe_ingredient without description)
+        expect(response.body).to include("4.0 cl")
+        expect(response.body).to include("Gin")
+        # Should show them in the correct format with <strong> tag
+        expect(response.body).to match(/<strong>4\.0 cl<\/strong>\s+Gin/)
+      end
+
+      it "handles mix of ingredients with and without descriptions" do
+        # Ingredient with description
+        vodka = create(:ingredient, name: "Vodka")
+        create(:recipe_ingredient,
+          recipe: recipe,
+          ingredient: vodka,
+          amount: 2.0,
+          unit: "cl",
+          description: "2cl Vodka (premium)"
+        )
+
+        # Ingredient without description (Gin already created in let!)
+
+        get recipe_path(recipe)
+
+        expect(response).to have_http_status(:success)
+        # Should show description for Vodka
+        expect(response.body).to include("2cl Vodka (premium)")
+        expect(response.body).not_to match(/<strong>2\.0 cl<\/strong>\s+Vodka/)
+
+        # Should show calculated values for Gin
+        expect(response.body).to match(/<strong>4\.0 cl<\/strong>\s+Gin/)
+      end
+    end
+
     it "tracks an anonymous visit" do
       expect {
         get recipe_path(recipe)
