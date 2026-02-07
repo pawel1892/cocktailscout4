@@ -4,6 +4,7 @@ class ForumPostsController < ApplicationController
   before_action :set_forum_post, only: %i[edit update destroy]
   before_action :authorize_edit!, only: %i[edit update]
   before_action :authorize_delete!, only: %i[destroy]
+  before_action :ensure_thread_not_locked, only: %i[create]
 
   def new
     add_breadcrumb "Community", community_path
@@ -25,7 +26,7 @@ class ForumPostsController < ApplicationController
   def create
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
-    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
+    @forum_thread ||= ForumThread.find_by!(slug: params[:thread_id])
     @forum_post = @forum_thread.forum_posts.new(forum_post_params)
     @forum_post.user = Current.user
 
@@ -91,5 +92,13 @@ class ForumPostsController < ApplicationController
 
   def forum_post_params
     params.require(:forum_post).permit(:body)
+  end
+
+  def ensure_thread_not_locked
+    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
+
+    if @forum_thread.locked? && !(Current.user&.admin? || Current.user&.forum_moderator?)
+      redirect_to forum_thread_path(@forum_thread), alert: "Dieser Thread ist geschlossen. Nur Moderatoren können neue Beiträge erstellen."
+    end
   end
 end

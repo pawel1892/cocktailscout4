@@ -312,4 +312,265 @@ RSpec.describe "ForumThreads", type: :request do
       end
     end
   end
+
+  describe "POST /cocktailforum/thema/:thread_id/sperren (lock thread)" do
+    let(:forum_topic) { create(:forum_topic) }
+    let(:forum_thread) { create(:forum_thread, forum_topic: forum_topic, locked: false) }
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+
+      before { sign_in(admin) }
+
+      it "locks the thread" do
+        post lock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.locked).to be true
+        expect(flash[:notice]).to eq("Thread wurde gesperrt.")
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+
+      before { sign_in(moderator) }
+
+      it "locks the thread" do
+        post lock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.locked).to be true
+      end
+    end
+
+    context "when authenticated as regular user" do
+      let(:user) { create(:user) }
+
+      before { sign_in(user) }
+
+      it "denies access" do
+        post lock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(root_path)
+        expect(forum_thread.reload.locked).to be false
+      end
+    end
+
+    context "when not authenticated" do
+      it "redirects to login" do
+        post lock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(new_session_path)
+        expect(forum_thread.reload.locked).to be false
+      end
+    end
+  end
+
+  describe "DELETE /cocktailforum/thema/:thread_id/sperren (unlock thread)" do
+    let(:forum_topic) { create(:forum_topic) }
+    let(:forum_thread) { create(:forum_thread, forum_topic: forum_topic, locked: true) }
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+
+      before { sign_in(admin) }
+
+      it "unlocks the thread" do
+        delete unlock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.locked).to be false
+        expect(flash[:notice]).to eq("Thread wurde entsperrt.")
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+
+      before { sign_in(moderator) }
+
+      it "unlocks the thread" do
+        delete unlock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.locked).to be false
+      end
+    end
+  end
+
+  describe "POST /cocktailforum/thema/:thread_id/anpinnen (pin thread)" do
+    let(:forum_topic) { create(:forum_topic) }
+    let(:forum_thread) { create(:forum_thread, forum_topic: forum_topic, sticky: false) }
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+
+      before { sign_in(admin) }
+
+      it "pins the thread" do
+        post pin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.sticky).to be true
+        expect(flash[:notice]).to eq("Thread wurde angepinnt.")
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+
+      before { sign_in(moderator) }
+
+      it "pins the thread" do
+        post pin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.sticky).to be true
+      end
+    end
+
+    context "when authenticated as regular user" do
+      let(:user) { create(:user) }
+
+      before { sign_in(user) }
+
+      it "denies access" do
+        post pin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(root_path)
+        expect(forum_thread.reload.sticky).to be false
+      end
+    end
+
+    context "when not authenticated" do
+      it "redirects to login" do
+        post pin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(new_session_path)
+        expect(forum_thread.reload.sticky).to be false
+      end
+    end
+  end
+
+  describe "DELETE /cocktailforum/thema/:thread_id/anpinnen (unpin thread)" do
+    let(:forum_topic) { create(:forum_topic) }
+    let(:forum_thread) { create(:forum_thread, forum_topic: forum_topic, sticky: true) }
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+
+      before { sign_in(admin) }
+
+      it "unpins the thread" do
+        delete unpin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.sticky).to be false
+        expect(flash[:notice]).to eq("Thread wurde losgelöst.")
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+
+      before { sign_in(moderator) }
+
+      it "unpins the thread" do
+        delete unpin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.sticky).to be false
+      end
+    end
+  end
+
+  describe "sticky thread ordering in index" do
+    let(:forum_topic) { create(:forum_topic) }
+    let!(:normal_thread) { create(:forum_thread, forum_topic: forum_topic, title: "Normal Thread", sticky: false, updated_at: 1.hour.ago) }
+    let!(:sticky_thread) { create(:forum_thread, forum_topic: forum_topic, title: "Sticky Thread", sticky: true, updated_at: 2.hours.ago) }
+
+    it "displays sticky thread before normal thread" do
+      get forum_topic_path(forum_topic)
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).to match(/Sticky Thread.*Normal Thread/m)
+    end
+
+    it "shows thumbtack icon for sticky thread" do
+      get forum_topic_path(forum_topic)
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include("fa-thumbtack")
+    end
+  end
+
+  describe "locked thread display" do
+    let(:forum_topic) { create(:forum_topic) }
+    let(:forum_thread) { create(:forum_thread, forum_topic: forum_topic, title: "Locked Thread", locked: true) }
+
+    it "shows lock icon for locked thread" do
+      get forum_thread_path(forum_thread)
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include("fa-lock")
+    end
+
+    context "when not authenticated" do
+      it "shows locked message instead of reply button" do
+        get forum_thread_path(forum_thread)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Dieser Thread ist geschlossen")
+        expect(response.body).not_to include("Antworten")
+      end
+    end
+
+    context "when authenticated as regular user" do
+      let(:user) { create(:user) }
+
+      before { sign_in(user) }
+
+      it "shows locked message instead of reply button" do
+        get forum_thread_path(forum_thread)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Dieser Thread ist geschlossen")
+        expect(response.body).not_to include(new_forum_post_path(forum_thread))
+      end
+    end
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+
+      before { sign_in(admin) }
+
+      it "shows reply button with moderator label" do
+        get forum_thread_path(forum_thread)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Antworten (als Moderator)")
+      end
+
+      it "shows lock/unlock and pin/unpin controls" do
+        get forum_thread_path(forum_thread)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Entsperren")
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+
+      before { sign_in(moderator) }
+
+      it "shows reply button with moderator label" do
+        get forum_thread_path(forum_thread)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Antworten (als Moderator)")
+      end
+    end
+  end
 end

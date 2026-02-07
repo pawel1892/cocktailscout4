@@ -55,14 +55,68 @@ RSpec.describe "ForumPosts", type: :request do
       end
 
       it "fails with invalid data" do
-                expect {
-                  post forum_posts_path(forum_thread), params: { forum_post: { body: "" } }
-                }.not_to change(ForumPost, :count)
+        expect {
+          post forum_posts_path(forum_thread), params: { forum_post: { body: "" } }
+        }.not_to change(ForumPost, :count)
 
-                expect(response).to have_http_status(:unprocessable_content)
-              end
-            end
-          end
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+    end
+  end
+
+  describe "POST /cocktailforum/thema/:thread_id/beitrag with locked thread" do
+    let(:locked_thread) { create(:forum_thread, forum_topic: forum_topic, locked: true) }
+
+    context "when authenticated as regular user" do
+      before { sign_in(user) }
+
+      it "prevents posting and redirects with alert" do
+        expect {
+          post forum_posts_path(locked_thread), params: { forum_post: { body: "Trying to post" } }
+        }.not_to change(ForumPost, :count)
+
+        expect(response).to redirect_to(forum_thread_path(locked_thread))
+        follow_redirect!
+        expect(response.body).to include("Dieser Thread ist geschlossen")
+      end
+    end
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+      before { sign_in(admin) }
+
+      it "allows posting in locked thread" do
+        expect {
+          post forum_posts_path(locked_thread), params: { forum_post: { body: "Admin post" } }
+        }.to change(ForumPost, :count).by(1)
+
+        expect(response).to redirect_to(forum_thread_path(locked_thread, page: 1, anchor: "post-#{ForumPost.last.id}"))
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+      before { sign_in(moderator) }
+
+      it "allows posting in locked thread" do
+        expect {
+          post forum_posts_path(locked_thread), params: { forum_post: { body: "Moderator post" } }
+        }.to change(ForumPost, :count).by(1)
+
+        expect(response).to redirect_to(forum_thread_path(locked_thread, page: 1, anchor: "post-#{ForumPost.last.id}"))
+      end
+    end
+
+    context "when not authenticated" do
+      it "redirects to login without checking lock status" do
+        expect {
+          post forum_posts_path(locked_thread), params: { forum_post: { body: "Trying to post" } }
+        }.not_to change(ForumPost, :count)
+
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+  end
   describe "GET /cocktailforum/beitrag/:id/bearbeiten" do
     context "when authenticated as author" do
       before { sign_in(user) }

@@ -198,4 +198,68 @@ RSpec.describe ForumThread, type: :model do
       expect(ForumThread.last_active_threads).to eq([ thread2, thread3, thread1 ])
     end
   end
+
+  describe "locked attribute" do
+    let(:forum_thread) { create(:forum_thread) }
+
+    it "defaults to false" do
+      expect(forum_thread.locked).to be false
+    end
+
+    it "can be set to true" do
+      forum_thread.update(locked: true)
+      expect(forum_thread.locked).to be true
+    end
+
+    it "responds to locked? predicate" do
+      expect(forum_thread.locked?).to be false
+      forum_thread.update(locked: true)
+      expect(forum_thread.locked?).to be true
+    end
+  end
+
+  describe "sticky attribute" do
+    let(:forum_thread) { create(:forum_thread) }
+
+    it "defaults to false" do
+      expect(forum_thread.sticky).to be false
+    end
+
+    it "can be set to true" do
+      forum_thread.update(sticky: true)
+      expect(forum_thread.sticky).to be true
+    end
+
+    it "responds to sticky? predicate" do
+      expect(forum_thread.sticky?).to be false
+      forum_thread.update(sticky: true)
+      expect(forum_thread.sticky?).to be true
+    end
+  end
+
+  describe "sticky thread ordering" do
+    let(:forum_topic) { create(:forum_topic) }
+    let!(:normal_thread1) { create(:forum_thread, forum_topic: forum_topic, sticky: false, updated_at: 1.hour.ago) }
+    let!(:sticky_thread1) { create(:forum_thread, forum_topic: forum_topic, sticky: true, updated_at: 3.hours.ago) }
+    let!(:normal_thread2) { create(:forum_thread, forum_topic: forum_topic, sticky: false, updated_at: 2.hours.ago) }
+    let!(:sticky_thread2) { create(:forum_thread, forum_topic: forum_topic, sticky: true, updated_at: 4.hours.ago) }
+
+    it "orders sticky threads before normal threads" do
+      threads = forum_topic.forum_threads.order(sticky: :desc, updated_at: :desc)
+      expect(threads.first(2)).to match_array([ sticky_thread1, sticky_thread2 ])
+      expect(threads.last(2)).to match_array([ normal_thread1, normal_thread2 ])
+    end
+
+    it "orders sticky threads by updated_at descending" do
+      threads = forum_topic.forum_threads.order(sticky: :desc, updated_at: :desc)
+      sticky_threads = threads.select(&:sticky?)
+      expect(sticky_threads).to eq([ sticky_thread1, sticky_thread2 ])
+    end
+
+    it "orders normal threads by updated_at descending" do
+      threads = forum_topic.forum_threads.order(sticky: :desc, updated_at: :desc)
+      normal_threads = threads.reject(&:sticky?)
+      expect(normal_threads).to eq([ normal_thread1, normal_thread2 ])
+    end
+  end
 end

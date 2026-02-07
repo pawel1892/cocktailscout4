@@ -8,7 +8,10 @@
         <div>
           <h1 class="text-2xl font-bold text-gray-900 mb-1">
             <% if @forum_thread.sticky %>
-              <i class="fas fa-thumbtack text-cs-gold mr-2" title="Sticky"></i>
+              <i class="fas fa-thumbtack text-cs-gold mr-2" title="Angepinnt"></i>
+            <% end %>
+            <% if @forum_thread.locked %>
+              <i class="fas fa-lock text-gray-500 mr-2" title="Gesperrt"></i>
             <% end %>
             <%= @forum_thread.title %>
           </h1>
@@ -26,9 +29,46 @@
     </div>
   </div>
 
+  <%# Moderation Controls %>
+  <% if Current.user&.admin? || Current.user&.forum_moderator? %>
+    <div class="flex flex-wrap gap-2">
+      <% if @forum_thread.locked %>
+        <%= button_to unlock_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-secondary' do %>
+          <i class="fas fa-unlock mr-1"></i> Entsperren
+        <% end %>
+      <% else %>
+        <%= button_to lock_forum_thread_path(@forum_thread), method: :post, class: 'btn btn-sm btn-secondary' do %>
+          <i class="fas fa-lock mr-1"></i> Sperren
+        <% end %>
+      <% end %>
+
+      <% if @forum_thread.sticky %>
+        <%= button_to unpin_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-secondary' do %>
+          <i class="fas fa-thumbtack mr-1"></i> Loslösen
+        <% end %>
+      <% else %>
+        <%= button_to pin_forum_thread_path(@forum_thread), method: :post, class: 'btn btn-sm btn-secondary' do %>
+          <i class="fas fa-thumbtack mr-1"></i> Anpinnen
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-    <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
-      <i class="fas fa-reply mr-2"></i> Antworten
+    <% if @forum_thread.locked %>
+      <% if Current.user&.admin? || Current.user&.forum_moderator? %>
+        <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+          <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
+        <% end %>
+      <% else %>
+        <div class="text-gray-600 italic w-full sm:w-auto">
+          <i class="fas fa-lock mr-2"></i> Dieser Thread ist geschlossen
+        </div>
+      <% end %>
+    <% else %>
+      <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+        <i class="fas fa-reply mr-2"></i> Antworten
+      <% end %>
     <% end %>
 
     <% if @pagy.pages > 1 %>
@@ -47,10 +87,22 @@
 
   <%# Bottom Pagination and Actions %>
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-    <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
-      <i class="fas fa-reply mr-2"></i> Antworten
+    <% if @forum_thread.locked %>
+      <% if Current.user&.admin? || Current.user&.forum_moderator? %>
+        <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+          <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
+        <% end %>
+      <% else %>
+        <div class="text-gray-600 italic w-full sm:w-auto">
+          <i class="fas fa-lock mr-2"></i> Dieser Thread ist geschlossen
+        </div>
+      <% end %>
+    <% else %>
+      <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+        <i class="fas fa-reply mr-2"></i> Antworten
+      <% end %>
     <% end %>
-    
+
     <% if @pagy.pages > 1 %>
       <div class="w-full sm:w-auto overflow-x-auto py-2">
         <%== @pagy.series_nav %>
