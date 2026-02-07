@@ -52,6 +52,10 @@ node_modules
 
 # Ignore SimpleCov coverage reports
 /coverage
+
+# Ignore Claude Code files
+/.claude
+
 # Ignore key files for decrypting credentials and more.
 /config/credentials/*.key
 
