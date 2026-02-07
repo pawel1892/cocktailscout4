@@ -15,7 +15,11 @@ class UsersController < ApplicationController
 
     # Filter to show only users with roles (admins/moderators)
     if params[:moderators_only] == "1"
-      query = query.joins(:roles).distinct
+      # When using distinct, we need to explicitly select the ORDER BY columns
+      # to satisfy MySQL's ONLY_FULL_GROUP_BY requirement
+      query = query.joins(:roles)
+                   .select('users.*, user_stats.points')
+                   .distinct
     end
 
     @pagy, @users = pagy(query.order("#{sort_column} #{sort_direction}"))
