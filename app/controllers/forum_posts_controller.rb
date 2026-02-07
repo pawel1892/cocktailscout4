@@ -79,13 +79,13 @@ class ForumPostsController < ApplicationController
   end
 
   def authorize_edit!
-    unless @forum_post.user == Current.user || Current.user&.admin? || Current.user&.forum_moderator?
+    unless @forum_post.user == Current.user || Current.user&.can_moderate_forum?
       redirect_to forum_thread_path(@forum_post.forum_thread), alert: "Du hast keine Berechtigung, diesen Beitrag zu bearbeiten."
     end
   end
 
   def authorize_delete!
-    unless Current.user&.admin? || Current.user&.forum_moderator?
+    unless Current.user&.can_moderate_forum?
       redirect_to forum_thread_path(@forum_post.forum_thread), alert: "Du hast keine Berechtigung, diesen Beitrag zu löschen."
     end
   end
@@ -97,7 +97,7 @@ class ForumPostsController < ApplicationController
   def ensure_thread_not_locked
     @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
 
-    if @forum_thread.locked? && !(Current.user&.admin? || Current.user&.forum_moderator?)
+    if @forum_thread.locked? && !Current.user&.can_moderate_forum?
       redirect_to forum_thread_path(@forum_thread), alert: "Dieser Thread ist geschlossen. Nur Moderatoren können neue Beiträge erstellen."
     end
   end

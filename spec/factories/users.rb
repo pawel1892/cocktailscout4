@@ -32,5 +32,11 @@ FactoryBot.define do
         user.roles << create(:role, :image_moderator)
       end
     end
+
+    trait :super_moderator do
+      after(:create) do |user|
+        user.roles << create(:role, :super_moderator)
+      end
+    end
   end
 end

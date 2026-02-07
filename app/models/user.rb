@@ -87,8 +87,24 @@ class User < ApplicationRecord
     role?("image_moderator")
   end
 
+  def super_moderator?
+    role?("super_moderator")
+  end
+
   def moderator?
-    admin? || forum_moderator? || recipe_moderator? || image_moderator?
+    admin? || forum_moderator? || recipe_moderator? || image_moderator? || super_moderator?
+  end
+
+  def can_moderate_forum?
+    admin? || forum_moderator? || super_moderator?
+  end
+
+  def can_moderate_recipe?
+    admin? || recipe_moderator? || super_moderator?
+  end
+
+  def can_moderate_image?
+    admin? || image_moderator? || super_moderator?
   end
 
   def role?(role_name)

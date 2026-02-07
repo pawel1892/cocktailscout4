@@ -6,11 +6,16 @@ class UsersController < ApplicationController
     add_breadcrumb "Community", community_path
     add_breadcrumb "Benutzer"
 
-    query = User.left_joins(:user_stat)
+    query = User.left_joins(:user_stat).includes(:roles)
 
     # Search by username
     if params[:q].present?
       query = query.where("username LIKE ?", "%#{params[:q]}%")
+    end
+
+    # Filter to show only users with roles (admins/moderators)
+    if params[:moderators_only] == "1"
+      query = query.joins(:roles).distinct
     end
 
     @pagy, @users = pagy(query.order("#{sort_column} #{sort_direction}"))

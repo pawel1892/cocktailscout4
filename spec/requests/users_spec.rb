@@ -290,4 +290,73 @@ RSpec.describe "Users", type: :request do
       expect(response.body).to include('rank-8-color')
     end
   end
+
+  describe "Role filtering" do
+    let!(:regular_user) { create(:user, username: "RegularUser") }
+    let!(:admin_user) { create(:user, :admin, username: "AdminUser") }
+    let!(:forum_mod) { create(:user, :forum_moderator, username: "ForumMod") }
+    let!(:recipe_mod) { create(:user, :recipe_moderator, username: "RecipeMod") }
+    let!(:super_mod) { create(:user, :super_moderator, username: "SuperMod") }
+
+    it "displays moderators checkbox filter" do
+      get users_path
+      expect(response.body).to include('name="moderators_only"')
+      expect(response.body).to include('Nur Admins / Moderatoren')
+    end
+
+    it "shows all users by default" do
+      get users_path
+      expect(response.body).to include("RegularUser")
+      expect(response.body).to include("AdminUser")
+      expect(response.body).to include("ForumMod")
+      expect(response.body).to include("RecipeMod")
+      expect(response.body).to include("SuperMod")
+    end
+
+    it "filters to show only users with roles when checkbox is checked" do
+      get users_path(moderators_only: "1")
+      expect(response.body).to include("AdminUser")
+      expect(response.body).to include("ForumMod")
+      expect(response.body).to include("RecipeMod")
+      expect(response.body).to include("SuperMod")
+      expect(response.body).not_to include("RegularUser")
+    end
+
+    it "displays role badges in filtered results" do
+      get users_path(moderators_only: "1")
+      expect(response.body).to include("Admin") # display_name
+      expect(response.body).to include("Forum-Moderator")
+    end
+
+    it "preserves sort params when filtering" do
+      get users_path(moderators_only: "1", sort: "username", direction: "asc")
+      expect(response.body).to include("AdminUser")
+      expect(response.body).to include('sort=username')
+    end
+  end
+
+  describe "Role display" do
+    let!(:admin_user) { create(:user, :admin, username: "AdminDisplay") }
+    let!(:super_mod) { create(:user, :super_moderator, username: "SuperModDisplay") }
+    let!(:regular_user) { create(:user, username: "RegularDisplay") }
+
+    it "displays role badge for admin" do
+      get users_path
+      expect(response.body).to include("Admin")
+      expect(response.body).to include("tag-gold")
+    end
+
+    it "displays role badge for super moderator" do
+      get users_path
+      expect(response.body).to include("Moderator") # super_moderator display_name
+      expect(response.body).to include("tag-light-blue")
+    end
+
+    it "does not display role badge for regular users" do
+      get users_path
+      # Regular users should not have role badges
+      # The dash "-" should appear in the role column for regular users in the table view
+      expect(response.body).to include("RegularDisplay")
+    end
+  end
 end
