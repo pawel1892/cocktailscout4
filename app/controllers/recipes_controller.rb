@@ -41,7 +41,7 @@ class RecipesController < ApplicationController
       :tags,
       recipe_ingredients: :ingredient,
       approved_recipe_images: [ :user, { image_attachment: :blob } ]
-    ).find_by!(slug: params[:id])
+    ).find_by!(slug: params[:slug])
 
     add_breadcrumb "Rezepte", recipes_path
     add_breadcrumb @recipe.title

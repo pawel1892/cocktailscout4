@@ -21,10 +21,11 @@ Rails.application.routes.draw do
 
   resources :user_profiles, only: [ :show, :update ]
   resources :users, path: "benutzer", only: [ :index ]
-  resources :recipes, path: "rezepte", only: [ :index, :show ] do
+  resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
     member do
       post :comment, to: "recipe_comments#create"
     end
+    resources :recipe_ingredients, only: [ :index ], path: "zutaten"
   end
   resources :recipe_categories, path: "rezept-kategorien", only: [ :index ]
   resources :top_lists, path: "toplisten", only: [ :index ]

@@ -52,20 +52,25 @@ RSpec.describe "Recipes", type: :request do
         get recipe_path(recipe)
 
         expect(response).to have_http_status(:success)
-        # Should show formatted amount + ingredient + additional info
-        expect(response.body).to match(/<strong>1\.5 cl<\/strong>\s+Tequila/)
-        expect(response.body).to include("(premium)")
+        # Should render the Vue recipe-scaling component
+        expect(response.body).to include("<recipe-scaling")
+        expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
+        # Should pass ingredient data with additional_info in JSON
+        expect(response.body).to include('"ingredient_name":"Tequila"')
+        expect(response.body).to include('"formatted_amount":"1.5 cl"')
+        expect(response.body).to include('"additional_info":"premium"')
       end
 
       it "shows amount + unit + ingredient name when no additional_info" do
         get recipe_path(recipe)
 
         expect(response).to have_http_status(:success)
-        # Should show the formatted values (from the let! recipe_ingredient)
-        expect(response.body).to include("4 cl")
-        expect(response.body).to include("Gin")
-        # Should show them in the correct format with <strong> tag
-        expect(response.body).to match(/<strong>4 cl<\/strong>\s+Gin/)
+        # Should render the Vue recipe-scaling component
+        expect(response.body).to include("<recipe-scaling")
+        expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
+        # Should pass ingredient data in JSON (from the let! recipe_ingredient)
+        expect(response.body).to include('"ingredient_name":"Gin"')
+        expect(response.body).to include('"formatted_amount":"4 cl"')
       end
 
       it "handles mix of ingredients with and without additional_info" do
@@ -85,12 +90,14 @@ RSpec.describe "Recipes", type: :request do
         get recipe_path(recipe)
 
         expect(response).to have_http_status(:success)
-        # Should show formatted display for Vodka with additional info
-        expect(response.body).to match(/<strong>2 cl<\/strong>\s+Vodka/)
-        expect(response.body).to include("(premium)")
-
-        # Should show calculated values for Gin
-        expect(response.body).to match(/<strong>4 cl<\/strong>\s+Gin/)
+        # Should render the Vue recipe-scaling component
+        expect(response.body).to include("<recipe-scaling")
+        # Should pass both ingredients in JSON with correct data
+        expect(response.body).to include('"ingredient_name":"Vodka"')
+        expect(response.body).to include('"formatted_amount":"2 cl"')
+        expect(response.body).to include('"additional_info":"premium"')
+        expect(response.body).to include('"ingredient_name":"Gin"')
+        expect(response.body).to include('"formatted_amount":"4 cl"')
       end
     end
 

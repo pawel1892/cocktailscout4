@@ -69,49 +69,39 @@
 
   <!-- Ingredients (2 columns on md+ when image present, full width otherwise) -->
   <div class="<%= @recipe.approved_recipe_images.any? ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
-    <div class="card h-full">
-      <div class="card-body p-4 sm:p-6">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <i class="fas fa-list text-cs-gold"></i>
-          Zutaten
-        </h2>
-        <ul class="space-y-2">
-          <% @recipe.recipe_ingredients.each do |ri| %>
-            <li class="flex items-start gap-2">
-              <span class="text-cs-gold mt-1">•</span>
-              <span>
-                <% if ri.amount.present? && ri.unit.present? %>
-                  <strong><%= ri.formatted_amount %></strong>
-                  <%= ri.formatted_ingredient_name %>
-                  <% if ri.additional_info.present? %>
-                    <span class="text-gray-600">(<%= ri.additional_info %>)</span>
-                  <% end %>
-                <% elsif ri.additional_info.present? %>
-                  <%= ri.additional_info %>
-                <% else %>
-                  <%= ri.ingredient.name %>
-                <% end %>
-              </span>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+    <recipe-scaling
+      recipe-slug="<%= @recipe.slug %>"
+      :initial-ingredients='<%= raw @recipe.recipe_ingredients.map { |ri|
+        {
+          id: ri.id,
+          amount: ri.amount,
+          unit_name: ri.unit&.name,
+          unit_display_name: ri.unit&.display_name,
+          ingredient_name: ri.formatted_ingredient_name,
+          ingredient_plural_name: ri.ingredient.plural_name,
+          formatted_amount: ri.formatted_amount,
+          additional_info: ri.additional_info,
+          is_garnish: ri.is_garnish
+        }
+      }.to_json %>'
+    ></recipe-scaling>
   </div>
 </div>
 
 <% if @recipe.approved_recipe_images.any? %>
-  <script>
-    window.recipeImages = <%= raw @recipe.approved_recipe_images.shuffle.map { |image|
-      {
-        id: image.id,
-        mediumUrl: url_for(recipe_image_url(image, style: :medium)),
-        largeUrl: url_for(recipe_image_url(image, style: :large)),
-        userBadge: user_badge(image.user),
-        uploadDate: l(image.created_at.to_date)
-      }
-    }.to_json %>;
-  </script>
+  <% content_for :head do %>
+    <script>
+      window.recipeImages = <%= raw @recipe.approved_recipe_images.shuffle.map { |image|
+        {
+          id: image.id,
+          mediumUrl: url_for(recipe_image_url(image, style: :medium)),
+          largeUrl: url_for(recipe_image_url(image, style: :large)),
+          userBadge: user_badge(image.user),
+          uploadDate: l(image.created_at.to_date)
+        }
+      }.to_json %>;
+    </script>
+  <% end %>
 <% end %>
 
 <!-- Preparation / Description -->
