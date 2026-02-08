@@ -22,7 +22,10 @@ namespace :units_migration do
       { name: "piece", display_name: "Stück", plural_name: "Stück", category: "count", ml_ratio: nil, divisible: false },
       { name: "slice", display_name: "Scheibe", plural_name: "Scheiben", category: "count", ml_ratio: nil, divisible: false },
       { name: "leaf", display_name: "Blatt", plural_name: "Blätter", category: "count", ml_ratio: nil, divisible: false },
-      { name: "sprig", display_name: "Zweig", plural_name: "Zweige", category: "count", ml_ratio: nil, divisible: false }
+      { name: "sprig", display_name: "Zweig", plural_name: "Zweige", category: "count", ml_ratio: nil, divisible: false },
+
+      # Blank unit (for ingredient counts like "1/2 Limette" - displays ingredient name only)
+      { name: "x", display_name: "", plural_name: "", category: "count", ml_ratio: nil, divisible: true }
     ]
 
     units_data.each do |unit_attrs|

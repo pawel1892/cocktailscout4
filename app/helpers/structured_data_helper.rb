@@ -67,7 +67,7 @@ module StructuredDataHelper
     recipe.recipe_ingredients.includes(:ingredient, :unit).map do |ri|
       parts = []
       parts << ri.formatted_amount if ri.formatted_amount.present?
-      parts << ri.ingredient.name
+      parts << ri.formatted_ingredient_name
       parts << "(#{ri.additional_info})" if ri.additional_info.present?
       parts.join(" ")
     end

@@ -2,8 +2,8 @@ class Unit < ApplicationRecord
   has_many :recipe_ingredients, dependent: :restrict_with_error
 
   validates :name, presence: true, uniqueness: true
-  validates :display_name, presence: true
-  validates :plural_name, presence: true
+  validates :display_name, presence: true, unless: -> { name == "x" }
+  validates :plural_name, presence: true, unless: -> { name == "x" }
   validates :category, inclusion: { in: %w[volume count special] }
   validates :ml_ratio, numericality: { greater_than: 0 }, if: -> { category.in?(%w[volume special]) }
 

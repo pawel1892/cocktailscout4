@@ -82,7 +82,7 @@
               <span>
                 <% if ri.amount.present? && ri.unit.present? %>
                   <strong><%= ri.formatted_amount %></strong>
-                  <%= ri.ingredient.name %>
+                  <%= ri.formatted_ingredient_name %>
                   <% if ri.additional_info.present? %>
                     <span class="text-gray-600">(<%= ri.additional_info %>)</span>
                   <% end %>
