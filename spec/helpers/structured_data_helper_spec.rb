@@ -7,7 +7,7 @@ RSpec.describe StructuredDataHelper, type: :helper do
     let(:ingredient) { create(:ingredient, name: "Rum") }
 
     before do
-      create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 6, unit: "cl")
+      create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 6)
       recipe.tag_list.add("Sour")
       recipe.save
     end
@@ -26,7 +26,7 @@ RSpec.describe StructuredDataHelper, type: :helper do
       expect(data["author"]["name"]).to eq("Mixologist")
       expect(data["alcoholContent"]).to eq("15.0% ABV")
       expect(data["keywords"]).to eq("Sour")
-      expect(data["recipeIngredient"]).to include("6.0 cl Rum")
+      expect(data["recipeIngredient"]).to include("6 cl Rum")
     end
 
     it "includes aggregate rating if ratings exist" do

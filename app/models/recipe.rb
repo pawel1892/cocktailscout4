@@ -42,4 +42,12 @@ class Recipe < ApplicationRecord
   def to_param
     slug
   end
+
+  def scale(factor)
+    recipe_ingredients.map { |ri| ri.scale(factor) }
+  end
+
+  def total_volume_in_ml
+    recipe_ingredients.sum { |ri| ri.amount_in_ml || 0 }
+  end
 end

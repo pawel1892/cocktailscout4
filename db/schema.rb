@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_08_061700) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -190,18 +190,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
   end
 
   create_table "recipe_ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "additional_info"
     t.decimal "amount", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.string "description"
     t.bigint "ingredient_id", null: false
+    t.boolean "is_garnish", default: false, null: false
+    t.decimal "old_amount", precision: 10, scale: 2
+    t.string "old_description"
     t.integer "old_id"
+    t.string "old_unit"
     t.integer "position"
     t.bigint "recipe_id", null: false
     t.string "unit", default: "cl"
+    t.bigint "unit_id"
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
     t.index ["old_id"], name: "index_recipe_ingredients_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
+    t.index ["unit_id"], name: "index_recipe_ingredients_on_unit_id"
   end
 
   create_table "recipes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -292,6 +299,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "category", null: false
+    t.datetime "created_at", null: false
+    t.string "display_name", null: false
+    t.boolean "divisible", default: true, null: false
+    t.decimal "ml_ratio", precision: 10, scale: 4
+    t.string "name", null: false
+    t.string "plural_name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_units_on_name", unique: true
+  end
+
   create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "old_id"
@@ -371,6 +390,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
   add_foreign_key "recipe_images", "users", column: "approved_by_id"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "recipe_ingredients", "units"
   add_foreign_key "recipes", "users"
   add_foreign_key "recipes", "users", column: "updated_by_id"
   add_foreign_key "reports", "users", column: "reporter_id"

@@ -80,10 +80,16 @@
             <li class="flex items-start gap-2">
               <span class="text-cs-gold mt-1">•</span>
               <span>
-                <% if ri.description.present? %>
-                  <%= ri.description %>
+                <% if ri.amount.present? && ri.unit.present? %>
+                  <strong><%= ri.formatted_amount %></strong>
+                  <%= ri.ingredient.name %>
+                  <% if ri.additional_info.present? %>
+                    <span class="text-gray-600">(<%= ri.additional_info %>)</span>
+                  <% end %>
+                <% elsif ri.additional_info.present? %>
+                  <%= ri.additional_info %>
                 <% else %>
-                  <strong><%= ri.amount %> <%= ri.unit %></strong> <%= ri.ingredient.name %>
+                  <%= ri.ingredient.name %>
                 <% end %>
               </span>
             </li>
