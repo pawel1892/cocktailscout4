@@ -3,6 +3,74 @@ require "units_parser"
 
 RSpec.describe UnitsParser do
   describe ".parse" do
+    context "with adjectives" do
+      it "extracts adjectives as additional_info" do
+        result = UnitsParser.parse("4 gefrostete Erdbeeren")
+        expect(result[:amount]).to eq(4.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("gefrostete")
+      end
+
+      it "extracts 'große' adjective" do
+        result = UnitsParser.parse("15 große Basilikumblätter")
+        expect(result[:amount]).to eq(15.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("große")
+      end
+
+      it "extracts 'frische' adjective" do
+        result = UnitsParser.parse("2 frische Orangen")
+        expect(result[:amount]).to eq(2.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("frische")
+      end
+
+      it "handles ingredients without adjectives" do
+        result = UnitsParser.parse("4 Erdbeeren")
+        expect(result[:amount]).to eq(4.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to be_nil
+      end
+    end
+
+    context "with range patterns" do
+      it "converts '1-2' range to midpoint 1.5" do
+        result = UnitsParser.parse("1-2 Limetten")
+        expect(result[:amount]).to eq(1.5)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "converts '2-3' range to midpoint 2.5" do
+        result = UnitsParser.parse("2-3 BL Rohrzucker")
+        expect(result[:amount]).to eq(2.5)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "handles ranges with units" do
+        result = UnitsParser.parse("1-2cl Limettensaft")
+        expect(result[:amount]).to eq(1.5)
+        expect(result[:unit]).to eq("cl")
+      end
+
+      it "handles decimal ranges" do
+        result = UnitsParser.parse("0.5-1cl Rosensirup")
+        expect(result[:amount]).to eq(0.75)
+        expect(result[:unit]).to eq("cl")
+      end
+
+      it "handles ranges with Teelöffel" do
+        result = UnitsParser.parse("2-3 Teelöffel Zucker")
+        expect(result[:amount]).to eq(2.5)
+        expect(result[:unit]).to eq("tl")
+      end
+
+      it "handles ranges with spaces around hyphen" do
+        result = UnitsParser.parse("6 - 7 Erdbeeren")
+        expect(result[:amount]).to eq(6.5)
+        expect(result[:unit]).to eq("x")
+      end
+    end
+
     context "with ingredient names starting with unit letters (bug fix)" do
       it "does not match 'L' in Limette as liter unit" do
         result = UnitsParser.parse("1 Limette")

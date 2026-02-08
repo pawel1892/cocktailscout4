@@ -12,6 +12,36 @@ module UnitsParser
     # Normalize: handle German number format (comma → period)
     normalized = description.gsub(",", ".")
 
+    # Special case: "halbe" (half) → 0.5
+    normalized = normalized.sub(/^halbe\s+/i, "0.5 ")
+
+    # Handle range patterns: "1-2 Limetten", "2-3cl Rum", "0.5-1 l"
+    # Convert to midpoint: "1-2" → "1.5", "2-3" → "2.5"
+    if range_match = normalized.match(/^(\d+\.?\d*)\s*-\s*(\d+\.?\d*)/)
+      min_val = range_match[1].to_f
+      max_val = range_match[2].to_f
+      midpoint = (min_val + max_val) / 2.0
+      # Replace the range with the midpoint and continue parsing
+      normalized = normalized.sub(range_match[0], midpoint.to_s)
+    end
+
+    # Hard-coded special case: "3 dünne Scheiben grüne Gurke" → unit: slice, additional_info: "dünn"
+    # This handles adjectives between number and unit (Scheiben/Scheibe)
+    if scheiben_match = normalized.match(/^(\d+\.?\d*)\s+dünne?\s+(Scheiben?)\s+(.+)/i)
+      amount = scheiben_match[1].to_f
+      ingredient_rest = scheiben_match[3]
+
+      # Remove "grüne" or other adjectives before ingredient name
+      ingredient_rest = ingredient_rest.sub(/^(grüne?|große?|kleine?)\s+/i, "")
+
+      return {
+        amount: amount,
+        unit: "slice",
+        additional_info: "dünn",
+        is_garnish: false  # Allow scaling
+      }
+    end
+
     # Pattern for fractions without explicit unit: "1/2 Limette", "1 1/2 Orangen"
     # This matches: whole number + optional fraction, then ingredient name
     fraction_pattern = /^(\d+\s+)?((\d+)\/(\d+))\s+(.+)/
@@ -57,16 +87,23 @@ module UnitsParser
           is_garnish: is_garnish
         }
       else
-        # Try simple count pattern: "1 Limette", "2 Orangen" (number + ingredient, no unit)
+        # Try simple count pattern: "1 Limette", "2 Orangen", "4 gefrostete Erdbeeren"
+        # Extract adjectives like "gefrostete", "große", "frische" as additional_info
         simple_count = normalized.match(/^(\d+\.?\d*|ein|eine)\s+(.+)/)
         if simple_count
           amount_str = simple_count[1]
+          remainder = simple_count[2]
           amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
+
+          # Try to extract adjectives (e.g., "gefrostete Erdbeeren" → additional_info: "gefrostete")
+          # Common adjective endings in German: -e, -en, -er, -es, -em
+          adjective_match = remainder.match(/^([a-zäöüß]+(?:e|en|er|es|em))\s+(.+)/i)
+          additional_info = adjective_match ? adjective_match[1] : nil
 
           {
             amount: amount,
             unit: "x",  # Blank unit
-            additional_info: nil,
+            additional_info: additional_info,
             is_garnish: false
           }
         else

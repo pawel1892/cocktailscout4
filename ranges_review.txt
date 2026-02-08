@@ -1,0 +1,198 @@
+=== Recipes with Range Patterns - Manual Review List ===
+Generated: 2026-02-08 18:19:11 +0700
+Total: 159 ingredients
+
+Recipe                                   | Old Description                | Amount     | Unit       | Formatted Display
+--------------------------------------------------------------------------------------------------------------------------------------------
+43er Caipi                               | 1-2 Limetten                   | 1.5        |            | 1 1/2
+43er Caipi                               | 2-3 BL Rohrzucker              | 2.5        |            | 2 1/2
+Absinth Sour                             | 2-3 Teelöffel Zucker           | 2.5        | TL         | 2,5 TL
+Afrutado                                 | 1-2cl Limettensaft             | 1.5        | cl         | 1,5 cl
+Agave Basil                              | 15-20 große Basilikumblätter   | 17.5       |            | 17 1/2
+Amélie                                   | 2-3 TL Honig                   | 2.5        | TL         | 2,5 TL
+Amélie                                   | 6-7 Erdbeeren                  | 6.5        |            | 6 1/2
+Americano AF                             | 3 cl Bitter-Sirup              | 3.0        | cl         | 3 cl
+Anguri Sour                              | 2-3cm Gurke                    | NOT PARSED | NOT PARSED | 2-3cm Gurke
+Apple Mojito                             | 2-3 Zweige Minze               | 2.5        | Zweig      | 2,5 Zweige
+Apricorose Cocktail                      | 0.5-1cl Rosensirup             | 0.75       | cl         | 0,75 cl
+Banana-Summer-Dream                      | 1BL Zitronen- oder Limett...   | NOT PARSED | NOT PARSED | 1BL Zitronen- oder Limettensaft
+Banana`s Dreamland                       | ca 5-6 Zitronenmelissenbl...   | NOT PARSED | NOT PARSED | ca 5-6 Zitronenmelissenblätter
+Banane à l`amande                        | 2-3 cl Mandelsirup             | 2.5        | cl         | 2,5 cl
+Batida de Kiwi                           | 5-7cl Cachaça                  | 6.0        | cl         | 6 cl
+Black Caipirovka                         | 1-2 Limetten                   | 1.5        |            | 1 1/2
+Black Refresher                          | 15 - 20 cl Schwarzbier         | 17.5       | cl         | 17,5 cl
+Blauer Kapitän                           | 4cl BlueCuracao-Sirup          | 4.0        | cl         | 4 cl
+Bourbon Red                              | 1-2 cl Grenadinensirup         | 1.5        | cl         | 1,5 cl
+Breakfast Martini                        | 2BL Orangen- oder Limette...   | NOT PARSED | NOT PARSED | 2BL Orangen- oder Limettenmarmelade
+Broken Shoe Shiner                       | 2-4 Spritzer Rosenwasser       | 3.0        | Spritzer   | 3 Spritzer
+Brokkr                                   | 0,5cl - 1cl Minzsirup          | 0.5        | cl         | 0,5 cl
+Café Frappé   Καφές φραπέ                | 2 BL Instant-Kaffee Mocca      | 2.0        |            | 2
+Café Frappé   Καφές φραπέ                | 1 - 2 BL Zucker (optional)     | 1.5        |            | 1 1/2
+Café Frappé   Καφές φραπέ                | 1 - 2 cl Kaffeesahne / Mi...   | 1.5        | cl         | 1,5 cl
+Caipirinha                               | 1-2 Limetten                   | 1.5        |            | 1 1/2
+Caipirinha Rose                          | 3-4BL  pürrierte Erdbeeren     | NOT PARSED | NOT PARSED | 3-4BL  pürrierte Erdbeeren
+Caipirovka                               | 1-2 Limetten                   | 1.5        |            | 1 1/2
+Carribean Blue                           | 3 - 4 cl Limoncello            | 3.5        | cl         | 3,5 cl
+Chocolate Mojito                         | 3-4 Minzblätter                | 3.5        |            | 3 1/2
+Clover Club                              | wenige Tropfen Ei-Klar         | NOT PARSED | NOT PARSED | wenige Tropfen Ei-Klar
+Contraire                                | 1,5-2cl Grapefruitsaft         | 1.75       | cl         | 1,75 cl
+Contraire                                | 8-10 Stachelbeeren             | 9.0        |            | 9
+Cucumber                                 | 10-15cl Bitterlemon            | 12.5       | cl         | 12,5 cl
+Cucumber                                 | 10-15g Gurke                   | NOT PARSED | NOT PARSED | 10-15g Gurke
+Daiquiri (alkoholfrei)                   | 1-2 Dash Rumaroma              | 1.5        | Spritzer   | 1,5 Spritzer
+Dead Eyes (Halloween)                    | 2-3 Dash Grenadinensirup       | 2.5        | Spritzer   | 2,5 Spritzer
+Don the Beachcombers MAI TAI             | 2 - 2,5 cl Limettensaft        | 2.25       | cl         | 2,25 cl
+Dons Special Daiquiri                    | 3 cl goldener Jamaica-Rum      | 3.0        | cl         | 3 cl
+Dons Special Daiquiri                    | 1,5 cl Maracuja-Sirup          | 1.5        | cl         | 1,5 cl
+Dons Special Daiquiri                    | 1,5 cl Honig-Mix (Honig+W...   | 1.5        | cl         | 1,5 cl
+Draka                                    | 2-3 Tropfen Minzsirup          | 2.5        |            | 2 1/2
+Ebony & Ivory                            | 2cl Williams-Christ Birne...   | 2.0        | cl         | 2 cl
+Elderflower Mojito                       | 1 große Limette(6-8cl Saft)    | 1.0        |            | 1
+Feuerzangenbowle                         | 3-4 Gewürznelken               | 3.5        |            | 3 1/2
+Florentine von Erd                       | ca  15 - 20 cl Tonic Water     | NOT PARSED | NOT PARSED | ca  15 - 20 cl Tonic Water
+Florentine von Erd                       | 4-5 Tropfen Rum Backaroma      | 4.5        |            | 4 1/2
+Frambu Basil                             | 7-8 Blätter Basilikum          | 7.5        | Blatt      | 7,5 Blätter
+Freepa                                   | 1-2cl Amaretto                 | 1.5        | cl         | 1,5 cl
+Fresa-Espanol43                          | 2-3cl Kokosmilch               | 2.5        | cl         | 2,5 cl
+Fresa-Espanol43                          | 2 Teelöffel Schwartau-Sam...   | 2.0        | TL         | 2 TL
+Frozen Apple Daiquiri                    | 500-800g Eis                   | NOT PARSED | NOT PARSED | 500-800g Eis
+Frozen Rhapsody In Blue                  | 12cl gefrorene Blaubeeren...   | 12.0       | cl         | 12 cl
+Frozen Strawberry (AF)                   | 3-4 große Erdbeeren            | 3.5        |            | 3 1/2
+Frozen Strawberry Daiquiri               | 3-4 große Erdbeeren            | 3.5        |            | 3 1/2
+Gin Basil Smash                          | 6-8 Basilikumblätter           | 7.0        |            | 7
+Gin Fizz                                 | 2-3cl Soda                     | 2.5        | cl         | 2,5 cl
+Ginger & Fred                            | 12cl Bionade Ingwer-Orange     | 12.0       | cl         | 12 cl
+Ginger MaMu                              | 3cl Ingwer-Wodka (siehe Z...   | 3.0        | cl         | 3 cl
+Grab The Grape                           | 3cl Kirsch-Bananennektar       | 3.0        | cl         | 3 cl
+Green Lady                               | 3-4cl Kokoslikör (Batida ...   | 3.5        | cl         | 3,5 cl
+Hibiskus Sektcocktail                    | 1-2cl Hibiskussirup            | 1.5        | cl         | 1,5 cl
+Holunder-Ingwer                          | 2-3 Blätter Minze              | 2.5        | Blatt      | 2,5 Blätter
+Hot Buttered Rum - Old Crow Bar          | 2-3 BL Brandy Butter           | 2.5        |            | 2 1/2
+Hot Passion                              | 1 Piri-Piri Schote             | 1.0        |            | 1
+Hot Summer                               | 4 cl Holunder-Blüten-Sirup     | 4.0        | cl         | 4 cl
+Hugo                                     | 2 cl Holunderblüten-Sirup      | 2.0        | cl         | 2 cl
+Ipanema                                  | 2-3 Spritzer Lime Juice        | 2.5        | Spritzer   | 2,5 Spritzer
+Irish Koko Mandel                        | 2-3cl Mandelsirup              | 2.5        | cl         | 2,5 cl
+Jackyto                                  | 10-12 cl Cola                  | 11.0       | cl         | 11 cl
+Jet Pilot                                | 1,5cl Pink-Grapefruitsaft      | 1.5        | cl         | 1,5 cl
+Kiwi Brasil                              | 4 cl Kiwi-Likör                | 4.0        | cl         | 4 cl
+Kiwi-Limes                               | 1-2cl Zuckersirup              | 1.5        | cl         | 1,5 cl
+Kiwirita                                 | 1-2BL Rohrzucker               | NOT PARSED | NOT PARSED | 1-2BL Rohrzucker
+Kumquat Flambé                           | 5-6 Kumquats                   | 5.5        |            | 5 1/2
+Kumquila                                 | 0-6cl Orangensaft              | 3.0        | cl         | 3 cl
+Le Piep                                  | 2 cl Gin (G-Vine)              | 2.0        | cl         | 2 cl
+Lennis 1000er                            | 3 - 4 Tropfen Mandel Back...   | 3.5        |            | 3 1/2
+Lennis 1000er                            | 3 - 4 Tropfen Vanille Bac...   | 3.5        |            | 3 1/2
+Lennis 1000er                            | 3 - 4 Tropfen Rum Backaroma    | 3.5        |            | 3 1/2
+Lucky Driver                             | 1-2 cl Grenadine               | 1.5        | cl         | 1,5 cl
+Mai Tai AF V.2                           | 4-5 Tropfen Rumaroma           | 4.5        |            | 4 1/2
+Mai Tai AF V.2                           | 2cl TripleSec-Sirup            | 2.0        | cl         | 2 cl
+Manamana                                 | 100g abgetropfte Mandarin...   | NOT PARSED | NOT PARSED | 100g abgetropfte Mandarin-Orangen (Dose)
+Manamana                                 | 4cl Mango-Maracuja-Nektar      | 4.0        | cl         | 4 cl
+Mangonade (alkoholfrei)                  | 6cl Bionade Ingwer-Orange      | 6.0        | cl         | 6 cl
+Martini Lemon                            | Zitronenzeste / -schale        | NOT PARSED | NOT PARSED | Zitronenzeste / -schale
+Martiniquat                              | 2-3BL weißer Rohrzucker        | NOT PARSED | NOT PARSED | 2-3BL weißer Rohrzucker
+Mathi                                    | 1 cl Praline-Nuss Sirup        | 1.0        | cl         | 1 cl
+Mintini (Cornwall Style)                 | 10cl Lime-Juice                | 10.0       | cl         | 10 cl
+Minty Black Currant                      | 3-4 Blätter frische Minze      | 3.5        | Blatt      | 3,5 Blätter
+Mixed Berry Refresher                    | 0,5-1cl Ahornsirup             | 0.75       | cl         | 0,75 cl
+Mojito (alkoholfrei)                     | 1-2 TL Rohrzucker              | 1.5        | TL         | 1,5 TL
+Moscow Mule (Home Made)                  | 2-4 dünne Scheiben grüne ...   | 3.0        |            | 3
+Mr. Nice                                 | 4-5cl Aperol                   | 4.5        | cl         | 4,5 cl
+Mr. Nice                                 | 0.5-1cl Grenadinesirup         | 0.75       | cl         | 0,75 cl
+Negron                                   | 2-3Bl Honig                    | NOT PARSED | NOT PARSED | 2-3Bl Honig
+Negron                                   | 15-20 Blätter Basilikum        | 17.5       | Blatt      | 17,5 Blätter
+Negron                                   | 2-3cl Soda                     | 2.5        | cl         | 2,5 cl
+Nicole                                   | 2-4 cl Zitronensaft            | 3.0        | cl         | 3 cl
+Oiled Flaming Mary                       | 6 Tropfen Chili-Öl             | 6.0        |            | 6
+One Jule                                 | 2-3 TL Rohrzucker              | 2.5        | TL         | 2,5 TL
+Parisienne                               | 0,5-1,5 cl Creme de Cassis     | 1.0        | cl         | 1 cl
+Passo CitroCoco                          | 0.5-1cl Zitronensaft           | 0.75       | cl         | 0,75 cl
+Piano di Sorrento                        | 2-4 cl Erdbeerlimes            | 3.0        | cl         | 3 cl
+Raffles Winter Sling                     | 2 dashes Orange-Bitter´s       | 2.0        |            | 2
+Red City                                 | 2-3cl Zitronensaft             | 2.5        | cl         | 2,5 cl
+Red Mojito                               | 2-3 Minzzweige                 | 2.5        |            | 2 1/2
+Red Mojito                               | 1-2TL Rohrzucker               | 1.5        | TL         | 1,5 TL
+Rob Roy                                  | 1 - 2 dashes Aromatic Bit...   | 1.5        |            | 1 1/2
+Rocky Mountain Bear                      | 6 Tropfen Tabasco-Sauce Rot    | 6.0        |            | 6
+Roses Rhubarb Garden                     | 6-7 Himbeeren                  | 6.5        |            | 6 1/2
+Rossini                                  | 1/2 - 1 Eiklar                 | 0.5        |            | 1/2
+Rote Legende                             | 1cl Irish-Sirup                | 1.0        | cl         | 1 cl
+Royal Jamaican Mojito                    | 5cl Rum (weiss-overproof)      | 5.0        | cl         | 5 cl
+Sachsencaipi                             | 2-3 BL Rohrzucker              | 2.5        |            | 2 1/2
+Salvia Laimun                            | 5-6 frische Salbeiblätter      | 5.5        |            | 5 1/2
+Saveur Florale                           | 1.5cl Rosen-Sirup              | 1.5        | cl         | 1,5 cl
+Schwarzwälder Kirsch                     | 10cl (Sauer-)Kirschnektar      | 10.0       | cl         | 10 cl
+Simplório                                | 3cl Kokos-Sirup                | 3.0        | cl         | 3 cl
+St. Limquat Mojito                       | 2-3 Teelöffel Rohrzucker       | 2.5        | TL         | 2,5 TL
+Straits Sling                            | 2-3cl Soda                     | 2.5        | cl         | 2,5 cl
+Strawberry Chi Chi                       | 4cl Erdbeer-Limes (Xuxu)       | 4.0        | cl         | 4 cl
+Summernight                              | 1-2cl Rohrzuckersirup          | 1.5        | cl         | 1,5 cl
+Sunnyday                                 | 2-3cl Zitronensaft             | 2.5        | cl         | 2,5 cl
+Sunset Trap                              | 6 cl Pink-Grapefruit-Saft      | 6.0        | cl         | 6 cl
+Sunset Trap                              | 1 - 1 1/2 cl Grenadinesirup    | 1.0        |            | 1
+Sunset Trap                              | 1 - 2 Prisen Zimtpulver        | 1.5        |            | 1 1/2
+Sweet Sour Strawberry Nuts               | 1.5cl Aprikosen-Sirup          | 1.5        | cl         | 1,5 cl
+Sweet Sour Strawberry Nuts               | 1cl Haselnuss-Sirup            | 1.0        | cl         | 1 cl
+Swimming Orca                            | 5-6 Tropfen Rum Backaroma      | 5.5        |            | 5 1/2
+Tequila Old Fashioned                    | 1-2 dash Angostura Bitter      | 1.5        | Spritzer   | 1,5 Spritzer
+Tequila Sour                             | 1-2 cl Zuckersirup             | 1.5        | cl         | 1,5 cl
+Texas Margarita                          | 4-5cl Tequila Reposado         | 4.5        | cl         | 4,5 cl
+The Apple Of Europe                      | 3-4 Blatt Zitronenmelisse      | 3.5        |            | 3 1/2
+The Ramos Gin Fizz                       | 6 Tropfen TBT-Orange Flow...   | 6.0        |            | 6
+TheDevisInMe                             | 4cl Whiskey (Jim-Beam Dev...   | 4.0        | cl         | 4 cl
+Thor                                     | 2-3 cl Zitronensaft            | 2.5        | cl         | 2,5 cl
+Tiefseetaucher                           | 1-2 Barlöffel feiner Zucker    | 1.5        | Barlöffel  | 1,5 Barlöffel
+Tiger and Dragon                         | 1-2cl Limettensaft             | 1.5        | cl         | 1,5 cl
+Top Ginger Tom                           | 10-20cl Ginger Ale             | 15.0       | cl         | 15 cl
+Tradicional Caipirinha                   | 6-8cl Cachaça                  | 7.0        | cl         | 7 cl
+Trinidad Sour                            | 2 - 2,5 cl Zitronensaft (...   | 2.25       | cl         | 2,25 cl
+Tropic Cranberry                         | 1-2 BL Rohrzucker              | 1.5        |            | 1 1/2
+Tropical Rain                            | 1-2 BL brauner Rohrzucker      | 1.5        |            | 1 1/2
+V.W.                                     | 3cl Williams-Birnenbrand       | 3.0        | cl         | 3 cl
+Veilchen Sektcocktail                    | 1-2cl Veilchensirup            | 1.5        | cl         | 1,5 cl
+Verdamillo                               | 1cl Blue-Curacao Sirup         | 1.0        | cl         | 1 cl
+Verirrter Taifun                         | 0-1cl Rohrzuckersirup          | 0.5        | cl         | 0,5 cl
+Violet Mojito                            | 2-3 Minzzweige                 | 2.5        |            | 2 1/2
+Weihnachts-Caipi                         | 2-4cl Rohrzuckersirup          | 3.0        | cl         | 3 cl
+WhiKiVac                                 | 16cl Sauerkirsch-Nektar        | 16.0       | cl         | 16 cl
+Wilson´s Smash                           | 1cl Karamellisierte Anana...   | 1.0        | cl         | 1 cl
+Winter Wizard                            | 1cl Vanille- oder Karamel...   | 1.0        | cl         | 1 cl
+Winter Wizard                            | 2-4 Spritzer Zitronensaft      | 3.0        | Spritzer   | 3 Spritzer
+Wodka-Ahoi                               | 1 Tütchen Ahoi-Brause          | 1.0        |            | 1
+ZitroMint (alkoholfrei)                  | 3/4 - 1 Zitrone                | 0.75       |            | 3/4
+ZitroMint (alkoholfrei)                  | 2 - 3 TL Rohrzucker            | 2.5        | TL         | 2,5 TL
+Zombie, Don the Beachcomber              | 1,5cl Pink-Grapefruitsaft      | 1.5        | cl         | 1,5 cl
+
+=== Summary ===
+Successfully parsed: 145
+Still unparsed: 14
+
+Note: Unparsed items contain patterns that could not be automatically converted.
+Examples: "2-3cm Gurke", "10-15g Gurke", "oder" (or), BL without space, etc.
+
+================================================================================
+=== ADDITIONAL ISSUE: Ingredient Names with Extra Information ===
+================================================================================
+
+## Problem
+Some ingredient names contain extra information (like "z.B. Cointreau") that was
+NOT displayed in the old system because only the `description` field was shown.
+
+Old system: displayed description only ("2cl Triple Sec Curaçao")
+New system: displays formatted_amount + ingredient.name ("2 cl Triple Sec Curaçao z.B. Cointreau")
+
+## Case: Triple Sec Curaçao z.B. Cointreau
+
+Ingredient Name (database): Triple Sec Curaçao z.B. Cointreau
+Old Description (displayed):  2cl Triple Sec Curaçao
+New Display:                  2 cl Triple Sec Curaçao z.B. Cointreau
+
+Impact: 125 recipes will now show "z.B. Cointreau" (was not shown before)
+
+## Recommendation
+Decide whether to:
+1. Rename ingredient to "Triple Sec Curaçao" (affects all 125 recipes)
+2. Keep as-is and accept the new display
+3. Store "z.B. Cointreau" in additional_info for specific recipes
+

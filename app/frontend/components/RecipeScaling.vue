@@ -33,11 +33,16 @@
             :key="ingredient.id"
             class="flex items-start gap-2">
           <span class="text-cs-gold mt-1">•</span>
-          <span>
+          <span v-if="ingredient.amount !== null">
+            <!-- Structured data: show formatted_amount + ingredient_name + optional additional_info -->
             <strong>{{ ingredient.formatted_amount }}</strong>
             {{ ingredient.ingredient_name }}
             <span v-if="ingredient.additional_info"
                   class="text-gray-600">({{ ingredient.additional_info }})</span>
+          </span>
+          <span v-else>
+            <!-- Unstructured data: formatted_amount already contains everything -->
+            <strong>{{ ingredient.formatted_amount }}</strong>
           </span>
         </li>
       </ul>
