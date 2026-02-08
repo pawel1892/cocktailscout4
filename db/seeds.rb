@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Create roles
+Role.find_or_create_by(name: 'admin') { |role| role.display_name = 'Admin' }
+Role.find_or_create_by(name: 'forum_moderator') { |role| role.display_name = 'Forum-Moderator' }
+Role.find_or_create_by(name: 'recipe_moderator') { |role| role.display_name = 'Rezept-Moderator' }
+Role.find_or_create_by(name: 'image_moderator') { |role| role.display_name = 'Bild-Moderator' }
+Role.find_or_create_by(name: 'super_moderator') { |role| role.display_name = 'Moderator' }

@@ -24,6 +24,7 @@ RSpec.describe User, type: :model do
     let(:forum_mod) { create(:user, :forum_moderator) }
     let(:recipe_mod) { create(:user, :recipe_moderator) }
     let(:image_mod) { create(:user, :image_moderator) }
+    let(:super_mod) { create(:user, :super_moderator) }
 
     describe "#admin?" do
       it "returns true for admin user" do
@@ -66,6 +67,120 @@ RSpec.describe User, type: :model do
 
       it "returns false for regular user" do
         expect(user.image_moderator?).to be false
+      end
+    end
+
+    describe "#super_moderator?" do
+      it "returns true for super moderator" do
+        expect(super_mod.super_moderator?).to be true
+      end
+
+      it "returns false for regular user" do
+        expect(user.super_moderator?).to be false
+      end
+    end
+
+    describe "#moderator?" do
+      it "returns true for admin" do
+        expect(admin.moderator?).to be true
+      end
+
+      it "returns true for forum moderator" do
+        expect(forum_mod.moderator?).to be true
+      end
+
+      it "returns true for recipe moderator" do
+        expect(recipe_mod.moderator?).to be true
+      end
+
+      it "returns true for image moderator" do
+        expect(image_mod.moderator?).to be true
+      end
+
+      it "returns true for super moderator" do
+        expect(super_mod.moderator?).to be true
+      end
+
+      it "returns false for regular user" do
+        expect(user.moderator?).to be false
+      end
+    end
+
+    describe "#can_moderate_forum?" do
+      it "returns true for admin" do
+        expect(admin.can_moderate_forum?).to be true
+      end
+
+      it "returns true for forum moderator" do
+        expect(forum_mod.can_moderate_forum?).to be true
+      end
+
+      it "returns true for super moderator" do
+        expect(super_mod.can_moderate_forum?).to be true
+      end
+
+      it "returns false for recipe moderator" do
+        expect(recipe_mod.can_moderate_forum?).to be false
+      end
+
+      it "returns false for image moderator" do
+        expect(image_mod.can_moderate_forum?).to be false
+      end
+
+      it "returns false for regular user" do
+        expect(user.can_moderate_forum?).to be false
+      end
+    end
+
+    describe "#can_moderate_recipe?" do
+      it "returns true for admin" do
+        expect(admin.can_moderate_recipe?).to be true
+      end
+
+      it "returns true for recipe moderator" do
+        expect(recipe_mod.can_moderate_recipe?).to be true
+      end
+
+      it "returns true for super moderator" do
+        expect(super_mod.can_moderate_recipe?).to be true
+      end
+
+      it "returns false for forum moderator" do
+        expect(forum_mod.can_moderate_recipe?).to be false
+      end
+
+      it "returns false for image moderator" do
+        expect(image_mod.can_moderate_recipe?).to be false
+      end
+
+      it "returns false for regular user" do
+        expect(user.can_moderate_recipe?).to be false
+      end
+    end
+
+    describe "#can_moderate_image?" do
+      it "returns true for admin" do
+        expect(admin.can_moderate_image?).to be true
+      end
+
+      it "returns true for image moderator" do
+        expect(image_mod.can_moderate_image?).to be true
+      end
+
+      it "returns true for super moderator" do
+        expect(super_mod.can_moderate_image?).to be true
+      end
+
+      it "returns false for forum moderator" do
+        expect(forum_mod.can_moderate_image?).to be false
+      end
+
+      it "returns false for recipe moderator" do
+        expect(recipe_mod.can_moderate_image?).to be false
+      end
+
+      it "returns false for regular user" do
+        expect(user.can_moderate_image?).to be false
       end
     end
 

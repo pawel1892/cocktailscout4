@@ -21,6 +21,9 @@
         <div class="mb-1">
           <%= user_badge(forum_post.user) %>
         </div>
+        <div class="mb-2">
+          <%= render 'users/role_badges', user: forum_post.user, size: :small %>
+        </div>
         <div class="text-[11px] text-gray-500 space-y-0.5">
           <p><%= forum_post.user_post_count %> Beiträge</p>
           <p class="hidden lg:block">Dabei seit: <%= forum_post.user&.created_at&.strftime("%m.%Y") %></p>
@@ -43,13 +46,13 @@
       <%# Post Actions %>
       <div class="mt-6 flex justify-between items-center pt-4 border-t border-gray-100">
         <div class="flex gap-3">
-          <% if Current.user && (forum_post.user == Current.user || Current.user.admin? || Current.user.try(:forum_moderator?)) %>
+          <% if Current.user && (forum_post.user == Current.user || Current.user.can_moderate_forum?) %>
             <%= link_to edit_forum_post_path(forum_post), class: 'text-gray-400 hover:text-cs-gold transition-colors', title: "Bearbeiten" do %>
               <i class="fas fa-pencil-alt"></i>
             <% end %>
           <% end %>
 
-          <% if Current.user && (Current.user.admin? || Current.user.try(:forum_moderator?)) %>
+          <% if Current.user&.can_moderate_forum? %>
             <%= button_to forum_post_path(forum_post), method: :delete, onclick: "return confirm('Möchten Sie diesen Beitrag wirklich löschen?')", class: 'text-gray-400 hover:text-cs-error transition-colors cursor-pointer', title: "Löschen" do %>
               <i class="fas fa-trash"></i>
             <% end %>

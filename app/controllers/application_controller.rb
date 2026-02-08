@@ -42,15 +42,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_forum_moderator!
-    authorization_redirect unless Current.user&.admin? || Current.user&.forum_moderator?
+    authorization_redirect unless Current.user&.can_moderate_forum?
   end
 
   def require_recipe_moderator!
-    authorization_redirect unless Current.user&.admin? || Current.user&.recipe_moderator?
+    authorization_redirect unless Current.user&.can_moderate_recipe?
   end
 
   def require_image_moderator!
-    authorization_redirect unless Current.user&.admin? || Current.user&.image_moderator?
+    authorization_redirect unless Current.user&.can_moderate_image?
   end
 
   def authorization_redirect

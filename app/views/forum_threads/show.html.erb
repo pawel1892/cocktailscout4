@@ -30,7 +30,7 @@
   </div>
 
   <%# Moderation Controls %>
-  <% if Current.user&.admin? || Current.user&.forum_moderator? %>
+  <% if Current.user&.can_moderate_forum? %>
     <div class="flex flex-wrap gap-2">
       <% if @forum_thread.locked %>
         <%= button_to unlock_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-secondary' do %>
@@ -56,7 +56,7 @@
 
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
     <% if @forum_thread.locked %>
-      <% if Current.user&.admin? || Current.user&.forum_moderator? %>
+      <% if Current.user&.can_moderate_forum? %>
         <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
           <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
         <% end %>
@@ -88,7 +88,7 @@
   <%# Bottom Pagination and Actions %>
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
     <% if @forum_thread.locked %>
-      <% if Current.user&.admin? || Current.user&.forum_moderator? %>
+      <% if Current.user&.can_moderate_forum? %>
         <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
           <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
         <% end %>

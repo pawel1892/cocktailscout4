@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_23_003014) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -245,6 +245,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_23_003014) do
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "display_name"
     t.string "name"
     t.integer "old_id"
     t.datetime "updated_at", null: false
@@ -325,7 +326,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_23_003014) do
     t.string "prename"
     t.string "public_email"
     t.integer "sign_in_count"
-    t.string "title"
     t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
     t.string "username"

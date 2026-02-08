@@ -13,12 +13,12 @@ class UserProfilesController < ApplicationController
           gender: @user.gender,
           location: @user.location,
           homepage: @user.homepage,
-          title: @user.title,
           rank: @user.rank,
           points: @user.points,
           sign_in_count: @user.sign_in_count,
           last_active_at: @user.last_active_at,
           created_at: @user.created_at,
+          roles: @user.roles.map { |r| { name: r.name, display_name: r.display_name } },
           # Stats for display
           recipes_count: @user.recipes.count,
           recipe_images_count: @user.recipe_images.approved.count,
@@ -39,12 +39,12 @@ class UserProfilesController < ApplicationController
         gender: @user.gender,
         location: @user.location,
         homepage: @user.homepage,
-        title: @user.title,
         rank: @user.rank,
         points: @user.points,
         sign_in_count: @user.sign_in_count,
         last_active_at: @user.last_active_at,
         created_at: @user.created_at,
+        roles: @user.roles.map { |r| { name: r.name, display_name: r.display_name } },
         recipes_count: @user.recipes.count,
         recipe_images_count: @user.recipe_images.approved.count,
         recipe_comments_count: @user.recipe_comments.count,
@@ -69,6 +69,6 @@ class UserProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:user).permit(:prename, :gender, :location, :homepage, :title)
+    params.require(:user).permit(:prename, :gender, :location, :homepage)
   end
 end

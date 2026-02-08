@@ -107,6 +107,19 @@ RSpec.describe "ForumPosts", type: :request do
       end
     end
 
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+      before { sign_in(super_mod) }
+
+      it "allows posting in locked thread" do
+        expect {
+          post forum_posts_path(locked_thread), params: { forum_post: { body: "Super moderator post" } }
+        }.to change(ForumPost, :count).by(1)
+
+        expect(response).to redirect_to(forum_thread_path(locked_thread, page: 1, anchor: "post-#{ForumPost.last.id}"))
+      end
+    end
+
     context "when not authenticated" do
       it "redirects to login without checking lock status" do
         expect {
@@ -208,6 +221,32 @@ RSpec.describe "ForumPosts", type: :request do
         forum_thread.reload
         expect(forum_thread.deleted).to be(true)
         expect(response).to redirect_to(forum_topic_path(forum_thread.forum_topic))
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+      before { sign_in(moderator) }
+
+      it "soft deletes the post" do
+        create(:forum_post, forum_thread: forum_thread) # Ensure thread has another post
+        delete forum_post_path(forum_post)
+        forum_post.reload
+        expect(forum_post.deleted).to be(true)
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+      end
+    end
+
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+      before { sign_in(super_mod) }
+
+      it "soft deletes the post" do
+        create(:forum_post, forum_thread: forum_thread) # Ensure thread has another post
+        delete forum_post_path(forum_post)
+        forum_post.reload
+        expect(forum_post.deleted).to be(true)
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
       end
     end
   end

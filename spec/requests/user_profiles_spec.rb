@@ -14,7 +14,6 @@ RSpec.describe "User Profiles API", type: :request do
           gender: "m",
           location: "Berlin",
           homepage: "https://example.com",
-          title: "Developer",
           sign_in_count: 5
         )
 
@@ -29,11 +28,11 @@ RSpec.describe "User Profiles API", type: :request do
         expect(json["gender"]).to eq("m")
         expect(json["location"]).to eq("Berlin")
         expect(json["homepage"]).to eq("https://example.com")
-        expect(json["title"]).to eq("Developer")
         expect(json["rank"]).to eq(user.rank)
         expect(json["points"]).to eq(user.points)
         expect(json["sign_in_count"]).to eq(5)
         expect(json["created_at"]).to be_present
+        expect(json["roles"]).to be_an(Array)
       end
 
       it "returns other user's profile data" do
@@ -93,7 +92,31 @@ RSpec.describe "User Profiles API", type: :request do
         expect(json["gender"]).to be_nil
         expect(json["location"]).to be_nil
         expect(json["homepage"]).to be_nil
-        expect(json["title"]).to be_nil
+      end
+
+      it "returns user roles with display names" do
+        admin_role = create(:role, name: "admin", display_name: "Administrator")
+        user.roles << admin_role
+
+        get user_profile_path(user), as: :json
+
+        expect(response).to have_http_status(:success)
+        json = JSON.parse(response.body)
+
+        expect(json["roles"]).to be_an(Array)
+        expect(json["roles"].length).to eq(1)
+        expect(json["roles"][0]["name"]).to eq("admin")
+        expect(json["roles"][0]["display_name"]).to eq("Administrator")
+      end
+
+      it "returns empty array when user has no roles" do
+        get user_profile_path(user), as: :json
+
+        expect(response).to have_http_status(:success)
+        json = JSON.parse(response.body)
+
+        expect(json["roles"]).to be_an(Array)
+        expect(json["roles"]).to be_empty
       end
 
       it "returns 404 for non-existent user" do
@@ -124,8 +147,7 @@ RSpec.describe "User Profiles API", type: :request do
             prename: "Updated Name",
             gender: "m",
             location: "Munich",
-            homepage: "https://newsite.com",
-            title: "Senior Developer"
+            homepage: "https://newsite.com"
           }
         }, as: :json
 
@@ -136,14 +158,12 @@ RSpec.describe "User Profiles API", type: :request do
         expect(json["gender"]).to eq("m")
         expect(json["location"]).to eq("Munich")
         expect(json["homepage"]).to eq("https://newsite.com")
-        expect(json["title"]).to eq("Senior Developer")
 
         user.reload
         expect(user.prename).to eq("Updated Name")
         expect(user.gender).to eq("m")
         expect(user.location).to eq("Munich")
         expect(user.homepage).to eq("https://newsite.com")
-        expect(user.title).to eq("Senior Developer")
       end
 
       it "updates individual profile fields" do
@@ -185,6 +205,7 @@ RSpec.describe "User Profiles API", type: :request do
         expect(json).to have_key("rank")
         expect(json).to have_key("points")
         expect(json).to have_key("recipes_count")
+        expect(json).to have_key("roles")
       end
 
       it "returns 403 when trying to update another user's profile" do
@@ -223,6 +244,24 @@ RSpec.describe "User Profiles API", type: :request do
         expect(user.username).to eq(original_username)
         expect(user.email_address).to eq(original_email)
         expect(user.admin?).to be false
+      end
+
+      it "ignores title field in update params (removed field)" do
+        patch user_profile_path(user), params: {
+          user: {
+            prename: "John",
+            title: "This should be ignored"
+          }
+        }, as: :json
+
+        expect(response).to have_http_status(:success)
+        user.reload
+
+        # Allowed field should be updated
+        expect(user.prename).to eq("John")
+
+        # Title field should not exist
+        expect(user).not_to respond_to(:title)
       end
 
       it "returns validation errors for invalid data" do

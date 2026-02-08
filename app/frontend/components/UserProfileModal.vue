@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import BaseModal from './BaseModal.vue'
 import ProfileEditForm from './ProfileEditForm.vue'
+import UserRoleBadges from './UserRoleBadges.vue'
 
 const show = ref(false)
 const userId = ref(null)
@@ -171,6 +172,12 @@ const getGenderText = (gender) => {
                   {{ profile.points }} Punkte
                 </span>
               </div>
+              <UserRoleBadges
+                v-if="profile.roles && profile.roles.length > 0"
+                :roles="profile.roles"
+                size="normal"
+                class="mt-2"
+              />
             </div>
           </div>
         </div>
@@ -193,11 +200,6 @@ const getGenderText = (gender) => {
             <div v-if="profile.location">
               <label class="text-sm font-medium text-gray-700">Ort</label>
               <p class="mt-1 text-gray-900">{{ profile.location }}</p>
-            </div>
-
-            <div v-if="profile.title">
-              <label class="text-sm font-medium text-gray-700">Titel</label>
-              <p class="mt-1 text-gray-900">{{ profile.title }}</p>
             </div>
           </div>
 

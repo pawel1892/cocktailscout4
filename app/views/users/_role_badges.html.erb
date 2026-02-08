@@ -1,0 +1,11 @@
+<%# Displays user role badges with consistent styling %>
+<%# Usage: render 'users/role_badges', user: @user, size: :normal, inline: false %>
+<% if user&.roles&.any? %>
+  <div class="<%= local_assigns[:inline] ? 'inline-flex' : 'flex' %> flex-wrap gap-1">
+    <% user.roles.each do |role| %>
+      <span class="tag <%= role.name == 'admin' ? 'tag-gold' : 'tag-light-blue' %> <%= 'text-[10px]' if local_assigns[:size] == :small %>">
+        <%= role.display_name || role.name %>
+      </span>
+    <% end %>
+  </div>
+<% end %>

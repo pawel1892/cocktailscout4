@@ -344,6 +344,19 @@ RSpec.describe "ForumThreads", type: :request do
       end
     end
 
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+
+      before { sign_in(super_mod) }
+
+      it "locks the thread" do
+        post lock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.locked).to be true
+      end
+    end
+
     context "when authenticated as regular user" do
       let(:user) { create(:user) }
 
@@ -397,6 +410,19 @@ RSpec.describe "ForumThreads", type: :request do
         expect(forum_thread.reload.locked).to be false
       end
     end
+
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+
+      before { sign_in(super_mod) }
+
+      it "unlocks the thread" do
+        delete unlock_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.locked).to be false
+      end
+    end
   end
 
   describe "POST /cocktailforum/thema/:thread_id/anpinnen (pin thread)" do
@@ -421,6 +447,19 @@ RSpec.describe "ForumThreads", type: :request do
       let(:moderator) { create(:user, :forum_moderator) }
 
       before { sign_in(moderator) }
+
+      it "pins the thread" do
+        post pin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.sticky).to be true
+      end
+    end
+
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+
+      before { sign_in(super_mod) }
 
       it "pins the thread" do
         post pin_forum_thread_path(forum_thread)
@@ -475,6 +514,19 @@ RSpec.describe "ForumThreads", type: :request do
       let(:moderator) { create(:user, :forum_moderator) }
 
       before { sign_in(moderator) }
+
+      it "unpins the thread" do
+        delete unpin_forum_thread_path(forum_thread)
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.sticky).to be false
+      end
+    end
+
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+
+      before { sign_in(super_mod) }
 
       it "unpins the thread" do
         delete unpin_forum_thread_path(forum_thread)
@@ -564,6 +616,19 @@ RSpec.describe "ForumThreads", type: :request do
       let(:moderator) { create(:user, :forum_moderator) }
 
       before { sign_in(moderator) }
+
+      it "shows reply button with moderator label" do
+        get forum_thread_path(forum_thread)
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Antworten (als Moderator)")
+      end
+    end
+
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+
+      before { sign_in(super_mod) }
 
       it "shows reply button with moderator label" do
         get forum_thread_path(forum_thread)
