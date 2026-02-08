@@ -21,15 +21,9 @@
         <div class="mb-1">
           <%= user_badge(forum_post.user) %>
         </div>
-        <% if forum_post.user&.roles&.any? %>
-          <div class="mb-2">
-            <% forum_post.user.roles.each do |role| %>
-              <span class="tag <%= role.name == 'admin' ? 'tag-gold' : 'tag-light-blue' %> text-[10px]">
-                <%= role.display_name || role.name %>
-              </span>
-            <% end %>
-          </div>
-        <% end %>
+        <div class="mb-2">
+          <%= render 'users/role_badges', user: forum_post.user, size: :small %>
+        </div>
         <div class="text-[11px] text-gray-500 space-y-0.5">
           <p><%= forum_post.user_post_count %> Beiträge</p>
           <p class="hidden lg:block">Dabei seit: <%= forum_post.user&.created_at&.strftime("%m.%Y") %></p>

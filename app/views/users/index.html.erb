@@ -85,13 +85,8 @@
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <% if user.roles.any? %>
-                <% user.roles.each do |role| %>
-                  <span class="tag <%= role.name == 'admin' ? 'tag-gold' : 'tag-light-blue' %>">
-                    <%= role.display_name || role.name %>
-                  </span>
-                <% end %>
-              <% else %>
+              <%= render 'users/role_badges', user: user, inline: true %>
+              <% unless user.roles.any? %>
                 <span class="text-sm text-gray-400">-</span>
               <% end %>
             </td>
@@ -135,15 +130,9 @@
         <div class="flex items-start justify-between mb-3">
           <div class="flex-1">
             <%= user_badge(user) %>
-            <% if user.roles.any? %>
-              <div class="mt-2 flex flex-wrap gap-1">
-                <% user.roles.each do |role| %>
-                  <span class="tag <%= role.name == 'admin' ? 'tag-gold' : 'tag-light-blue' %>">
-                    <%= role.display_name || role.name %>
-                  </span>
-                <% end %>
-              </div>
-            <% end %>
+            <div class="mt-2">
+              <%= render 'users/role_badges', user: user %>
+            </div>
           </div>
           <div class="text-right">
             <div class="text-lg font-bold text-gray-900">
