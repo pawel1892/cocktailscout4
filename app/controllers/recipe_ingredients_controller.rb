@@ -12,7 +12,7 @@ class RecipeIngredientsController < ApplicationController
         amount: scaled.amount,
         unit_name: ri.unit&.name,
         unit_display_name: ri.unit&.display_name,
-        ingredient_name: ri.ingredient.name,
+        ingredient_name: scaled.formatted_ingredient_name,
         ingredient_plural_name: ri.ingredient.plural_name,
         formatted_amount: scaled.formatted_amount,
         additional_info: ri.additional_info,
