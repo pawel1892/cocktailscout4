@@ -1,4 +1,52 @@
 namespace :units_migration do
+  desc "Run complete migration workflow (all tasks in correct order)"
+  task full_migration: :environment do
+    puts "\n" + "=" * 80
+    puts "UNITS MIGRATION - FULL WORKFLOW"
+    puts "=" * 80 + "\n"
+
+    begin
+      # Step 1: Migrate units data
+      puts "\n[1/4] Running units migration..."
+      Rake::Task["units_migration:migrate"].invoke
+      puts "✓ Units migration complete\n"
+
+      # Step 2: Populate ingredient plurals and clean up names
+      puts "\n[2/4] Populating ingredient plurals and cleaning names..."
+      Rake::Task["ingredients:populate_plurals"].invoke
+      puts "✓ Ingredient plurals and cleanup complete\n"
+
+      # Step 3: Validate migration
+      puts "\n[3/4] Validating migration results..."
+      Rake::Task["units_migration:validate"].invoke
+      puts "✓ Validation complete\n"
+
+      # Step 4: Check for issues
+      puts "\n[4/4] Checking for parsing issues..."
+      Rake::Task["units_migration:check_issues"].invoke
+      puts "✓ Issue check complete\n"
+
+      puts "\n" + "=" * 80
+      puts "✓ FULL MIGRATION COMPLETE!"
+      puts "=" * 80
+      puts "\nNext steps:"
+      puts "  - Review any reported issues above"
+      puts "  - Test recipes in browser to verify display"
+      puts "  - Run comparison script if needed: ruby scripts/compare_ingredients.rb"
+      puts "  - When satisfied, finalize with: rake units_migration:finalize CONFIRM=yes"
+      puts ""
+
+    rescue => e
+      puts "\n" + "=" * 80
+      puts "✗ MIGRATION FAILED"
+      puts "=" * 80
+      puts "\nError: #{e.message}"
+      puts e.backtrace.first(5)
+      puts "\nPlease fix the error and run again."
+      exit 1
+    end
+  end
+
   desc "Populate units table with German units"
   task populate_units: :environment do
     puts "Populating units table with German units..."

@@ -46,13 +46,29 @@ namespace :ingredients do
       "Bananen" => { singular: "Banane", plural: "Bananen" }
     }
 
+    # Fix ingredient names with extra information that should be removed
+    name_cleanups = {
+      "Triple Sec Curaçao z.B. Cointreau" => "Triple Sec Curaçao"
+      # Add more cleanup cases here as needed
+    }
+
     # Ingredients that don't need plurals (abstract/mass nouns)
     # Likör, Vodka, Rum, Gin, Whisky, Sirup, Saft, Wasser, Zucker, Salz, etc.
     # These are not in the plurals hash, so they won't get a plural_name
 
     count = 0
 
-    # First, fix plural ingredient names
+    # First, clean up ingredient names
+    name_cleanups.each do |old_name, new_name|
+      ingredient = Ingredient.find_by(name: old_name)
+      if ingredient
+        ingredient.update(name: new_name)
+        puts "  ✓ Cleaned: #{old_name} → #{new_name}"
+        count += 1
+      end
+    end
+
+    # Second, fix plural ingredient names
     plural_to_singular.each do |plural_name, forms|
       ingredient = Ingredient.find_by(name: plural_name)
       if ingredient
