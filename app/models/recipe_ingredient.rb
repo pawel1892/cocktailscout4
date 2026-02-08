@@ -20,7 +20,7 @@ class RecipeIngredient < ApplicationRecord
     formatted = if unit.name == "x"
       format_fraction(amount)
     else
-      amount % 1 == 0 ? amount.to_i : amount
+      format_german_number(amount)
     end
 
     unit_name = unit.display_name_for(amount)
@@ -44,6 +44,16 @@ class RecipeIngredient < ApplicationRecord
   end
 
   private
+
+  def format_german_number(number)
+    # Format number in German style: comma for decimal separator
+    # Integer amounts without decimals, decimal amounts with comma
+    if number % 1 == 0
+      number.to_i.to_s
+    else
+      number.to_s.sub(".", ",")
+    end
+  end
 
   def format_fraction(decimal)
     whole = decimal.to_i

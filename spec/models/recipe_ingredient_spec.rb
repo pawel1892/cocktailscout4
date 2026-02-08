@@ -19,9 +19,9 @@ RSpec.describe RecipeIngredient, type: :model do
         expect(ri.formatted_amount).to eq("4 cl")
       end
 
-      it "formats decimal amounts with decimals" do
+      it "formats decimal amounts with German format (comma)" do
         ri = RecipeIngredient.new(amount: 1.5, unit: cl_unit)
-        expect(ri.formatted_amount).to eq("1.5 cl")
+        expect(ri.formatted_amount).to eq("1,5 cl")
       end
     end
 

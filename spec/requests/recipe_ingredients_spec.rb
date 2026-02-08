@@ -209,5 +209,41 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(lime["ingredient_plural_name"]).to eq("Limetten")
       end
     end
+
+    context "with decimal amounts" do
+      let!(:recipe_ingredient_decimal) do
+        create(:recipe_ingredient,
+          recipe: recipe,
+          ingredient: create(:ingredient, name: "Tequila"),
+          amount: 3.5,
+          unit: unit_cl,
+          position: 5,
+          is_garnish: false
+        )
+      end
+
+      it "formats decimal amounts with German format (comma)" do
+        get recipe_recipe_ingredients_path(recipe_slug: recipe.slug),
+            headers: { "Accept" => "application/json" }
+
+        json = JSON.parse(response.body)
+        tequila = json.find { |i| i["ingredient_name"] == "Tequila" }
+
+        expect(tequila["amount"]).to eq("3.5")
+        expect(tequila["formatted_amount"]).to eq("3,5 cl")
+      end
+
+      it "formats scaled decimal amounts with German format" do
+        get recipe_recipe_ingredients_path(recipe_slug: recipe.slug),
+            params: { scale: 0.5 },
+            headers: { "Accept" => "application/json" }
+
+        json = JSON.parse(response.body)
+        tequila = json.find { |i| i["ingredient_name"] == "Tequila" }
+
+        expect(tequila["amount"]).to eq("1.75")
+        expect(tequila["formatted_amount"]).to eq("1,75 cl")
+      end
+    end
   end
 end

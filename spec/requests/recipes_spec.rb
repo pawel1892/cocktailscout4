@@ -57,7 +57,7 @@ RSpec.describe "Recipes", type: :request do
         expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
         # Should pass ingredient data with additional_info in JSON
         expect(response.body).to include('"ingredient_name":"Tequila"')
-        expect(response.body).to include('"formatted_amount":"1.5 cl"')
+        expect(response.body).to include('"formatted_amount":"1,5 cl"')
         expect(response.body).to include('"additional_info":"premium"')
       end
 
