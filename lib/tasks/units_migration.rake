@@ -54,7 +54,16 @@ namespace :units_migration do
   end
 
   desc "Migrate data from descriptions to structured fields"
-  task migrate: [ :environment, :populate_units, :backup_data ] do
+  task migrate: :environment do
+    Rake::Task["units_migration:populate_units"].invoke
+
+    # Only backup if old_description is nil (first time running)
+    if RecipeIngredient.where.not(old_description: nil).exists?
+      puts "Skipping backup - using existing old_description data"
+    else
+      Rake::Task["units_migration:backup_data"].invoke
+    end
+
     require_relative "../units_parser"
 
     stats = { total: 0, migrated: 0, errors: [] }
@@ -104,6 +113,53 @@ namespace :units_migration do
     if stats[:errors].any?
       puts "\n⚠ Errors: #{stats[:errors].count}"
       stats[:errors].each { |err| puts "  - #{err}" }
+    end
+  end
+
+  desc "Check for potential parsing issues by comparing current state with re-parsing"
+  task check_issues: :environment do
+    require_relative "../units_parser"
+
+    puts "\n=== Checking for Potential Unit Parsing Issues ===\n"
+
+    issues = []
+
+    # Check for records where old_description doesn't match current parsing
+    RecipeIngredient.where.not(old_description: nil).find_each do |ri|
+      parsed = UnitsParser.parse(ri.old_description)
+
+      current_unit = ri.unit&.name
+      expected_unit = parsed[:unit]
+
+      if current_unit != expected_unit || ri.amount&.to_f != parsed[:amount]&.to_f
+        issues << {
+          id: ri.id,
+          recipe: ri.recipe.title,
+          old_description: ri.old_description,
+          current_unit: current_unit,
+          current_amount: ri.amount,
+          expected_unit: expected_unit,
+          expected_amount: parsed[:amount]
+        }
+      end
+    end
+
+    if issues.empty?
+      puts "✓ No parsing mismatches found! All records match expected parsing."
+    else
+      puts "Found #{issues.count} records with unit/amount mismatches:\n"
+      issues.first(25).each do |issue|
+        puts "  [#{issue[:id]}] #{issue[:recipe]}: '#{issue[:old_description]}'"
+        puts "    Current:  #{issue[:current_amount]} #{issue[:current_unit]}"
+        puts "    Expected: #{issue[:expected_amount]} #{issue[:expected_unit]}"
+        puts ""
+      end
+
+      if issues.count > 25
+        puts "  ... and #{issues.count - 25} more"
+      end
+
+      puts "\n⚠ Run 'rake units_migration:migrate' to fix these issues"
     end
   end
 

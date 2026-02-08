@@ -33,7 +33,8 @@ module UnitsParser
     else
       # Pattern: [number] [unit] [ingredient] [(optional)]
       # Examples: "3cl Rum", "2 TL Zucker", "ein Spritzer", "1 Scheibe Zitrone"
-      pattern = /^(\d+\.?\d*|ein|eine)\s*(cl|ml|l|TL|EL|Teelöffel|Esslöffel|Spritzer|Dash|Splash|Barlöffel|Stück|Scheiben?|Blätter?|Zweige?)/i
+      # The l(?!\w) lookahead prevents matching "l" in "Limette"
+      pattern = /^(\d+\.?\d*|ein|eine)\s*(cl|ml|l(?!\w)|TL|EL|Teelöffel|Esslöffel|Spritzer|Dash|Splash|Barlöffel|Stück|Scheiben?|Blätter?|Zweige?)\b/i
 
       if match = normalized.match(pattern)
         amount_str = match[1]
@@ -56,10 +57,24 @@ module UnitsParser
           is_garnish: is_garnish
         }
       else
-        # No structured data - check if it's garnish description
-        is_garnish = GARNISH_KEYWORDS.any? { |kw| description.downcase.include?(kw) }
+        # Try simple count pattern: "1 Limette", "2 Orangen" (number + ingredient, no unit)
+        simple_count = normalized.match(/^(\d+\.?\d*|ein|eine)\s+(.+)/)
+        if simple_count
+          amount_str = simple_count[1]
+          amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
 
-        { amount: nil, unit: nil, additional_info: description, is_garnish: is_garnish }
+          {
+            amount: amount,
+            unit: "x",  # Blank unit
+            additional_info: nil,
+            is_garnish: false
+          }
+        else
+          # No structured data - check if it's garnish description
+          is_garnish = GARNISH_KEYWORDS.any? { |kw| description.downcase.include?(kw) }
+
+          { amount: nil, unit: nil, additional_info: description, is_garnish: is_garnish }
+        end
       end
     end
   end

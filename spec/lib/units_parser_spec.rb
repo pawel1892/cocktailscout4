@@ -3,6 +3,71 @@ require "units_parser"
 
 RSpec.describe UnitsParser do
   describe ".parse" do
+    context "with ingredient names starting with unit letters (bug fix)" do
+      it "does not match 'L' in Limette as liter unit" do
+        result = UnitsParser.parse("1 Limette")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to be_nil
+      end
+
+      it "does not match 'L' in Limettenspalte as liter unit" do
+        result = UnitsParser.parse("1 Limettenspalte")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "correctly parses actual liter amounts" do
+        result = UnitsParser.parse("1 l")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("l")
+      end
+
+      it "correctly parses liter with following text" do
+        result = UnitsParser.parse("1 l Wodka")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("l")
+      end
+
+      it "correctly parses '1.5 l Wodka'" do
+        result = UnitsParser.parse("1.5 l Wodka")
+        expect(result[:amount]).to eq(1.5)
+        expect(result[:unit]).to eq("l")
+      end
+
+      it "parses Orange correctly (not as oz)" do
+        result = UnitsParser.parse("1 Orange")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "parses Zitrone correctly" do
+        result = UnitsParser.parse("1 Zitrone")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "parses Minze correctly" do
+        result = UnitsParser.parse("1 Minze")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "handles formats without space between amount and unit" do
+        # "3cl Rum" format is common in the data
+        result = UnitsParser.parse("3cl Rum")
+        expect(result[:amount]).to eq(3.0)
+        expect(result[:unit]).to eq("cl")
+      end
+
+      it "handles formats with space between amount and unit" do
+        # "3 cl Rum" format is also used
+        result = UnitsParser.parse("3 cl Rum")
+        expect(result[:amount]).to eq(3.0)
+        expect(result[:unit]).to eq("cl")
+      end
+    end
+
     context "with fractions" do
       it "parses 1/2 fraction" do
         result = UnitsParser.parse("1/2 Limette")
