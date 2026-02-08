@@ -284,6 +284,119 @@ RSpec.describe UnitsParser do
         expect(result[:amount]).to eq(1.0)
       end
     end
+
+    context "with hard-coded special cases from analysis report" do
+      it "parses D.O.M. Benedictine with brand info" do
+        result = UnitsParser.parse("0,75cl D.O.M. Benedictine")
+        expect(result[:amount]).to eq(0.75)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("D.O.M.")
+      end
+
+      it "parses Benedictine D.O.M. (reversed order)" do
+        result = UnitsParser.parse("2cl Benedictine D.O.M.")
+        expect(result[:amount]).to eq(2.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("D.O.M.")
+      end
+
+      it "parses strawberries in grams with fresh/frozen info" do
+        result = UnitsParser.parse("1500 g Erdbeeren (frisch od. gefroren)")
+        expect(result[:amount]).to eq(1500.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("frisch oder gefroren")
+      end
+
+      it "parses egg white specification" do
+        result = UnitsParser.parse("1 Eiweiß von einem kleinen Ei")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("Eiweiß")
+      end
+
+      it "parses frozen raspberry in ice cube" do
+        result = UnitsParser.parse("1 in klarem Eiswrfel eingefrorene Himbeere")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("in klarem Eiswürfel eingefroren")
+        expect(result[:is_garnish]).to be true
+      end
+
+      it "parses 'ein paar Spritzer' as 3 spritzer" do
+        result = UnitsParser.parse("ein paar Spritzer Angostura")
+        expect(result[:amount]).to eq(3.0)
+        expect(result[:unit]).to eq("spritzer")
+      end
+
+      it "parses 'ein paar Tropfen' as 3 spritzer" do
+        result = UnitsParser.parse("ein paar Tropfen Angostura")
+        expect(result[:amount]).to eq(3.0)
+        expect(result[:unit]).to eq("spritzer")
+      end
+
+      it "parses Bourbon or Rye whiskey" do
+        result = UnitsParser.parse("3cl Bourbon oder Rye Whiskey")
+        expect(result[:amount]).to eq(3.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("Bourbon oder Rye")
+      end
+
+      it "parses Hennessy brand cognac" do
+        result = UnitsParser.parse("4 cl Hennessy Fine de Cognac")
+        expect(result[:amount]).to eq(4.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("Hennessy Fine de Cognac")
+      end
+
+      it "parses fresh grated ginger with TL" do
+        result = UnitsParser.parse("1/2 TL Frischer Ingwer (gerieben)")
+        expect(result[:amount]).to eq(0.5)
+        expect(result[:unit]).to eq("tl")
+        expect(result[:additional_info]).to eq("frisch gerieben")
+      end
+
+      it "parses white peach puree" do
+        result = UnitsParser.parse("5 cl frisches Püree vom weißen Pfirsich")
+        expect(result[:amount]).to eq(5.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("frisches Püree vom weißen Pfirsich")
+      end
+
+      it "parses lychees from can" do
+        result = UnitsParser.parse("6 Lychees (ersatzweise aus der Dose)")
+        expect(result[:amount]).to eq(6.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("ersatzweise aus der Dose")
+      end
+
+      it "parses mint stem with leaf count" do
+        result = UnitsParser.parse("1 Stengel Minze / ca. 6 Blatt")
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("x")
+        expect(result[:additional_info]).to eq("Stengel (ca. 6 Blatt)")
+      end
+
+      it "parses Single Malt Scotch whisky" do
+        result = UnitsParser.parse("4cl Single Malt Scotch Whisky")
+        expect(result[:amount]).to eq(4.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("Single Malt Scotch")
+      end
+
+      it "parses Islay Single Malt Scotch whisky" do
+        result = UnitsParser.parse("6cl Islay Single Malt Scotch Whisky")
+        expect(result[:amount]).to eq(6.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("Islay Single Malt Scotch")
+      end
+
+      it "parses aged rum from Barbados" do
+        result = UnitsParser.parse("6 cl gereifter Rum, vorzugsweise aus Barbados")
+        expect(result[:amount]).to eq(6.0)
+        expect(result[:unit]).to eq("cl")
+        expect(result[:additional_info]).to eq("gereift, vorzugsweise aus Barbados")
+      end
+    end
   end
 
   describe ".normalize_unit_name" do
