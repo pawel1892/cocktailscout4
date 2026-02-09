@@ -7,6 +7,10 @@ class RecipeIngredient < ApplicationRecord
 
   acts_as_list scope: :recipe
 
+  # Update recipe's computed fields when ingredients change
+  after_save :update_recipe_computed_fields
+  after_destroy :update_recipe_computed_fields
+
   def amount_in_ml
     return nil unless unit&.ml_ratio && amount
     unit.to_ml(amount)
@@ -44,6 +48,10 @@ class RecipeIngredient < ApplicationRecord
   end
 
   private
+
+  def update_recipe_computed_fields
+    recipe.reload.update_computed_fields! if recipe
+  end
 
   def format_german_number(number)
     # Format number in German style: comma for decimal separator

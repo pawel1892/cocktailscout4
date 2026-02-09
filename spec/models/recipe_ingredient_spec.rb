@@ -145,4 +145,47 @@ RSpec.describe RecipeIngredient, type: :model do
       expect(ri.amount_in_ml).to be_nil
     end
   end
+
+  describe "callbacks" do
+    let(:vodka) { create(:ingredient, name: "Vodka", alcoholic_content: 40.0) }
+    let(:fresh_recipe) { create(:recipe, total_volume: nil, alcohol_content: nil) }
+
+    describe "after_save" do
+      it "updates recipe computed fields when ingredient is added" do
+        expect(fresh_recipe.total_volume).to be_nil
+        expect(fresh_recipe.alcohol_content).to be_nil
+
+        create(:recipe_ingredient, recipe: fresh_recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        fresh_recipe.reload
+
+        expect(fresh_recipe.total_volume.to_f).to eq(50.0)
+        expect(fresh_recipe.alcohol_content.to_f).to eq(40.0)
+      end
+
+      it "updates recipe computed fields when ingredient amount changes" do
+        ri = create(:recipe_ingredient, recipe: fresh_recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        fresh_recipe.reload
+        expect(fresh_recipe.total_volume.to_f).to eq(50.0)
+
+        ri.update(amount: 10.0)
+        fresh_recipe.reload
+
+        expect(fresh_recipe.total_volume.to_f).to eq(100.0)
+      end
+    end
+
+    describe "after_destroy" do
+      it "updates recipe computed fields when ingredient is removed" do
+        ri = create(:recipe_ingredient, recipe: fresh_recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        fresh_recipe.reload
+        expect(fresh_recipe.total_volume.to_f).to eq(50.0)
+
+        ri.destroy
+        fresh_recipe.reload
+
+        expect(fresh_recipe.total_volume.to_f).to eq(0.0)
+        expect(fresh_recipe.alcohol_content.to_f).to eq(0.0)
+      end
+    end
+  end
 end

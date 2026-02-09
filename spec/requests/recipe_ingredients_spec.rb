@@ -51,10 +51,12 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
 
-        expect(json).to be_an(Array)
-        expect(json.length).to eq(3)
+        expect(json).to have_key("ingredients")
+        expect(json).to have_key("alcohol_info")
+        expect(json["ingredients"]).to be_an(Array)
+        expect(json["ingredients"].length).to eq(3)
 
-        rum = json.find { |i| i["ingredient_name"] == "Rum (weiss)" }
+        rum = json["ingredients"].find { |i| i["ingredient_name"] == "Rum (weiss)" }
         expect(rum["amount"]).to eq("4.0")
         expect(rum["unit_name"]).to eq("cl")
         expect(rum["formatted_amount"]).to eq("4 cl")
@@ -65,7 +67,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         get recipe_recipe_ingredients_path(recipe_slug: recipe.slug), headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        ingredient = json.first
+        ingredient = json["ingredients"].first
 
         expect(ingredient).to have_key("id")
         expect(ingredient).to have_key("amount")
@@ -76,6 +78,21 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(ingredient).to have_key("formatted_amount")
         expect(ingredient).to have_key("additional_info")
         expect(ingredient).to have_key("is_garnish")
+      end
+
+      it "returns alcohol_info with total volume and alcohol content" do
+        # Set alcohol content for rum
+        ingredient_rum.update(alcoholic_content: 40.0)
+
+        get recipe_recipe_ingredients_path(recipe_slug: recipe.slug), headers: { "Accept" => "application/json" }
+
+        json = JSON.parse(response.body)
+        alcohol_info = json["alcohol_info"]
+
+        expect(alcohol_info).to have_key("total_volume_ml")
+        expect(alcohol_info).to have_key("alcohol_volume_ml")
+        expect(alcohol_info).to have_key("alcohol_content_percent")
+        expect(alcohol_info["total_volume_ml"].to_f).to eq(40.0) # 4cl rum = 40ml
       end
     end
 
@@ -88,11 +105,11 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
 
-        rum = json.find { |i| i["ingredient_name"] == "Rum (weiss)" }
+        rum = json["ingredients"].find { |i| i["ingredient_name"] == "Rum (weiss)" }
         expect(rum["amount"]).to eq("8.0")
         expect(rum["formatted_amount"]).to eq("8 cl")
 
-        lime = json.find { |i| i["ingredient_plural_name"] == "Limetten" }
+        lime = json["ingredients"].find { |i| i["ingredient_plural_name"] == "Limetten" }
         expect(lime["amount"]).to eq("2.0")
       end
 
@@ -102,7 +119,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
             headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        mint = json.find { |i| i["ingredient_name"] == "Minze" }
+        mint = json["ingredients"].find { |i| i["ingredient_name"] == "Minze" }
 
         expect(mint["amount"]).to eq("1.0")
         expect(mint["is_garnish"]).to be true
@@ -114,11 +131,29 @@ RSpec.describe "Recipe Ingredients API", type: :request do
             headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        lime = json.find { |i| i["ingredient_plural_name"] == "Limetten" }
+        lime = json["ingredients"].find { |i| i["ingredient_plural_name"] == "Limetten" }
 
         expect(lime["amount"]).to eq("2.0")
         expect(lime["ingredient_name"]).to eq("Limetten")
         expect(lime["formatted_amount"]).to eq("2")
+      end
+
+      it "scales total volume but not alcohol percentage" do
+        ingredient_rum.update(alcoholic_content: 40.0)
+
+        get recipe_recipe_ingredients_path(recipe_slug: recipe.slug),
+            params: { scale: 2 },
+            headers: { "Accept" => "application/json" }
+
+        json = JSON.parse(response.body)
+        alcohol_info = json["alcohol_info"]
+
+        # Volume doubles: 4cl * 2 = 8cl = 80ml
+        expect(alcohol_info["total_volume_ml"].to_f).to eq(80.0)
+        # Alcohol volume also doubles: 40ml * 0.4 * 2 = 32ml
+        expect(alcohol_info["alcohol_volume_ml"].to_f).to eq(32.0)
+        # But percentage stays the same
+        expect(alcohol_info["alcohol_content_percent"].to_f).to eq(40.0)
       end
     end
 
@@ -131,11 +166,11 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
 
-        rum = json.find { |i| i["ingredient_name"] == "Rum (weiss)" }
+        rum = json["ingredients"].find { |i| i["ingredient_name"] == "Rum (weiss)" }
         expect(rum["amount"]).to eq("2.0")
         expect(rum["formatted_amount"]).to eq("2 cl")
 
-        lime = json.find { |i| i["ingredient_name"] == "Limette" }
+        lime = json["ingredients"].find { |i| i["ingredient_name"] == "Limette" }
         expect(lime["amount"]).to eq("0.5")
       end
     end
@@ -149,7 +184,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
 
-        rum = json.find { |i| i["ingredient_name"] == "Rum (weiss)" }
+        rum = json["ingredients"].find { |i| i["ingredient_name"] == "Rum (weiss)" }
         expect(rum["amount"]).to eq("6.0")
       end
     end
@@ -191,7 +226,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
             headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        rum_with_info = json.find { |i| i["additional_info"] == "braun" }
+        rum_with_info = json["ingredients"].find { |i| i["additional_info"] == "braun" }
 
         expect(rum_with_info).to be_present
         expect(rum_with_info["additional_info"]).to eq("braun")
@@ -204,7 +239,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
             headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        lime = json.find { |i| i["ingredient_name"] == "Limette" }
+        lime = json["ingredients"].find { |i| i["ingredient_name"] == "Limette" }
 
         expect(lime["ingredient_plural_name"]).to eq("Limetten")
       end
@@ -227,7 +262,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
             headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        tequila = json.find { |i| i["ingredient_name"] == "Tequila" }
+        tequila = json["ingredients"].find { |i| i["ingredient_name"] == "Tequila" }
 
         expect(tequila["amount"]).to eq("3.5")
         expect(tequila["formatted_amount"]).to eq("3,5 cl")
@@ -239,7 +274,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
             headers: { "Accept" => "application/json" }
 
         json = JSON.parse(response.body)
-        tequila = json.find { |i| i["ingredient_name"] == "Tequila" }
+        tequila = json["ingredients"].find { |i| i["ingredient_name"] == "Tequila" }
 
         expect(tequila["amount"]).to eq("1.75")
         expect(tequila["formatted_amount"]).to eq("1,75 cl")

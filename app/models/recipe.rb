@@ -50,4 +50,28 @@ class Recipe < ApplicationRecord
   def total_volume_in_ml
     recipe_ingredients.sum { |ri| ri.amount_in_ml || 0 }
   end
+
+  # Calculate total alcohol volume in ml
+  def alcohol_volume_in_ml
+    recipe_ingredients.sum do |ri|
+      next 0 unless ri.amount_in_ml && ri.ingredient.alcoholic_content
+      ri.amount_in_ml * (ri.ingredient.alcoholic_content / 100.0)
+    end
+  end
+
+  # Calculate alcohol content (ABV) as percentage
+  def calculate_alcohol_content
+    total = total_volume_in_ml
+    return 0.0 if total.zero?
+
+    (alcohol_volume_in_ml / total * 100.0).round(1)
+  end
+
+  # Update computed fields in database
+  def update_computed_fields!
+    update_columns(
+      total_volume: total_volume_in_ml.round(1),
+      alcohol_content: calculate_alcohol_content
+    )
+  end
 end

@@ -43,15 +43,9 @@
           <%= user_badge(@recipe.user) %>
         </div>
 
-        <!-- Views, Alcohol & Volume in one row -->
+        <!-- Views -->
         <div class="text-xs text-gray-400 flex items-center sm:justify-end gap-3">
           <span><i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %></span>
-          <% if @recipe.alcohol_content.present? %>
-            <span><i class="fas fa-wine-glass-alt"></i> <%= number_to_percentage(@recipe.alcohol_content, precision: 1) %></span>
-          <% end %>
-          <% if @recipe.total_volume.present? %>
-            <span><i class="fas fa-flask"></i> <%= @recipe.total_volume %> cl</span>
-          <% end %>
         </div>
       </div>
     </div>
@@ -84,6 +78,11 @@
           is_garnish: ri.is_garnish
         }
       }.to_json %>'
+      :initial-alcohol-info='<%= raw({
+        total_volume_ml: @recipe.total_volume_in_ml.round(1),
+        alcohol_volume_ml: @recipe.alcohol_volume_in_ml.round(1),
+        alcohol_content_percent: @recipe.calculate_alcohol_content
+      }.to_json) %>'
     ></recipe-scaling>
   </div>
 </div>

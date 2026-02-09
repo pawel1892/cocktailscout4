@@ -47,6 +47,18 @@
         </li>
       </ul>
 
+      <!-- Alcohol information (compact with icons) -->
+      <div v-if="!loading && alcoholInfo && alcoholInfo.total_volume_ml > 0" class="mt-4 pt-3 border-t border-gray-200">
+        <div class="text-xs text-gray-500 flex items-center gap-3 flex-wrap">
+          <span title="Gesamtvolumen">
+            <i class="fas fa-flask"></i> {{ formatVolume(alcoholInfo.total_volume_ml / 10) }} cl
+          </span>
+          <span v-if="alcoholInfo.alcohol_content_percent > 0" title="Alkoholgehalt">
+            <i class="fas fa-wine-glass-alt"></i> {{ formatPercent(alcoholInfo.alcohol_content_percent) }} % Vol.
+          </span>
+        </div>
+      </div>
+
       <!-- Error message -->
       <div v-if="error" class="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
         {{ error }}
@@ -66,6 +78,10 @@ const props = defineProps({
   initialIngredients: {
     type: Array,
     required: true
+  },
+  initialAlcoholInfo: {
+    type: Object,
+    default: null
   }
 })
 
@@ -81,6 +97,7 @@ const scaleFactors = [
 
 const scaleFactor = ref(1)
 const ingredients = ref(props.initialIngredients)
+const alcoholInfo = ref(props.initialAlcoholInfo)
 const loading = ref(false)
 const error = ref(null)
 
@@ -104,7 +121,8 @@ async function fetchScaledIngredients(factor) {
     }
 
     const data = await response.json()
-    ingredients.value = data
+    ingredients.value = data.ingredients
+    alcoholInfo.value = data.alcohol_info
   } catch (e) {
     console.error('Error fetching scaled ingredients:', e)
     error.value = 'Fehler beim Laden der skalierten Zutaten. Bitte versuchen Sie es erneut.'
@@ -121,5 +139,27 @@ function buttonClasses(value) {
   return scaleFactor.value === value
     ? `${baseClasses} ${activeClasses}`
     : `${baseClasses} ${inactiveClasses}`
+}
+
+function formatVolume(ml) {
+  // Format with German decimal separator
+  const num = parseFloat(ml)
+  if (isNaN(num)) return '0'
+
+  if (num % 1 === 0) {
+    return num.toFixed(0)
+  }
+  return num.toFixed(1).replace('.', ',')
+}
+
+function formatPercent(percent) {
+  // Format percentage with German decimal separator
+  const num = parseFloat(percent)
+  if (isNaN(num)) return '0'
+
+  if (num % 1 === 0) {
+    return num.toFixed(0)
+  }
+  return num.toFixed(1).replace('.', ',')
 }
 </script>

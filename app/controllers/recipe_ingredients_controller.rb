@@ -20,7 +20,19 @@ class RecipeIngredientsController < ApplicationController
       }
     end
 
-    render json: scaled_ingredients
+    # Calculate scaled alcohol info
+    total_volume = @recipe.total_volume_in_ml * scale_factor
+    alcohol_volume = @recipe.alcohol_volume_in_ml * scale_factor
+    alcohol_content = @recipe.calculate_alcohol_content
+
+    render json: {
+      ingredients: scaled_ingredients,
+      alcohol_info: {
+        total_volume_ml: total_volume.round(1),
+        alcohol_volume_ml: alcohol_volume.round(1),
+        alcohol_content_percent: alcohol_content
+      }
+    }
   end
 
   private
