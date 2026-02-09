@@ -33,41 +33,16 @@ RSpec.describe UnitsParser do
       end
     end
 
-    context "with range patterns" do
-      it "converts '1-2' range to midpoint 1.5" do
+    # Ranges are now marked as uncertain - no longer parsing ranges
+    context "with range patterns (uncertain)" do
+      it "marks '1-2 Limetten' as uncertain" do
         result = UnitsParser.parse("1-2 Limetten")
-        expect(result[:amount]).to eq(1.5)
-        expect(result[:unit]).to eq("x")
+        expect(result[:is_certain]).to be false
       end
 
-      it "converts '2-3' range to midpoint 2.5" do
+      it "marks '2-3 BL Rohrzucker' as uncertain" do
         result = UnitsParser.parse("2-3 BL Rohrzucker")
-        expect(result[:amount]).to eq(2.5)
-        expect(result[:unit]).to eq("x")
-      end
-
-      it "handles ranges with units" do
-        result = UnitsParser.parse("1-2cl Limettensaft")
-        expect(result[:amount]).to eq(1.5)
-        expect(result[:unit]).to eq("cl")
-      end
-
-      it "handles decimal ranges" do
-        result = UnitsParser.parse("0.5-1cl Rosensirup")
-        expect(result[:amount]).to eq(0.75)
-        expect(result[:unit]).to eq("cl")
-      end
-
-      it "handles ranges with Teelöffel" do
-        result = UnitsParser.parse("2-3 Teelöffel Zucker")
-        expect(result[:amount]).to eq(2.5)
-        expect(result[:unit]).to eq("tl")
-      end
-
-      it "handles ranges with spaces around hyphen" do
-        result = UnitsParser.parse("6 - 7 Erdbeeren")
-        expect(result[:amount]).to eq(6.5)
-        expect(result[:unit]).to eq("x")
+        expect(result[:is_certain]).to be false
       end
     end
 
@@ -285,116 +260,17 @@ RSpec.describe UnitsParser do
       end
     end
 
-    context "with hard-coded special cases from analysis report" do
-      it "parses D.O.M. Benedictine with brand info" do
-        result = UnitsParser.parse("0,75cl D.O.M. Benedictine")
-        expect(result[:amount]).to eq(0.75)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("D.O.M.")
-      end
-
-      it "parses Benedictine D.O.M. (reversed order)" do
-        result = UnitsParser.parse("2cl Benedictine D.O.M.")
-        expect(result[:amount]).to eq(2.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("D.O.M.")
-      end
-
-      it "parses strawberries in grams with fresh/frozen info" do
-        result = UnitsParser.parse("1500 g Erdbeeren (frisch od. gefroren)")
-        expect(result[:amount]).to eq(1500.0)
-        expect(result[:unit]).to eq("x")
-        expect(result[:additional_info]).to eq("frisch oder gefroren")
-      end
-
-      it "parses egg white specification" do
-        result = UnitsParser.parse("1 Eiweiß von einem kleinen Ei")
-        expect(result[:amount]).to eq(1.0)
-        expect(result[:unit]).to eq("x")
-        expect(result[:additional_info]).to eq("Eiweiß")
-      end
-
-      it "parses frozen raspberry in ice cube" do
-        result = UnitsParser.parse("1 in klarem Eiswrfel eingefrorene Himbeere")
-        expect(result[:amount]).to eq(1.0)
-        expect(result[:unit]).to eq("x")
-        expect(result[:additional_info]).to eq("in klarem Eiswürfel eingefroren")
-        expect(result[:is_garnish]).to be true
-      end
-
-      it "parses 'ein paar Spritzer' as 3 spritzer" do
+    # Hard-coded special cases removed - conservative approach
+    # Complex descriptions now marked as uncertain and need manual review
+    context "with complex descriptions (conservative approach)" do
+      it "marks 'ein paar Spritzer' as uncertain" do
         result = UnitsParser.parse("ein paar Spritzer Angostura")
-        expect(result[:amount]).to eq(3.0)
-        expect(result[:unit]).to eq("spritzer")
+        expect(result[:is_certain]).to be false
       end
 
-      it "parses 'ein paar Tropfen' as 3 spritzer" do
+      it "marks 'ein paar Tropfen' as uncertain" do
         result = UnitsParser.parse("ein paar Tropfen Angostura")
-        expect(result[:amount]).to eq(3.0)
-        expect(result[:unit]).to eq("spritzer")
-      end
-
-      it "parses Bourbon or Rye whiskey" do
-        result = UnitsParser.parse("3cl Bourbon oder Rye Whiskey")
-        expect(result[:amount]).to eq(3.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("Bourbon oder Rye")
-      end
-
-      it "parses Hennessy brand cognac" do
-        result = UnitsParser.parse("4 cl Hennessy Fine de Cognac")
-        expect(result[:amount]).to eq(4.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("Hennessy Fine de Cognac")
-      end
-
-      it "parses fresh grated ginger with TL" do
-        result = UnitsParser.parse("1/2 TL Frischer Ingwer (gerieben)")
-        expect(result[:amount]).to eq(0.5)
-        expect(result[:unit]).to eq("tl")
-        expect(result[:additional_info]).to eq("frisch gerieben")
-      end
-
-      it "parses white peach puree" do
-        result = UnitsParser.parse("5 cl frisches Püree vom weißen Pfirsich")
-        expect(result[:amount]).to eq(5.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("frisches Püree vom weißen Pfirsich")
-      end
-
-      it "parses lychees from can" do
-        result = UnitsParser.parse("6 Lychees (ersatzweise aus der Dose)")
-        expect(result[:amount]).to eq(6.0)
-        expect(result[:unit]).to eq("x")
-        expect(result[:additional_info]).to eq("ersatzweise aus der Dose")
-      end
-
-      it "parses mint stem with leaf count" do
-        result = UnitsParser.parse("1 Stengel Minze / ca. 6 Blatt")
-        expect(result[:amount]).to eq(1.0)
-        expect(result[:unit]).to eq("x")
-        expect(result[:additional_info]).to eq("Stengel (ca. 6 Blatt)")
-      end
-
-      it "parses Single Malt Scotch whisky" do
-        result = UnitsParser.parse("4cl Single Malt Scotch Whisky")
-        expect(result[:amount]).to eq(4.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("Single Malt Scotch")
-      end
-
-      it "parses Islay Single Malt Scotch whisky" do
-        result = UnitsParser.parse("6cl Islay Single Malt Scotch Whisky")
-        expect(result[:amount]).to eq(6.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("Islay Single Malt Scotch")
-      end
-
-      it "parses aged rum from Barbados" do
-        result = UnitsParser.parse("6 cl gereifter Rum, vorzugsweise aus Barbados")
-        expect(result[:amount]).to eq(6.0)
-        expect(result[:unit]).to eq("cl")
-        expect(result[:additional_info]).to eq("gereift, vorzugsweise aus Barbados")
+        expect(result[:is_certain]).to be false
       end
     end
   end
@@ -412,12 +288,82 @@ RSpec.describe UnitsParser do
       expect(UnitsParser.normalize_unit_name("Dash")).to eq("spritzer")
     end
 
+    it "normalizes Schuss to spritzer" do
+      expect(UnitsParser.normalize_unit_name("Schuss")).to eq("spritzer")
+    end
+
     it "normalizes Scheiben to slice" do
       expect(UnitsParser.normalize_unit_name("Scheiben")).to eq("slice")
     end
 
     it "normalizes Blätter to leaf" do
       expect(UnitsParser.normalize_unit_name("Blätter")).to eq("leaf")
+    end
+  end
+
+  describe "certainty flag (is_certain)" do
+    context "certain patterns (amount + unit)" do
+      it "marks '4 cl Rum' as certain" do
+        result = UnitsParser.parse("4 cl Rum")
+        expect(result[:is_certain]).to be true
+        expect(result[:amount]).to eq(4.0)
+        expect(result[:unit]).to eq("cl")
+      end
+
+      it "marks '4cl Rum' (no space) as certain" do
+        result = UnitsParser.parse("4cl Rum")
+        expect(result[:is_certain]).to be true
+        expect(result[:amount]).to eq(4.0)
+        expect(result[:unit]).to eq("cl")
+      end
+
+      it "marks 'ein Schuss Blue Curaçao' as certain" do
+        result = UnitsParser.parse("ein Schuss Blue Curaçao")
+        expect(result[:is_certain]).to be true
+        expect(result[:amount]).to eq(1.0)
+        expect(result[:unit]).to eq("spritzer")
+      end
+
+      it "marks '2 TL Zucker' as certain" do
+        result = UnitsParser.parse("2 TL Zucker")
+        expect(result[:is_certain]).to be true
+        expect(result[:unit]).to eq("tl")
+      end
+
+      it "marks '1 Scheibe Zitrone' as certain" do
+        result = UnitsParser.parse("1 Scheibe Zitrone")
+        expect(result[:is_certain]).to be true
+        expect(result[:unit]).to eq("slice")
+      end
+    end
+
+    context "uncertain patterns" do
+      it "marks 'Schuss Grenadine' (no amount) as uncertain" do
+        result = UnitsParser.parse("Schuss Grenadine")
+        expect(result[:is_certain]).to be false
+      end
+
+      it "marks '2 Limetten' (no unit) as uncertain" do
+        result = UnitsParser.parse("2 Limetten")
+        expect(result[:is_certain]).to be false
+      end
+
+      it "marks '1/2 Limette' (fraction only) as uncertain" do
+        result = UnitsParser.parse("1/2 Limette")
+        expect(result[:is_certain]).to be false
+        expect(result[:amount]).to eq(0.5)
+        expect(result[:unit]).to eq("x")
+      end
+
+      it "marks 'Orangensaft' (no amount, no unit) as uncertain" do
+        result = UnitsParser.parse("Orangensaft")
+        expect(result[:is_certain]).to be false
+      end
+
+      it "marks '1 paar Spritzer' (complex) as uncertain" do
+        result = UnitsParser.parse("1 paar Spritzer Grenadine")
+        expect(result[:is_certain]).to be false
+      end
     end
   end
 end

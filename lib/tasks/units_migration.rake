@@ -101,7 +101,7 @@ namespace :units_migration do
     puts "✓ Backed up #{RecipeIngredient.count} records"
   end
 
-  desc "Migrate data from descriptions to structured fields"
+  desc "Migrate data from descriptions to structured fields (conservative approach)"
   task migrate: :environment do
     Rake::Task["units_migration:populate_units"].invoke
 
@@ -114,18 +114,21 @@ namespace :units_migration do
 
     require_relative "../units_parser"
 
-    stats = { total: 0, migrated: 0, errors: [] }
+    puts "\n=== Conservative Units Migration ==="
+    puts "Only converting unambiguous patterns...\n"
 
-    RecipeIngredient.find_each do |ri|
-      stats[:total] += 1
+    certain_count = 0
+    uncertain_count = 0
+    errors = []
 
-      # Parse the description (the only source of truth)
+    RecipeIngredient.where.not(old_description: nil).find_each do |ri|
       parsed = UnitsParser.parse(ri.old_description)
 
-      if parsed[:amount] && parsed[:unit]
+      if parsed[:is_certain]
+        # Only update if parsing is unambiguous
         unit = Unit.find_by(name: parsed[:unit])
         unless unit
-          stats[:errors] << "Recipe #{ri.recipe_id}, Ingredient #{ri.ingredient_id}: Unknown unit '#{parsed[:unit]}' from description '#{ri.old_description}'"
+          errors << "Recipe #{ri.recipe_id}, Ingredient #{ri.ingredient_id}: Unknown unit '#{parsed[:unit]}' from description '#{ri.old_description}'"
           next
         end
 
@@ -140,27 +143,33 @@ namespace :units_migration do
           unit_id: unit.id,
           additional_info: additional_info,
           is_garnish: parsed[:is_garnish],
-          description: nil  # Clear old description
+          needs_review: false,
+          description: nil
         )
+        certain_count += 1
       else
-        # Garnish or unstructured (e.g., "Minzzweig")
+        # Keep as description, mark for review
         ri.update_columns(
           amount: nil,
           unit_id: nil,
-          additional_info: parsed[:additional_info],
-          is_garnish: parsed[:is_garnish],
+          additional_info: nil,
+          is_garnish: parsed[:is_garnish] || false,
+          needs_review: true,
           description: nil
         )
+        uncertain_count += 1
       end
 
-      stats[:migrated] += 1
-      print "." if (stats[:total] % 100).zero?
+      print "." if ((certain_count + uncertain_count) % 100).zero?
     end
 
-    puts "\n✓ Migrated #{stats[:migrated]}/#{stats[:total]}"
-    if stats[:errors].any?
-      puts "\n⚠ Errors: #{stats[:errors].count}"
-      stats[:errors].each { |err| puts "  - #{err}" }
+    puts "\n\n✓ Migrated #{certain_count} ingredients with certainty"
+    puts "⚠ Marked #{uncertain_count} ingredients for manual review"
+    puts "\nUse `bin/rails units_migration:review` to see uncertain cases"
+
+    if errors.any?
+      puts "\n⚠ Errors: #{errors.count}"
+      errors.each { |err| puts "  - #{err}" }
     end
   end
 
@@ -266,5 +275,25 @@ namespace :units_migration do
     ActiveRecord::Migration.remove_column :recipe_ingredients, :old_description
 
     puts "✓ Finalized migration"
+  end
+
+  desc "Show ingredients that need manual review"
+  task review: :environment do
+    puts "\n=== Ingredients Needing Review ==="
+
+    uncertain = RecipeIngredient.where(needs_review: true).includes(:recipe, :ingredient)
+
+    puts "Total: #{uncertain.count} ingredients"
+    puts "\nSample (first 20):"
+
+    uncertain.limit(20).each do |ri|
+      puts "  [#{ri.id}] #{ri.recipe.title}: #{ri.old_description}"
+    end
+
+    if uncertain.count > 20
+      puts "\n... and #{uncertain.count - 20} more"
+    end
+
+    puts "\nTo fix these, update manually or improve UnitsParser and re-run migration."
   end
 end

@@ -33,7 +33,17 @@
             :key="ingredient.id"
             class="flex items-start gap-2">
           <span class="text-cs-gold mt-1">•</span>
-          <span v-if="ingredient.amount !== null">
+          <span v-if="ingredient.needs_review">
+            <!-- Uncertain ingredient: show original description -->
+            {{ ingredient.old_description }}
+            <!-- Warning icon when recipe is scaled -->
+            <span v-if="scaleFactor !== 1"
+                  class="inline-block ml-1 text-amber-600 cursor-help"
+                  :title="warningMessage">
+              ⚠️
+            </span>
+          </span>
+          <span v-else-if="ingredient.amount !== null">
             <!-- Structured data: show formatted_amount + ingredient_name + optional additional_info -->
             <strong>{{ ingredient.formatted_amount }}</strong>
             {{ ingredient.ingredient_name }}
@@ -46,6 +56,14 @@
           </span>
         </li>
       </ul>
+
+      <!-- Warning for uncertain ingredients when scaled -->
+      <div v-if="!loading && scaleFactor !== 1 && hasUncertainIngredients" class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm flex items-start gap-2">
+        <i class="fas fa-exclamation-triangle mt-0.5"></i>
+        <div>
+          <strong>Hinweis:</strong> Einige Zutaten (mit ⚠️ markiert) konnten nicht automatisch skaliert werden und sollten manuell angepasst werden.
+        </div>
+      </div>
 
       <!-- Alcohol information (compact with icons) -->
       <div v-if="!loading && alcoholInfo && alcoholInfo.total_volume_ml > 0" class="mt-4 pt-3 border-t border-gray-200">
@@ -68,7 +86,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   recipeSlug: {
@@ -100,6 +118,12 @@ const ingredients = ref(props.initialIngredients)
 const alcoholInfo = ref(props.initialAlcoholInfo)
 const loading = ref(false)
 const error = ref(null)
+const warningMessage = "Diese Zutat kann nicht automatisch skaliert werden, da die Menge nicht eindeutig ist. Bitte manuell anpassen."
+
+// Check if there are any ingredients that need review
+const hasUncertainIngredients = computed(() => {
+  return ingredients.value.some(ingredient => ingredient.needs_review)
+})
 
 async function fetchScaledIngredients(factor) {
   if (factor === scaleFactor.value) return // Already at this scale

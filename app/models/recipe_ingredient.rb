@@ -40,11 +40,33 @@ class RecipeIngredient < ApplicationRecord
     end
   end
 
+  # Check if ingredient can be scaled
+  def scalable?
+    amount.present? && unit.present? && !needs_review
+  end
+
+  # Get display text (structured or fallback to description)
+  def display_text
+    if scalable?
+      "#{formatted_amount} #{formatted_ingredient_name}"
+    else
+      old_description  # Fallback to original text
+    end
+  end
+
   def scale(factor)
     return self if amount.nil?
     return self if is_garnish?  # Garnishes don't scale!
+    return self if needs_review  # Don't scale uncertain ingredients
 
-    dup.tap { |ri| ri.amount = amount * factor }
+    scaled_amount = amount * factor
+
+    # Round if unit is non-divisible (Spritzer, Dash, etc.)
+    if unit && !unit.divisible
+      scaled_amount = scaled_amount.round
+    end
+
+    dup.tap { |ri| ri.amount = scaled_amount }
   end
 
   private

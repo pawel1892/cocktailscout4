@@ -97,6 +97,45 @@ RSpec.describe RecipeIngredient, type: :model do
     end
   end
 
+  describe "#scalable?" do
+    it "returns true when amount, unit, and not needs_review" do
+      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: false)
+      expect(ri.scalable?).to be true
+    end
+
+    it "returns false when needs_review is true" do
+      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: true)
+      expect(ri.scalable?).to be false
+    end
+
+    it "returns false when amount is nil" do
+      ri = RecipeIngredient.new(amount: nil, unit: cl_unit, needs_review: false)
+      expect(ri.scalable?).to be false
+    end
+
+    it "returns false when unit is nil" do
+      ri = RecipeIngredient.new(amount: 4.0, unit: nil, needs_review: false)
+      expect(ri.scalable?).to be false
+    end
+  end
+
+  describe "#display_text" do
+    it "returns formatted text when scalable" do
+      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, ingredient: ingredient, needs_review: false, old_description: "4 cl Rum")
+      expect(ri.display_text).to eq("4 cl Limette")
+    end
+
+    it "returns old_description when not scalable" do
+      ri = RecipeIngredient.new(old_description: "Schuss Grenadine", needs_review: true, ingredient: ingredient)
+      expect(ri.display_text).to eq("Schuss Grenadine")
+    end
+
+    it "returns old_description when amount is nil" do
+      ri = RecipeIngredient.new(amount: nil, old_description: "Orangensaft", ingredient: ingredient)
+      expect(ri.display_text).to eq("Orangensaft")
+    end
+  end
+
   describe "#scale" do
     it "scales the amount by the given factor" do
       ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 4.0, unit: cl_unit)
@@ -122,10 +161,32 @@ RSpec.describe RecipeIngredient, type: :model do
       expect(scaled.amount).to eq(2.0)
     end
 
+    it "does not scale ingredients that need review" do
+      ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 2.0, unit: blank_unit, needs_review: true)
+      scaled = ri.scale(2)
+      expect(scaled.amount).to eq(2.0)
+    end
+
     it "returns self when amount is nil" do
       ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: nil)
       scaled = ri.scale(2)
       expect(scaled).to eq(ri)
+    end
+
+    context "with non-divisible units" do
+      let(:spritzer_unit) { Unit.find_or_create_by!(name: "spritzer") { |u| u.display_name = "Spritzer"; u.plural_name = "Spritzer"; u.category = "special"; u.ml_ratio = 0.9; u.divisible = false } }
+
+      it "rounds non-divisible units" do
+        ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 1.0, unit: spritzer_unit)
+        scaled = ri.scale(1.5)
+        expect(scaled.amount).to eq(2.0)  # Rounded from 1.5
+      end
+
+      it "does not round divisible units" do
+        ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 4.0, unit: cl_unit)
+        scaled = ri.scale(1.5)
+        expect(scaled.amount).to eq(6.0)  # Not rounded
+      end
     end
   end
 

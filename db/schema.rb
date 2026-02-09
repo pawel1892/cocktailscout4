@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_08_071902) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_09_053510) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -197,6 +197,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_071902) do
     t.string "description"
     t.bigint "ingredient_id", null: false
     t.boolean "is_garnish", default: false, null: false
+    t.boolean "needs_review", default: false, null: false
     t.decimal "old_amount", precision: 10, scale: 2
     t.string "old_description"
     t.integer "old_id"
@@ -207,6 +208,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_071902) do
     t.bigint "unit_id"
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
+    t.index ["needs_review"], name: "index_recipe_ingredients_on_needs_review"
     t.index ["old_id"], name: "index_recipe_ingredients_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
     t.index ["unit_id"], name: "index_recipe_ingredients_on_unit_id"
