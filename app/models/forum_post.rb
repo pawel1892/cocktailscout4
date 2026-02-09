@@ -10,6 +10,7 @@ class ForumPost < ApplicationRecord
   validates :body, presence: true
   # Note: user is optional to allow for deleted users, but should be present at creation
 
+  before_create :generate_public_id
   after_create :update_user_stats
   after_save :update_user_stats_if_deleted, if: -> { saved_change_to_deleted? }
 
@@ -34,6 +35,13 @@ class ForumPost < ApplicationRecord
   end
 
   private
+
+  def generate_public_id
+    loop do
+      self.public_id = SecureRandom.alphanumeric(8)
+      break unless ForumPost.unscoped.exists?(public_id: public_id)
+    end
+  end
 
   def soft_delete_empty_thread
     return unless forum_thread

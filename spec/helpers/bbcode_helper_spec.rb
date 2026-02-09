@@ -82,9 +82,15 @@ RSpec.describe BbcodeHelper, type: :helper do
         expect(result).to include('>Beitrag #456</a>')
       end
 
-      it "does not match invalid post IDs" do
-        result = helper.render_bbcode("[post=abc]Invalid[/post]")
-        expect(result).to include('[post=abc]Invalid[/post]')
+      it "renders post link with alphanumeric public_id" do
+        result = helper.render_bbcode("[post=xpGSk7C4]Link text[/post]")
+        expect(result).to include('href="/cocktailforum/beitrag/xpGSk7C4"')
+        expect(result).to include('>Link text</a>')
+      end
+
+      it "does not match invalid characters in post IDs" do
+        result = helper.render_bbcode("[post=abc-123]Invalid[/post]")
+        expect(result).to include('[post=abc-123]Invalid[/post]')
       end
     end
 

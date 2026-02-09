@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_09_165211) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -70,12 +70,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_050157) do
     t.bigint "forum_thread_id", null: false
     t.bigint "last_editor_id"
     t.integer "old_id"
+    t.string "public_id", limit: 8, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["body"], name: "index_forum_posts_on_body", type: :fulltext
     t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
     t.index ["last_editor_id"], name: "index_forum_posts_on_last_editor_id"
     t.index ["old_id"], name: "index_forum_posts_on_old_id"
+    t.index ["public_id"], name: "index_forum_posts_on_public_id", unique: true
     t.index ["user_id"], name: "index_forum_posts_on_user_id"
   end
 
