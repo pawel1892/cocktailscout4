@@ -132,8 +132,15 @@ namespace :units_migration do
     "Vermouth Dry" => [ "vermouth dry", "trockener wermut", "wermut dry", "dry vermouth" ],
     "Sangrita Picante" => [ "sangrita picante", "sangrita pikant" ],
     "Kirschnektar" => [ "kirschnektar", "kirschsaft", "cherry nectar", "cherry juice" ],
-    "Minze" => [ "minze", "minzzweig", "minzblatt" ],
-    "Rum (braun) 73%" => [ "rum (braun) 73%", "rum 73%" ]
+    "Minze" => [ "minze", "minzzweig", "minzblatt", "minzblätter" ],
+    "Rum (braun) 73%" => [ "rum (braun) 73%", "rum 73%" ],
+    "Rum (weiss)" => [ "rum (weiss)", "rum weiss", "rum(weiss)", "weißer rum", "weisser rum" ],
+    "Rum (braun)" => [ "rum (braun)", "rum braun", "rum(braun)", "brauner rum" ],
+    "Triple Sec Curaçao" => [ "triple sec curaçao", "triple sec curacao", "triple sec" ],
+    "Blue Curaçao" => [ "blue curaçao", "blue curacao" ],
+    "Tequila (weiss)" => [ "tequila (weiss)", "tequila weiss", "tequila blanco", "tequila (blanco)" ],
+    "Maracujanektar" => [ "maracujanektar", "maracujasaft", "maracuja nektar" ],
+    "Grenadine" => [ "grenadine", "grenadinesirup" ]
     # Add more exceptions here as needed
     # "Ingredient Name" => ["variation1", "variation2"]
   }.freeze
@@ -150,7 +157,10 @@ namespace :units_migration do
   # Non-scalable ingredient patterns: descriptions that should be marked as non-scalable
   # Key = ingredient name, Value = array of description patterns that are non-scalable (garnishes)
   NON_SCALABLE_PATTERNS = {
-    "Minze" => [ "minzzweig", "minzblatt" ]
+    "Minze" => [ "minzzweig", "minzblatt" ],
+    "Soda" => [ "soda" ],  # Just "Soda" without amount (to taste/to fill)
+    "Orangensaft" => [ "orangensaft" ],  # Just "Orangensaft" without amount (to taste/to fill)
+    "Tonic Water" => [ "tonic water", "tonic" ]  # Just "Tonic Water" without amount (to taste/to fill)
     # Add more non-scalable patterns as needed
   }.freeze
 
@@ -567,6 +577,20 @@ namespace :units_migration do
 
     puts "\n\n✓ Migrated #{certain_count} ingredients with certainty"
     puts "⚠ Marked #{uncertain_count} ingredients for manual review"
+
+    # Calculate recipe statistics
+    total_recipes = Recipe.count
+    recipes_needing_review = Recipe.joins(:recipe_ingredients)
+                                   .where(recipe_ingredients: { needs_review: true })
+                                   .distinct
+                                   .count
+    percentage = total_recipes > 0 ? (recipes_needing_review.to_f / total_recipes * 100).round(1) : 0
+
+    puts "\n📊 Recipe Statistics:"
+    puts "   Total recipes: #{total_recipes}"
+    puts "   Recipes needing review: #{recipes_needing_review} (#{percentage}%)"
+    puts "   Recipes fully migrated: #{total_recipes - recipes_needing_review} (#{(100 - percentage).round(1)}%)"
+
     puts "\nUse `bin/rails units_migration:review` to see uncertain cases"
 
     if errors.any?
