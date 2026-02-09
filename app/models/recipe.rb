@@ -43,6 +43,11 @@ class Recipe < ApplicationRecord
     slug
   end
 
+  # Check if ALL ingredients are certain (no needs_review) - only then show scaling controls
+  def has_scalable_ingredients?
+    recipe_ingredients.any? && recipe_ingredients.all? { |ri| !ri.needs_review }
+  end
+
   def scale(factor)
     recipe_ingredients.map { |ri| ri.scale(factor) }
   end

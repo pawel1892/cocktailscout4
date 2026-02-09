@@ -7,8 +7,8 @@
           <i class="fas fa-list text-cs-gold"></i>
           Zutaten
         </h2>
-        <!-- Scaling controls -->
-        <div class="flex items-center gap-2 flex-wrap">
+        <!-- Scaling controls (only shown if recipe is scalable) -->
+        <div v-if="scalable" class="flex items-center gap-2 flex-wrap">
           <span class="text-sm text-gray-600">Portionen:</span>
           <div class="flex gap-1 flex-wrap">
             <button v-for="factor in scaleFactors"
@@ -100,6 +100,10 @@ const props = defineProps({
   initialAlcoholInfo: {
     type: Object,
     default: null
+  },
+  scalable: {
+    type: Boolean,
+    default: true
   }
 })
 

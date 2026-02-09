@@ -1,4 +1,14 @@
 namespace :units_migration do
+  # Convert fraction string to decimal (e.g., "1/2" → 0.5)
+  def self.fraction_to_decimal(fraction_str)
+    if match = fraction_str.match(/^(\d+)\/(\d+)$/)
+      numerator = match[1].to_f
+      denominator = match[2].to_f
+      return numerator / denominator if denominator != 0
+    end
+    nil
+  end
+
   # Parse ingredient description - only handles certain cases (amount + unit)
   def self.parse_ingredient_description(description)
     return { is_certain: false } if description.blank?
@@ -9,11 +19,11 @@ namespace :units_migration do
     # Special case: "halbe" (half) → 0.5
     normalized = normalized.sub(/^halbe\s+/i, "0.5 ")
 
-    # Pattern: [number] [optional space] [unit] [ingredient] [(optional)]
-    # Examples: "4 cl Rum", "4cl Rum", "2 TL Zucker", "ein Spritzer", "1 Scheibe Zitrone"
+    # Pattern: [number or fraction] [optional space] [unit] [ingredient] [(optional)]
+    # Examples: "4 cl Rum", "4cl Rum", "2 TL Zucker", "ein Spritzer", "1/2 Limette"
     # The l(?!\w) lookahead prevents matching "l" in "Limette"
     # \s* allows optional space between number and unit
-    pattern = /^(\d+\.?\d*|ein|eine)\s*(cl|ml|l(?!\w)|TL|EL|Teelöffel|Esslöffel|Spritzer|Dash|Splash|Schuss|Barlöffel|Stück|Scheiben?|Blätter?|Zweige?)\b/i
+    pattern = /^(\d+\/\d+|\d+\.?\d*|ein|eine)\s*(cl|ml|l(?!\w)|TL|EL|Teelöffel|Esslöffel|Spritzer|Dash|Splash|Schuss|Barlöffel|Stück|Scheiben?|Blätter?|Zweige?)\b/i
 
     match = normalized.match(pattern)
 
@@ -23,8 +33,15 @@ namespace :units_migration do
       unit_str = match[2]
       remainder = normalized.sub(match[0], "").strip
 
-      # Convert "ein"/"eine" to 1
-      amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
+      # Convert to decimal
+      if amount_str.match?(/^ein/i)
+        amount = 1.0
+      elsif amount_str.include?("/")
+        amount = fraction_to_decimal(amount_str)
+        return { is_certain: false } unless amount  # Invalid fraction
+      else
+        amount = amount_str.to_f
+      end
 
       # Extract additional info from parentheses: "Rum (braun)" → "braun"
       additional_info = nil
@@ -39,15 +56,24 @@ namespace :units_migration do
         is_certain: true
       }
     else
-      # No explicit unit - check if it's a simple count for whitelisted ingredient
+      # No explicit unit - check if it's a simple count (including fractions) for whitelisted ingredient
       # This will be validated against ingredient name in the migration task
-      simple_count_pattern = /^(\d+\.?\d*|ein|eine)\s+(.+)/i
+      simple_count_pattern = /^(\d+\/\d+|\d+\.?\d*|ein|eine)\s+(.+)/i
       simple_match = normalized.match(simple_count_pattern)
 
       if simple_match
         amount_str = simple_match[1]
         remainder = simple_match[2].strip
-        amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
+
+        # Convert to decimal
+        if amount_str.match?(/^ein/i)
+          amount = 1.0
+        elsif amount_str.include?("/")
+          amount = fraction_to_decimal(amount_str)
+          return { is_certain: false } unless amount  # Invalid fraction
+        else
+          amount = amount_str.to_f
+        end
 
         # Return with no unit (will be NULL in database)
         # Migration task will check if ingredient is in ALLOWED_WITHOUT_UNIT
@@ -106,7 +132,8 @@ namespace :units_migration do
     "Vermouth Dry" => [ "vermouth dry", "trockener wermut", "wermut dry", "dry vermouth" ],
     "Sangrita Picante" => [ "sangrita picante", "sangrita pikant" ],
     "Kirschnektar" => [ "kirschnektar", "kirschsaft", "cherry nectar", "cherry juice" ],
-    "Minze" => [ "minze", "minzzweig", "minzblatt" ]
+    "Minze" => [ "minze", "minzzweig", "minzblatt" ],
+    "Rum (braun) 73%" => [ "rum (braun) 73%", "rum 73%" ]
     # Add more exceptions here as needed
     # "Ingredient Name" => ["variation1", "variation2"]
   }.freeze

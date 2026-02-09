@@ -65,6 +65,7 @@
   <div class="<%= @recipe.approved_recipe_images.any? ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
     <recipe-scaling
       recipe-slug="<%= @recipe.slug %>"
+      :scalable="<%= @recipe.has_scalable_ingredients? %>"
       :initial-ingredients='<%= raw @recipe.recipe_ingredients.map { |ri|
         {
           id: ri.id,
