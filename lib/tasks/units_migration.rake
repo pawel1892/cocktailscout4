@@ -16,27 +16,59 @@ namespace :units_migration do
     pattern = /^(\d+\.?\d*|ein|eine)\s*(cl|ml|l(?!\w)|TL|EL|Teelöffel|Esslöffel|Spritzer|Dash|Splash|Schuss|Barlöffel|Stück|Scheiben?|Blätter?|Zweige?)\b/i
 
     match = normalized.match(pattern)
-    return { is_certain: false } unless match
 
-    amount_str = match[1]
-    unit_str = match[2]
-    remainder = normalized.sub(match[0], "").strip
+    if match
+      # Pattern with explicit unit matched
+      amount_str = match[1]
+      unit_str = match[2]
+      remainder = normalized.sub(match[0], "").strip
 
-    # Convert "ein"/"eine" to 1
-    amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
+      # Convert "ein"/"eine" to 1
+      amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
 
-    # Extract additional info from parentheses: "Rum (braun)" → "braun"
-    additional_info = nil
-    if paren_match = remainder.match(/\(([^)]+)\)/)
-      additional_info = paren_match[1]
+      # Extract additional info from parentheses: "Rum (braun)" → "braun"
+      additional_info = nil
+      if paren_match = remainder.match(/\(([^)]+)\)/)
+        additional_info = paren_match[1]
+      end
+
+      {
+        amount: amount,
+        unit: normalize_unit_name(unit_str),
+        additional_info: additional_info,
+        is_certain: true
+      }
+    else
+      # No explicit unit - check if it's a simple count for whitelisted ingredient
+      # This will be validated against ingredient name in the migration task
+      simple_count_pattern = /^(\d+\.?\d*|ein|eine)\s+(.+)/i
+      simple_match = normalized.match(simple_count_pattern)
+
+      if simple_match
+        amount_str = simple_match[1]
+        remainder = simple_match[2].strip
+        amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
+
+        # Return with no unit (will be NULL in database)
+        # Migration task will check if ingredient is in ALLOWED_WITHOUT_UNIT
+        {
+          amount: amount,
+          unit: nil,
+          additional_info: nil,
+          ingredient_text: remainder,  # For validation in migration
+          is_certain: :check_whitelist  # Special flag - needs whitelist check
+        }
+      else
+        # Check if it's an unquantified garnish/decoration (e.g., "Minzzweig")
+        # These will be validated against NON_SCALABLE_PATTERNS in migration
+        {
+          amount: nil,
+          unit: nil,
+          additional_info: description,
+          is_certain: :check_non_scalable  # Special flag - needs non-scalable pattern check
+        }
+      end
     end
-
-    {
-      amount: amount,
-      unit: normalize_unit_name(unit_str),
-      additional_info: additional_info,
-      is_certain: true
-    }
   end
 
   # Normalize unit names to database format
@@ -73,9 +105,26 @@ namespace :units_migration do
     "Rohrzuckersirup" => [ "zuckersirup", "rohrzuckersirup", "sugar syrup" ],
     "Vermouth Dry" => [ "vermouth dry", "trockener wermut", "wermut dry", "dry vermouth" ],
     "Sangrita Picante" => [ "sangrita picante", "sangrita pikant" ],
-    "Kirschnektar" => [ "kirschnektar", "kirschsaft", "cherry nectar", "cherry juice" ]
+    "Kirschnektar" => [ "kirschnektar", "kirschsaft", "cherry nectar", "cherry juice" ],
+    "Minze" => [ "minze", "minzzweig", "minzblatt" ]
     # Add more exceptions here as needed
     # "Ingredient Name" => ["variation1", "variation2"]
+  }.freeze
+
+  # Ingredients allowed to be parsed without explicit units (e.g., "1 Limette" → amount=1, unit=NULL)
+  # Only these ingredients can have simple count patterns marked as certain
+  ALLOWED_WITHOUT_UNIT = [
+    "Limette", "Limetten",
+    "Zitrone", "Zitronen",
+    "Orange", "Orangen"
+    # Add more countable ingredients as needed
+  ].freeze
+
+  # Non-scalable ingredient patterns: descriptions that should be marked as non-scalable
+  # Key = ingredient name, Value = array of description patterns that are non-scalable (garnishes)
+  NON_SCALABLE_PATTERNS = {
+    "Minze" => [ "minzzweig", "minzblatt" ]
+    # Add more non-scalable patterns as needed
   }.freeze
 
   desc "Run complete migration workflow (all tasks in correct order)"
@@ -291,10 +340,85 @@ namespace :units_migration do
     RecipeIngredient.where.not(old_description: nil).find_each do |ri|
       parsed = parse_ingredient_description(ri.old_description)
 
+      # Handle whitelist check for simple counts without units
+      if parsed[:is_certain] == :check_whitelist
+        # Simple count pattern - check if ingredient is whitelisted
+        unless ALLOWED_WITHOUT_UNIT.include?(ri.ingredient.name)
+          # Not whitelisted - mark as uncertain
+          ri.update_columns(
+            amount: nil,
+            unit_id: nil,
+            additional_info: nil,
+            needs_review: true,
+            description: nil
+          )
+          uncertain_count += 1
+          next
+        end
+
+        # Whitelisted - convert to certain
+        parsed[:is_certain] = true
+        parsed[:unit] = nil  # No unit for simple counts
+      end
+
+      # Handle non-scalable pattern check for unquantified garnishes
+      if parsed[:is_certain] == :check_non_scalable
+        # Check if description matches a non-scalable pattern for this ingredient
+        matches_non_scalable = false
+        if NON_SCALABLE_PATTERNS.key?(ri.ingredient.name)
+          description_lower = ri.old_description.downcase
+          NON_SCALABLE_PATTERNS[ri.ingredient.name].each do |pattern|
+            if description_lower.include?(pattern)
+              matches_non_scalable = true
+              break
+            end
+          end
+        end
+
+        # Also check INGREDIENT_ALIASES to see if description is acceptable
+        matches_alias = false
+        if INGREDIENT_ALIASES.key?(ri.ingredient.name)
+          description_lower = ri.old_description.downcase
+          INGREDIENT_ALIASES[ri.ingredient.name].each do |alias_name|
+            if description_lower.include?(alias_name)
+              matches_alias = true
+              break
+            end
+          end
+        end
+
+        unless matches_non_scalable || matches_alias
+          # Not a recognized non-scalable pattern - mark as uncertain
+          ri.update_columns(
+            amount: nil,
+            unit_id: nil,
+            additional_info: nil,
+            needs_review: true,
+            description: nil
+          )
+          uncertain_count += 1
+          next
+        end
+
+        # Recognized pattern - migrate with amount=1, mark as non-scalable
+        # Store full description in display_name to override ingredient name
+        ri.update_columns(
+          amount: 1.0,  # Implicit "1" even though not written
+          unit_id: nil,  # No explicit unit
+          additional_info: nil,
+          display_name: ri.old_description,  # e.g., "Minzzweig" overrides "Minze"
+          is_scalable: false,  # Unquantified garnishes are non-scalable
+          needs_review: false,
+          description: nil
+        )
+        certain_count += 1
+        next
+      end
+
       if parsed[:is_certain]
         # Only update if parsing is unambiguous
-        unit = Unit.find_by(name: parsed[:unit])
-        unless unit
+        unit = parsed[:unit] ? Unit.find_by(name: parsed[:unit]) : nil
+        if parsed[:unit] && !unit
           errors << "Recipe #{ri.recipe_id}, Ingredient #{ri.ingredient_id}: Unknown unit '#{parsed[:unit]}' from description '#{ri.old_description}'"
           next
         end
@@ -379,10 +503,22 @@ namespace :units_migration do
           additional_info = nil
         end
 
+        # Check if this should be marked as non-scalable (garnish/decoration)
+        is_scalable = true
+        if NON_SCALABLE_PATTERNS.key?(ri.ingredient.name)
+          NON_SCALABLE_PATTERNS[ri.ingredient.name].each do |pattern|
+            if description_lower.include?(pattern)
+              is_scalable = false
+              break
+            end
+          end
+        end
+
         ri.update_columns(
           amount: parsed[:amount],
-          unit_id: unit.id,
+          unit_id: unit&.id,
           additional_info: additional_info,
+          is_scalable: is_scalable,
           needs_review: false,
           description: nil
         )

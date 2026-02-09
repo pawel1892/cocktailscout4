@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_09_064253) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_09_100906) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -195,6 +195,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_09_064253) do
     t.decimal "amount", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.string "description"
+    t.string "display_name"
     t.bigint "ingredient_id", null: false
     t.boolean "is_optional", default: false, null: false
     t.boolean "is_scalable", default: true, null: false

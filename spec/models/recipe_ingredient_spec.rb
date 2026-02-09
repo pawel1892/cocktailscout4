@@ -66,6 +66,19 @@ RSpec.describe RecipeIngredient, type: :model do
   end
 
   describe "#formatted_ingredient_name" do
+    context "with display_name override" do
+      it "uses display_name when set" do
+        mint = create(:ingredient, name: "Minze")
+        ri = RecipeIngredient.new(amount: 1.0, unit: nil, ingredient: mint, display_name: "Minzzweig")
+        expect(ri.formatted_ingredient_name).to eq("Minzzweig")
+      end
+
+      it "uses display_name even when plural would normally be used" do
+        ri = RecipeIngredient.new(amount: 2.0, unit: nil, ingredient: ingredient, display_name: "Custom Name")
+        expect(ri.formatted_ingredient_name).to eq("Custom Name")
+      end
+    end
+
     context "without explicit unit" do
       it "uses singular form when amount is 1" do
         ri = RecipeIngredient.new(amount: 1.0, unit: nil, ingredient: ingredient)

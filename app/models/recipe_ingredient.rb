@@ -33,6 +33,9 @@ class RecipeIngredient < ApplicationRecord
   end
 
   def formatted_ingredient_name
+    # Use custom display_name if set
+    return display_name if display_name.present?
+
     # Use plural form when amount > 1 and there's no explicit unit
     if unit.nil? && amount && amount > 1 && ingredient.plural_name.present?
       ingredient.plural_name
