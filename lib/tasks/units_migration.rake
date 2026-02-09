@@ -67,6 +67,17 @@ namespace :units_migration do
     }[normalized] || normalized
   end
 
+  # Ingredient name exceptions: descriptions that are acceptable variations of ingredient names
+  # Key = ingredient name in database, Value = array of acceptable variations in descriptions
+  INGREDIENT_ALIASES = {
+    "Rohrzuckersirup" => [ "zuckersirup", "rohrzuckersirup", "sugar syrup" ],
+    "Vermouth Dry" => [ "vermouth dry", "trockener wermut", "wermut dry", "dry vermouth" ],
+    "Sangrita Picante" => [ "sangrita picante", "sangrita pikant" ],
+    "Kirschnektar" => [ "kirschnektar", "kirschsaft", "cherry nectar", "cherry juice" ]
+    # Add more exceptions here as needed
+    # "Ingredient Name" => ["variation1", "variation2"]
+  }.freeze
+
   desc "Run complete migration workflow (all tasks in correct order)"
   task full_migration: :environment do
     puts "\n" + "=" * 80
@@ -138,10 +149,8 @@ namespace :units_migration do
       { name: "piece", display_name: "Stück", plural_name: "Stück", category: "count", ml_ratio: nil, divisible: false },
       { name: "slice", display_name: "Scheibe", plural_name: "Scheiben", category: "count", ml_ratio: nil, divisible: false },
       { name: "leaf", display_name: "Blatt", plural_name: "Blätter", category: "count", ml_ratio: nil, divisible: false },
-      { name: "sprig", display_name: "Zweig", plural_name: "Zweige", category: "count", ml_ratio: nil, divisible: false },
-
-      # Blank unit (for ingredient counts like "1/2 Limette" - displays ingredient name only)
-      { name: "x", display_name: "", plural_name: "", category: "count", ml_ratio: nil, divisible: true }
+      { name: "sprig", display_name: "Zweig", plural_name: "Zweige", category: "count", ml_ratio: nil, divisible: false }
+      # Note: Ingredients without explicit units (like "1 Limette") now use NULL unit_id
     ]
 
     units_data.each do |unit_attrs|
@@ -295,19 +304,40 @@ namespace :units_migration do
         # - "Eier" vs "Eigelb" (different ingredient)
         # - "Minze" vs "Minzzweig" (compound word, more specific)
         # - "Rum" vs "Rum (braun)" (has qualifier, more specific)
-        ingredient_name = ri.ingredient.name.downcase
+        ingredient_name = ri.ingredient.name
+        ingredient_name_lower = ingredient_name.downcase
         description_lower = ri.old_description.downcase
 
-        # Check if ingredient name appears as a whole word
-        # Use word boundaries to avoid matching "Minze" in "Minzzweig"
-        ingredient_pattern = /\b#{Regexp.escape(ingredient_name)}\b/
-        ingredient_matches = description_lower.match?(ingredient_pattern)
+        ingredient_matches = false
 
-        # Also check plural name if available
-        if !ingredient_matches && ri.ingredient.plural_name.present?
-          plural_name = ri.ingredient.plural_name.downcase
-          plural_pattern = /\b#{Regexp.escape(plural_name)}\b/
-          ingredient_matches = description_lower.match?(plural_pattern)
+        # First check: if ingredient has defined aliases, check those
+        if INGREDIENT_ALIASES.key?(ingredient_name)
+          INGREDIENT_ALIASES[ingredient_name].each do |alias_name|
+            if description_lower.include?(alias_name)
+              ingredient_matches = true
+              break
+            end
+          end
+        end
+
+        # Second check: if no alias match, use word boundary matching
+        unless ingredient_matches
+          # Check if ingredient name appears as a whole word
+          # Use word boundaries to avoid matching "Minze" in "Minzzweig"
+          # Only use trailing \b if ingredient name ends with a word character
+          escaped_name = Regexp.escape(ingredient_name_lower)
+          trailing_boundary = ingredient_name_lower.match?(/\w$/) ? '\b' : ""
+          ingredient_pattern = /\b#{escaped_name}#{trailing_boundary}/
+          ingredient_matches = description_lower.match?(ingredient_pattern)
+
+          # Also check plural name if available
+          if !ingredient_matches && ri.ingredient.plural_name.present?
+            plural_name = ri.ingredient.plural_name.downcase
+            escaped_plural = Regexp.escape(plural_name)
+            plural_boundary = plural_name.match?(/\w$/) ? '\b' : ""
+            plural_pattern = /\b#{escaped_plural}#{plural_boundary}/
+            ingredient_matches = description_lower.match?(plural_pattern)
+          end
         end
 
         # Additional check: if description has parenthetical qualifiers that aren't in ingredient name,

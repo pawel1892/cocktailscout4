@@ -18,22 +18,23 @@ class RecipeIngredient < ApplicationRecord
 
   def formatted_amount
     return additional_info if additional_info.present? && amount.nil?
-    return nil unless amount && unit
+    return nil unless amount
 
-    # Format the amount (with fraction support for blank unit)
-    formatted = if unit.name == "x"
+    # Format the amount (with fraction support for ingredients without explicit unit)
+    if unit.nil?
+      # No unit (e.g., "1 Limette", "2 Orangen") - use fraction format
       format_fraction(amount)
     else
-      format_german_number(amount)
+      # Has unit - use German number format
+      formatted = format_german_number(amount)
+      unit_name = unit.display_name_for(amount)
+      "#{formatted}#{" " unless unit_name.empty?}#{unit_name}"
     end
-
-    unit_name = unit.display_name_for(amount)
-    "#{formatted}#{" " unless unit_name.empty?}#{unit_name}"
   end
 
   def formatted_ingredient_name
-    # Use plural form when amount > 1 and unit is blank
-    if unit&.name == "x" && amount && amount > 1 && ingredient.plural_name.present?
+    # Use plural form when amount > 1 and there's no explicit unit
+    if unit.nil? && amount && amount > 1 && ingredient.plural_name.present?
       ingredient.plural_name
     else
       ingredient.name

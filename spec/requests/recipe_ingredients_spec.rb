@@ -4,7 +4,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
   let(:recipe) { create(:recipe, slug: 'mojito') }
   let(:unit_cl) { Unit.find_or_create_by!(name: "cl") { |u| u.display_name = "cl"; u.plural_name = "cl"; u.category = "volume"; u.ml_ratio = 10.0; u.divisible = true } }
   let(:unit_piece) { Unit.find_or_create_by!(name: "piece") { |u| u.display_name = "Stück"; u.plural_name = "Stück"; u.category = "count"; u.ml_ratio = nil; u.divisible = false } }
-  let(:unit_blank) { Unit.find_or_create_by!(name: "x") { |u| u.display_name = ""; u.plural_name = ""; u.category = "count"; u.ml_ratio = nil; u.divisible = true } }
+  # No longer using unit_blank - ingredients without explicit units use nil
 
   let!(:ingredient_rum) { create(:ingredient, name: "Rum (weiss)") }
   let!(:ingredient_lime) { create(:ingredient, name: "Limette", plural_name: "Limetten") }
@@ -26,7 +26,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
       recipe: recipe,
       ingredient: ingredient_lime,
       amount: 1.0,
-      unit: unit_blank,
+      unit: nil,
       position: 2,
       is_scalable: true
     )
