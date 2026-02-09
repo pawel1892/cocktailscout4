@@ -1,4 +1,72 @@
 namespace :units_migration do
+  # Parse ingredient description - only handles certain cases (amount + unit)
+  def self.parse_ingredient_description(description)
+    return { is_certain: false } if description.blank?
+
+    # Normalize: handle German number format (comma → period)
+    normalized = description.gsub(",", ".")
+
+    # Special case: "halbe" (half) → 0.5
+    normalized = normalized.sub(/^halbe\s+/i, "0.5 ")
+
+    # Pattern: [number] [optional space] [unit] [ingredient] [(optional)]
+    # Examples: "4 cl Rum", "4cl Rum", "2 TL Zucker", "ein Spritzer", "1 Scheibe Zitrone"
+    # The l(?!\w) lookahead prevents matching "l" in "Limette"
+    # \s* allows optional space between number and unit
+    pattern = /^(\d+\.?\d*|ein|eine)\s*(cl|ml|l(?!\w)|TL|EL|Teelöffel|Esslöffel|Spritzer|Dash|Splash|Schuss|Barlöffel|Stück|Scheiben?|Blätter?|Zweige?)\b/i
+
+    match = normalized.match(pattern)
+    return { is_certain: false } unless match
+
+    amount_str = match[1]
+    unit_str = match[2]
+    remainder = normalized.sub(match[0], "").strip
+
+    # Convert "ein"/"eine" to 1
+    amount = amount_str.match?(/^ein/i) ? 1.0 : amount_str.to_f
+
+    # Extract additional info from parentheses: "Rum (braun)" → "braun"
+    additional_info = nil
+    if paren_match = remainder.match(/\(([^)]+)\)/)
+      additional_info = paren_match[1]
+    end
+
+    {
+      amount: amount,
+      unit: normalize_unit_name(unit_str),
+      additional_info: additional_info,
+      is_certain: true
+    }
+  end
+
+  # Normalize unit names to database format
+  def self.normalize_unit_name(unit_str)
+    # Handle plural forms
+    normalized = unit_str.downcase
+    normalized = "scheibe" if normalized.match?(/scheiben?/)
+    normalized = "blatt" if normalized.match?(/blätter?/)
+    normalized = "zweig" if normalized.match?(/zweige?/)
+
+    {
+      "cl" => "cl",
+      "ml" => "ml",
+      "l" => "l",
+      "tl" => "tl",
+      "teelöffel" => "tl",
+      "el" => "el",
+      "esslöffel" => "el",
+      "spritzer" => "spritzer",
+      "dash" => "spritzer",
+      "splash" => "splash",
+      "schuss" => "spritzer",
+      "barlöffel" => "barspoon",
+      "stück" => "piece",
+      "scheibe" => "slice",
+      "blatt" => "leaf",
+      "zweig" => "sprig"
+    }[normalized] || normalized
+  end
+
   desc "Run complete migration workflow (all tasks in correct order)"
   task full_migration: :environment do
     puts "\n" + "=" * 80
@@ -112,8 +180,6 @@ namespace :units_migration do
       Rake::Task["units_migration:backup_data"].invoke
     end
 
-    require_relative "../units_parser"
-
     puts "\n=== Conservative Units Migration ==="
     puts "Only converting unambiguous patterns...\n"
 
@@ -122,13 +188,66 @@ namespace :units_migration do
     errors = []
 
     RecipeIngredient.where.not(old_description: nil).find_each do |ri|
-      parsed = UnitsParser.parse(ri.old_description)
+      parsed = parse_ingredient_description(ri.old_description)
 
       if parsed[:is_certain]
         # Only update if parsing is unambiguous
         unit = Unit.find_by(name: parsed[:unit])
         unless unit
           errors << "Recipe #{ri.recipe_id}, Ingredient #{ri.ingredient_id}: Unknown unit '#{parsed[:unit]}' from description '#{ri.old_description}'"
+          next
+        end
+
+        # CRITICAL CHECK: Verify ingredient name appears in description
+        # This prevents migrating when description is more specific than ingredient name:
+        # - "Eier" vs "Eigelb" (different ingredient)
+        # - "Minze" vs "Minzzweig" (compound word, more specific)
+        # - "Rum" vs "Rum (braun)" (has qualifier, more specific)
+        ingredient_name = ri.ingredient.name.downcase
+        description_lower = ri.old_description.downcase
+
+        # Check if ingredient name appears as a whole word
+        # Use word boundaries to avoid matching "Minze" in "Minzzweig"
+        ingredient_pattern = /\b#{Regexp.escape(ingredient_name)}\b/
+        ingredient_matches = description_lower.match?(ingredient_pattern)
+
+        # Also check plural name if available
+        if !ingredient_matches && ri.ingredient.plural_name.present?
+          plural_name = ri.ingredient.plural_name.downcase
+          plural_pattern = /\b#{Regexp.escape(plural_name)}\b/
+          ingredient_matches = description_lower.match?(plural_pattern)
+        end
+
+        # Additional check: if description has parenthetical qualifiers that aren't in ingredient name,
+        # mark as uncertain (e.g., ingredient="Rum" but description="Rum (braun)")
+        if ingredient_matches && ri.old_description.include?("(")
+          # Description has a qualifier like "(braun)"
+          # Only proceed if the ingredient name also has that qualifier
+          unless ri.ingredient.name.include?("(")
+            # Ingredient name doesn't have the qualifier - mark as uncertain
+            ri.update_columns(
+              amount: nil,
+              unit_id: nil,
+              additional_info: nil,
+              needs_review: true,
+              description: nil
+            )
+            uncertain_count += 1
+            next
+          end
+        end
+
+        unless ingredient_matches
+          # Ingredient name doesn't match description - mark as uncertain
+          # Example: ingredient="Eier" but description="2 Eigelb"
+          ri.update_columns(
+            amount: nil,
+            unit_id: nil,
+            additional_info: nil,
+            needs_review: true,
+            description: nil
+          )
+          uncertain_count += 1
           next
         end
 
@@ -142,7 +261,6 @@ namespace :units_migration do
           amount: parsed[:amount],
           unit_id: unit.id,
           additional_info: additional_info,
-          is_garnish: parsed[:is_garnish],
           needs_review: false,
           description: nil
         )
@@ -153,7 +271,6 @@ namespace :units_migration do
           amount: nil,
           unit_id: nil,
           additional_info: nil,
-          is_garnish: parsed[:is_garnish] || false,
           needs_review: true,
           description: nil
         )
@@ -175,15 +292,13 @@ namespace :units_migration do
 
   desc "Check for potential parsing issues by comparing current state with re-parsing"
   task check_issues: :environment do
-    require_relative "../units_parser"
-
     puts "\n=== Checking for Potential Unit Parsing Issues ===\n"
 
     issues = []
 
     # Check for records where old_description doesn't match current parsing
     RecipeIngredient.where.not(old_description: nil).find_each do |ri|
-      parsed = UnitsParser.parse(ri.old_description)
+      parsed = parse_ingredient_description(ri.old_description)
 
       current_unit = ri.unit&.name
       expected_unit = parsed[:unit]
@@ -240,9 +355,9 @@ namespace :units_migration do
       puts "  #{unit_name}: #{count}"
     end
 
-    # Garnishes without unit
-    garnish_count = RecipeIngredient.where(is_garnish: true, unit_id: nil).count
-    puts "\nGarnishes without unit_id: #{garnish_count}"
+    # Non-scalable ingredients without unit
+    non_scalable_count = RecipeIngredient.where(is_scalable: false, unit_id: nil).count
+    puts "\nNon-scalable ingredients without unit_id: #{non_scalable_count}"
 
     # Sample comparison
     puts "\n\nSample comparison (first 20 records):"
@@ -294,6 +409,6 @@ namespace :units_migration do
       puts "\n... and #{uncertain.count - 20} more"
     end
 
-    puts "\nTo fix these, update manually or improve UnitsParser and re-run migration."
+    puts "\nTo fix these, update manually or improve parsing logic and re-run migration."
   end
 end

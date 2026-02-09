@@ -17,7 +17,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
       amount: 4.0,
       unit: unit_cl,
       position: 1,
-      is_garnish: false
+      is_scalable: true
     )
   end
 
@@ -28,7 +28,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
       amount: 1.0,
       unit: unit_blank,
       position: 2,
-      is_garnish: false
+      is_scalable: true
     )
   end
 
@@ -39,7 +39,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
       amount: 1.0,
       unit: unit_piece,
       position: 3,
-      is_garnish: true
+      is_scalable: false
     )
   end
 
@@ -60,7 +60,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(rum["amount"]).to eq("4.0")
         expect(rum["unit_name"]).to eq("cl")
         expect(rum["formatted_amount"]).to eq("4 cl")
-        expect(rum["is_garnish"]).to be false
+        expect(rum["is_scalable"]).to be true
       end
 
       it "returns correct ingredient structure" do
@@ -77,7 +77,8 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(ingredient).to have_key("ingredient_plural_name")
         expect(ingredient).to have_key("formatted_amount")
         expect(ingredient).to have_key("additional_info")
-        expect(ingredient).to have_key("is_garnish")
+        expect(ingredient).to have_key("is_scalable")
+        expect(ingredient).to have_key("is_optional")
       end
 
       it "returns alcohol_info with total volume and alcohol content" do
@@ -113,7 +114,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(lime["amount"]).to eq("2.0")
       end
 
-      it "does not scale garnishes" do
+      it "does not scale non-scalable ingredients" do
         get recipe_recipe_ingredients_path(recipe_slug: recipe.slug),
             params: { scale: 2 },
             headers: { "Accept" => "application/json" }
@@ -122,7 +123,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         mint = json["ingredients"].find { |i| i["ingredient_name"] == "Minze" }
 
         expect(mint["amount"]).to eq("1.0")
-        expect(mint["is_garnish"]).to be true
+        expect(mint["is_scalable"]).to be false
       end
 
       it "uses plural ingredient names when amount > 1 with blank unit" do
@@ -217,7 +218,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
           unit: unit_cl,
           position: 4,
           additional_info: "braun",
-          is_garnish: false
+          is_scalable: true
         )
       end
 
@@ -253,7 +254,7 @@ RSpec.describe "Recipe Ingredients API", type: :request do
           amount: 3.5,
           unit: unit_cl,
           position: 5,
-          is_garnish: false
+          is_scalable: true
         )
       end
 

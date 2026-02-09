@@ -98,23 +98,28 @@ RSpec.describe RecipeIngredient, type: :model do
   end
 
   describe "#scalable?" do
-    it "returns true when amount, unit, and not needs_review" do
-      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: false)
+    it "returns true when amount, unit, is_scalable, and not needs_review" do
+      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: false, is_scalable: true)
       expect(ri.scalable?).to be true
     end
 
     it "returns false when needs_review is true" do
-      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: true)
+      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: true, is_scalable: true)
+      expect(ri.scalable?).to be false
+    end
+
+    it "returns false when is_scalable is false" do
+      ri = RecipeIngredient.new(amount: 4.0, unit: cl_unit, needs_review: false, is_scalable: false)
       expect(ri.scalable?).to be false
     end
 
     it "returns false when amount is nil" do
-      ri = RecipeIngredient.new(amount: nil, unit: cl_unit, needs_review: false)
+      ri = RecipeIngredient.new(amount: nil, unit: cl_unit, needs_review: false, is_scalable: true)
       expect(ri.scalable?).to be false
     end
 
     it "returns false when unit is nil" do
-      ri = RecipeIngredient.new(amount: 4.0, unit: nil, needs_review: false)
+      ri = RecipeIngredient.new(amount: 4.0, unit: nil, needs_review: false, is_scalable: true)
       expect(ri.scalable?).to be false
     end
   end
@@ -155,10 +160,16 @@ RSpec.describe RecipeIngredient, type: :model do
       expect(scaled.amount).to eq(0.5)
     end
 
-    it "does not scale garnishes" do
-      ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 2.0, unit: blank_unit, is_garnish: true)
+    it "does not scale non-scalable ingredients" do
+      ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 2.0, unit: blank_unit, is_scalable: false)
       scaled = ri.scale(2)
       expect(scaled.amount).to eq(2.0)
+    end
+
+    it "scales scalable ingredients normally" do
+      ri = create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 2.0, unit: blank_unit, is_scalable: true)
+      scaled = ri.scale(2)
+      expect(scaled.amount).to eq(4.0)
     end
 
     it "does not scale ingredients that need review" do

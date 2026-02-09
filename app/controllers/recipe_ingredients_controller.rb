@@ -16,7 +16,8 @@ class RecipeIngredientsController < ApplicationController
         ingredient_plural_name: ri.ingredient.plural_name,
         formatted_amount: scaled.formatted_amount,
         additional_info: ri.additional_info,
-        is_garnish: ri.is_garnish,
+        is_scalable: ri.is_scalable,
+        is_optional: ri.is_optional,
         needs_review: ri.needs_review,
         old_description: ri.old_description
       }

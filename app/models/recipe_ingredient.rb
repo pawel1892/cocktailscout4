@@ -42,7 +42,7 @@ class RecipeIngredient < ApplicationRecord
 
   # Check if ingredient can be scaled
   def scalable?
-    amount.present? && unit.present? && !needs_review
+    amount.present? && unit.present? && !needs_review && is_scalable
   end
 
   # Get display text (structured or fallback to description)
@@ -56,7 +56,7 @@ class RecipeIngredient < ApplicationRecord
 
   def scale(factor)
     return self if amount.nil?
-    return self if is_garnish?  # Garnishes don't scale!
+    return self unless is_scalable  # Non-scalable ingredients don't scale!
     return self if needs_review  # Don't scale uncertain ingredients
 
     scaled_amount = amount * factor
