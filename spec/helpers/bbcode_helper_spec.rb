@@ -65,5 +65,64 @@ RSpec.describe BbcodeHelper, type: :helper do
     it "handles newlines" do
       expect(helper.render_bbcode("line 1\nline 2")).to include("<br />")
     end
+
+    describe "post links" do
+      it "renders post link with custom text" do
+        result = helper.render_bbcode("[post=123]My Custom Link[/post]")
+        expect(result).to include('href="/cocktailforum/beitrag/123"')
+        expect(result).to include('class="link-underline"')
+        expect(result).to include('>My Custom Link</a>')
+        expect(result).not_to include('target="_blank"')
+        expect(result).not_to include('rel="nofollow"')
+      end
+
+      it "renders post link with auto-generated text" do
+        result = helper.render_bbcode("[post=456][/post]")
+        expect(result).to include('href="/cocktailforum/beitrag/456"')
+        expect(result).to include('>Beitrag #456</a>')
+      end
+
+      it "does not match invalid post IDs" do
+        result = helper.render_bbcode("[post=abc]Invalid[/post]")
+        expect(result).to include('[post=abc]Invalid[/post]')
+      end
+    end
+
+    describe "thread links" do
+      let!(:thread) { create(:forum_thread, slug: "test-thread", title: "Test Thread Title") }
+
+      it "renders thread link with custom text" do
+        result = helper.render_bbcode("[thread=test-thread]Custom Thread Link[/thread]")
+        expect(result).to include('href="/cocktailforum/thema/test-thread"')
+        expect(result).to include('class="link-underline"')
+        expect(result).to include('>Custom Thread Link</a>')
+        expect(result).not_to include('target="_blank"')
+      end
+
+      it "renders thread link with auto-generated text from title" do
+        result = helper.render_bbcode("[thread=test-thread][/thread]")
+        expect(result).to include('href="/cocktailforum/thema/test-thread"')
+        expect(result).to include('>Test Thread Title</a>')
+      end
+
+      it "falls back to slug if thread not found" do
+        result = helper.render_bbcode("[thread=nonexistent][/thread]")
+        expect(result).to include('href="/cocktailforum/thema/nonexistent"')
+        expect(result).to include('>nonexistent</a>')
+      end
+
+      it "does not match invalid slugs" do
+        result = helper.render_bbcode("[thread=Invalid_Slug]Text[/thread]")
+        expect(result).to include('[thread=Invalid_Slug]Text[/thread]')
+      end
+    end
+
+    describe "mixed with other BBCode" do
+      it "renders post links alongside other formatting" do
+        result = helper.render_bbcode("[b]Bold[/b] [post=123]Link[/post]")
+        expect(result).to include('<strong>Bold</strong>')
+        expect(result).to include('href="/cocktailforum/beitrag/123"')
+      end
+    end
   end
 end
