@@ -42,6 +42,61 @@ RSpec.describe "ForumPosts", type: :request do
     end
   end
 
+  describe "GET /cocktailforum/beitrag/:id" do
+    context "with existing post on page 1" do
+      it "redirects to correct thread page with anchor" do
+        get show_forum_post_path(forum_post)
+
+        expect(response).to have_http_status(:moved_permanently)
+        expect(response).to redirect_to(forum_thread_path(forum_thread, page: 1, anchor: "post-#{forum_post.id}"))
+      end
+    end
+
+    context "with post on page 2" do
+      it "calculates correct page for post beyond page 1" do
+        # Create 20 posts to fill page 1 (forum_post is first)
+        19.times { create(:forum_post, forum_thread: forum_thread, created_at: forum_post.created_at + 1.minute) }
+
+        # Create post on page 2
+        post_on_page_2 = create(:forum_post, forum_thread: forum_thread, created_at: forum_post.created_at + 30.minutes)
+
+        get show_forum_post_path(post_on_page_2)
+
+        expect(response).to have_http_status(:moved_permanently)
+        expect(response).to redirect_to(forum_thread_path(forum_thread, page: 2, anchor: "post-#{post_on_page_2.id}"))
+      end
+    end
+
+    context "with deleted post" do
+      it "returns 404" do
+        deleted_post = nil
+        # Use unscoped to create a deleted post that bypasses default scope
+        ForumPost.unscoped do
+          deleted_post = create(:forum_post, forum_thread: forum_thread, user: user, deleted: true)
+        end
+
+        get show_forum_post_path(deleted_post)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "with non-existent post" do
+      it "returns 404" do
+        get show_forum_post_path(id: 999999)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "authentication" do
+      it "does not require authentication for public posts" do
+        get show_forum_post_path(forum_post)
+
+        expect(response).to have_http_status(:moved_permanently)
+        expect(response).to redirect_to(forum_thread_path(forum_thread, page: 1, anchor: "post-#{forum_post.id}"))
+      end
+    end
+  end
+
   describe "POST /cocktailforum/thema/:thread_id/beitrag" do
     context "when authenticated" do
       before { sign_in(user) }

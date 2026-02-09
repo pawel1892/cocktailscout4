@@ -3,7 +3,7 @@
   <div class="card-header flex justify-between items-center py-2 px-4 bg-gray-50 text-xs text-gray-500">
     <div class="flex items-center gap-2">
       <span class="font-medium"><%= forum_post.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
-      <a href="#post-<%= forum_post.id %>" class="link hover:underline">#<%= forum_post.id %></a>
+      <a href="<%= show_forum_post_path(forum_post) %>" class="link hover:underline" title="Permalink zu diesem Beitrag">#<%= forum_post.id %></a>
     </div>
     <div class="flex items-center gap-3">
       <% if Current.user %>

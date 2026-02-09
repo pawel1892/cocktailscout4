@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   get "cocktailforum/thema/:thread_id/beitrag/neu", to: "forum_posts#new", as: :new_forum_post
   post "cocktailforum/thema/:thread_id/beitrag", to: "forum_posts#create", as: :forum_posts
 
+  get "cocktailforum/beitrag/:id", to: "forum_posts#show", as: :show_forum_post
   get "cocktailforum/beitrag/:id/bearbeiten", to: "forum_posts#edit", as: :edit_forum_post
   patch "cocktailforum/beitrag/:id", to: "forum_posts#update", as: :forum_post
   delete "cocktailforum/beitrag/:id", to: "forum_posts#destroy"

@@ -1,10 +1,23 @@
 class ForumPostsController < ApplicationController
-  # Standard CRUD actions require auth
+  # Show action is public - it redirects to the thread which is also public
+  allow_unauthenticated_access only: [ :show ]
 
-  before_action :set_forum_post, only: %i[edit update destroy]
+  before_action :set_forum_post, only: %i[show edit update destroy]
   before_action :authorize_edit!, only: %i[edit update]
   before_action :authorize_delete!, only: %i[destroy]
   before_action :ensure_thread_not_locked, only: %i[create]
+
+  def show
+    # @forum_post is set by before_action, but we need to eager load the thread
+    @forum_post = ForumPost.includes(:forum_thread).find(params[:id])
+    page = @forum_post.page
+
+    redirect_to forum_thread_path(
+      @forum_post.forum_thread,
+      page: page,
+      anchor: "post-#{@forum_post.id}"
+    ), status: 301
+  end
 
   def new
     add_breadcrumb "Community", community_path
