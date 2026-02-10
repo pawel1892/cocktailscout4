@@ -10,6 +10,29 @@ RSpec.describe ForumPost, type: :model do
     it { is_expected.to validate_presence_of(:body) }
   end
 
+  describe "public_id generation" do
+    let(:forum_thread) { create(:forum_thread) }
+
+    it "automatically generates a public_id on creation" do
+      post = create(:forum_post, forum_thread: forum_thread)
+      expect(post.public_id).to be_present
+      expect(post.public_id).to match(/^[a-zA-Z0-9]{8}$/)
+    end
+
+    it "generates unique public_ids" do
+      post1 = create(:forum_post, forum_thread: forum_thread)
+      post2 = create(:forum_post, forum_thread: forum_thread)
+      expect(post1.public_id).not_to eq(post2.public_id)
+    end
+
+    it "does not change public_id on update" do
+      post = create(:forum_post, forum_thread: forum_thread)
+      original_public_id = post.public_id
+      post.update(body: "Updated body")
+      expect(post.public_id).to eq(original_public_id)
+    end
+  end
+
   describe "#page" do
     let(:forum_thread) { create(:forum_thread) }
     let!(:post1) { create(:forum_post, forum_thread: forum_thread, created_at: 5.hours.ago) }

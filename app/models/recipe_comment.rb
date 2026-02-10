@@ -1,5 +1,7 @@
 class RecipeComment < ApplicationRecord
   include Reportable
+  has_paper_trail limit: 10
+
   belongs_to :user, optional: true
   belongs_to :recipe
   belongs_to :last_editor, class_name: "User", optional: true
