@@ -72,3 +72,5 @@ gem "resend", "~> 1.0"
 
 gem "meta-tags", "~> 2.22"
 gem "sitemap_generator", "~> 6.3"
+
+gem "paper_trail", "~> 17.0"
