@@ -60,7 +60,7 @@
         <div><strong>Link:</strong> [url=https://example.com]Link-Text[/url]</div>
         <div><strong>Bild:</strong> [img]https://example.com/bild.jpg[/img]</div>
         <div><strong>Zitat:</strong> [quote]Text[/quote] oder [quote=Name]Text[/quote]</div>
-        <div><strong>Beitrag verlinken:</strong> [post=abc123xy]Text[/post] oder [post=abc123xy][/post] (zeigt "Beitrag #abc123xy")</div>
+        <div><strong>Beitrag verlinken:</strong> [post=abc123xy]Text[/post] oder [post=#abc123xy][/post] (mit oder ohne #)</div>
         <div><strong>Thema verlinken:</strong> [thread=thema-slug]Text[/thread] oder [thread=thema-slug][/thread] (zeigt Thema-Titel)</div>
       </div>
     </div>
