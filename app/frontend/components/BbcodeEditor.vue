@@ -60,7 +60,7 @@
         <div><strong>Link:</strong> [url=https://example.com]Link-Text[/url]</div>
         <div><strong>Bild:</strong> [img]https://example.com/bild.jpg[/img]</div>
         <div><strong>Zitat:</strong> [quote]Text[/quote] oder [quote=Name]Text[/quote]</div>
-        <div><strong>Beitrag verlinken:</strong> [post=123]Text[/post] oder [post=123][/post] (zeigt "Beitrag #123")</div>
+        <div><strong>Beitrag verlinken:</strong> [post=abc123xy]Text[/post] oder [post=abc123xy][/post] (zeigt "Beitrag #abc123xy")</div>
         <div><strong>Thema verlinken:</strong> [thread=thema-slug]Text[/thread] oder [thread=thema-slug][/thread] (zeigt Thema-Titel)</div>
       </div>
     </div>
@@ -140,10 +140,10 @@ const insertImage = () => {
 
 const insertPost = () => {
   const postId = prompt("Bitte gib die Beitrags-ID ein:", "")
-  if (postId && /^\d+$/.test(postId.trim())) {
+  if (postId && /^[a-zA-Z0-9]+$/.test(postId.trim())) {
     wrapText(`[post=${postId.trim()}]`, "[/post]")
   } else if (postId) {
-    alert("Bitte gib eine gültige Beitrags-ID (nur Zahlen) ein.")
+    alert("Bitte gib eine gültige Beitrags-ID ein (z.B. abc123xy).")
   }
 }
 
