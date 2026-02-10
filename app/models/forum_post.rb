@@ -1,7 +1,7 @@
 class ForumPost < ApplicationRecord
   include Reportable
   include Visitable
-  has_paper_trail limit: 20, ignore: [ :deleted, :visits_count ]
+  has_paper_trail limit: 20, ignore: [ :visits_count ]
 
   belongs_to :forum_thread, touch: true
   belongs_to :user, optional: true
