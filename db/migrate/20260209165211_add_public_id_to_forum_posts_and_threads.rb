@@ -3,8 +3,13 @@ class AddPublicIdToForumPostsAndThreads < ActiveRecord::Migration[8.1]
     # Add public_id to forum_posts (after foreign keys, before data columns)
     # Note: forum_threads already use slugs as stable identifiers
     # Start as nullable to allow backfilling existing records
-    add_column :forum_posts, :public_id, :string, limit: 8, after: :forum_thread_id
-    add_index :forum_posts, :public_id, unique: true
+    unless column_exists?(:forum_posts, :public_id)
+      add_column :forum_posts, :public_id, :string, limit: 8, after: :forum_thread_id
+    end
+
+    unless index_exists?(:forum_posts, :public_id, unique: true)
+      add_index :forum_posts, :public_id, unique: true
+    end
 
     # Backfill existing records
     reversible do |dir|
@@ -13,8 +18,10 @@ class AddPublicIdToForumPostsAndThreads < ActiveRecord::Migration[8.1]
       end
     end
 
-    # Make public_id NOT NULL after backfilling
-    change_column_null :forum_posts, :public_id, false
+    # Make public_id NOT NULL after backfilling (only if not already set)
+    if column_exists?(:forum_posts, :public_id)
+      change_column_null :forum_posts, :public_id, false
+    end
   end
 
   private
