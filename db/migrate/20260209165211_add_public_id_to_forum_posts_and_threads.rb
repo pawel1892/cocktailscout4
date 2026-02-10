@@ -18,8 +18,9 @@ class AddPublicIdToForumPostsAndThreads < ActiveRecord::Migration[8.1]
       end
     end
 
-    # Make public_id NOT NULL after backfilling (only if not already set)
-    if column_exists?(:forum_posts, :public_id)
+    # Make public_id NOT NULL after backfilling (only if currently nullable)
+    if column_exists?(:forum_posts, :public_id) &&
+       connection.columns(:forum_posts).find { |c| c.name == "public_id" }&.null
       change_column_null :forum_posts, :public_id, false
     end
   end
@@ -27,8 +28,8 @@ class AddPublicIdToForumPostsAndThreads < ActiveRecord::Migration[8.1]
   private
 
   def backfill_public_ids
-    # Backfill forum_posts
-    ForumPost.unscoped.find_each do |post|
+    # Backfill forum_posts that don't already have a public_id
+    ForumPost.unscoped.where(public_id: nil).find_each do |post|
       post.update_column(:public_id, generate_public_id)
     end
   end
