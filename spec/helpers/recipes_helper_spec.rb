@@ -175,4 +175,89 @@ RSpec.describe RecipesHelper, type: :helper do
       expect(helper.instance_variable_get(:@tag_cloud_stats)).to be_present
     end
   end
+
+  describe "Authorization helpers" do
+    let(:owner) { create(:user) }
+    let(:moderator) { create(:user, :recipe_moderator) }
+    let(:other_user) { create(:user) }
+    let(:published_recipe) { create(:recipe, user: owner, is_public: true) }
+    let(:draft_recipe) { create(:recipe, :draft, user: owner) }
+
+    describe "#can_view_recipe?" do
+      context "when recipe is published" do
+        it "allows anyone to view" do
+          [ nil, owner, moderator, other_user ].each do |user|
+            allow(Current).to receive(:user).and_return(user)
+            expect(helper.can_view_recipe?(published_recipe)).to be true
+          end
+        end
+      end
+
+      context "when recipe is a draft" do
+        it "allows owner to view" do
+          allow(Current).to receive(:user).and_return(owner)
+          expect(helper.can_view_recipe?(draft_recipe)).to be true
+        end
+
+        it "allows moderators to view" do
+          allow(Current).to receive(:user).and_return(moderator)
+          expect(helper.can_view_recipe?(draft_recipe)).to be true
+        end
+
+        it "denies other users" do
+          allow(Current).to receive(:user).and_return(other_user)
+          expect(helper.can_view_recipe?(draft_recipe)).to be false
+        end
+
+        it "denies anonymous users" do
+          allow(Current).to receive(:user).and_return(nil)
+          expect(helper.can_view_recipe?(draft_recipe)).to be false
+        end
+      end
+    end
+
+    describe "#can_edit_recipe?" do
+      it "allows owner to edit" do
+        allow(Current).to receive(:user).and_return(owner)
+        expect(helper.can_edit_recipe?(published_recipe)).to be true
+      end
+
+      it "allows moderators to edit" do
+        allow(Current).to receive(:user).and_return(moderator)
+        expect(helper.can_edit_recipe?(published_recipe)).to be true
+      end
+
+      it "denies other users" do
+        allow(Current).to receive(:user).and_return(other_user)
+        expect(helper.can_edit_recipe?(published_recipe)).to be false
+      end
+
+      it "denies anonymous users" do
+        allow(Current).to receive(:user).and_return(nil)
+        expect(helper.can_edit_recipe?(published_recipe)).to be false
+      end
+    end
+
+    describe "#can_delete_recipe?" do
+      it "allows moderators to delete" do
+        allow(Current).to receive(:user).and_return(moderator)
+        expect(helper.can_delete_recipe?(published_recipe)).to be true
+      end
+
+      it "denies owner from deleting" do
+        allow(Current).to receive(:user).and_return(owner)
+        expect(helper.can_delete_recipe?(published_recipe)).to be false
+      end
+
+      it "denies other users" do
+        allow(Current).to receive(:user).and_return(other_user)
+        expect(helper.can_delete_recipe?(published_recipe)).to be false
+      end
+
+      it "denies anonymous users" do
+        allow(Current).to receive(:user).and_return(nil)
+        expect(helper.can_delete_recipe?(published_recipe)).to be false
+      end
+    end
+  end
 end

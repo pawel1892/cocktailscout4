@@ -80,4 +80,23 @@ module RecipesHelper
 
     "tag-level-#{level}"
   end
+
+  # Authorization helpers
+  def can_view_recipe?(recipe)
+    return true if recipe.is_public  # Published recipes visible to all
+    return false unless Current.user
+    return true if recipe.user == Current.user  # Owner can see own drafts
+    Current.user.can_moderate_recipe?  # Moderators can see all drafts
+  end
+
+  def can_edit_recipe?(recipe)
+    return false unless Current.user
+    return true if recipe.user == Current.user
+    can_delete_recipe?(recipe)
+  end
+
+  def can_delete_recipe?(recipe)
+    return false unless Current.user
+    Current.user.can_moderate_recipe?
+  end
 end

@@ -10,7 +10,7 @@ class RecipeCommentsController < ApplicationController
       :tags,
       recipe_ingredients: :ingredient,
       approved_recipe_images: [ :user, { image_attachment: :blob } ]
-    ).find_by!(slug: params[:id])
+    ).find_by!(slug: params[:slug])
 
     # Ensure user is logged in for create (if not handled by router/view)
     unless Current.user

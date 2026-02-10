@@ -21,9 +21,10 @@ Rails.application.routes.draw do
 
   resources :user_profiles, only: [ :show, :update ]
   resources :users, path: "benutzer", only: [ :index ]
-  resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
+  resources :recipes, path: "rezepte", param: :slug do
     member do
       post :comment, to: "recipe_comments#create"
+      patch :publish
     end
     resources :recipe_ingredients, only: [ :index ], path: "zutaten"
   end
@@ -45,6 +46,9 @@ Rails.application.routes.draw do
 
   # Ingredients API (for search)
   resources :ingredients, only: [ :index ]
+
+  # Units API (for recipe form)
+  resources :units, only: [ :index ]
 
   # Ingredient Collections API
   resources :ingredient_collections, only: [ :index, :show, :create, :update, :destroy ] do

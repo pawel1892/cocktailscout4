@@ -607,6 +607,9 @@ namespace :units_migration do
 
     # Check for records where old_description doesn't match current parsing
     RecipeIngredient.where.not(old_description: nil).find_each do |ri|
+      # Skip ingredients from deleted recipes (recipe will be nil due to default_scope)
+      next if ri.recipe.nil?
+
       parsed = parse_ingredient_description(ri.old_description)
 
       current_unit = ri.unit&.name
@@ -711,6 +714,8 @@ namespace :units_migration do
     puts "\nSample (first 20):"
 
     uncertain.limit(20).each do |ri|
+      # Skip ingredients from deleted recipes
+      next if ri.recipe.nil?
       puts "  [#{ri.id}] #{ri.recipe.title}: #{ri.old_description}"
     end
 

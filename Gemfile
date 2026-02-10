@@ -74,3 +74,5 @@ gem "meta-tags", "~> 2.22"
 gem "sitemap_generator", "~> 6.3"
 
 gem "paper_trail", "~> 17.0"
+
+gem "redcarpet", "~> 3.6"

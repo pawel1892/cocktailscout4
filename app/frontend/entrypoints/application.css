@@ -196,6 +196,24 @@ nav.pagy a[role="separator"] {
   @apply border-none bg-transparent px-1 cursor-default text-gray-400;
 }
 
+/* Markdown prose styling */
+.prose-cs {
+  @apply text-gray-800 leading-relaxed;
+}
+.prose-cs h1 { @apply text-2xl font-bold mt-6 mb-4; }
+.prose-cs h2 { @apply text-xl font-bold mt-5 mb-3; }
+.prose-cs h3 { @apply text-lg font-bold mt-4 mb-2; }
+.prose-cs p { @apply mb-4; }
+.prose-cs ul { @apply list-disc list-inside mb-4; }
+.prose-cs ol { @apply list-decimal list-inside mb-4; }
+.prose-cs li { @apply mb-1; }
+.prose-cs a { @apply text-cs-gold underline hover:text-cs-dark-red; }
+.prose-cs code { @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono; }
+.prose-cs pre { @apply bg-gray-100 p-4 rounded mb-4 overflow-x-auto; }
+.prose-cs blockquote { @apply border-l-4 border-cs-gold pl-4 italic mb-4; }
+.prose-cs strong { @apply font-bold; }
+.prose-cs em { @apply italic; }
+
 /* User Ranks */
 .rank-0-color { color: #9A9A1E; }
 .rank-1-color { color: #4D9A34; }

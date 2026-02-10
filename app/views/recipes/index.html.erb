@@ -4,8 +4,15 @@
 
 <div class="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
   <h1 class="text-3xl font-bold">Rezepte</h1>
-  <div class="text-sm text-gray-500">
-    <%= @pagy.count %> <%= Recipe.model_name.human(count: @pagy.count) %> gefunden
+  <div class="flex items-center gap-3">
+    <% if Current.user&.can_moderate_recipe? %>
+      <%= link_to new_recipe_path, class: "text-gray-400 hover:text-cs-gold transition-colors", title: "Neues Rezept erstellen" do %>
+        <i class="fas fa-plus"></i>
+      <% end %>
+    <% end %>
+    <div class="text-sm text-gray-500">
+      <%= @pagy.count %> <%= Recipe.model_name.human(count: @pagy.count) %> gefunden
+    </div>
   </div>
 </div>
 

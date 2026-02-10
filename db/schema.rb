@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_10_151116) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -225,6 +225,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
     t.decimal "average_rating", precision: 3, scale: 1, default: "0.0"
     t.datetime "created_at", null: false
     t.text "description"
+    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_public", default: false, null: false
     t.integer "old_id"
     t.integer "ratings_count", default: 0
     t.string "slug"
@@ -234,6 +236,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
     t.bigint "updated_by_id"
     t.bigint "user_id", null: false
     t.integer "visits_count", default: 0
+    t.index ["is_deleted"], name: "index_recipes_on_is_deleted"
+    t.index ["is_public"], name: "index_recipes_on_is_public"
     t.index ["old_id"], name: "index_recipes_on_old_id"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
     t.index ["title"], name: "index_recipes_on_title", type: :fulltext

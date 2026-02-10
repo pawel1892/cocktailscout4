@@ -195,6 +195,101 @@ RSpec.describe Recipe, type: :model do
         expect(result1.pluck(:id).sort).to eq(result2.pluck(:id).sort)
       end
     end
+
+    describe "visibility scopes" do
+      let!(:published_recipe) { create(:recipe, is_public: true, is_deleted: false) }
+      let!(:draft_recipe) { create(:recipe, :draft) }
+      let!(:deleted_recipe) { create(:recipe, :deleted) }
+      let!(:deleted_draft) { create(:recipe, is_public: false, is_deleted: true) }
+
+      describe ".published" do
+        it "returns only published recipes" do
+          expect(Recipe.published).to include(published_recipe)
+          expect(Recipe.published).not_to include(draft_recipe, deleted_recipe, deleted_draft)
+        end
+      end
+
+      describe ".not_deleted" do
+        it "returns only non-deleted recipes" do
+          # Use unscoped to bypass default scope
+          expect(Recipe.unscoped.not_deleted).to include(published_recipe, draft_recipe)
+          expect(Recipe.unscoped.not_deleted).not_to include(deleted_recipe, deleted_draft)
+        end
+      end
+
+      describe ".visible" do
+        it "returns only published and non-deleted recipes" do
+          expect(Recipe.visible).to include(published_recipe)
+          expect(Recipe.visible).not_to include(draft_recipe, deleted_recipe, deleted_draft)
+        end
+      end
+
+      describe ".drafts" do
+        it "returns only draft recipes" do
+          expect(Recipe.drafts).to include(draft_recipe)
+          expect(Recipe.drafts).not_to include(published_recipe, deleted_recipe)
+        end
+      end
+
+      describe "default scope" do
+        it "excludes deleted recipes by default" do
+          expect(Recipe.all).to include(published_recipe, draft_recipe)
+          expect(Recipe.all).not_to include(deleted_recipe, deleted_draft)
+        end
+
+        it "can be bypassed with unscoped" do
+          expect(Recipe.unscoped.all).to include(published_recipe, draft_recipe, deleted_recipe, deleted_draft)
+        end
+      end
+    end
+  end
+
+  describe "Draft and publish methods" do
+    let(:recipe) { create(:recipe, :draft) }
+
+    describe "#draft?" do
+      it "returns true for draft recipes" do
+        expect(recipe.draft?).to be true
+      end
+
+      it "returns false for published recipes" do
+        recipe.update!(is_public: true)
+        expect(recipe.draft?).to be false
+      end
+    end
+
+    describe "#publish!" do
+      it "publishes a draft recipe" do
+        expect {
+          recipe.publish!
+        }.to change { recipe.reload.is_public }.from(false).to(true)
+      end
+
+      it "makes the recipe visible" do
+        recipe.publish!
+        expect(Recipe.visible).to include(recipe)
+      end
+    end
+
+    describe "#soft_delete!" do
+      let(:published_recipe) { create(:recipe) }
+
+      it "marks recipe as deleted" do
+        expect {
+          published_recipe.soft_delete!
+        }.to change { published_recipe.reload.is_deleted }.from(false).to(true)
+      end
+
+      it "removes recipe from default scope" do
+        published_recipe.soft_delete!
+        expect(Recipe.all).not_to include(published_recipe)
+      end
+
+      it "can still be accessed with unscoped" do
+        published_recipe.soft_delete!
+        expect(Recipe.unscoped.find(published_recipe.id)).to eq(published_recipe)
+      end
+    end
   end
 
   describe "Alcohol calculations" do

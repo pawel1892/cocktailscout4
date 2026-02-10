@@ -20,6 +20,9 @@ const components = {
   FavoriteToggle: () => import('../components/FavoriteToggle.vue'),
   ContentReportModal: () => import('../components/ContentReportModal.vue'),
   RecipeScaling: () => import('../components/RecipeScaling.vue'),
+  RecipeForm: () => import('../components/RecipeForm.vue'),
+  IngredientAutocomplete: () => import('../components/IngredientAutocomplete.vue'),
+  MarkdownEditor: () => import('../components/MarkdownEditor.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
