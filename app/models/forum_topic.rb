@@ -1,4 +1,6 @@
 class ForumTopic < ApplicationRecord
+  has_paper_trail limit: 10
+
   has_many :forum_threads
 
   validates :name, presence: true

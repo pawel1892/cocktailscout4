@@ -1,5 +1,7 @@
 class ForumThread < ApplicationRecord
   include Visitable
+  has_paper_trail limit: 10, ignore: [ :visits_count ]
+
   belongs_to :forum_topic, touch: true
   belongs_to :user, optional: true
 
