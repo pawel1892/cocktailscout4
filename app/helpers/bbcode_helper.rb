@@ -60,6 +60,35 @@ module BbcodeHelper
     t.gsub!(/\[url=(.*?)\](.*?)\[\/url\]/mi) { "<a href=\"#{Regexp.last_match(1)}\" class=\"link-underline\" target=\"_blank\" rel=\"nofollow\">#{Regexp.last_match(2)}</a>" }
     t.gsub!(/\[url\](.*?)\[\/url\]/mi) { "<a href=\"#{Regexp.last_match(1)}\" class=\"link-underline\" target=\"_blank\" rel=\"nofollow\">#{Regexp.last_match(1)}</a>" }
 
+    # Post links - [post=public_id]text[/post]
+    t.gsub!(/\[post=([a-zA-Z0-9]+)\](.*?)\[\/post\]/mi) do
+      public_id = Regexp.last_match(1)
+      link_text = Regexp.last_match(2)
+
+      # If no custom text provided, generate default
+      link_text = "Beitrag ##{public_id}" if link_text.blank?
+
+      "<a href=\"#{show_forum_post_path(public_id)}\" " \
+      "class=\"link-underline\" " \
+      "title=\"Zum Beitrag\">#{link_text}</a>"
+    end
+
+    # Thread links - [thread=slug]text[/thread]
+    t.gsub!(/\[thread=([a-z0-9\-]+)\](.*?)\[\/thread\]/mi) do
+      thread_slug = Regexp.last_match(1)
+      link_text = Regexp.last_match(2)
+
+      # If no custom text provided, lookup thread title
+      if link_text.blank?
+        thread = ForumThread.find_by(slug: thread_slug)
+        link_text = thread&.title || thread_slug
+      end
+
+      "<a href=\"#{forum_thread_path(thread_slug)}\" " \
+      "class=\"link-underline\" " \
+      "title=\"Zum Thema: #{thread_slug}\">#{link_text}</a>"
+    end
+
     # Image
     t.gsub!(/\[img\](.*?)\[\/img\]/mi) { "<img src=\"#{Regexp.last_match(1)}\" class=\"max-w-full h-auto rounded my-2\" />" }
 

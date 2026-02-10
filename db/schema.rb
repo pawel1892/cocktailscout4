@@ -70,12 +70,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_030902) do
     t.bigint "forum_thread_id", null: false
     t.bigint "last_editor_id"
     t.integer "old_id"
+    t.string "public_id", limit: 8, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["body"], name: "index_forum_posts_on_body", type: :fulltext
     t.index ["forum_thread_id"], name: "index_forum_posts_on_forum_thread_id"
     t.index ["last_editor_id"], name: "index_forum_posts_on_last_editor_id"
     t.index ["old_id"], name: "index_forum_posts_on_old_id"
+    t.index ["public_id"], name: "index_forum_posts_on_public_id", unique: true
     t.index ["user_id"], name: "index_forum_posts_on_user_id"
   end
 

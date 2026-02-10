@@ -8,6 +8,8 @@
       <button type="button" @click="insertUrl" class="p-1 px-2 rounded hover:bg-gray-200" title="Link"><i class="fas fa-link"></i></button>
       <button type="button" @click="insertImage" class="p-1 px-2 rounded hover:bg-gray-200" title="Bild"><i class="far fa-image"></i></button>
       <button type="button" @click="wrapText('[quote]', '[/quote]')" class="p-1 px-2 rounded hover:bg-gray-200" title="Zitat"><i class="fas fa-quote-right"></i></button>
+      <button type="button" @click="insertPost" class="p-1 px-2 rounded hover:bg-gray-200" title="Beitrag verlinken"><i class="fas fa-comment"></i></button>
+      <button type="button" @click="insertThread" class="p-1 px-2 rounded hover:bg-gray-200" title="Thema verlinken"><i class="fas fa-comments"></i></button>
       
       <!-- Smiley Toggle -->
       <div class="relative ml-auto">
@@ -39,6 +41,29 @@
       placeholder="Schreibe deinen Beitrag..."
       @input="$emit('update:modelValue', content)"
     ></textarea>
+
+    <!-- BBCode Help -->
+    <div class="mt-2 p-3 bg-gray-50 border border-gray-200 rounded text-xs text-gray-600">
+      <button
+        type="button"
+        @click="showHelp = !showHelp"
+        class="flex items-center gap-1 text-cs-dark-red hover:underline mb-1"
+      >
+        <i class="fas fa-info-circle"></i>
+        <span>{{ showHelp ? 'Formatierungs-Hilfe ausblenden' : 'Formatierungs-Hilfe einblenden' }}</span>
+      </button>
+
+      <div v-if="showHelp" class="mt-2 space-y-1">
+        <div><strong>Fett:</strong> [b]Text[/b]</div>
+        <div><strong>Kursiv:</strong> [i]Text[/i]</div>
+        <div><strong>Unterstrichen:</strong> [u]Text[/u]</div>
+        <div><strong>Link:</strong> [url=https://example.com]Link-Text[/url]</div>
+        <div><strong>Bild:</strong> [img]https://example.com/bild.jpg[/img]</div>
+        <div><strong>Zitat:</strong> [quote]Text[/quote] oder [quote=Name]Text[/quote]</div>
+        <div><strong>Beitrag verlinken:</strong> [post=123]Text[/post] oder [post=123][/post] (zeigt "Beitrag #123")</div>
+        <div><strong>Thema verlinken:</strong> [thread=thema-slug]Text[/thread] oder [thread=thema-slug][/thread] (zeigt Thema-Titel)</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,6 +82,7 @@ const emit = defineEmits(['update:modelValue'])
 const content = ref(props.modelValue)
 const textareaRef = ref(null)
 const showSmileys = ref(false)
+const showHelp = ref(false)
 
 const wrapText = (openTag, closeTag) => {
   const textarea = textareaRef.value
@@ -109,6 +135,24 @@ const insertImage = () => {
   const url = prompt("Bitte gib die Bild-URL ein:", "https://")
   if (url) {
     insertText(`[img]${url}[/img]`)
+  }
+}
+
+const insertPost = () => {
+  const postId = prompt("Bitte gib die Beitrags-ID ein:", "")
+  if (postId && /^\d+$/.test(postId.trim())) {
+    wrapText(`[post=${postId.trim()}]`, "[/post]")
+  } else if (postId) {
+    alert("Bitte gib eine gültige Beitrags-ID (nur Zahlen) ein.")
+  }
+}
+
+const insertThread = () => {
+  const slug = prompt("Bitte gib den Thema-Slug ein:", "")
+  if (slug && /^[a-z0-9\-]+$/.test(slug.trim())) {
+    wrapText(`[thread=${slug.trim()}]`, "[/thread]")
+  } else if (slug) {
+    alert("Bitte gib einen gültigen Slug ein (nur Kleinbuchstaben, Zahlen und Bindestriche).")
   }
 }
 </script>
