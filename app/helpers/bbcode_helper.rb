@@ -60,8 +60,8 @@ module BbcodeHelper
     t.gsub!(/\[url=(.*?)\](.*?)\[\/url\]/mi) { "<a href=\"#{Regexp.last_match(1)}\" class=\"link-underline\" target=\"_blank\" rel=\"nofollow\">#{Regexp.last_match(2)}</a>" }
     t.gsub!(/\[url\](.*?)\[\/url\]/mi) { "<a href=\"#{Regexp.last_match(1)}\" class=\"link-underline\" target=\"_blank\" rel=\"nofollow\">#{Regexp.last_match(1)}</a>" }
 
-    # Post links - [post=public_id]text[/post]
-    t.gsub!(/\[post=([a-zA-Z0-9]+)\](.*?)\[\/post\]/mi) do
+    # Post links - [post=public_id]text[/post] or [post=#public_id]text[/post]
+    t.gsub!(/\[post=#?([a-zA-Z0-9]+)\](.*?)\[\/post\]/mi) do
       public_id = Regexp.last_match(1)
       link_text = Regexp.last_match(2)
 

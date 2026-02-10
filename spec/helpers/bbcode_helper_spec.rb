@@ -92,6 +92,27 @@ RSpec.describe BbcodeHelper, type: :helper do
         result = helper.render_bbcode("[post=abc-123]Invalid[/post]")
         expect(result).to include('[post=abc-123]Invalid[/post]')
       end
+
+      it "handles post link with # prefix" do
+        result = helper.render_bbcode("[post=#xpGSk7C4]Link text[/post]")
+        expect(result).to include('href="/cocktailforum/beitrag/xpGSk7C4"')
+        expect(result).to include('>Link text</a>')
+      end
+
+      it "renders post link with # prefix and auto-generated text" do
+        result = helper.render_bbcode("[post=#abc123xy][/post]")
+        expect(result).to include('href="/cocktailforum/beitrag/abc123xy"')
+        expect(result).to include('>Beitrag #abc123xy</a>')
+      end
+
+      it "handles both formats - with and without # prefix" do
+        result_with_hash = helper.render_bbcode("[post=#abc123xy]Text[/post]")
+        result_without_hash = helper.render_bbcode("[post=abc123xy]Text[/post]")
+
+        expect(result_with_hash).to include('href="/cocktailforum/beitrag/abc123xy"')
+        expect(result_without_hash).to include('href="/cocktailforum/beitrag/abc123xy"')
+        expect(result_with_hash).to eq(result_without_hash)
+      end
     end
 
     describe "thread links" do

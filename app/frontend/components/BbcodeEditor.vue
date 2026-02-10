@@ -140,10 +140,12 @@ const insertImage = () => {
 
 const insertPost = () => {
   const postId = prompt("Bitte gib die Beitrags-ID ein:", "")
-  if (postId && /^[a-zA-Z0-9]+$/.test(postId.trim())) {
-    wrapText(`[post=${postId.trim()}]`, "[/post]")
+  // Accept both "abc123xy" and "#abc123xy" (strip # if present)
+  const trimmedId = postId ? postId.trim().replace(/^#/, '') : ''
+  if (trimmedId && /^[a-zA-Z0-9]+$/.test(trimmedId)) {
+    wrapText(`[post=${trimmedId}]`, "[/post]")
   } else if (postId) {
-    alert("Bitte gib eine gültige Beitrags-ID ein (z.B. abc123xy).")
+    alert("Bitte gib eine gültige Beitrags-ID ein (z.B. abc123xy oder #abc123xy).")
   }
 }
 
