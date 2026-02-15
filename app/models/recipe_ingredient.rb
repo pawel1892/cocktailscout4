@@ -12,8 +12,18 @@ class RecipeIngredient < ApplicationRecord
   after_destroy :update_recipe_computed_fields
 
   def amount_in_ml
-    return nil unless unit&.ml_ratio && amount
-    unit.to_ml(amount)
+    return nil unless amount
+
+    if unit_id
+      # Case 1: Zutat mit expliziter Einheit (z.B. "4 cl Rum")
+      unit.ml_ratio ? (amount * unit.ml_ratio) : nil
+    elsif ingredient&.ml_per_unit
+      # Case 2: Zutat ohne Einheit mit definiertem Volumen (z.B. "2 Limetten")
+      amount * ingredient.ml_per_unit
+    else
+      # Case 3: Zutat ohne Einheit und ohne Volumendefinition (z.B. "1 Minzweig")
+      nil
+    end
   end
 
   def formatted_amount
@@ -46,7 +56,7 @@ class RecipeIngredient < ApplicationRecord
 
   # Check if ingredient can be scaled
   def scalable?
-    amount.present? && unit.present? && !needs_review && is_scalable
+    amount.present? && !needs_review && is_scalable
   end
 
   # Get display text (structured or fallback to description)

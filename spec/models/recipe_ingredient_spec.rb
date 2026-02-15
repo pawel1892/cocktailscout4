@@ -131,9 +131,9 @@ RSpec.describe RecipeIngredient, type: :model do
       expect(ri.scalable?).to be false
     end
 
-    it "returns false when unit is nil" do
+    it "returns true when unit is nil but has amount" do
       ri = RecipeIngredient.new(amount: 4.0, unit: nil, needs_review: false, is_scalable: true)
-      expect(ri.scalable?).to be false
+      expect(ri.scalable?).to be true
     end
   end
 
