@@ -53,8 +53,10 @@ Zusätzlich dazu gibt es natürlich alles Standardfelder: id, timestamps
 -  `is_optional` tinyint(1) NOT NULL DEFAULT 0: im wesentlichen für mybar (kann diese Zutat weggelassen werden?)
 -  `display_name` varchar(255) DEFAULT NULL: Fall ein anderer Zutatenname angezeigt werden muss als der in Zutaten tabelle. Beispiel: Zutat: Erdbeeren - Display name: gefrostete Erdbeeren
 ### Tabelle: ingredients
-neu: `:plural_name, :string, after: :name`
-Das wird benötigt, um beim Skalieren: 1 Limette und 2 Limetten Plural anzuzeigen
+#### Neue Felder
+- `:plural_name, :string, after: :name`: Das wird benötigt, um beim Skalieren: 1 Limette und 2 Limetten Plural anzuzeigen
+- `:ml_per_unit, decimal(10,2), DEFAULT NULL`: Volumen in ml pro Einheit für Zutaten ohne explizite Einheit. Optional, da die meisten Zutaten Flüssigkeiten sind und bereits eine Einheit haben.
+
 #### Neue Relation
 Rezeptzutaten (recipe_ingredients) haben eine Einheit (ingredients)
 
@@ -172,3 +174,53 @@ Beispiele sind:
 Hier würden die Zusatzinformationen (gefrostet, nur Eigelb, Marke Wyborowa) verloren gehen bei einer automatischen Migration.
 
 Wenn needs_review gesetzt ist, zeigt das System dem User die old_description. Diese Rezepte können nicht nach Portionen skaliert werden, bis sie bereinigt wurden.
+
+## Volumenberechnung für Zutaten ohne Einheit
+
+### Problem
+Rezeptzutaten ohne explizite Volumeneinheit (wie "2 Limetten", "1 Minzweig", "3 Eigelb") beeinflussen die Berechnung von `total_volume` und `alcoholic_content` in Rezepten. Während einige Zutaten zum Getränkevolumen beitragen (z.B. Limettensaft), tragen andere nichts bei (z.B. Garnituren wie Minzzweige).
+
+### Lösung
+Die `ingredients` Tabelle erhält ein optionales Feld `ml_per_unit`, das angibt, wie viel Volumen (in ml) eine Einheit dieser Zutat zum Drink beiträgt.
+
+### Beispiele
+- **Limette** (`ml_per_unit: 30.0`): "2 Limetten" → 60 ml Limettensaft tragen zum Gesamtvolumen bei
+- **Zitrone** (`ml_per_unit: 45.0`): "1 Zitrone" → 45 ml Zitronensaft
+- **Eigelb** (`ml_per_unit: 20.0`): "3 Eigelb" → 60 ml
+- **Minzzweig** (`ml_per_unit: NULL` oder `0`): "1 Minzweig" → trägt nicht zum Volumen bei (Garnitur)
+- **Cocktailkirsche** (`ml_per_unit: NULL` oder `0`): "2 Cocktailkirschen" → Dekoration, kein Volumen
+
+### Berechnung
+Wenn ein `recipe_ingredient` folgende Eigenschaften hat:
+- `unit_id` ist `NULL` (keine explizite Einheit)
+- `amount` ist gesetzt (z.B. 2)
+- `ingredient.ml_per_unit` ist gesetzt (z.B. 30.0)
+
+Dann wird das Volumen berechnet als: `amount * ingredient.ml_per_unit`
+
+Beispiel: "2 Limetten" → `2 * 30.0 = 60.0 ml`
+
+Die Methode `amount_in_ml` in RecipeIngredient muss drei Fälle behandeln:
+1. Zutat mit expliziter Einheit (z.B. "4 cl Rum"): `amount * unit.ml_ratio`
+2. Zutat ohne Einheit mit definiertem Volumen (z.B. "2 Limetten"): `amount * ingredient.ml_per_unit`
+3. Zutat ohne Einheit und ohne Volumendefinition (z.B. "1 Minzweig"): `0`
+
+### Befüllung typischer Zutaten
+Nach der Einführung des neuen Feldes müssen typische Zutaten mit sinnvollen Werten befüllt werden:
+
+**Zitrusfrüchte** (durchschnittliche Saftausbeute):
+- Limette: 30.0 ml
+- Zitrone: 45.0 ml
+- Orange: 80.0 ml
+
+**Eier**:
+- Eigelb: 20.0 ml
+- Eiweiß: 30.0 ml
+
+**Garnituren** (explizit 0.0 ml):
+- Minze: 0.0 ml
+- Cocktailkirsche: 0.0 ml
+
+### Hinweise
+- **Optionales Feld**: Die meisten Zutaten (Flüssigkeiten wie Rum, Gin, etc.) benötigen dieses Feld nicht, da sie immer mit einer Volumeneinheit verwendet werden
+- **Typische Anwendungsfälle**: Hauptsächlich für frische Früchte, Eier und Garnituren relevant
