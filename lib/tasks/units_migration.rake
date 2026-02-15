@@ -85,14 +85,8 @@ namespace :units_migration do
           is_certain: :check_whitelist  # Special flag - needs whitelist check
         }
       else
-        # Check if it's an unquantified garnish/decoration (e.g., "Minzzweig")
-        # These will be validated against NON_SCALABLE_PATTERNS in migration
-        {
-          amount: nil,
-          unit: nil,
-          additional_info: description,
-          is_certain: :check_non_scalable  # Special flag - needs non-scalable pattern check
-        }
+        # No amount or unit found - mark as uncertain
+        { is_certain: false }
       end
     end
   end
@@ -153,16 +147,6 @@ namespace :units_migration do
     "Orange", "Orangen"
     # Add more countable ingredients as needed
   ].freeze
-
-  # Non-scalable ingredient patterns: descriptions that should be marked as non-scalable
-  # Key = ingredient name, Value = array of description patterns that are non-scalable (garnishes)
-  NON_SCALABLE_PATTERNS = {
-    "Minze" => [ "minzzweig", "minzblatt" ],
-    "Soda" => [ "soda" ],  # Just "Soda" without amount (to taste/to fill)
-    "Orangensaft" => [ "orangensaft" ],  # Just "Orangensaft" without amount (to taste/to fill)
-    "Tonic Water" => [ "tonic water", "tonic" ]  # Just "Tonic Water" without amount (to taste/to fill)
-    # Add more non-scalable patterns as needed
-  }.freeze
 
   desc "Run complete migration workflow (all tasks in correct order)"
   task full_migration: :environment do
@@ -398,60 +382,6 @@ namespace :units_migration do
         parsed[:unit] = nil  # No unit for simple counts
       end
 
-      # Handle non-scalable pattern check for unquantified garnishes
-      if parsed[:is_certain] == :check_non_scalable
-        # Check if description matches a non-scalable pattern for this ingredient
-        matches_non_scalable = false
-        if NON_SCALABLE_PATTERNS.key?(ri.ingredient.name)
-          description_lower = ri.old_description.downcase
-          NON_SCALABLE_PATTERNS[ri.ingredient.name].each do |pattern|
-            if description_lower.include?(pattern)
-              matches_non_scalable = true
-              break
-            end
-          end
-        end
-
-        # Also check INGREDIENT_ALIASES to see if description is acceptable
-        matches_alias = false
-        if INGREDIENT_ALIASES.key?(ri.ingredient.name)
-          description_lower = ri.old_description.downcase
-          INGREDIENT_ALIASES[ri.ingredient.name].each do |alias_name|
-            if description_lower.include?(alias_name)
-              matches_alias = true
-              break
-            end
-          end
-        end
-
-        unless matches_non_scalable || matches_alias
-          # Not a recognized non-scalable pattern - mark as uncertain
-          ri.update_columns(
-            amount: nil,
-            unit_id: nil,
-            additional_info: nil,
-            needs_review: true,
-            description: nil
-          )
-          uncertain_count += 1
-          next
-        end
-
-        # Recognized pattern - migrate with amount=1, mark as non-scalable
-        # Store full description in display_name to override ingredient name
-        ri.update_columns(
-          amount: 1.0,  # Implicit "1" even though not written
-          unit_id: nil,  # No explicit unit
-          additional_info: nil,
-          display_name: ri.old_description,  # e.g., "Minzzweig" overrides "Minze"
-          is_scalable: false,  # Unquantified garnishes are non-scalable
-          needs_review: false,
-          description: nil
-        )
-        certain_count += 1
-        next
-      end
-
       if parsed[:is_certain]
         # Only update if parsing is unambiguous
         unit = parsed[:unit] ? Unit.find_by(name: parsed[:unit]) : nil
@@ -540,22 +470,10 @@ namespace :units_migration do
           additional_info = nil
         end
 
-        # Check if this should be marked as non-scalable (garnish/decoration)
-        is_scalable = true
-        if NON_SCALABLE_PATTERNS.key?(ri.ingredient.name)
-          NON_SCALABLE_PATTERNS[ri.ingredient.name].each do |pattern|
-            if description_lower.include?(pattern)
-              is_scalable = false
-              break
-            end
-          end
-        end
-
         ri.update_columns(
           amount: parsed[:amount],
           unit_id: unit&.id,
           additional_info: additional_info,
-          is_scalable: is_scalable,
           needs_review: false,
           description: nil
         )
