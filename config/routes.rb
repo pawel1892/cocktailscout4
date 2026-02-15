@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :recipes, only: [ :index ]
     resources :ingredients
+    resources :units
   end
 
   resources :user_profiles, only: [ :show, :update ]

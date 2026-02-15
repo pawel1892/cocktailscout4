@@ -1,0 +1,123 @@
+<%= form_with model: [:admin, @unit], class: "space-y-6" do |f| %>
+  <!-- Error Messages -->
+  <% if @unit.errors.any? %>
+    <div class="bg-red-50 border-l-4 border-red-500 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@unit.errors.count, "Fehler") %> verhindert das Speichern:
+          </h3>
+          <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+            <% @unit.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Name (readonly for edit) -->
+  <div>
+    <%= f.label :name, "Name (Systembezeichnung) *", class: "label-field" %>
+    <%= f.text_field :name,
+      required: true,
+      readonly: @unit.persisted?,
+      class: "input-field #{@unit.persisted? ? 'bg-gray-100 cursor-not-allowed' : ''}",
+      placeholder: "z.B. cl, ml, tl, spritzer..." %>
+    <p class="mt-1 text-sm text-gray-500">
+      Eindeutiger Systemname. Wird für interne Referenzen verwendet. <%= @unit.persisted? ? "(Kann nicht geändert werden)" : "" %>
+    </p>
+  </div>
+
+  <!-- Display Name -->
+  <div>
+    <%= f.label :display_name, "Anzeigename (Singular) *", class: "label-field" %>
+    <%= f.text_field :display_name,
+      required: true,
+      class: "input-field",
+      placeholder: "z.B. cl, TL, Spritzer, Stück" %>
+    <p class="mt-1 text-sm text-gray-500">
+      Wie die Einheit dem Benutzer angezeigt wird (Singularform).
+    </p>
+  </div>
+
+  <!-- Plural Name -->
+  <div>
+    <%= f.label :plural_name, "Anzeigename (Plural) *", class: "label-field" %>
+    <%= f.text_field :plural_name,
+      required: true,
+      class: "input-field",
+      placeholder: "z.B. cl, TL, Spritzer, Stück, Scheiben" %>
+    <p class="mt-1 text-sm text-gray-500">
+      Pluralform für die Anzeige. Für viele Einheiten gleich wie Singular.
+    </p>
+  </div>
+
+  <!-- Category -->
+  <div>
+    <%= f.label :category, "Kategorie *", class: "label-field" %>
+    <%= f.select :category,
+      options_for_select([
+        ["Volumen (flüssige Maße)", "volume"],
+        ["Zählbar (Stückzahlen)", "count"],
+        ["Speziell (Barmaße)", "special"]
+      ], @unit.category),
+      { include_blank: "Bitte wählen..." },
+      { required: true, class: "input-field", data: { unit_category_target: "category" } } %>
+    <p class="mt-1 text-sm text-gray-500">
+      <strong>Volumen:</strong> für flüssige Maße (cl, ml, l). <strong>Zählbar:</strong> für Stückzahlen (Stück, Scheibe, Blatt). <strong>Speziell:</strong> für Barmaße (Spritzer, Dash, Barlöffel).
+    </p>
+  </div>
+
+  <!-- ml_ratio (conditional) -->
+  <div>
+    <%= f.label :ml_ratio, "Milliliter-Verhältnis", class: "label-field" %>
+    <div class="relative">
+      <%= f.number_field :ml_ratio,
+        step: 0.01,
+        min: 0,
+        class: "input-field pr-12",
+        placeholder: "z.B. 10.0 für cl, 5.0 für TL" %>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-gray-500 sm:text-sm">ml</span>
+      </div>
+    </div>
+    <p class="mt-1 text-sm text-gray-500">
+      Umrechnungsfaktor zu Millilitern. <strong>Erforderlich für Volumen- und Spezialeinheiten.</strong> Leer lassen für zählbare Einheiten.
+    </p>
+    <% if @unit.category.in?(%w[volume special]) && @unit.ml_ratio.blank? %>
+      <p class="mt-1 text-sm text-yellow-600 font-medium">
+        ⚠️ ml-Verhältnis ist erforderlich für <%= @unit.category == "volume" ? "Volumen" : "Spezial" %>-Einheiten.
+      </p>
+    <% end %>
+  </div>
+
+  <!-- Divisible -->
+  <div class="flex items-start">
+    <div class="flex items-center h-5">
+      <%= f.check_box :divisible, class: "h-4 w-4 text-cs-gold focus:ring-cs-gold border-gray-300 rounded" %>
+    </div>
+    <div class="ml-3">
+      <%= f.label :divisible, class: "text-sm font-medium text-gray-700" do %>
+        Teilbar
+      <% end %>
+      <p class="text-sm text-gray-500">
+        Aktivieren, wenn die Einheit Bruchwerte unterstützt (z.B. 0,5 cl). Deaktivieren für Einheiten wie Spritzer, Stück, Scheibe.
+      </p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex items-center justify-between pt-6 border-t">
+    <div class="flex gap-2">
+      <%= f.submit @unit.new_record? ? "Einheit erstellen" : "Änderungen speichern", class: "btn btn-primary" %>
+      <%= link_to "Abbrechen", admin_units_path, class: "btn btn-outline" %>
+    </div>
+  </div>
+<% end %>
