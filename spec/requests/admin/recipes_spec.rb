@@ -301,7 +301,7 @@ RSpec.describe "Admin::Recipes", type: :request do
       it "displays edit link for each recipe" do
         get admin_recipes_path
         expect(response.body).to include("Bearbeiten")
-        expect(response.body).to include(edit_recipe_path(published_recipe.slug))
+        expect(response.body).to include(edit_admin_recipe_path(published_recipe.id))
       end
 
       it "displays view link for each recipe" do
@@ -321,6 +321,283 @@ RSpec.describe "Admin::Recipes", type: :request do
         get admin_recipes_path
         expect(response.body).to include(published_recipe.user.username)
         expect(response.body).to include(published_recipe.visits_count.to_s)
+      end
+    end
+  end
+
+  describe "GET /admin/recipes/new" do
+    context "when logged in as admin" do
+      before { sign_in admin }
+
+      it "returns success" do
+        get new_admin_recipe_path
+        expect(response).to have_http_status(:success)
+      end
+
+      it "displays the recipe form" do
+        get new_admin_recipe_path
+        expect(response.body).to include("Neues Rezept erstellen")
+        expect(response.body).to include("recipe-form")
+      end
+    end
+
+    context "when logged in as regular user" do
+      before { sign_in regular_user }
+
+      it "redirects to root" do
+        get new_admin_recipe_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "POST /admin/recipes" do
+    let!(:rum) { create(:ingredient, name: "Rum") }
+    let!(:lime) { create(:ingredient, name: "Lime") }
+    let!(:cl_unit) { create(:unit, name: "cl") }
+    let!(:piece_unit) { create(:unit, name: "piece") }
+    let(:valid_params) do
+      {
+        recipe: {
+          title: "New Test Recipe",
+          description: "A delicious cocktail",
+          tag_list: "classic, strong",
+          is_public: "true",
+          ingredients_json: JSON.generate([
+            {
+              ingredientId: rum.id,
+              ingredientName: rum.name,
+              unitId: cl_unit.id,
+              amount: "4",
+              additionalInfo: "",
+              displayName: "",
+              isOptional: false,
+              isScalable: true
+            },
+            {
+              ingredientId: lime.id,
+              ingredientName: lime.name,
+              unitId: piece_unit.id,
+              amount: "1",
+              additionalInfo: "",
+              displayName: "",
+              isOptional: false,
+              isScalable: true
+            }
+          ])
+        }
+      }
+    end
+
+    context "when logged in as admin" do
+      before { sign_in admin }
+
+      it "creates a new recipe" do
+        expect {
+          post admin_recipes_path, params: valid_params
+        }.to change(Recipe, :count).by(1)
+      end
+
+      it "redirects to admin recipes index" do
+        post admin_recipes_path, params: valid_params
+        expect(response).to redirect_to(admin_recipes_path)
+      end
+
+      it "sets the current user as the recipe owner" do
+        post admin_recipes_path, params: valid_params
+        expect(Recipe.last.user).to eq(admin)
+      end
+
+      it "creates recipe ingredients" do
+        post admin_recipes_path, params: valid_params
+        expect(Recipe.last.recipe_ingredients.count).to eq(2)
+      end
+    end
+
+    context "when logged in as regular user" do
+      before { sign_in regular_user }
+
+      it "redirects to root" do
+        post admin_recipes_path, params: valid_params
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "does not create a recipe" do
+        expect {
+          post admin_recipes_path, params: valid_params
+        }.not_to change(Recipe, :count)
+      end
+    end
+
+    context "with invalid params" do
+      before { sign_in admin }
+
+      it "renders new template with errors" do
+        post admin_recipes_path, params: { recipe: { title: "" } }
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+    end
+  end
+
+  describe "GET /admin/recipes/:id/edit" do
+    context "when logged in as admin" do
+      before { sign_in admin }
+
+      it "returns success" do
+        get edit_admin_recipe_path(published_recipe.id)
+        expect(response).to have_http_status(:success)
+      end
+
+      it "displays the recipe form with existing data" do
+        get edit_admin_recipe_path(published_recipe.id)
+        expect(response.body).to include("Rezept bearbeiten")
+        expect(response.body).to include(published_recipe.title)
+        expect(response.body).to include("recipe-form")
+      end
+
+      it "can edit deleted recipes" do
+        get edit_admin_recipe_path(deleted_recipe.id)
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "when logged in as regular user" do
+      before { sign_in regular_user }
+
+      it "redirects to root" do
+        get edit_admin_recipe_path(published_recipe.id)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "PATCH /admin/recipes/:id" do
+    let!(:vodka) { create(:ingredient, name: "Vodka") }
+    let!(:cranberry) { create(:ingredient, name: "Cranberry Juice") }
+    let!(:ml_unit) { create(:unit, name: "ml") }
+    let(:update_params) do
+      {
+        recipe: {
+          title: "Updated Recipe Title",
+          description: "Updated description",
+          tag_list: "updated, tags",
+          is_public: "false",
+          ingredients_json: JSON.generate([
+            {
+              ingredientId: vodka.id,
+              ingredientName: vodka.name,
+              unitId: ml_unit.id,
+              amount: "50",
+              additionalInfo: "",
+              displayName: "",
+              isOptional: false,
+              isScalable: true
+            },
+            {
+              ingredientId: cranberry.id,
+              ingredientName: cranberry.name,
+              unitId: ml_unit.id,
+              amount: "100",
+              additionalInfo: "",
+              displayName: "",
+              isOptional: false,
+              isScalable: true
+            }
+          ])
+        }
+      }
+    end
+
+    context "when logged in as admin" do
+      before { sign_in admin }
+
+      it "updates the recipe" do
+        patch admin_recipe_path(published_recipe.id), params: update_params
+        published_recipe.reload
+        expect(published_recipe.title).to eq("Updated Recipe Title")
+        expect(published_recipe.description).to eq("Updated description")
+      end
+
+      it "redirects to admin recipes index" do
+        patch admin_recipe_path(published_recipe.id), params: update_params
+        expect(response).to redirect_to(admin_recipes_path)
+      end
+
+      it "can update deleted recipes" do
+        patch admin_recipe_path(deleted_recipe.id), params: update_params
+        deleted_recipe.reload
+        expect(deleted_recipe.title).to eq("Updated Recipe Title")
+      end
+
+      it "uses ID in URL, not slug" do
+        # This test ensures we're using ID-based routing
+        expect {
+          patch admin_recipe_path(published_recipe.id), params: update_params
+        }.not_to raise_error
+      end
+    end
+
+    context "when logged in as regular user" do
+      before { sign_in regular_user }
+
+      it "redirects to root" do
+        patch admin_recipe_path(published_recipe.id), params: update_params
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "does not update the recipe" do
+        original_title = published_recipe.title
+        patch admin_recipe_path(published_recipe.id), params: update_params
+        published_recipe.reload
+        expect(published_recipe.title).to eq(original_title)
+      end
+    end
+
+    context "with invalid params" do
+      before { sign_in admin }
+
+      it "renders edit template with errors" do
+        patch admin_recipe_path(published_recipe.id), params: { recipe: { title: "" } }
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+    end
+  end
+
+  describe "DELETE /admin/recipes/:id" do
+    context "when logged in as admin" do
+      before { sign_in admin }
+
+      it "soft deletes the recipe" do
+        delete admin_recipe_path(published_recipe.id)
+        published_recipe.reload
+        expect(published_recipe.is_deleted).to be true
+      end
+
+      it "redirects to admin recipes index" do
+        delete admin_recipe_path(published_recipe.id)
+        expect(response).to redirect_to(admin_recipes_path)
+      end
+
+      it "uses ID in URL, not slug" do
+        # This test ensures we're using ID-based routing
+        expect {
+          delete admin_recipe_path(published_recipe.id)
+        }.not_to raise_error
+      end
+    end
+
+    context "when logged in as regular user" do
+      before { sign_in regular_user }
+
+      it "redirects to root" do
+        delete admin_recipe_path(published_recipe.id)
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "does not delete the recipe" do
+        delete admin_recipe_path(published_recipe.id)
+        published_recipe.reload
+        expect(published_recipe.is_deleted).to be false
       end
     end
   end

@@ -1,7 +1,10 @@
 <div class="mb-8 flex items-center justify-between">
   <h1 class="text-3xl font-bold text-gray-800">Rezepte verwalten</h1>
-  <div class="text-sm text-gray-600">
-    Gesamt: <strong><%= @pagy.count %></strong> Rezepte
+  <div class="flex items-center gap-4">
+    <div class="text-sm text-gray-600">
+      Gesamt: <strong><%= @pagy.count %></strong> Rezepte
+    </div>
+    <%= link_to "Neues Rezept erstellen", new_admin_recipe_path, class: "btn btn-primary" %>
   </div>
 </div>
 
@@ -175,9 +178,16 @@
               <%= l(recipe.created_at, format: :short) %>
             </td>
             <td class="px-4 py-3 text-sm">
-              <div class="flex gap-2">
-                <%= link_to "Bearbeiten", edit_recipe_path(recipe.slug), class: "text-blue-600 hover:underline" %>
-                <%= link_to "Ansehen", recipe_path(recipe.slug), class: "text-gray-600 hover:underline", target: "_blank" %>
+              <div class="flex gap-2 items-center">
+                <%= link_to "Bearbeiten", edit_admin_recipe_path(recipe.id), class: "text-blue-600 hover:underline" %>
+                <%= link_to "Ansehen", recipe_path(recipe.slug), target: "_blank", class: "text-blue-600 hover:underline" %>
+                <% unless recipe.is_deleted %>
+                  <%= button_to "Löschen",
+                    admin_recipe_path(recipe.id),
+                    method: :delete,
+                    data: { turbo_confirm: "Sind Sie sicher, dass Sie dieses Rezept löschen möchten?" },
+                    class: "text-red-600 hover:underline" %>
+                <% end %>
               </div>
             </td>
           </tr>

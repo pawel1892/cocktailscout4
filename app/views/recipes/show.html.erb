@@ -18,32 +18,6 @@
     <!-- Tags -->
     <%= render "recipes/tag_list", tags: @recipe.tags %>
 
-    <!-- Edit/Delete/Publish Buttons -->
-    <% if can_edit_recipe?(@recipe) || can_delete_recipe?(@recipe) %>
-      <div class="flex items-center gap-3 mt-3">
-        <% if @recipe.draft? %>
-          <%= button_to publish_recipe_path(@recipe), method: :patch,
-              class: "btn btn-gold btn-sm" do %>
-            <i class="fas fa-check mr-1"></i> Veröffentlichen
-          <% end %>
-        <% end %>
-
-        <% if can_edit_recipe?(@recipe) %>
-          <%= link_to edit_recipe_path(@recipe), class: "text-gray-400 hover:text-cs-gold transition-colors", title: "Bearbeiten" do %>
-            <i class="fas fa-pencil-alt"></i>
-          <% end %>
-        <% end %>
-
-        <% if can_delete_recipe?(@recipe) %>
-          <%= button_to recipe_path(@recipe), method: :delete,
-              onclick: "return confirm('Rezept wirklich löschen?')",
-              class: "text-gray-400 hover:text-cs-error transition-colors cursor-pointer",
-              title: "Löschen" do %>
-            <i class="fas fa-trash"></i>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
   </div>
 
   <div class="flex-shrink-0 pt-1">

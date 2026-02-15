@@ -10,7 +10,7 @@ class RatingsController < ApplicationController
     if rating.save
       render json: { success: true, rating: rating, average: rateable.reload.average_rating, count: rateable.ratings_count }
     else
-      render json: { success: false, errors: rating.errors.full_messages }, status: :unprocessable_entity
+      render json: { success: false, errors: rating.errors.full_messages }, status: :unprocessable_content
     end
   end
 

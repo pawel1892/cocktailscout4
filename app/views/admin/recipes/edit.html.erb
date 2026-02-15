@@ -1,11 +1,12 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
   <div class="mb-6">
-    <%= link_to recipes_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
+    <%= link_to admin_recipes_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
       <i class="fas fa-chevron-left"></i>
       Zurück zur Übersicht
     <% end %>
 
-    <h1 class="text-2xl font-bold text-gray-800">Neues Rezept erstellen</h1>
+    <h1 class="text-2xl font-bold text-gray-800">Rezept bearbeiten</h1>
+    <p class="text-gray-500"><%= @recipe.title %></p>
   </div>
 
   <% if @errors.present? %>
@@ -19,11 +20,12 @@
   <% end %>
 
   <div class="card p-6">
-    <%= form_with model: Recipe.new, url: recipes_path, local: true, class: "space-y-6" do |form| %>
+    <%= form_with url: admin_recipe_path(@recipe.id), method: :patch, local: true, class: "space-y-6" do |form| %>
       <recipe-form
         :initial-data='<%= raw @recipe_form_data.to_json %>'
         :units='<%= raw Unit.order(:category, :name).map { |u| { id: u.id, name: u.name, display_name: u.display_name, plural_name: u.plural_name, category: u.category, divisible: u.divisible } }.to_json %>'
         form-name="recipe"
+        :edit-mode="true"
       ></recipe-form>
     <% end %>
   </div>

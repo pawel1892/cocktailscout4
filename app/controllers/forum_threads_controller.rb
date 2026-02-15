@@ -39,7 +39,7 @@ class ForumThreadsController < ApplicationController
     if @forum_thread_form.save
       redirect_to forum_thread_path(@forum_thread_form.forum_thread), notice: "Thema erfolgreich erstellt."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

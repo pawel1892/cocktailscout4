@@ -11,6 +11,96 @@ module Admin
       @pagy, @recipes = pagy(@recipes, limit: 50)
     end
 
+    def new
+      @recipe_form_data = {
+        title: "",
+        description: "",
+        tagList: "",
+        isPublic: false,
+        ingredients: []
+      }
+    end
+
+    def create
+      @recipe_form = RecipeForm.new(
+        user: Current.user,
+        title: recipe_params[:title],
+        description: recipe_params[:description],
+        tag_list: recipe_params[:tag_list],
+        is_public: recipe_params[:is_public] == "true",
+        ingredients_data: parse_ingredients_data
+      )
+
+      if @recipe_form.save
+        redirect_to admin_recipes_path, notice: "Rezept wurde erfolgreich erstellt."
+      else
+        @errors = @recipe_form.errors.full_messages
+        @recipe_form_data = {
+          title: recipe_params[:title],
+          description: recipe_params[:description],
+          tagList: recipe_params[:tag_list],
+          isPublic: recipe_params[:is_public] == "true",
+          ingredients: format_ingredients_for_vue
+        }
+        render :new, status: :unprocessable_content
+      end
+    end
+
+    def edit
+      @recipe = Recipe.unscoped.find(params[:id])
+      @recipe_form_data = {
+        title: @recipe.title,
+        description: @recipe.description,
+        tagList: @recipe.tag_list.join(", "),
+        isPublic: @recipe.is_public,
+        ingredients: @recipe.recipe_ingredients.map do |ri|
+          {
+            ingredientId: ri.ingredient_id,
+            ingredientName: ri.ingredient.name,
+            unitId: ri.unit_id,
+            amount: ri.amount,
+            additionalInfo: ri.additional_info,
+            displayName: ri.display_name,
+            isOptional: ri.is_optional,
+            isScalable: ri.is_scalable
+          }
+        end
+      }
+    end
+
+    def update
+      @recipe = Recipe.unscoped.find(params[:id])
+      @recipe_form = RecipeForm.new(
+        recipe: @recipe,
+        user: Current.user,
+        title: recipe_params[:title],
+        description: recipe_params[:description],
+        tag_list: recipe_params[:tag_list],
+        is_public: recipe_params[:is_public] == "true",
+        ingredients_data: parse_ingredients_data
+      )
+
+      if @recipe_form.save
+        redirect_to admin_recipes_path, notice: "Rezept wurde erfolgreich aktualisiert."
+      else
+        @errors = @recipe_form.errors.full_messages
+        @recipe_form_data = {
+          title: recipe_params[:title],
+          description: recipe_params[:description],
+          tagList: recipe_params[:tag_list],
+          isPublic: recipe_params[:is_public] == "true",
+          ingredients: format_ingredients_for_vue
+        }
+        render :edit, status: :unprocessable_content
+      end
+    end
+
+    def destroy
+      @recipe = Recipe.unscoped.find(params[:id])
+      @recipe.soft_delete!
+      redirect_to admin_recipes_path, notice: "Rezept wurde gelöscht."
+    end
+
     private
 
     def require_recipe_moderator!
@@ -56,6 +146,38 @@ module Admin
 
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+    end
+
+    def recipe_params
+      params.require(:recipe).permit(:title, :description, :tag_list, :is_public, :ingredients_json)
+    end
+
+    def parse_ingredients_data
+      return [] unless params[:recipe][:ingredients_json].present?
+
+      JSON.parse(params[:recipe][:ingredients_json]).map do |ingredient|
+        {
+          ingredient_id: ingredient["ingredientId"],
+          ingredient_name: ingredient["ingredientName"],
+          unit_id: ingredient["unitId"],
+          amount: ingredient["amount"],
+          additional_info: ingredient["additionalInfo"],
+          display_name: ingredient["displayName"],
+          is_optional: ingredient["isOptional"],
+          is_scalable: ingredient["isScalable"]
+        }
+      end
+    rescue JSON::ParserError
+      []
+    end
+
+    # Format ingredients data for Vue component (camelCase keys)
+    def format_ingredients_for_vue
+      return [] unless params[:recipe][:ingredients_json].present?
+
+      JSON.parse(params[:recipe][:ingredients_json])
+    rescue JSON::ParserError
+      []
     end
   end
 end

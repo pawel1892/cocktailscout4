@@ -8,7 +8,7 @@ class FavoritesController < ApplicationController
     if favorite.save
       render json: { success: true, favorited: true }
     else
-      render json: { success: false, errors: favorite.errors.full_messages }, status: :unprocessable_entity
+      render json: { success: false, errors: favorite.errors.full_messages }, status: :unprocessable_content
     end
   end
 

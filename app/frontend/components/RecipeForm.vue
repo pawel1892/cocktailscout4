@@ -177,27 +177,35 @@
     <!-- Hidden field for ingredients JSON -->
     <input type="hidden" :name="`${formName}[ingredients_json]`" :value="ingredientsJson" />
 
-    <!-- Submit Buttons -->
-    <div class="flex justify-end gap-2">
-      <button
-        type="submit"
-        @click="submitAsDraft"
-        class="btn btn-outline"
-      >
-        <i class="fas fa-save mr-2"></i>Als Entwurf speichern
-      </button>
-
-      <button
-        type="submit"
-        @click="submitAsPublished"
-        class="btn btn-gold"
-      >
-        <i class="fas fa-check mr-2"></i>Veröffentlichen
-      </button>
+    <!-- Visibility Checkbox -->
+    <div class="form-group">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input
+          type="checkbox"
+          v-model="isPublic"
+          class="h-5 w-5 text-cs-gold focus:ring-cs-gold border-gray-300 rounded"
+        />
+        <span class="text-sm font-medium text-gray-700">
+          <i class="fas fa-eye mr-1"></i>Rezept veröffentlichen
+        </span>
+      </label>
+      <p class="form-hint mt-1 ml-7">
+        Wenn aktiviert, ist das Rezept öffentlich sichtbar. Andernfalls bleibt es ein Entwurf.
+      </p>
     </div>
 
     <!-- Hidden field for is_public -->
-    <input type="hidden" :name="`${formName}[is_public]`" :value="isPublicValue" />
+    <input type="hidden" :name="`${formName}[is_public]`" :value="isPublic ? 'true' : 'false'" />
+
+    <!-- Submit Button -->
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        class="btn btn-gold"
+      >
+        <i class="fas fa-save mr-2"></i>Speichern
+      </button>
+    </div>
   </div>
 </template>
 
@@ -230,7 +238,6 @@ const title = ref(props.initialData.title || '')
 const description = ref(props.initialData.description || '')
 const tagList = ref(props.initialData.tagList || '')
 const isPublic = ref(props.initialData.isPublic || false)
-const isPublicValue = ref('false')
 
 // Ingredients
 const ingredients = ref([])
@@ -324,14 +331,6 @@ const ingredientsJson = computed(() => {
     isScalable: ing.isScalable
   })))
 })
-
-const submitAsDraft = () => {
-  isPublicValue.value = 'false'
-}
-
-const submitAsPublished = () => {
-  isPublicValue.value = 'true'
-}
 
 onMounted(() => {
   initializeIngredients()

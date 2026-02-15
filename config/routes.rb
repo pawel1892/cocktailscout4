@@ -18,17 +18,16 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :recipes, only: [ :index ]
+    resources :recipes  # Full CRUD
     resources :ingredients
     resources :units
   end
 
   resources :user_profiles, only: [ :show, :update ]
   resources :users, path: "benutzer", only: [ :index ]
-  resources :recipes, path: "rezepte", param: :slug do
+  resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
     member do
       post :comment, to: "recipe_comments#create"
-      patch :publish
     end
     resources :recipe_ingredients, only: [ :index ], path: "zutaten"
   end
