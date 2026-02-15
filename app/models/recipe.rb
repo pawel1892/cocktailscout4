@@ -20,6 +20,11 @@ class Recipe < ApplicationRecord
   scope :not_deleted, -> { where(is_deleted: false) }
   scope :visible, -> { published.not_deleted }
   scope :drafts, -> { where(is_public: false) }
+  scope :needs_unit_migration_attention, -> {
+    joins(:recipe_ingredients)
+      .where(recipe_ingredients: { needs_review: true })
+      .distinct
+  }
 
   # Override default scope to exclude deleted recipes from all queries
   default_scope { not_deleted }
