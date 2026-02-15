@@ -17,6 +17,9 @@ Rails.application.routes.draw do
         get :count
       end
     end
+
+    resources :recipes, only: [ :index ]
+    resources :ingredients
   end
 
   resources :user_profiles, only: [ :show, :update ]

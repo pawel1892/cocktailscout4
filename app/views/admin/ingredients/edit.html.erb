@@ -1,0 +1,51 @@
+<div class="mb-6">
+  <%= link_to admin_ingredients_path, class: "inline-flex items-center text-gray-600 hover:text-gray-900" do %>
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+    Zurück zur Übersicht
+  <% end %>
+</div>
+
+<div class="bg-white rounded-lg shadow border border-gray-200 p-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-2">
+    Zutat bearbeiten
+  </h1>
+  <p class="text-gray-600 mb-8"><%= @ingredient.name %></p>
+
+  <!-- Warning if ingredient is in use -->
+  <% if @ingredient.in_use? %>
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm text-yellow-700">
+            <strong>Achtung:</strong> Diese Zutat wird in <strong><%= @ingredient.recipes_count %></strong> Rezept(en) verwendet.
+            Änderungen wirken sich auf alle betroffenen Rezepte aus.
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render "form" %>
+
+  <!-- Delete Button (only if not used) -->
+  <% if @ingredient.can_delete? %>
+    <div class="mt-8 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Gefahrenzone</h3>
+      <p class="text-sm text-gray-600 mb-4">
+        Diese Zutat wird in keinem Rezept verwendet und kann sicher gelöscht werden.
+      </p>
+      <%= button_to "Zutat löschen",
+        admin_ingredient_path(@ingredient),
+        method: :delete,
+        data: { turbo_confirm: "Sind Sie sicher, dass Sie diese Zutat unwiderruflich löschen möchten?" },
+        class: "btn bg-red-600 hover:bg-red-700 text-white" %>
+    </div>
+  <% end %>
+</div>

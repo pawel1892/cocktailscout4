@@ -1,0 +1,215 @@
+<div class="mb-8 flex items-center justify-between">
+  <h1 class="text-3xl font-bold text-gray-800">Zutaten verwalten</h1>
+  <div class="flex items-center gap-4">
+    <div class="text-sm text-gray-600">
+      Gesamt: <strong><%= @pagy.count %></strong> Zutaten
+    </div>
+    <%= link_to "Neue Zutat erstellen", new_admin_ingredient_path, class: "btn btn-primary" %>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="bg-white rounded-lg shadow border border-gray-200 p-6 mb-6">
+  <%= form_with url: admin_ingredients_path, method: :get, class: "space-y-4" do |f| %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Usage Filter -->
+      <div>
+        <%= f.label :usage, "Verwendung", class: "label-field" %>
+        <%= f.select :usage,
+          options_for_select([
+            ["Alle", ""],
+            ["In Rezepten verwendet", "used"],
+            ["Nicht verwendet", "unused"]
+          ], params[:usage]),
+          {},
+          class: "input-field" %>
+      </div>
+
+      <!-- Alcohol Filter -->
+      <div>
+        <%= f.label :alcohol, "Alkoholgehalt", class: "label-field" %>
+        <%= f.select :alcohol,
+          options_for_select([
+            ["Alle", ""],
+            ["Alkoholisch", "alcoholic"],
+            ["Nicht alkoholisch", "non_alcoholic"]
+          ], params[:alcohol]),
+          {},
+          class: "input-field" %>
+      </div>
+
+      <!-- Search -->
+      <div>
+        <%= f.label :q, "Name suchen", class: "label-field" %>
+        <%= f.text_field :q,
+          value: params[:q],
+          placeholder: "Zutatname...",
+          class: "input-field" %>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-2">
+      <%= f.submit "Filtern", class: "btn btn-primary" %>
+      <% if params[:usage].present? || params[:alcohol].present? || params[:q].present? %>
+        <%= link_to "Filter zurücksetzen", admin_ingredients_path, class: "btn btn-outline" %>
+      <% end %>
+    </div>
+
+    <!-- Active Filters Display -->
+    <% if params[:usage].present? || params[:alcohol].present? || params[:q].present? %>
+      <div class="flex flex-wrap gap-2 pt-2 border-t">
+        <span class="text-sm text-gray-600">Aktive Filter:</span>
+
+        <% if params[:usage].present? %>
+          <span class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">
+            Verwendung: <%= {"used" => "In Rezepten verwendet", "unused" => "Nicht verwendet"}[params[:usage]] %>
+            <%= link_to "×", admin_ingredients_path(usage: nil, alcohol: params[:alcohol], q: params[:q]), class: "ml-1 font-bold hover:text-blue-900" %>
+          </span>
+        <% end %>
+
+        <% if params[:alcohol].present? %>
+          <span class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">
+            Alkohol: <%= {"alcoholic" => "Alkoholisch", "non_alcoholic" => "Nicht alkoholisch"}[params[:alcohol]] %>
+            <%= link_to "×", admin_ingredients_path(usage: params[:usage], alcohol: nil, q: params[:q]), class: "ml-1 font-bold hover:text-blue-900" %>
+          </span>
+        <% end %>
+
+        <% if params[:q].present? %>
+          <span class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">
+            Suche: "<%= params[:q] %>"
+            <%= link_to "×", admin_ingredients_path(usage: params[:usage], alcohol: params[:alcohol], q: nil), class: "ml-1 font-bold hover:text-blue-900" %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Ingredients Table -->
+<% if @ingredients.any? %>
+  <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            ID
+          </th>
+          <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= link_to admin_ingredients_path(sort: "name", direction: params[:sort] == "name" && params[:direction] == "asc" ? "desc" : "asc", usage: params[:usage], alcohol: params[:alcohol], q: params[:q]), class: "hover:text-gray-700" do %>
+              Name
+              <% if params[:sort] == "name" || params[:sort].blank? %>
+                <%= params[:direction] == "asc" || params[:direction].blank? ? "↑" : "↓" %>
+              <% end %>
+            <% end %>
+          </th>
+          <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Plural
+          </th>
+          <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= link_to admin_ingredients_path(sort: "alcoholic_content", direction: params[:sort] == "alcoholic_content" && params[:direction] == "asc" ? "desc" : "asc", usage: params[:usage], alcohol: params[:alcohol], q: params[:q]), class: "hover:text-gray-700" do %>
+              Alkohol %
+              <% if params[:sort] == "alcoholic_content" %>
+                <%= params[:direction] == "asc" ? "↑" : "↓" %>
+              <% end %>
+            <% end %>
+          </th>
+          <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            ml/Einheit
+          </th>
+          <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= link_to admin_ingredients_path(sort: "recipes_count", direction: params[:sort] == "recipes_count" && params[:direction] == "asc" ? "desc" : "asc", usage: params[:usage], alcohol: params[:alcohol], q: params[:q]), class: "hover:text-gray-700" do %>
+              Rezepte
+              <% if params[:sort] == "recipes_count" %>
+                <%= params[:direction] == "asc" ? "↑" : "↓" %>
+              <% end %>
+            <% end %>
+          </th>
+          <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <%= link_to admin_ingredients_path(sort: "created_at", direction: params[:sort] == "created_at" && params[:direction] == "asc" ? "desc" : "asc", usage: params[:usage], alcohol: params[:alcohol], q: params[:q]), class: "hover:text-gray-700" do %>
+              Erstellt
+              <% if params[:sort] == "created_at" %>
+                <%= params[:direction] == "asc" ? "↑" : "↓" %>
+              <% end %>
+            <% end %>
+          </th>
+          <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Aktionen
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @ingredients.each do |ingredient| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 text-sm text-gray-900">
+              <%= ingredient.id %>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-900 font-medium">
+              <%= ingredient.name %>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-500">
+              <%= ingredient.plural_name %>
+            </td>
+            <td class="px-4 py-3 text-sm text-center">
+              <% if ingredient.alcoholic_content && ingredient.alcoholic_content > 0 %>
+                <span class="px-2 py-1 text-xs font-semibold rounded bg-red-100 text-red-800">
+                  <%= ingredient.alcoholic_content.round(1) %>%
+                </span>
+              <% else %>
+                <span class="text-gray-400">-</span>
+              <% end %>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-900 text-center">
+              <%= ingredient.ml_per_unit&.round(1) || "-" %>
+            </td>
+            <td class="px-4 py-3 text-sm text-center">
+              <% count = ingredient.recipes_count.to_i %>
+              <% if count > 0 %>
+                <span class="px-2 py-1 text-xs font-semibold rounded <%= count > 10 ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' %>">
+                  <%= count %>
+                </span>
+              <% else %>
+                <span class="px-2 py-1 text-xs font-semibold rounded bg-gray-100 text-gray-600">
+                  0
+                </span>
+              <% end %>
+            </td>
+            <td class="px-4 py-3 text-sm text-gray-500">
+              <%= l(ingredient.created_at, format: :short) %>
+            </td>
+            <td class="px-4 py-3 text-sm">
+              <div class="flex gap-2 items-center">
+                <%= link_to "Bearbeiten", edit_admin_ingredient_path(ingredient), class: "text-blue-600 hover:underline" %>
+                <% if ingredient.recipes_count.to_i == 0 %>
+                  <%= button_to "Löschen",
+                    admin_ingredient_path(ingredient),
+                    method: :delete,
+                    data: { turbo_confirm: "Sind Sie sicher, dass Sie diese Zutat löschen möchten?" },
+                    class: "text-red-600 hover:underline" %>
+                <% else %>
+                  <span class="text-gray-400 cursor-not-allowed" title="Wird in <%= ingredient.recipes_count.to_i %> Rezept(en) verwendet">Löschen</span>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-6 flex justify-center">
+    <%== @pagy.series_nav %>
+  </div>
+<% else %>
+  <div class="text-center py-12 bg-white rounded-lg border border-gray-200">
+    <div class="text-gray-400 mb-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+      </svg>
+    </div>
+    <h3 class="text-lg font-medium text-gray-900">Keine Zutaten gefunden</h3>
+    <p class="text-gray-500">Versuchen Sie andere Filter oder erstellen Sie eine neue Zutat.</p>
+  </div>
+<% end %>

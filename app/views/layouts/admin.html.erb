@@ -36,7 +36,11 @@
                   </span>
                 <% end %>
               <% end %>
-              
+
+              <%= link_to "Rezepte", admin_recipes_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipes'}" %>
+
+              <%= link_to "Zutaten", admin_ingredients_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'ingredients'}" %>
+
               <%= link_to "Zurück zur Seite", root_path, class: "hover:text-cs-gold transition opacity-70" %>
             </div>
           </div>
