@@ -1,0 +1,158 @@
+<div class="max-w-4xl mx-auto">
+  <div class="mb-6">
+    <%= link_to admin_recipe_suggestions_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
+      <i class="fas fa-chevron-left"></i>
+      Zurück zur Übersicht
+    <% end %>
+
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2"><%= @suggestion.title %></h1>
+        <div class="flex items-center gap-3 text-sm text-gray-600">
+          <span>von <strong><%= @suggestion.user.username %></strong></span>
+          <span>•</span>
+          <span>Eingereicht <%= l(@suggestion.created_at, format: :short) %></span>
+        </div>
+      </div>
+      <%= render "shared/suggestion_status_badge", suggestion: @suggestion %>
+    </div>
+  </div>
+
+  <!-- Actions for Pending Suggestions -->
+  <% if @suggestion.status_pending? %>
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+      <h3 class="font-semibold text-blue-900 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-gavel"></i>
+        Vorschlag prüfen
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Approve -->
+        <div class="bg-white rounded-lg border border-green-200 p-4">
+          <h4 class="font-semibold text-green-900 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-check-circle"></i>
+            Genehmigen
+          </h4>
+          <p class="text-sm text-gray-700 mb-4">
+            Erstellt ein veröffentlichtes Rezept mit dem Originalautor als Besitzer.
+          </p>
+          <%= button_to "Vorschlag genehmigen",
+            approve_admin_recipe_suggestion_path(@suggestion),
+            method: :post,
+            class: "btn btn-primary w-full",
+            data: { confirm: "Diesen Vorschlag genehmigen und als Rezept veröffentlichen?" } %>
+        </div>
+
+        <!-- Reject -->
+        <div class="bg-white rounded-lg border border-red-200 p-4">
+          <h4 class="font-semibold text-red-900 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-times-circle"></i>
+            Ablehnen
+          </h4>
+          <%= form_with url: reject_admin_recipe_suggestion_path(@suggestion), method: :post, class: "space-y-3" do |f| %>
+            <%= f.label :feedback, "Ablehnungsgrund (wird dem Benutzer angezeigt):", class: "label-field text-sm" %>
+            <%= f.text_area :feedback,
+              rows: 3,
+              placeholder: "Begründe kurz, warum dieser Vorschlag abgelehnt wird...",
+              class: "input-field text-sm",
+              required: true %>
+            <%= f.submit "Vorschlag ablehnen",
+              class: "btn btn-outline-danger w-full",
+              data: { confirm: "Diesen Vorschlag ablehnen?" } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Review Information (for reviewed suggestions) -->
+  <% if @suggestion.reviewed_at %>
+    <div class="card p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Prüfungsinformationen</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div>
+          <span class="text-gray-600">Geprüft am:</span>
+          <span class="font-medium"><%= l(@suggestion.reviewed_at, format: :long) %></span>
+        </div>
+        <div>
+          <span class="text-gray-600">Geprüft von:</span>
+          <span class="font-medium"><%= @suggestion.reviewed_by.username %></span>
+        </div>
+      </div>
+
+      <% if @suggestion.status_rejected? && @suggestion.feedback.present? %>
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
+          <p class="font-semibold text-red-900 mb-1">Ablehnungsgrund:</p>
+          <p class="text-red-800"><%= simple_format(@suggestion.feedback) %></p>
+        </div>
+      <% end %>
+
+      <% if @suggestion.status_approved? && @suggestion.published_recipe %>
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+          <p class="font-semibold text-green-900 mb-1">Veröffentlicht als:</p>
+          <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "text-green-800 link text-lg", target: "_blank" do %>
+            <%= @suggestion.published_recipe.title %>
+            <i class="fa-solid fa-external-link-alt ml-1 text-sm"></i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Description -->
+  <div class="card p-6 mb-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Beschreibung</h2>
+    <div class="prose max-w-none">
+      <%= simple_format(@suggestion.description) %>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  <% if @suggestion.tag_list.present? %>
+    <div class="card p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Tags</h2>
+      <div class="flex flex-wrap gap-2">
+        <% @suggestion.tag_list.split(',').map(&:strip).each do |tag| %>
+          <span class="inline-flex items-center px-3 py-1 text-sm font-medium bg-gray-100 text-gray-800 rounded-full">
+            <%= tag %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Ingredients -->
+  <div class="card p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">
+      Zutaten
+      <span class="text-sm font-normal text-gray-600">(<%= @ingredients.count %>)</span>
+    </h2>
+    <ul class="space-y-3">
+      <% @ingredients.each do |rsi| %>
+        <li class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+          <i class="fa-solid fa-circle text-xs text-gray-400 mt-1.5"></i>
+          <div class="flex-1">
+            <div class="font-medium">
+              <% if rsi.amount && rsi.unit %>
+                <span class="text-cs-dark-red"><%= rsi.amount %> <%= rsi.unit.display_name_for(rsi.amount) %></span>
+              <% elsif rsi.amount %>
+                <span class="text-cs-dark-red"><%= rsi.amount %>x</span>
+              <% end %>
+              <%= rsi.display_name.presence || rsi.ingredient.name %>
+            </div>
+            <div class="text-sm text-gray-600 space-x-3 mt-1">
+              <% if rsi.additional_info.present? %>
+                <span><i class="fa-solid fa-info-circle"></i> <%= rsi.additional_info %></span>
+              <% end %>
+              <% if rsi.is_optional %>
+                <span class="text-yellow-600"><i class="fa-solid fa-star-half-stroke"></i> Optional</span>
+              <% end %>
+              <% unless rsi.is_scalable %>
+                <span class="text-blue-600"><i class="fa-solid fa-lock"></i> Nicht skalierbar</span>
+              <% end %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

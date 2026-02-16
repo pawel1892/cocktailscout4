@@ -47,10 +47,73 @@
 
     <!-- Ingredients -->
     <div class="form-group">
-      <h3 class="text-lg font-bold mb-4">Zutaten</h3>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold">Zutaten</h3>
+        <button
+          v-if="ingredients.length > 0"
+          type="button"
+          @click="toggleAllPreview"
+          class="link text-sm"
+        >
+          <i :class="allInPreview ? 'fas fa-pencil' : 'fas fa-eye'" class="mr-1"></i>
+          {{ allInPreview ? 'Alle bearbeiten' : 'Alle Vorschau' }}
+        </button>
+      </div>
 
       <div v-for="(ingredient, index) in ingredients" :key="index" class="card p-4 mb-4">
-        <div class="space-y-4">
+        <!-- Preview Mode -->
+        <div v-if="ingredient.isPreview" class="flex items-start gap-2">
+          <span class="text-cs-gold mt-1">•</span>
+          <span class="flex-1">
+            <strong v-if="ingredient.amount">{{ formatIngredientAmount(ingredient) }}</strong>
+            {{ ingredient.displayName || ingredient.selectedIngredient?.name || 'Zutat auswählen' }}
+            <span v-if="ingredient.additionalInfo" class="text-gray-600">
+              ({{ ingredient.additionalInfo }})
+            </span>
+            <span v-if="ingredient.isOptional" class="text-sm text-gray-500 italic ml-1">
+              (optional)
+            </span>
+            <span v-if="!ingredient.isScalable" class="text-sm text-blue-600 ml-1">
+              <i class="fa-solid fa-lock"></i>
+            </span>
+          </span>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button
+              type="button"
+              @click="ingredient.isPreview = false"
+              class="text-gray-500 hover:text-cs-dark-red transition-colors"
+              title="Bearbeiten"
+            >
+              <i class="fas fa-pencil"></i>
+            </button>
+            <button
+              type="button"
+              @click="removeIngredient(index)"
+              :disabled="ingredients.length <= 2"
+              class="text-gray-400 hover:text-cs-error transition-colors"
+              :class="{ 'opacity-30 cursor-not-allowed': ingredients.length <= 2 }"
+              title="Entfernen"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Edit Mode -->
+        <div v-else class="space-y-4">
+          <!-- Header with Preview Button -->
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-700">Zutat {{ index + 1 }}</span>
+            <button
+              type="button"
+              @click="ingredient.isPreview = true"
+              class="text-gray-500 hover:text-cs-dark-red transition-colors text-sm"
+              title="Vorschau"
+            >
+              <i class="fas fa-eye mr-1"></i>Vorschau
+            </button>
+          </div>
+
           <!-- Ingredient Name -->
           <div>
             <label class="label-field">
@@ -177,8 +240,8 @@
     <!-- Hidden field for ingredients JSON -->
     <input type="hidden" :name="`${formName}[ingredients_json]`" :value="ingredientsJson" />
 
-    <!-- Visibility Checkbox -->
-    <div class="form-group">
+    <!-- Visibility Checkbox (only for recipes, not for suggestions) -->
+    <div v-if="formName === 'recipe'" class="form-group">
       <label class="flex items-center gap-2 cursor-pointer">
         <input
           type="checkbox"
@@ -194,8 +257,8 @@
       </p>
     </div>
 
-    <!-- Hidden field for is_public -->
-    <input type="hidden" :name="`${formName}[is_public]`" :value="isPublic ? 'true' : 'false'" />
+    <!-- Hidden field for is_public (only for recipes) -->
+    <input v-if="formName === 'recipe'" type="hidden" :name="`${formName}[is_public]`" :value="isPublic ? 'true' : 'false'" />
 
     <!-- Submit Button -->
     <div class="flex justify-end">
@@ -255,7 +318,11 @@ const unitsByCategory = computed(() => {
 })
 
 const unitCategories = computed(() => {
-  return Object.keys(unitsByCategory.value)
+  // Order categories: volume first (most common), then count, then special
+  const categoryOrder = ['volume', 'count', 'special']
+  const categories = Object.keys(unitsByCategory.value)
+
+  return categoryOrder.filter(cat => categories.includes(cat))
 })
 
 const categoryLabel = (category) => {
@@ -280,7 +347,8 @@ const initializeIngredients = () => {
       displayName: ing.displayName || '',
       isOptional: ing.isOptional || false,
       isScalable: ing.isScalable !== false,
-      showAdvanced: false
+      showAdvanced: false,
+      isPreview: false
     }))
   } else {
     // Start with 2 empty ingredients
@@ -288,18 +356,24 @@ const initializeIngredients = () => {
   }
 }
 
-const createEmptyIngredient = () => ({
-  selectedIngredient: null,
-  ingredientId: null,
-  ingredientName: '',
-  unitId: null,
-  amount: null,
-  additionalInfo: '',
-  displayName: '',
-  isOptional: false,
-  isScalable: true,
-  showAdvanced: false
-})
+const createEmptyIngredient = () => {
+  // Find cl unit as default (most common for cocktails)
+  const clUnit = props.units.find(u => u.name === 'cl')
+
+  return {
+    selectedIngredient: null,
+    ingredientId: null,
+    ingredientName: '',
+    unitId: clUnit?.id || null,
+    amount: null,
+    additionalInfo: '',
+    displayName: '',
+    isOptional: false,
+    isScalable: true,
+    showAdvanced: false,
+    isPreview: false
+  }
+}
 
 const addIngredient = () => {
   ingredients.value.push(createEmptyIngredient())
@@ -316,6 +390,49 @@ const updateIngredient = (index, selectedIngredient) => {
     ingredients.value[index].ingredientId = selectedIngredient.id
     ingredients.value[index].ingredientName = selectedIngredient.name
   }
+}
+
+// Get unit display name with correct plural form
+const getUnitDisplayName = (unitId, amount) => {
+  const unit = props.units.find(u => u.id === unitId)
+  if (!unit) return ''
+
+  // Use plural form if amount is not 1
+  if (amount && parseFloat(amount) !== 1 && unit.plural_name) {
+    return unit.plural_name
+  }
+
+  return unit.display_name
+}
+
+// Format ingredient amount with German number format and unit
+const formatIngredientAmount = (ingredient) => {
+  if (!ingredient.amount) return ''
+
+  // Convert to German number format (comma as decimal separator)
+  const amount = parseFloat(ingredient.amount)
+  const germanAmount = amount.toString().replace('.', ',')
+
+  // Add unit if present
+  if (ingredient.unitId) {
+    const unitName = getUnitDisplayName(ingredient.unitId, amount)
+    return `${germanAmount} ${unitName}`
+  }
+
+  return germanAmount
+}
+
+// Check if all ingredients are in preview mode
+const allInPreview = computed(() => {
+  return ingredients.value.length > 0 && ingredients.value.every(ing => ing.isPreview)
+})
+
+// Toggle all ingredients between preview and edit mode
+const toggleAllPreview = () => {
+  const newPreviewState = !allInPreview.value
+  ingredients.value.forEach(ing => {
+    ing.isPreview = newPreviewState
+  })
 }
 
 // Serialize ingredients to JSON for hidden field

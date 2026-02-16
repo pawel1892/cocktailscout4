@@ -1,0 +1,46 @@
+<% content_for :title, "Rezept vorschlagen - CocktailScout" %>
+
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <%= link_to recipe_suggestions_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
+      <i class="fas fa-chevron-left"></i>
+      Zurück zur Übersicht
+    <% end %>
+
+    <h1 class="text-2xl font-bold text-gray-800">Rezept vorschlagen</h1>
+  </div>
+
+  <!-- Info Callout -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+    <h3 class="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+      <i class="fa-solid fa-circle-info"></i>
+      So geht's weiter
+    </h3>
+    <div class="text-blue-800 space-y-2">
+      <p><strong>1.</strong> Fülle das Formular mit allen Details aus (Titel, Beschreibung, Tags und Zutaten)</p>
+      <p><strong>2.</strong> Ein Moderator prüft deinen Vorschlag</p>
+      <p><strong>3.</strong> Bei Genehmigung wird dein Rezept veröffentlicht - mit deinem Namen als Autor</p>
+      <p><strong>4.</strong> Du kannst deinen Vorschlag jederzeit bearbeiten, solange er noch nicht geprüft wurde</p>
+    </div>
+  </div>
+
+  <% if @errors.present? %>
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+      <ul class="list-disc list-inside text-red-700">
+        <% @errors.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card p-6">
+    <%= form_with url: recipe_suggestions_path, method: :post, local: true, class: "space-y-6" do |form| %>
+      <recipe-form
+        :initial-data='<%= raw @recipe_suggestion_form_data.to_json %>'
+        :units='<%= raw Unit.order(:category, :name).map { |u| { id: u.id, name: u.name, display_name: u.display_name, plural_name: u.plural_name, category: u.category, divisible: u.divisible } }.to_json %>'
+        form-name="recipe_suggestion"
+      ></recipe-form>
+    <% end %>
+  </div>
+</div>

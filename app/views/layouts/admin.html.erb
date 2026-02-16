@@ -39,6 +39,15 @@
 
               <%= link_to "Rezepte", admin_recipes_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipes'}" %>
 
+              <%= link_to admin_recipe_suggestions_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipe_suggestions'}" do %>
+                Rezeptvorschläge
+                <% if RecipeSuggestion.pending_review.count > 0 %>
+                  <span class="ml-1 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                    <%= RecipeSuggestion.pending_review.count %>
+                  </span>
+                <% end %>
+              <% end %>
+
               <%= link_to "Zutaten", admin_ingredients_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'ingredients'}" %>
 
               <%= link_to "Einheiten", admin_units_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'units'}" %>

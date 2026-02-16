@@ -21,6 +21,16 @@ Rails.application.routes.draw do
     resources :recipes  # Full CRUD
     resources :ingredients
     resources :units
+
+    resources :recipe_suggestions, only: [ :index, :show ] do
+      member do
+        post :approve
+        post :reject
+      end
+      collection do
+        get :count
+      end
+    end
   end
 
   resources :user_profiles, only: [ :show, :update ]
@@ -31,6 +41,8 @@ Rails.application.routes.draw do
     end
     resources :recipe_ingredients, only: [ :index ], path: "zutaten"
   end
+  resources :recipe_suggestions, path: "rezeptvorschlaege", only: [ :index, :new, :create, :show, :edit, :update ]
+
   resources :recipe_categories, path: "rezept-kategorien", only: [ :index ]
   resources :top_lists, path: "toplisten", only: [ :index ]
   resources :recipe_comments, only: [ :edit, :update, :destroy ]

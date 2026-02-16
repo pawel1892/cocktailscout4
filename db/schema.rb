@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_15_091958) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_15_165234) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -221,6 +221,43 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_15_091958) do
     t.index ["unit_id"], name: "index_recipe_ingredients_on_unit_id"
   end
 
+  create_table "recipe_suggestion_ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "additional_info"
+    t.decimal "amount", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.string "display_name"
+    t.bigint "ingredient_id", null: false
+    t.boolean "is_optional", default: false, null: false
+    t.boolean "is_scalable", default: true, null: false
+    t.integer "position", default: 0, null: false
+    t.bigint "recipe_suggestion_id", null: false
+    t.bigint "unit_id"
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_recipe_suggestion_ingredients_on_ingredient_id"
+    t.index ["position"], name: "index_recipe_suggestion_ingredients_on_position"
+    t.index ["recipe_suggestion_id"], name: "index_recipe_suggestion_ingredients_on_recipe_suggestion_id"
+    t.index ["unit_id"], name: "index_recipe_suggestion_ingredients_on_unit_id"
+  end
+
+  create_table "recipe_suggestions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.text "feedback"
+    t.bigint "published_recipe_id"
+    t.datetime "reviewed_at"
+    t.bigint "reviewed_by_id"
+    t.string "status", default: "pending", null: false
+    t.string "tag_list"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["created_at"], name: "index_recipe_suggestions_on_created_at"
+    t.index ["published_recipe_id"], name: "index_recipe_suggestions_on_published_recipe_id"
+    t.index ["reviewed_by_id"], name: "index_recipe_suggestions_on_reviewed_by_id"
+    t.index ["status"], name: "index_recipe_suggestions_on_status"
+    t.index ["user_id"], name: "index_recipe_suggestions_on_user_id"
+  end
+
   create_table "recipes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "alcohol_content", precision: 5, scale: 2
     t.decimal "average_rating", precision: 3, scale: 1, default: "0.0"
@@ -415,6 +452,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_15_091958) do
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_ingredients", "units"
+  add_foreign_key "recipe_suggestion_ingredients", "ingredients"
+  add_foreign_key "recipe_suggestion_ingredients", "recipe_suggestions"
+  add_foreign_key "recipe_suggestion_ingredients", "units"
+  add_foreign_key "recipe_suggestions", "recipes", column: "published_recipe_id"
+  add_foreign_key "recipe_suggestions", "users"
+  add_foreign_key "recipe_suggestions", "users", column: "reviewed_by_id"
   add_foreign_key "recipes", "users"
   add_foreign_key "recipes", "users", column: "updated_by_id"
   add_foreign_key "reports", "users", column: "reporter_id"
