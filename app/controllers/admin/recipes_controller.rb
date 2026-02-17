@@ -62,7 +62,9 @@ module Admin
             additionalInfo: ri.additional_info,
             displayName: ri.display_name,
             isOptional: ri.is_optional,
-            isScalable: ri.is_scalable
+            isScalable: ri.is_scalable,
+            needsReview: ri.needs_review,
+            oldDescription: ri.old_description
           }
         end
       }

@@ -103,7 +103,12 @@
         <div v-else class="space-y-4">
           <!-- Header with Preview Button -->
           <div class="flex justify-between items-center mb-2">
-            <span class="text-sm font-medium text-gray-700">Zutat {{ index + 1 }}</span>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-gray-700">Zutat {{ index + 1 }}</span>
+              <span v-if="ingredient.needsReview" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded" title="Dieser Eintrag konnte nicht automatisch migriert werden">
+                <i class="fas fa-exclamation-triangle mr-1"></i>Prüfung erforderlich
+              </span>
+            </div>
             <button
               type="button"
               @click="ingredient.isPreview = true"
@@ -112,6 +117,17 @@
             >
               <i class="fas fa-eye mr-1"></i>Vorschau
             </button>
+          </div>
+
+          <!-- Old Description (Migration Reference) -->
+          <div v-if="ingredient.oldDescription" class="bg-gray-50 border border-gray-200 rounded p-3">
+            <div class="flex items-start gap-2">
+              <i class="fas fa-info-circle text-gray-500 mt-0.5"></i>
+              <div class="flex-1">
+                <span class="text-xs font-medium text-gray-600 uppercase">Original-Beschreibung:</span>
+                <p class="text-sm text-gray-700 mt-1">{{ ingredient.oldDescription }}</p>
+              </div>
+            </div>
           </div>
 
           <!-- Ingredient Name -->
@@ -347,6 +363,8 @@ const initializeIngredients = () => {
       displayName: ing.displayName || '',
       isOptional: ing.isOptional || false,
       isScalable: ing.isScalable !== false,
+      needsReview: ing.needsReview || false,
+      oldDescription: ing.oldDescription || '',
       showAdvanced: false,
       isPreview: false
     }))
