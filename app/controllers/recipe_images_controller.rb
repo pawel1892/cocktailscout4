@@ -2,7 +2,7 @@ class RecipeImagesController < ApplicationController
   allow_unauthenticated_access only: %i[ index ]
 
   def new
-    @recipe = Recipe.find_by!(slug: params[:id])
+    @recipe = Recipe.find_by!(slug: params[:slug])
     add_breadcrumb "Rezepte", recipes_path
     add_breadcrumb @recipe.title, recipe_path(@recipe)
     add_breadcrumb "Bild hochladen"
@@ -15,7 +15,7 @@ class RecipeImagesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.find_by!(slug: params[:id])
+    @recipe = Recipe.find_by!(slug: params[:slug])
 
     @recipe_image = @recipe.recipe_images.build(
       user:        Current.user,
