@@ -1,6 +1,106 @@
 require 'rails_helper'
 
 RSpec.describe "RecipeImages", type: :request do
+  let(:image_file) { fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg") }
+
+  describe "GET /rezepte/:id/bilder" do
+    let(:user)   { create(:user) }
+    let(:recipe) { create(:recipe, title: "Tropical Storm", user: user) }
+
+    context "when authenticated" do
+      before { sign_in user }
+
+      it "returns http success" do
+        get bilder_recipe_path(recipe)
+        expect(response).to have_http_status(:success)
+      end
+
+      it "displays the recipe title for context" do
+        get bilder_recipe_path(recipe)
+        expect(response.body).to include("Tropical Storm")
+      end
+    end
+
+    context "when unauthenticated" do
+      it "redirects to login" do
+        get bilder_recipe_path(recipe)
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+  end
+
+  describe "POST /rezepte/:id/bilder" do
+    let(:user)   { create(:user) }
+    let(:recipe) { create(:recipe, user: user) }
+
+    context "when authenticated" do
+      before { sign_in user }
+
+      it "creates a recipe image and returns success JSON" do
+        expect {
+          post bilder_recipe_path(recipe), params: { image: image_file }
+        }.to change(RecipeImage, :count).by(1)
+
+        expect(response).to have_http_status(:success)
+        json = JSON.parse(response.body)
+        expect(json["success"]).to be true
+        expect(json["message"]).to be_present
+      end
+
+      it "saves the image as pending (approved_at is nil)" do
+        post bilder_recipe_path(recipe), params: { image: image_file }
+        expect(RecipeImage.last.approved_at).to be_nil
+      end
+
+      it "associates the image with the uploading user" do
+        post bilder_recipe_path(recipe), params: { image: image_file }
+        expect(RecipeImage.last.user).to eq(user)
+      end
+
+      it "associates the image with the correct recipe" do
+        post bilder_recipe_path(recipe), params: { image: image_file }
+        expect(RecipeImage.last.recipe).to eq(recipe)
+      end
+
+      context "with an invalid content type" do
+        let(:bad_file) { fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_document.txt"), "text/plain") }
+
+        it "returns 422 with error JSON" do
+          post bilder_recipe_path(recipe), params: { image: bad_file }
+          expect(response).to have_http_status(:unprocessable_content)
+          json = JSON.parse(response.body)
+          expect(json["success"]).to be false
+          expect(json["errors"]).to be_present
+        end
+
+        it "does not create a record" do
+          expect {
+            post bilder_recipe_path(recipe), params: { image: bad_file }
+          }.not_to change(RecipeImage, :count)
+        end
+      end
+
+      it "the uploaded image is not approved and is excluded from the gallery" do
+        post bilder_recipe_path(recipe), params: { image: image_file }
+        expect(RecipeImage.last.approved_at).to be_nil
+        expect(RecipeImage.approved).not_to include(RecipeImage.last)
+      end
+    end
+
+    context "when unauthenticated" do
+      it "redirects to login" do
+        post bilder_recipe_path(recipe), params: { image: image_file }
+        expect(response).to redirect_to(new_session_path)
+      end
+
+      it "does not create a record" do
+        expect {
+          post bilder_recipe_path(recipe), params: { image: image_file }
+        }.not_to change(RecipeImage, :count)
+      end
+    end
+  end
+
   describe "GET /cocktailgalerie" do
     let(:user) { create(:user, username: "cocktail_master") }
     let(:approver) { create(:user) }

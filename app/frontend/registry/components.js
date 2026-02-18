@@ -23,6 +23,7 @@ const components = {
   RecipeForm: () => import('../components/RecipeForm.vue'),
   IngredientAutocomplete: () => import('../components/IngredientAutocomplete.vue'),
   MarkdownEditor: () => import('../components/MarkdownEditor.vue'),
+  ImageUploader: () => import('../components/ImageUploader.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
