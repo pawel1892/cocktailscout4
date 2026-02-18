@@ -1,0 +1,24 @@
+<div class="mb-6 flex items-center gap-3">
+  <%= link_to recipe_path(@recipe), class: "text-gray-400 hover:text-gray-600 transition-colors" do %>
+    <i class="fas fa-arrow-left"></i>
+  <% end %>
+  <div>
+    <p class="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Foto hochladen für</p>
+    <h1 class="text-2xl font-bold leading-tight"><%= @recipe.title %></h1>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body p-4 sm:p-6">
+    <image-uploader
+      upload-url="<%= bilder_recipe_path(@recipe) %>"
+      :max-size-mb="10"
+    ></image-uploader>
+  </div>
+</div>
+
+<div class="mt-4">
+  <%= link_to recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
+    <i class="fas fa-arrow-left mr-1"></i> Zurück zum Rezept
+  <% end %>
+</div>

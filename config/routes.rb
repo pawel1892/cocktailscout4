@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   resources :recipes, path: "rezepte", only: [ :index, :show ] do
     member do
       post :comment, to: "recipe_comments#create"
+      get  :bilder,  to: "recipe_images#new"
+      post :bilder,  to: "recipe_images#create"
     end
   end
   resources :recipe_categories, path: "rezept-kategorien", only: [ :index ]

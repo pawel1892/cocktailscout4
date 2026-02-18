@@ -11,6 +11,54 @@ RSpec.describe RecipeImage, type: :model do
     it { should validate_presence_of(:image) }
   end
 
+  describe "image content type validation" do
+    let(:user)   { create(:user) }
+    let(:recipe) { create(:recipe, user: user) }
+
+    def build_with_type(content_type)
+      ri   = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), content_type)
+      ri.image.attach(file)
+      ri
+    end
+
+    %w[image/jpeg image/png image/webp image/gif].each do |type|
+      it "accepts #{type}" do
+        expect(build_with_type(type)).to be_valid
+      end
+    end
+
+    it "rejects unsupported content types" do
+      ri = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg")
+      ri.image.attach(file)
+      allow(ri.image.blob).to receive(:content_type).and_return("application/pdf")
+      expect(ri).not_to be_valid
+      expect(ri.errors[:image]).to include("muss ein JPEG, PNG, WebP oder GIF sein")
+    end
+  end
+
+  describe "image size validation" do
+    let(:user)   { create(:user) }
+    let(:recipe) { create(:recipe, user: user) }
+
+    it "accepts files within the 10 MB limit" do
+      ri   = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg")
+      ri.image.attach(file)
+      expect(ri).to be_valid
+    end
+
+    it "rejects files larger than 10 MB" do
+      ri   = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg")
+      ri.image.attach(file)
+      allow(ri.image.blob).to receive(:byte_size).and_return(11.megabytes.to_i)
+      expect(ri).not_to be_valid
+      expect(ri.errors[:image]).to include("darf nicht größer als 10 MB sein")
+    end
+  end
+
   describe "Active Storage" do
     it "has one attached image" do
       recipe_image = build(:recipe_image)

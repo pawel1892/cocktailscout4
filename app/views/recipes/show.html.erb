@@ -59,16 +59,34 @@
 </div>
 
 <!-- Image & Ingredients Section -->
+<% show_image_col = @recipe.approved_recipe_images.any? || Current.user %>
 <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-  <!-- Image (1 column on md+, above on sm) -->
-  <% if @recipe.approved_recipe_images.any? %>
+  <!-- Image column -->
+  <% if show_image_col %>
     <div class="md:col-span-1 md:order-2">
-      <recipe-image-gallery></recipe-image-gallery>
+      <% if @recipe.approved_recipe_images.any? %>
+        <recipe-image-gallery></recipe-image-gallery>
+        <% if Current.user %>
+          <div class="mt-2 text-center">
+            <%= link_to bilder_recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
+              <i class="fas fa-camera mr-1"></i> Bild hochladen
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="card h-full flex flex-col items-center justify-center py-10 px-4 text-center">
+          <i class="fas fa-camera text-4xl text-gray-300 mb-3"></i>
+          <p class="text-gray-500 text-sm mb-4">Noch keine Fotos vorhanden</p>
+          <%= link_to bilder_recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
+            <i class="fas fa-camera mr-1"></i> Bild hochladen
+          <% end %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 
-  <!-- Ingredients (2 columns on md+ when image present, full width otherwise) -->
-  <div class="<%= @recipe.approved_recipe_images.any? ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
+  <!-- Ingredients (2 columns on md+ when image col present, full width otherwise) -->
+  <div class="<%= show_image_col ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
     <div class="card h-full">
       <div class="card-body p-4 sm:p-6">
         <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
