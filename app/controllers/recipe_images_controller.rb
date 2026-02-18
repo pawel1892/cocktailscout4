@@ -17,10 +17,7 @@ class RecipeImagesController < ApplicationController
   def create
     @recipe = Recipe.find_by!(slug: params[:slug])
 
-    @recipe_image = @recipe.recipe_images.build(
-      user:        Current.user,
-      approved_at: nil
-    )
+    @recipe_image = @recipe.recipe_images.build(user: Current.user)
     @recipe_image.image.attach(params[:image])
 
     if @recipe_image.save

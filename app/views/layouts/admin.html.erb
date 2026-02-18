@@ -48,6 +48,14 @@
                 <% end %>
               <% end %>
 
+              <%= link_to admin_recipe_images_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipe_images'}" do %>
+                Bilder
+                <% pending = RecipeImage.pending.count %>
+                <% if pending > 0 %>
+                  <span class="ml-1 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"><%= pending %></span>
+                <% end %>
+              <% end %>
+
               <%= link_to "Zutaten", admin_ingredients_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'ingredients'}" %>
 
               <%= link_to "Einheiten", admin_units_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'units'}" %>

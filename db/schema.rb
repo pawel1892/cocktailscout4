@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_15_165234) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_161911) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -180,16 +180,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_15_165234) do
   end
 
   create_table "recipe_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "approved_at"
-    t.bigint "approved_by_id"
     t.datetime "created_at", null: false
+    t.datetime "moderated_at"
+    t.bigint "moderated_by_id"
+    t.text "moderation_reason"
     t.integer "old_id"
     t.bigint "recipe_id", null: false
+    t.string "state", default: "pending", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["approved_by_id"], name: "index_recipe_images_on_approved_by_id"
+    t.index ["moderated_by_id"], name: "index_recipe_images_on_moderated_by_id"
     t.index ["old_id"], name: "index_recipe_images_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_images_on_recipe_id"
+    t.index ["state"], name: "index_recipe_images_on_state"
     t.index ["user_id"], name: "index_recipe_images_on_user_id"
   end
 
@@ -448,7 +451,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_15_165234) do
   add_foreign_key "recipe_comments", "users", column: "last_editor_id"
   add_foreign_key "recipe_images", "recipes"
   add_foreign_key "recipe_images", "users"
-  add_foreign_key "recipe_images", "users", column: "approved_by_id"
+  add_foreign_key "recipe_images", "users", column: "moderated_by_id"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_ingredients", "units"

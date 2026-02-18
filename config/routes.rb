@@ -31,6 +31,16 @@ Rails.application.routes.draw do
         get :count
       end
     end
+
+    resources :recipe_images, only: [ :index, :show ] do
+      member do
+        post :approve
+        post :reject
+      end
+      collection do
+        get :count
+      end
+    end
   end
 
   resources :user_profiles, only: [ :show, :update ]
