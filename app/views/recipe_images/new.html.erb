@@ -1,0 +1,45 @@
+<div class="mb-6 flex items-center gap-3">
+  <%= link_to recipe_path(@recipe), class: "text-gray-400 hover:text-gray-600 transition-colors" do %>
+    <i class="fas fa-arrow-left"></i>
+  <% end %>
+  <div>
+    <p class="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Foto hochladen für</p>
+    <h1 class="text-2xl font-bold leading-tight"><%= @recipe.title %></h1>
+  </div>
+</div>
+
+<div class="callout-gold mb-4">
+  <p class="font-semibold flex items-center gap-2 mb-3">
+    <i class="fa-solid fa-camera-retro"></i>
+    Kurz bevor du hochlädst — das macht ein gutes Foto aus
+  </p>
+  <ul class="space-y-2.5 text-sm">
+    <li class="flex items-start gap-2">
+      <i class="fa-solid fa-camera mt-0.5 shrink-0"></i>
+      <span><strong>Selbst gemacht.</strong> Nur Fotos, die du selbst geknipst hast — Handy oder Kamera, egal. Hauptsache du warst dabei!</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <i class="fa-solid fa-scale-balanced mt-0.5 shrink-0"></i>
+      <span><strong>Kein fremdes Material.</strong> Bilder aus dem Internet, aus Büchern oder Zeitschriften dürfen wir leider nicht verwenden — das wäre eine Urheberrechtsverletzung und würde uns in echte rechtliche Schwierigkeiten bringen.</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <i class="fa-solid fa-robot mt-0.5 shrink-0"></i>
+      <span><strong>Kein KI-Brei.</strong> KI-generierte Bilder lehnen wir grundsätzlich ab. Sie sehen zwar hübsch aus, zeigen aber nicht wirklich das Rezept — und andere können sich denselben Einheitsbrei selbst generieren. Was wir wollen, sind echte Cocktails, wirklich zubereitet von echten Menschen.</span>
+    </li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-body p-4 sm:p-6">
+    <image-uploader
+      upload-url="<%= bilder_recipe_path(@recipe) %>"
+      :max-size-mb="10"
+    ></image-uploader>
+  </div>
+</div>
+
+<div class="mt-4">
+  <%= link_to recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
+    <i class="fas fa-arrow-left mr-1"></i> Zurück zum Rezept
+  <% end %>
+</div>

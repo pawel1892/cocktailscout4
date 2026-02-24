@@ -1,5 +1,8 @@
 class RecipesController < ApplicationController
+  include RecipesHelper
   allow_unauthenticated_access only: %i[ index show ]
+  before_action :set_recipe, only: %i[ show ]
+  before_action :authorize_view!, only: %i[ show ]
   helper_method :sort_column, :sort_direction
 
   def index
@@ -8,7 +11,7 @@ class RecipesController < ApplicationController
       title: "Cocktail-Rezepte",
       description: "Entdecke die besten Cocktail-Rezepte unserer Community. Filtere nach Bewertung, Zutaten und Tags."
     )
-    query = Recipe.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
+    query = Recipe.visible.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
 
     # Filters
     query = query.search_by_title(params[:q])
@@ -36,13 +39,6 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.includes(
-      :taggings,
-      :tags,
-      recipe_ingredients: :ingredient,
-      approved_recipe_images: [ :user, { image_attachment: :blob } ]
-    ).find_by!(slug: params[:id])
-
     add_breadcrumb "Rezepte", recipes_path
     add_breadcrumb @recipe.title
     set_recipe_meta_tags(@recipe)
@@ -57,6 +53,21 @@ class RecipesController < ApplicationController
   end
 
   private
+
+  def set_recipe
+    @recipe = Recipe.unscoped.includes(
+      :taggings,
+      :tags,
+      recipe_ingredients: [ :ingredient, :unit ],
+      approved_recipe_images: [ :user, { image_attachment: :blob } ]
+    ).find_by!(slug: params[:slug])
+  end
+
+  def authorize_view!
+    unless can_view_recipe?(@recipe)
+      redirect_to recipes_path, alert: "Rezept nicht gefunden oder keine Berechtigung."
+    end
+  end
 
   def sort_column
     %w[title average_rating alcohol_content visits_count users.username].include?(params[:sort]) ? params[:sort] : "visits_count"

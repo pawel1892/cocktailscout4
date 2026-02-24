@@ -17,7 +17,7 @@ RSpec.describe "Recipes", type: :request do
 
   describe "GET /rezepte/:slug" do
     let(:ingredient) { create(:ingredient, name: "Gin") }
-    let!(:recipe_ingredient) { create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 4, unit: "cl") }
+    let!(:recipe_ingredient) { create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 4) }
     let!(:comment) { create(:recipe_comment, recipe: recipe, body: "Yummy!", user: recipe.user) }
 
     it "returns http success and shows details" do
@@ -25,7 +25,7 @@ RSpec.describe "Recipes", type: :request do
       expect(response).to have_http_status(:success)
       expect(response.body).to include(recipe.title)
       expect(response.body).to include("Gin")
-      expect(response.body).to include("4.0 cl")
+      expect(response.body).to include("4 cl")
       expect(response.body).to include("Yummy!")
 
       # Meta Tags
@@ -38,58 +38,66 @@ RSpec.describe "Recipes", type: :request do
     end
 
     context "ingredient display" do
-      it "shows only the description when present" do
-        ingredient_with_desc = create(:ingredient, name: "Tequila")
+      it "shows amount + unit + ingredient name with additional_info" do
+        ingredient_with_info = create(:ingredient, name: "Tequila")
+        cl_unit = Unit.find_by(name: "cl")
         create(:recipe_ingredient,
           recipe: recipe,
-          ingredient: ingredient_with_desc,
-          amount: 1.0,
-          unit: "cl",
-          description: "1,5cl Tequila (weiss)"
+          ingredient: ingredient_with_info,
+          amount: 1.5,
+          unit: cl_unit,
+          additional_info: "premium"
         )
 
         get recipe_path(recipe)
 
         expect(response).to have_http_status(:success)
-        # Should show the description
-        expect(response.body).to include("1,5cl Tequila (weiss)")
-        # Should NOT show the calculated amount + ingredient name
-        expect(response.body).not_to match(/<strong>1\.0 cl<\/strong>\s+Tequila/)
+        # Should render the Vue recipe-scaling component
+        expect(response.body).to include("<recipe-scaling")
+        expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
+        # Should pass ingredient data with additional_info in JSON
+        expect(response.body).to include('"ingredient_name":"Tequila"')
+        expect(response.body).to include('"formatted_amount":"1,5 cl"')
+        expect(response.body).to include('"additional_info":"premium"')
       end
 
-      it "shows amount + unit + ingredient name when description is missing" do
+      it "shows amount + unit + ingredient name when no additional_info" do
         get recipe_path(recipe)
 
         expect(response).to have_http_status(:success)
-        # Should show the calculated values (from the let! recipe_ingredient without description)
-        expect(response.body).to include("4.0 cl")
-        expect(response.body).to include("Gin")
-        # Should show them in the correct format with <strong> tag
-        expect(response.body).to match(/<strong>4\.0 cl<\/strong>\s+Gin/)
+        # Should render the Vue recipe-scaling component
+        expect(response.body).to include("<recipe-scaling")
+        expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
+        # Should pass ingredient data in JSON (from the let! recipe_ingredient)
+        expect(response.body).to include('"ingredient_name":"Gin"')
+        expect(response.body).to include('"formatted_amount":"4 cl"')
       end
 
-      it "handles mix of ingredients with and without descriptions" do
-        # Ingredient with description
+      it "handles mix of ingredients with and without additional_info" do
+        # Ingredient with additional_info
         vodka = create(:ingredient, name: "Vodka")
+        cl_unit = Unit.find_by(name: "cl")
         create(:recipe_ingredient,
           recipe: recipe,
           ingredient: vodka,
           amount: 2.0,
-          unit: "cl",
-          description: "2cl Vodka (premium)"
+          unit: cl_unit,
+          additional_info: "premium"
         )
 
-        # Ingredient without description (Gin already created in let!)
+        # Ingredient without additional_info (Gin already created in let!)
 
         get recipe_path(recipe)
 
         expect(response).to have_http_status(:success)
-        # Should show description for Vodka
-        expect(response.body).to include("2cl Vodka (premium)")
-        expect(response.body).not_to match(/<strong>2\.0 cl<\/strong>\s+Vodka/)
-
-        # Should show calculated values for Gin
-        expect(response.body).to match(/<strong>4\.0 cl<\/strong>\s+Gin/)
+        # Should render the Vue recipe-scaling component
+        expect(response.body).to include("<recipe-scaling")
+        # Should pass both ingredients in JSON with correct data
+        expect(response.body).to include('"ingredient_name":"Vodka"')
+        expect(response.body).to include('"formatted_amount":"2 cl"')
+        expect(response.body).to include('"additional_info":"premium"')
+        expect(response.body).to include('"ingredient_name":"Gin"')
+        expect(response.body).to include('"formatted_amount":"4 cl"')
       end
     end
 

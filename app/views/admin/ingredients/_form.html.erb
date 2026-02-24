@@ -1,0 +1,105 @@
+<%= form_with model: [:admin, @ingredient], class: "space-y-6" do |f| %>
+  <!-- Error Messages -->
+  <% if @ingredient.errors.any? %>
+    <div class="bg-red-50 border-l-4 border-red-500 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@ingredient.errors.count, "Fehler") %> verhindert das Speichern:
+          </h3>
+          <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+            <% @ingredient.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Name -->
+  <div>
+    <%= f.label :name, "Name *", class: "label-field" %>
+    <%= f.text_field :name,
+      required: true,
+      class: "input-field",
+      placeholder: "z.B. Rum, Wodka, Limette..." %>
+    <p class="mt-1 text-sm text-gray-500">
+      Der Name der Zutat, wie er in Rezepten angezeigt wird.
+    </p>
+  </div>
+
+  <!-- Plural Name -->
+  <div>
+    <%= f.label :plural_name, "Pluralform", class: "label-field" %>
+    <%= f.text_field :plural_name,
+      class: "input-field",
+      placeholder: "z.B. Limetten (für Limette)" %>
+    <p class="mt-1 text-sm text-gray-500">
+      Optional: Die Pluralform des Namens. Wird verwendet, wenn mehrere Einheiten benötigt werden.
+    </p>
+  </div>
+
+  <!-- Description -->
+  <div>
+    <%= f.label :description, "Beschreibung", class: "label-field" %>
+    <%= f.text_area :description,
+      rows: 4,
+      class: "input-field",
+      placeholder: "Optional: Zusätzliche Informationen zur Zutat..." %>
+    <p class="mt-1 text-sm text-gray-500">
+      Optional: Eine Beschreibung oder zusätzliche Details zur Zutat.
+    </p>
+  </div>
+
+  <!-- Alcoholic Content -->
+  <div>
+    <%= f.label :alcoholic_content, "Alkoholgehalt (%)", class: "label-field" %>
+    <div class="relative">
+      <%= f.number_field :alcoholic_content,
+        min: 0,
+        max: 100,
+        step: 0.1,
+        value: @ingredient.alcoholic_content || 0,
+        class: "input-field pr-10",
+        placeholder: "0" %>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-gray-500 sm:text-sm">%</span>
+      </div>
+    </div>
+    <p class="mt-1 text-sm text-gray-500">
+      Der durchschnittliche Alkoholgehalt dieser Zutat in Prozent (0-100). Für alkoholfreie Zutaten 0 eingeben.
+    </p>
+  </div>
+
+  <!-- ml per unit -->
+  <div>
+    <%= f.label :ml_per_unit, "Milliliter pro Stück - Optional", class: "label-field" %>
+    <div class="relative">
+      <%= f.number_field :ml_per_unit,
+        min: 0,
+        step: 0.1,
+        class: "input-field pr-12",
+        placeholder: "Nur für stückzählbare Zutaten" %>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-gray-500 sm:text-sm">ml</span>
+      </div>
+    </div>
+    <p class="mt-1 text-sm text-gray-500">
+      Optional: Nur für Zutaten, die stückweise gezählt werden (z.B. Limetten, Zitronen). Gibt das durchschnittliche Volumen in Millilitern pro Stück an. <strong>Nicht für Flüssigkeiten</strong> verwenden.
+    </p>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex items-center justify-between pt-6 border-t">
+    <div class="flex gap-2">
+      <%= f.submit @ingredient.new_record? ? "Zutat erstellen" : "Änderungen speichern", class: "btn btn-primary" %>
+      <%= link_to "Abbrechen", admin_ingredients_path, class: "btn btn-outline" %>
+    </div>
+  </div>
+<% end %>

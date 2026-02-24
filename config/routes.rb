@@ -17,15 +17,44 @@ Rails.application.routes.draw do
         get :count
       end
     end
+
+    resources :recipes  # Full CRUD
+    resources :ingredients
+    resources :units
+
+    resources :recipe_suggestions, only: [ :index, :show ] do
+      member do
+        post :approve
+        post :reject
+      end
+      collection do
+        get :count
+      end
+    end
+
+    resources :recipe_images, only: [ :index, :show ] do
+      member do
+        post :approve
+        post :reject
+      end
+      collection do
+        get :count
+      end
+    end
   end
 
   resources :user_profiles, only: [ :show, :update ]
   resources :users, path: "benutzer", only: [ :index ]
-  resources :recipes, path: "rezepte", only: [ :index, :show ] do
+  resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
     member do
       post :comment, to: "recipe_comments#create"
+      get  :bilder,  to: "recipe_images#new"
+      post :bilder,  to: "recipe_images#create"
     end
+    resources :recipe_ingredients, only: [ :index ], path: "zutaten"
   end
+  resources :recipe_suggestions, path: "rezeptvorschlaege", only: [ :index, :new, :create, :show, :edit, :update ]
+
   resources :recipe_categories, path: "rezept-kategorien", only: [ :index ]
   resources :top_lists, path: "toplisten", only: [ :index ]
   resources :recipe_comments, only: [ :edit, :update, :destroy ]
@@ -44,6 +73,9 @@ Rails.application.routes.draw do
 
   # Ingredients API (for search)
   resources :ingredients, only: [ :index ]
+
+  # Units API (for recipe form)
+  resources :units, only: [ :index ]
 
   # Ingredient Collections API
   resources :ingredient_collections, only: [ :index, :show, :create, :update, :destroy ] do

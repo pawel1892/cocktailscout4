@@ -4,11 +4,59 @@ RSpec.describe RecipeImage, type: :model do
   describe "associations" do
     it { should belong_to(:recipe) }
     it { should belong_to(:user) }
-    it { should belong_to(:approved_by).class_name('User').optional }
+    it { should belong_to(:moderated_by).class_name('User').optional }
   end
 
   describe "validations" do
     it { should validate_presence_of(:image) }
+  end
+
+  describe "image content type validation" do
+    let(:user)   { create(:user) }
+    let(:recipe) { create(:recipe, user: user) }
+
+    def build_with_type(content_type)
+      ri   = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), content_type)
+      ri.image.attach(file)
+      ri
+    end
+
+    %w[image/jpeg image/png image/webp image/gif].each do |type|
+      it "accepts #{type}" do
+        expect(build_with_type(type)).to be_valid
+      end
+    end
+
+    it "rejects unsupported content types" do
+      ri = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg")
+      ri.image.attach(file)
+      allow(ri.image.blob).to receive(:content_type).and_return("application/pdf")
+      expect(ri).not_to be_valid
+      expect(ri.errors[:image]).to include("muss ein JPEG, PNG, WebP oder GIF sein")
+    end
+  end
+
+  describe "image size validation" do
+    let(:user)   { create(:user) }
+    let(:recipe) { create(:recipe, user: user) }
+
+    it "accepts files within the 10 MB limit" do
+      ri   = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg")
+      ri.image.attach(file)
+      expect(ri).to be_valid
+    end
+
+    it "rejects files larger than 10 MB" do
+      ri   = RecipeImage.new(recipe: recipe, user: user)
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "files", "test_image.jpg"), "image/jpeg")
+      ri.image.attach(file)
+      allow(ri.image.blob).to receive(:byte_size).and_return(11.megabytes.to_i)
+      expect(ri).not_to be_valid
+      expect(ri.errors[:image]).to include("darf nicht größer als 10 MB sein")
+    end
   end
 
   describe "Active Storage" do
@@ -54,37 +102,32 @@ RSpec.describe RecipeImage, type: :model do
   describe "scopes" do
     let(:user) { create(:user) }
     let(:recipe) { create(:recipe, user: user) }
-    let(:approver) { create(:user) }
+    let(:moderator) { create(:user) }
 
     before do
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
 
-      @approved_image = RecipeImage.new(
-        recipe: recipe,
-        user: user,
-        approved_at: Time.current,
-        approved_by: approver
-      )
+      @approved_image = RecipeImage.new(recipe: recipe, user: user, state: "approved",
+                                        moderated_at: Time.current, moderated_by: moderator)
       @approved_image.image.attach(file)
       @approved_image.save!
 
-      @pending_image = RecipeImage.new(
-        recipe: recipe,
-        user: user,
-        approved_at: nil
-      )
+      @pending_image = RecipeImage.new(recipe: recipe, user: user, state: "pending")
       @pending_image.image.attach(file)
       @pending_image.save!
+
+      @rejected_image = RecipeImage.new(recipe: recipe, user: user, state: "rejected",
+                                        moderated_at: Time.current, moderated_by: moderator,
+                                        moderation_reason: "Inappropriate content")
+      @rejected_image.image.attach(file)
+      @rejected_image.save!
     end
 
     describe ".approved" do
       it "returns only approved images" do
         expect(RecipeImage.approved).to include(@approved_image)
         expect(RecipeImage.approved).not_to include(@pending_image)
-      end
-
-      it "returns images with approved_at set" do
-        expect(RecipeImage.approved.all? { |img| img.approved_at.present? }).to be true
+        expect(RecipeImage.approved).not_to include(@rejected_image)
       end
     end
 
@@ -92,39 +135,80 @@ RSpec.describe RecipeImage, type: :model do
       it "returns only pending images" do
         expect(RecipeImage.pending).to include(@pending_image)
         expect(RecipeImage.pending).not_to include(@approved_image)
+        expect(RecipeImage.pending).not_to include(@rejected_image)
       end
+    end
 
-      it "returns images with approved_at nil" do
-        expect(RecipeImage.pending.all? { |img| img.approved_at.nil? }).to be true
+    describe ".rejected" do
+      it "returns only rejected images" do
+        expect(RecipeImage.rejected).to include(@rejected_image)
+        expect(RecipeImage.rejected).not_to include(@approved_image)
+        expect(RecipeImage.rejected).not_to include(@pending_image)
       end
     end
   end
 
-  describe "approval workflow" do
+  describe "moderation workflow" do
     let(:user) { create(:user) }
     let(:recipe) { create(:recipe, user: user) }
-    let(:approver) { create(:user) }
+    let(:moderator) { create(:user) }
 
-    it "can be created without approval" do
+    def build_recipe_image
+      ri = RecipeImage.new(recipe: recipe, user: user)
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
-      recipe_image = RecipeImage.new(recipe: recipe, user: user)
-      recipe_image.image.attach(file)
-      recipe_image.save!
-
-      expect(recipe_image.approved_at).to be_nil
-      expect(recipe_image.approved_by).to be_nil
+      ri.image.attach(file)
+      ri.save!
+      ri
     end
 
-    it "can be approved by setting approved_at and approved_by" do
-      file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
-      recipe_image = RecipeImage.new(recipe: recipe, user: user)
-      recipe_image.image.attach(file)
-      recipe_image.save!
+    it "is created with pending state by default" do
+      ri = build_recipe_image
+      expect(ri.state).to eq("pending")
+      expect(ri.pending?).to be true
+      expect(ri.moderated_at).to be_nil
+      expect(ri.moderated_by).to be_nil
+    end
 
-      recipe_image.update!(approved_at: Time.current, approved_by: approver)
+    describe "#approve!" do
+      it "sets state to approved" do
+        ri = build_recipe_image
+        ri.approve!(moderator)
+        expect(ri.reload.state).to eq("approved")
+        expect(ri.approved?).to be true
+      end
 
-      expect(recipe_image.approved_at).to be_present
-      expect(recipe_image.approved_by).to eq(approver)
+      it "records the moderator and timestamp" do
+        ri = build_recipe_image
+        ri.approve!(moderator)
+        ri.reload
+        expect(ri.moderated_by).to eq(moderator)
+        expect(ri.moderated_at).to be_present
+      end
+    end
+
+    describe "#reject!" do
+      it "sets state to rejected" do
+        ri = build_recipe_image
+        ri.reject!(moderator, "Inappropriate content")
+        expect(ri.reload.state).to eq("rejected")
+        expect(ri.rejected?).to be true
+      end
+
+      it "records the moderator, timestamp, and reason" do
+        ri = build_recipe_image
+        ri.reject!(moderator, "Inappropriate content")
+        ri.reload
+        expect(ri.moderated_by).to eq(moderator)
+        expect(ri.moderated_at).to be_present
+        expect(ri.moderation_reason).to eq("Inappropriate content")
+      end
+
+      it "allows rejection without a reason" do
+        ri = build_recipe_image
+        ri.reject!(moderator, nil)
+        expect(ri.reload.state).to eq("rejected")
+        expect(ri.moderation_reason).to be_nil
+      end
     end
   end
 

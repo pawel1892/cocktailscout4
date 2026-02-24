@@ -44,6 +44,13 @@
                 </span>
               </a>
               <a
+                href="/rezeptvorschlaege"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-lightbulb"></i>
+                Meine Rezeptvorschläge
+              </a>
+              <a
                 href="/email_aendern"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
               >
@@ -69,6 +76,20 @@
                   class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
                 >
                   {{ reportCount }}
+                </span>
+              </a>
+              <a
+                v-if="user.can_moderate_recipe"
+                href="/admin/recipe_suggestions"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-lightbulb"></i>
+                Rezeptvorschläge
+                <span
+                  v-if="suggestionCount > 0"
+                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
+                >
+                  {{ suggestionCount }}
                 </span>
               </a>
             </div>
@@ -109,8 +130,9 @@ const initialMode = ref('login') // 'login' or 'register'
 const showUserMenu = ref(false)
 const unreadCount = ref(0)
 const reportCount = ref(0)
+const suggestionCount = ref(0)
 
-const totalNotifications = computed(() => unreadCount.value + reportCount.value)
+const totalNotifications = computed(() => unreadCount.value + reportCount.value + suggestionCount.value)
 
 const openLogin = () => {
   initialMode.value = 'login'
@@ -170,14 +192,30 @@ const fetchReportCount = async () => {
   }
 }
 
+const fetchSuggestionCount = async () => {
+  if (!isAuthenticated.value || !user.value?.can_moderate_recipe) return
+
+  try {
+    const response = await fetch('/admin/recipe_suggestions/count')
+    if (response.ok) {
+      const data = await response.json()
+      suggestionCount.value = data.count
+    }
+  } catch (error) {
+    console.error('Failed to fetch suggestion count:', error)
+  }
+}
+
 // Fetch unread count on mount and when authentication status changes
 watch(isAuthenticated, (newValue) => {
   if (newValue) {
     fetchUnreadCount()
     if (user.value?.is_moderator) fetchReportCount()
+    if (user.value?.can_moderate_recipe) fetchSuggestionCount()
   } else {
     unreadCount.value = 0
     reportCount.value = 0
+    suggestionCount.value = 0
   }
 }, { immediate: true })
 
@@ -186,10 +224,12 @@ onMounted(() => {
   if (isAuthenticated.value) {
     fetchUnreadCount()
     if (user.value?.is_moderator) fetchReportCount()
-    
+    if (user.value?.can_moderate_recipe) fetchSuggestionCount()
+
     setInterval(() => {
       fetchUnreadCount()
       if (user.value?.is_moderator) fetchReportCount()
+      if (user.value?.can_moderate_recipe) fetchSuggestionCount()
     }, 60000)
   }
 })

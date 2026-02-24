@@ -52,7 +52,7 @@ class UserProfilesController < ApplicationController
         forum_posts_count: @user.forum_posts.count
       }
     else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_content
     end
   end
 

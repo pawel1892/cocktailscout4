@@ -6,6 +6,16 @@ FactoryBot.define do
     association :user
     alcohol_content { 15.5 }
     total_volume { 20.0 }
+    is_public { true }  # Published by default for tests
+    is_deleted { false }
+
+    trait :draft do
+      is_public { false }
+    end
+
+    trait :deleted do
+      is_deleted { true }
+    end
 
     trait :with_ingredients do
       transient do

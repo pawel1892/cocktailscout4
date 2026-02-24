@@ -1,0 +1,1 @@
+This is a plain text file used in tests to simulate an invalid upload type.

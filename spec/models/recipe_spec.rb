@@ -195,5 +195,232 @@ RSpec.describe Recipe, type: :model do
         expect(result1.pluck(:id).sort).to eq(result2.pluck(:id).sort)
       end
     end
+
+    describe "visibility scopes" do
+      let!(:published_recipe) { create(:recipe, is_public: true, is_deleted: false) }
+      let!(:draft_recipe) { create(:recipe, :draft) }
+      let!(:deleted_recipe) { create(:recipe, :deleted) }
+      let!(:deleted_draft) { create(:recipe, is_public: false, is_deleted: true) }
+
+      describe ".published" do
+        it "returns only published recipes" do
+          expect(Recipe.published).to include(published_recipe)
+          expect(Recipe.published).not_to include(draft_recipe, deleted_recipe, deleted_draft)
+        end
+      end
+
+      describe ".not_deleted" do
+        it "returns only non-deleted recipes" do
+          # Use unscoped to bypass default scope
+          expect(Recipe.unscoped.not_deleted).to include(published_recipe, draft_recipe)
+          expect(Recipe.unscoped.not_deleted).not_to include(deleted_recipe, deleted_draft)
+        end
+      end
+
+      describe ".visible" do
+        it "returns only published and non-deleted recipes" do
+          expect(Recipe.visible).to include(published_recipe)
+          expect(Recipe.visible).not_to include(draft_recipe, deleted_recipe, deleted_draft)
+        end
+      end
+
+      describe ".drafts" do
+        it "returns only draft recipes" do
+          expect(Recipe.drafts).to include(draft_recipe)
+          expect(Recipe.drafts).not_to include(published_recipe, deleted_recipe)
+        end
+      end
+
+      describe "default scope" do
+        it "excludes deleted recipes by default" do
+          expect(Recipe.all).to include(published_recipe, draft_recipe)
+          expect(Recipe.all).not_to include(deleted_recipe, deleted_draft)
+        end
+
+        it "can be bypassed with unscoped" do
+          expect(Recipe.unscoped.all).to include(published_recipe, draft_recipe, deleted_recipe, deleted_draft)
+        end
+      end
+    end
+  end
+
+  describe "Draft and publish methods" do
+    let(:recipe) { create(:recipe, :draft) }
+
+    describe "#draft?" do
+      it "returns true for draft recipes" do
+        expect(recipe.draft?).to be true
+      end
+
+      it "returns false for published recipes" do
+        recipe.update!(is_public: true)
+        expect(recipe.draft?).to be false
+      end
+    end
+
+    describe "#publish!" do
+      it "publishes a draft recipe" do
+        expect {
+          recipe.publish!
+        }.to change { recipe.reload.is_public }.from(false).to(true)
+      end
+
+      it "makes the recipe visible" do
+        recipe.publish!
+        expect(Recipe.visible).to include(recipe)
+      end
+    end
+
+    describe "#soft_delete!" do
+      let(:published_recipe) { create(:recipe) }
+
+      it "marks recipe as deleted" do
+        expect {
+          published_recipe.soft_delete!
+        }.to change { published_recipe.reload.is_deleted }.from(false).to(true)
+      end
+
+      it "removes recipe from default scope" do
+        published_recipe.soft_delete!
+        expect(Recipe.all).not_to include(published_recipe)
+      end
+
+      it "can still be accessed with unscoped" do
+        published_recipe.soft_delete!
+        expect(Recipe.unscoped.find(published_recipe.id)).to eq(published_recipe)
+      end
+    end
+  end
+
+  describe "Alcohol calculations" do
+    let(:recipe) { create(:recipe) }
+    let(:cl_unit) { Unit.find_or_create_by!(name: "cl") { |u| u.display_name = "cl"; u.plural_name = "cl"; u.category = "volume"; u.ml_ratio = 10.0 } }
+    let(:ml_unit) { Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0 } }
+    let(:vodka) { create(:ingredient, name: "Vodka", alcoholic_content: 40.0) }
+    let(:orange_juice) { create(:ingredient, name: "Orange Juice", alcoholic_content: 0.0) }
+    let(:triple_sec) { create(:ingredient, name: "Triple Sec", alcoholic_content: 30.0) }
+
+    describe "#total_volume_in_ml" do
+      it "calculates total volume from all ingredients" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+        recipe.reload
+
+        expect(recipe.total_volume_in_ml.to_f).to eq(150.0) # 5cl + 10cl = 150ml
+      end
+
+      it "handles ingredients without volume" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: nil, amount: nil)
+
+        expect(recipe.total_volume_in_ml).to eq(50.0)
+      end
+
+      it "returns 0 when no ingredients have volume" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: nil, amount: nil)
+
+        expect(recipe.total_volume_in_ml).to eq(0.0)
+      end
+    end
+
+    describe "#alcohol_volume_in_ml" do
+      it "calculates total alcohol volume" do
+        # 5cl vodka at 40% = 50ml * 0.4 = 20ml alcohol
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        # 10cl OJ at 0% = 0ml alcohol
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        expect(recipe.reload.alcohol_volume_in_ml.to_f).to eq(20.0)
+      end
+
+      it "handles multiple alcoholic ingredients" do
+        # 5cl vodka at 40% = 50ml * 0.4 = 20ml
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        # 2cl triple sec at 30% = 20ml * 0.3 = 6ml
+        create(:recipe_ingredient, recipe: recipe, ingredient: triple_sec, unit: cl_unit, amount: 2.0)
+
+        expect(recipe.reload.alcohol_volume_in_ml.to_f).to eq(26.0)
+      end
+
+      it "returns 0 when no alcoholic ingredients" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        expect(recipe.reload.alcohol_volume_in_ml.to_f).to eq(0.0)
+      end
+
+      it "ignores ingredients without volume" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: triple_sec, unit: nil, amount: nil)
+
+        expect(recipe.reload.alcohol_volume_in_ml.to_f).to eq(20.0)
+      end
+    end
+
+    describe "#calculate_alcohol_content" do
+      it "calculates ABV percentage" do
+        # 5cl vodka (40%) + 10cl OJ (0%) = 15cl total
+        # Alcohol: 50ml * 0.4 = 20ml
+        # ABV: 20/150 * 100 = 13.3%
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        expect(recipe.reload.calculate_alcohol_content.to_f).to eq(13.3)
+      end
+
+      it "rounds to 1 decimal place" do
+        # 6cl vodka (40%) + 10cl OJ (0%) = 16cl total
+        # Alcohol: 60ml * 0.4 = 24ml
+        # ABV: 24/160 * 100 = 15.0%
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 6.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        expect(recipe.reload.calculate_alcohol_content.to_f).to eq(15.0)
+      end
+
+      it "returns 0 when total volume is 0" do
+        expect(recipe.reload.calculate_alcohol_content.to_f).to eq(0.0)
+      end
+
+      it "returns 0 when no alcoholic ingredients" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        expect(recipe.reload.calculate_alcohol_content.to_f).to eq(0.0)
+      end
+
+      it "handles high-proof spirits correctly" do
+        pure_alcohol = create(:ingredient, name: "Pure Alcohol", alcoholic_content: 100.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: pure_alcohol, unit: cl_unit, amount: 5.0)
+
+        expect(recipe.reload.calculate_alcohol_content.to_f).to eq(100.0)
+      end
+    end
+
+    describe "#update_computed_fields!" do
+      it "updates total_volume field in database" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        recipe.reload.update_computed_fields!
+
+        expect(recipe.reload.total_volume.to_f).to eq(150.0)
+      end
+
+      it "updates alcohol_content field in database" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: cl_unit, amount: 5.0)
+        create(:recipe_ingredient, recipe: recipe, ingredient: orange_juice, unit: cl_unit, amount: 10.0)
+
+        recipe.reload.update_computed_fields!
+
+        expect(recipe.reload.alcohol_content.to_f).to eq(13.3)
+      end
+
+      it "rounds total_volume to 1 decimal place" do
+        create(:recipe_ingredient, recipe: recipe, ingredient: vodka, unit: ml_unit, amount: 33.333)
+
+        recipe.update_computed_fields!
+
+        expect(recipe.reload.total_volume.to_f).to eq(33.3)
+      end
+    end
   end
 end

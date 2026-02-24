@@ -64,11 +64,11 @@ module StructuredDataHelper
 
   # Format recipe ingredients as array of strings
   def recipe_ingredients_list(recipe)
-    recipe.recipe_ingredients.includes(:ingredient).map do |ri|
+    recipe.recipe_ingredients.includes(:ingredient, :unit).map do |ri|
       parts = []
-      parts << "#{ri.amount} #{ri.unit}" if ri.amount.present?
-      parts << ri.ingredient.name
-      parts << "(#{ri.description})" if ri.description.present?
+      parts << ri.formatted_amount if ri.formatted_amount.present?
+      parts << ri.formatted_ingredient_name
+      parts << "(#{ri.additional_info})" if ri.additional_info.present?
       parts.join(" ")
     end
   end

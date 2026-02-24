@@ -3,12 +3,21 @@
   <%= recipe_structured_data(@recipe) %>
 <% end %>
 
+<!-- Draft Indicator -->
+<% if @recipe.draft? %>
+  <div class="callout callout-gold mb-4">
+    <i class="fas fa-file-alt"></i>
+    <strong>Entwurf:</strong> Dieses Rezept ist noch nicht veröffentlicht und nur für dich sichtbar.
+  </div>
+<% end %>
+
 <!-- Title -->
 <div class="mb-6 flex items-start justify-between gap-4">
   <div class="min-w-0 flex-1">
     <h1 class="text-3xl md:text-4xl font-bold mb-2 break-words"><%= @recipe.title %></h1>
     <!-- Tags -->
     <%= render "recipes/tag_list", tags: @recipe.tags %>
+
   </div>
 
   <div class="flex-shrink-0 pt-1">
@@ -43,15 +52,9 @@
           <%= user_badge(@recipe.user) %>
         </div>
 
-        <!-- Views, Alcohol & Volume in one row -->
+        <!-- Views -->
         <div class="text-xs text-gray-400 flex items-center sm:justify-end gap-3">
           <span><i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %></span>
-          <% if @recipe.alcohol_content.present? %>
-            <span><i class="fas fa-wine-glass-alt"></i> <%= number_to_percentage(@recipe.alcohol_content, precision: 1) %></span>
-          <% end %>
-          <% if @recipe.total_volume.present? %>
-            <span><i class="fas fa-flask"></i> <%= @recipe.total_volume %> cl</span>
-          <% end %>
         </div>
       </div>
     </div>
@@ -59,53 +62,76 @@
 </div>
 
 <!-- Image & Ingredients Section -->
+<% show_image_col = @recipe.approved_recipe_images.any? || Current.user %>
 <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-  <!-- Image (1 column on md+, above on sm) -->
-  <% if @recipe.approved_recipe_images.any? %>
+  <!-- Image column -->
+  <% if show_image_col %>
     <div class="md:col-span-1 md:order-2">
-      <recipe-image-gallery></recipe-image-gallery>
+      <% if @recipe.approved_recipe_images.any? %>
+        <recipe-image-gallery></recipe-image-gallery>
+        <% if Current.user %>
+          <div class="mt-2 text-center">
+            <%= link_to bilder_recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
+              <i class="fas fa-camera mr-1"></i> Bild hochladen
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="card h-full flex flex-col items-center justify-center py-10 px-4 text-center">
+          <i class="fas fa-camera text-4xl text-gray-300 mb-3"></i>
+          <p class="text-gray-500 text-sm mb-4">Noch keine Fotos vorhanden</p>
+          <%= link_to bilder_recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
+            <i class="fas fa-camera mr-1"></i> Bild hochladen
+          <% end %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 
-  <!-- Ingredients (2 columns on md+ when image present, full width otherwise) -->
-  <div class="<%= @recipe.approved_recipe_images.any? ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
-    <div class="card h-full">
-      <div class="card-body p-4 sm:p-6">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <i class="fas fa-list text-cs-gold"></i>
-          Zutaten
-        </h2>
-        <ul class="space-y-2">
-          <% @recipe.recipe_ingredients.each do |ri| %>
-            <li class="flex items-start gap-2">
-              <span class="text-cs-gold mt-1">•</span>
-              <span>
-                <% if ri.description.present? %>
-                  <%= ri.description %>
-                <% else %>
-                  <strong><%= ri.amount %> <%= ri.unit %></strong> <%= ri.ingredient.name %>
-                <% end %>
-              </span>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+  <!-- Ingredients (2 columns on md+ when image col present, full width otherwise) -->
+  <div class="<%= show_image_col ? 'md:col-span-2 md:order-1' : 'md:col-span-3' %>">
+    <recipe-scaling
+      recipe-slug="<%= @recipe.slug %>"
+      :scalable="<%= @recipe.has_scalable_ingredients? %>"
+      :initial-ingredients='<%= raw @recipe.recipe_ingredients.map { |ri|
+        {
+          id: ri.id,
+          amount: ri.amount,
+          unit_name: ri.unit&.name,
+          unit_display_name: ri.unit&.display_name,
+          ingredient_name: ri.formatted_ingredient_name,
+          ingredient_plural_name: ri.ingredient.plural_name,
+          formatted_amount: ri.formatted_amount,
+          additional_info: ri.additional_info,
+          is_scalable: ri.is_scalable,
+          is_optional: ri.is_optional,
+          needs_review: ri.needs_review,
+          old_description: ri.old_description
+        }
+      }.to_json %>'
+      :initial-alcohol-info='<%= raw({
+        total_volume_ml: @recipe.total_volume_in_ml.round(1),
+        alcohol_volume_ml: @recipe.alcohol_volume_in_ml.round(1),
+        alcohol_content_percent: @recipe.calculate_alcohol_content
+      }.to_json) %>'
+    ></recipe-scaling>
   </div>
 </div>
 
 <% if @recipe.approved_recipe_images.any? %>
-  <script>
-    window.recipeImages = <%= raw @recipe.approved_recipe_images.shuffle.map { |image|
-      {
-        id: image.id,
-        mediumUrl: url_for(recipe_image_url(image, style: :medium)),
-        largeUrl: url_for(recipe_image_url(image, style: :large)),
-        userBadge: user_badge(image.user),
-        uploadDate: l(image.created_at.to_date)
-      }
-    }.to_json %>;
-  </script>
+  <% content_for :head do %>
+    <script>
+      window.recipeImages = <%= raw @recipe.approved_recipe_images.shuffle.map { |image|
+        {
+          id: image.id,
+          mediumUrl: url_for(recipe_image_url(image, style: :medium)),
+          largeUrl: url_for(recipe_image_url(image, style: :large)),
+          userBadge: user_badge(image.user),
+          uploadDate: l(image.created_at.to_date)
+        }
+      }.to_json %>;
+    </script>
+  <% end %>
 <% end %>
 
 <!-- Preparation / Description -->
@@ -116,8 +142,8 @@
         <i class="fas fa-cocktail text-cs-gold"></i>
         Zubereitung
       </h2>
-      <div class="prose prose-sm sm:prose max-w-none text-gray-700">
-        <%= simple_format(@recipe.description) %>
+      <div class="prose prose-cs max-w-none">
+        <%= render_markdown(@recipe.description) %>
       </div>
     </div>
   </div>

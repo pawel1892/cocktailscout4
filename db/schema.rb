@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_161911) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -127,8 +127,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
     t.decimal "alcoholic_content", precision: 10
     t.datetime "created_at", null: false
     t.text "description"
+    t.decimal "ml_per_unit", precision: 10, scale: 2
     t.string "name"
     t.integer "old_id"
+    t.string "plural_name"
     t.string "slug"
     t.datetime "updated_at", null: false
   end
@@ -178,32 +180,85 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
   end
 
   create_table "recipe_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "approved_at"
-    t.bigint "approved_by_id"
     t.datetime "created_at", null: false
+    t.datetime "moderated_at"
+    t.bigint "moderated_by_id"
+    t.text "moderation_reason"
     t.integer "old_id"
     t.bigint "recipe_id", null: false
+    t.string "state", default: "pending", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["approved_by_id"], name: "index_recipe_images_on_approved_by_id"
+    t.index ["moderated_by_id"], name: "index_recipe_images_on_moderated_by_id"
     t.index ["old_id"], name: "index_recipe_images_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_images_on_recipe_id"
+    t.index ["state"], name: "index_recipe_images_on_state"
     t.index ["user_id"], name: "index_recipe_images_on_user_id"
   end
 
   create_table "recipe_ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "additional_info"
     t.decimal "amount", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.string "description"
+    t.string "display_name"
     t.bigint "ingredient_id", null: false
+    t.boolean "is_optional", default: false, null: false
+    t.boolean "is_scalable", default: true, null: false
+    t.boolean "needs_review", default: false, null: false
+    t.decimal "old_amount", precision: 10, scale: 2
+    t.string "old_description"
     t.integer "old_id"
+    t.string "old_unit"
     t.integer "position"
     t.bigint "recipe_id", null: false
     t.string "unit", default: "cl"
+    t.bigint "unit_id"
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
+    t.index ["is_optional"], name: "index_recipe_ingredients_on_is_optional"
+    t.index ["is_scalable"], name: "index_recipe_ingredients_on_is_scalable"
+    t.index ["needs_review"], name: "index_recipe_ingredients_on_needs_review"
     t.index ["old_id"], name: "index_recipe_ingredients_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
+    t.index ["unit_id"], name: "index_recipe_ingredients_on_unit_id"
+  end
+
+  create_table "recipe_suggestion_ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "additional_info"
+    t.decimal "amount", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.string "display_name"
+    t.bigint "ingredient_id", null: false
+    t.boolean "is_optional", default: false, null: false
+    t.boolean "is_scalable", default: true, null: false
+    t.integer "position", default: 0, null: false
+    t.bigint "recipe_suggestion_id", null: false
+    t.bigint "unit_id"
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_id"], name: "index_recipe_suggestion_ingredients_on_ingredient_id"
+    t.index ["position"], name: "index_recipe_suggestion_ingredients_on_position"
+    t.index ["recipe_suggestion_id"], name: "index_recipe_suggestion_ingredients_on_recipe_suggestion_id"
+    t.index ["unit_id"], name: "index_recipe_suggestion_ingredients_on_unit_id"
+  end
+
+  create_table "recipe_suggestions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.text "feedback"
+    t.bigint "published_recipe_id"
+    t.datetime "reviewed_at"
+    t.bigint "reviewed_by_id"
+    t.string "status", default: "pending", null: false
+    t.string "tag_list"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["created_at"], name: "index_recipe_suggestions_on_created_at"
+    t.index ["published_recipe_id"], name: "index_recipe_suggestions_on_published_recipe_id"
+    t.index ["reviewed_by_id"], name: "index_recipe_suggestions_on_reviewed_by_id"
+    t.index ["status"], name: "index_recipe_suggestions_on_status"
+    t.index ["user_id"], name: "index_recipe_suggestions_on_user_id"
   end
 
   create_table "recipes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -211,6 +266,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
     t.decimal "average_rating", precision: 3, scale: 1, default: "0.0"
     t.datetime "created_at", null: false
     t.text "description"
+    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_public", default: false, null: false
     t.integer "old_id"
     t.integer "ratings_count", default: 0
     t.string "slug"
@@ -220,6 +277,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
     t.bigint "updated_by_id"
     t.bigint "user_id", null: false
     t.integer "visits_count", default: 0
+    t.index ["is_deleted"], name: "index_recipes_on_is_deleted"
+    t.index ["is_public"], name: "index_recipes_on_is_public"
     t.index ["old_id"], name: "index_recipes_on_old_id"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
     t.index ["title"], name: "index_recipes_on_title", type: :fulltext
@@ -292,6 +351,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
     t.integer "taggings_count", default: 0
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "category", null: false
+    t.datetime "created_at", null: false
+    t.string "display_name", null: false
+    t.boolean "divisible", default: true, null: false
+    t.decimal "ml_ratio", precision: 10, scale: 4
+    t.string "name", null: false
+    t.string "plural_name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_units_on_name", unique: true
   end
 
   create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -380,9 +451,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_071004) do
   add_foreign_key "recipe_comments", "users", column: "last_editor_id"
   add_foreign_key "recipe_images", "recipes"
   add_foreign_key "recipe_images", "users"
-  add_foreign_key "recipe_images", "users", column: "approved_by_id"
+  add_foreign_key "recipe_images", "users", column: "moderated_by_id"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "recipe_ingredients", "units"
+  add_foreign_key "recipe_suggestion_ingredients", "ingredients"
+  add_foreign_key "recipe_suggestion_ingredients", "recipe_suggestions"
+  add_foreign_key "recipe_suggestion_ingredients", "units"
+  add_foreign_key "recipe_suggestions", "recipes", column: "published_recipe_id"
+  add_foreign_key "recipe_suggestions", "users"
+  add_foreign_key "recipe_suggestions", "users", column: "reviewed_by_id"
   add_foreign_key "recipes", "users"
   add_foreign_key "recipes", "users", column: "updated_by_id"
   add_foreign_key "reports", "users", column: "reporter_id"

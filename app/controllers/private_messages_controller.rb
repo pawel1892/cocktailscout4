@@ -46,7 +46,7 @@ class PrivateMessagesController < ApplicationController
         notice: "Nachricht wurde erfolgreich gesendet."
     else
       @receiver = User.find_by(id: message_params[:receiver_id])
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

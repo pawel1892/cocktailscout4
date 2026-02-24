@@ -110,17 +110,17 @@ RSpec.describe IngredientCollection, type: :model do
       it "returns recipes that can be made with available ingredients" do
         # Recipe with vodka and tonic (doable)
         vodka_tonic = create(:recipe, title: "Vodka Tonic")
-        vodka_tonic.recipe_ingredients.create!(ingredient: vodka, amount: 50.0, unit: "ml")
-        vodka_tonic.recipe_ingredients.create!(ingredient: tonic, amount: 100.0, unit: "ml")
+        vodka_tonic.recipe_ingredients.create!(ingredient: vodka, amount: 50.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
+        vodka_tonic.recipe_ingredients.create!(ingredient: tonic, amount: 100.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         # Recipe with vodka only (doable)
         vodka_shot = create(:recipe, title: "Vodka Shot")
-        vodka_shot.recipe_ingredients.create!(ingredient: vodka, amount: 40.0, unit: "ml")
+        vodka_shot.recipe_ingredients.create!(ingredient: vodka, amount: 40.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         # Recipe with rum and lime (not doable - missing rum)
         rum_punch = create(:recipe, title: "Rum Punch")
-        rum_punch.recipe_ingredients.create!(ingredient: rum, amount: 50.0, unit: "ml")
-        rum_punch.recipe_ingredients.create!(ingredient: lime, amount: 20.0, unit: "ml")
+        rum_punch.recipe_ingredients.create!(ingredient: rum, amount: 50.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
+        rum_punch.recipe_ingredients.create!(ingredient: lime, amount: 20.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         doable = collection.doable_recipes
 
@@ -131,8 +131,8 @@ RSpec.describe IngredientCollection, type: :model do
       it "does not return recipes requiring ingredients not in collection" do
         # Recipe requiring gin (not in collection)
         gin_tonic = create(:recipe, title: "Gin & Tonic")
-        gin_tonic.recipe_ingredients.create!(ingredient: gin, amount: 50.0, unit: "ml")
-        gin_tonic.recipe_ingredients.create!(ingredient: tonic, amount: 100.0, unit: "ml")
+        gin_tonic.recipe_ingredients.create!(ingredient: gin, amount: 50.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
+        gin_tonic.recipe_ingredients.create!(ingredient: tonic, amount: 100.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         expect(collection.doable_recipes).not_to include(gin_tonic)
       end
@@ -140,9 +140,9 @@ RSpec.describe IngredientCollection, type: :model do
       it "handles recipes with multiple ingredients correctly" do
         # 3-ingredient recipe that's doable
         complex_drink = create(:recipe, title: "Complex Drink")
-        complex_drink.recipe_ingredients.create!(ingredient: vodka, amount: 30.0, unit: "ml")
-        complex_drink.recipe_ingredients.create!(ingredient: tonic, amount: 90.0, unit: "ml")
-        complex_drink.recipe_ingredients.create!(ingredient: lime, amount: 15.0, unit: "ml")
+        complex_drink.recipe_ingredients.create!(ingredient: vodka, amount: 30.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
+        complex_drink.recipe_ingredients.create!(ingredient: tonic, amount: 90.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
+        complex_drink.recipe_ingredients.create!(ingredient: lime, amount: 15.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         expect(collection.doable_recipes).to include(complex_drink)
       end
@@ -156,10 +156,10 @@ RSpec.describe IngredientCollection, type: :model do
         collection.ingredients << vodka
 
         vodka_recipe = create(:recipe, title: "Vodka Recipe")
-        vodka_recipe.recipe_ingredients.create!(ingredient: vodka, amount: 50.0, unit: "ml")
+        vodka_recipe.recipe_ingredients.create!(ingredient: vodka, amount: 50.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         rum_recipe = create(:recipe, title: "Rum Recipe")
-        rum_recipe.recipe_ingredients.create!(ingredient: rum, amount: 50.0, unit: "ml")
+        rum_recipe.recipe_ingredients.create!(ingredient: rum, amount: 50.0, unit: Unit.find_or_create_by!(name: "ml") { |u| u.display_name = "ml"; u.plural_name = "ml"; u.category = "volume"; u.ml_ratio = 1.0; u.divisible = true })
 
         expect(collection.doable_recipes).to include(vodka_recipe)
         expect(collection.doable_recipes).not_to include(rum_recipe)

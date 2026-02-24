@@ -37,4 +37,14 @@ module ApplicationHelper
       end
     end
   end
+
+  def status_badge(recipe)
+    if recipe.is_deleted
+      content_tag :span, "Gelöscht", class: "px-2 py-1 text-xs font-semibold rounded bg-red-100 text-red-800"
+    elsif recipe.is_public
+      content_tag :span, "Veröffentlicht", class: "px-2 py-1 text-xs font-semibold rounded bg-green-100 text-green-800"
+    else
+      content_tag :span, "Entwurf", class: "px-2 py-1 text-xs font-semibold rounded bg-yellow-100 text-yellow-800"
+    end
+  end
 end

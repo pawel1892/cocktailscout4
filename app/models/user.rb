@@ -18,6 +18,9 @@ class User < ApplicationRecord
 
   has_many :ingredient_collections, dependent: :destroy
 
+  has_many :recipe_suggestions, dependent: :nullify
+  has_many :reviewed_suggestions, class_name: "RecipeSuggestion", foreign_key: "reviewed_by_id", dependent: :nullify
+
   has_many :sent_private_messages, -> { where(deleted_by_sender: false) },
     class_name: "PrivateMessage", foreign_key: "sender_id", dependent: :destroy
   has_many :received_private_messages, -> { where(deleted_by_receiver: false) },

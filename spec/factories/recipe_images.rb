@@ -2,8 +2,7 @@ FactoryBot.define do
   factory :recipe_image do
     association :recipe
     association :user
-    approved_by { nil }
-    approved_at { nil }
+    state { "pending" }
     old_id { nil }
 
     trait :with_image do
@@ -17,13 +16,20 @@ FactoryBot.define do
     end
 
     trait :approved do
-      approved_at { Time.current }
-      association :approved_by, factory: :user
+      state { "approved" }
+      moderated_at { Time.current }
+      association :moderated_by, factory: :user
+    end
+
+    trait :rejected do
+      state { "rejected" }
+      moderated_at { Time.current }
+      association :moderated_by, factory: :user
+      moderation_reason { "Inhalt nicht geeignet" }
     end
 
     trait :pending do
-      approved_at { nil }
-      approved_by { nil }
+      state { "pending" }
     end
   end
 end

@@ -1,0 +1,112 @@
+<% content_for :title, "Meine Rezeptvorschläge - CocktailScout" %>
+
+<div class="max-w-7xl mx-auto">
+  <div class="mb-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+      <h1 class="text-3xl font-bold text-gray-900">Meine Rezeptvorschläge</h1>
+      <%= link_to new_recipe_suggestion_path, class: "btn btn-primary flex items-center gap-2" do %>
+        <i class="fa-solid fa-plus"></i>
+        Neuen Vorschlag einreichen
+      <% end %>
+    </div>
+    <p class="text-gray-600">Hier kannst du Rezepte vorschlagen und den Status deiner Einreichungen verfolgen.</p>
+  </div>
+
+  <!-- Info Callout -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+    <h3 class="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+      <i class="fa-solid fa-circle-info"></i>
+      So funktioniert die Einreichung
+    </h3>
+    <ol class="text-blue-800 space-y-2 ml-5 list-decimal">
+      <li><strong>Rezept einreichen:</strong> Fülle das Formular mit Titel, Beschreibung, Tags und Zutaten aus</li>
+      <li><strong>Prüfung:</strong> Ein Moderator überprüft deinen Vorschlag</li>
+      <li><strong>Veröffentlichung:</strong> Bei Genehmigung wird dein Rezept veröffentlicht (mit deinem Namen als Autor)</li>
+      <li><strong>Bearbeitung:</strong> Du kannst wartende oder abgelehnte Vorschläge jederzeit bearbeiten und erneut einreichen</li>
+    </ol>
+  </div>
+
+  <!-- Suggestions List -->
+  <% if @suggestions.any? %>
+    <div class="space-y-4">
+      <% @suggestions.each do |suggestion| %>
+        <div class="card p-6">
+          <div class="flex flex-col lg:flex-row justify-between gap-4">
+            <div class="flex-1">
+              <div class="flex items-start gap-3">
+                <div class="flex-1">
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                    <%= link_to suggestion.title, recipe_suggestion_path(suggestion), class: "link" %>
+                  </h3>
+                  <div class="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-3">
+                    <span class="flex items-center gap-1">
+                      <i class="fa-solid fa-calendar"></i>
+                      Eingereicht <%= l(suggestion.created_at, format: :short) %>
+                    </span>
+                    <% if suggestion.reviewed_at %>
+                      <span class="flex items-center gap-1">
+                        <i class="fa-solid fa-check-circle"></i>
+                        Geprüft <%= l(suggestion.reviewed_at, format: :short) %>
+                      </span>
+                    <% end %>
+                  </div>
+                  <%= render "shared/suggestion_status_badge", suggestion: suggestion %>
+                </div>
+              </div>
+
+              <!-- Feedback for rejected suggestions -->
+              <% if suggestion.status_rejected? && suggestion.feedback.present? %>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
+                  <p class="font-semibold text-red-900 mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-exclamation-triangle"></i>
+                    Ablehnungsgrund:
+                  </p>
+                  <p class="text-red-800"><%= simple_format(suggestion.feedback) %></p>
+                </div>
+              <% end %>
+
+              <!-- Published recipe link for approved suggestions -->
+              <% if suggestion.status_approved? && suggestion.published_recipe %>
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+                  <p class="font-semibold text-green-900 mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i>
+                    Veröffentlicht als:
+                  </p>
+                  <%= link_to recipe_path(suggestion.published_recipe.slug), class: "text-green-800 link" do %>
+                    <%= suggestion.published_recipe.title %>
+                    <i class="fa-solid fa-arrow-right ml-1"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="flex flex-row lg:flex-col gap-2">
+              <%= link_to "Details", recipe_suggestion_path(suggestion), class: "btn btn-secondary text-center" %>
+              <% if suggestion.editable_by?(Current.user) %>
+                <%= link_to "Bearbeiten", edit_recipe_suggestion_path(suggestion), class: "btn btn-primary text-center" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Pagination -->
+    <% if @pagy.pages > 1 %>
+      <div class="mt-8">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
+  <% else %>
+    <!-- Empty State -->
+    <div class="card p-12 text-center">
+      <i class="fa-solid fa-lightbulb text-6xl text-gray-300 mb-4"></i>
+      <h3 class="text-xl font-semibold text-gray-700 mb-2">Noch keine Rezeptvorschläge</h3>
+      <p class="text-gray-600 mb-6">Reiche deinen ersten Cocktail-Vorschlag ein und teile ihn mit der Community!</p>
+      <%= link_to new_recipe_suggestion_path, class: "btn btn-primary inline-flex items-center gap-2" do %>
+        <i class="fa-solid fa-plus"></i>
+        Rezept vorschlagen
+      <% end %>
+    </div>
+  <% end %>
+</div>
