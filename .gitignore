@@ -56,6 +56,9 @@ node_modules
 # Ignore Claude Code files
 /.claude
 
+# Ignore local-only scripts
+/script/sync-storage
+
 # Ignore key files for decrypting credentials and more.
 /config/credentials/*.key
 
