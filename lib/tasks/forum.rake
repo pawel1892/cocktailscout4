@@ -1,3 +1,5 @@
+require "cgi"
+
 namespace :forum do
   desc "Backfill public_id for existing forum posts"
   task backfill_public_ids: :environment do
@@ -35,5 +37,35 @@ namespace :forum do
     end
 
     puts "Backfill complete! Processed #{processed} posts."
+  end
+
+  desc "Fix double-encoded HTML entities in forum post bodies (e.g. &amp; → &). Use DRY_RUN=true to preview."
+  task fix_html_entities: :environment do
+    dry_run = ENV["DRY_RUN"] == "true"
+    puts dry_run ? "DRY RUN - keine Änderungen werden gespeichert" : "Starte Fix für HTML-Entities in Forum-Posts..."
+
+    total = ForumPost.unscoped.count
+    puts "Gesamt: #{total} Posts"
+
+    affected = 0
+    checked = 0
+
+    ForumPost.unscoped.find_in_batches(batch_size: 500) do |batch|
+      batch.each do |post|
+        checked += 1
+        decoded = CGI.unescapeHTML(post.body)
+        next if decoded == post.body
+
+        affected += 1
+        if dry_run
+          puts "Post ##{post.public_id}: #{post.body.truncate(80).inspect} → #{decoded.truncate(80).inspect}"
+        else
+          post.update_column(:body, decoded)
+        end
+      end
+      print "\r#{checked}/#{total} geprüft, #{affected} betroffen..."
+    end
+
+    puts "\nFertig. #{affected} von #{total} Posts #{dry_run ? "würden" : "wurden"} korrigiert."
   end
 end
