@@ -20,11 +20,11 @@
 <% end %>
 
 <script>
-  window.galleryImages = <%= raw @recipe_images.map { |image|
+  window.galleryImages = <%= raw @recipe_images.select { |image| image.image.attached? }.map { |image|
     {
       id: image.id,
-      thumbnailUrl: url_for(recipe_image_url(image, style: :medium)),
-      largeUrl: url_for(recipe_image_url(image, style: :large)),
+      thumbnailUrl: url_for(image.image.variant(:medium)),
+      largeUrl: url_for(image.image.variant(:large)),
       recipeTitle: image.recipe.title,
       recipeUrl: recipe_path(image.recipe),
       userBadge: user_badge(image.user),

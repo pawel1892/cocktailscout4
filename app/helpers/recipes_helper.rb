@@ -1,14 +1,8 @@
 module RecipesHelper
   def recipe_thumbnail(recipe, size_class: "w-20 h-20")
-    if recipe.approved_recipe_images.any?
-      image = recipe.approved_recipe_images.sample.image
-      if image.attached?
-        # Use a variant if available, otherwise the image itself
-        # Assuming :thumb variant exists as per RecipeImage model
-        image_tag(image.variant(:thumb), class: "#{size_class} object-cover rounded-md")
-      else
-        placeholder_image(size_class)
-      end
+    attached_images = recipe.approved_recipe_images.select { |ri| ri.image.attached? }
+    if attached_images.any?
+      image_tag(attached_images.sample.image.variant(:thumb), class: "#{size_class} object-cover rounded-md")
     else
       placeholder_image(size_class)
     end

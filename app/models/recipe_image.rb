@@ -21,6 +21,8 @@ class RecipeImage < ApplicationRecord
 
   def approve!(moderator)
     update!(state: "approved", moderated_by: moderator, moderated_at: Time.current)
+    image.variant(:thumb).processed
+    image.variant(:medium).processed
   end
 
   def reject!(moderator, reason)
