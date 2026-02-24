@@ -48,7 +48,17 @@
     <!-- Ingredients -->
     <div class="form-group">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold">Zutaten</h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-lg font-bold">Zutaten</h3>
+          <button
+            type="button"
+            @click="showHelpModal = true"
+            class="flex items-center gap-1 text-sm text-gray-400 hover:text-cs-gold transition-colors"
+          >
+            <i class="fas fa-circle-question"></i>
+            <span>Anleitung</span>
+          </button>
+        </div>
         <button
           v-if="ingredients.length > 0"
           type="button"
@@ -59,6 +69,134 @@
           {{ allInPreview ? 'Alle bearbeiten' : 'Alle Vorschau' }}
         </button>
       </div>
+
+      <!-- Help Modal -->
+      <base-modal v-model="showHelpModal" max-width="max-w-2xl">
+        <template #header>
+          <h3 class="text-xl font-bold text-gray-900">
+            <i class="fas fa-circle-question mr-2 text-cs-gold"></i>
+            Zutaten erfassen – So geht's
+          </h3>
+        </template>
+        <template #content>
+          <div class="space-y-6 text-sm text-gray-700">
+
+            <!-- Standardfall -->
+            <section>
+              <h4 class="font-bold text-gray-900 mb-2">Der Normalfall: <code class="bg-gray-100 px-1 rounded">4 cl Rum</code></h4>
+              <p class="mb-2">Das ist der häufigste Fall:</p>
+              <ul class="list-disc list-inside space-y-1 ml-2">
+                <li><strong>Zutat:</strong> Namen eingeben und aus der Vorschlagsliste wählen</li>
+                <li><strong>Menge:</strong> Die Zahl, z.B. <code class="bg-gray-100 px-1 rounded">4</code> – Dezimalzahlen gehen auch: <code class="bg-gray-100 px-1 rounded">2.5</code></li>
+                <li><strong>Einheit:</strong> <code class="bg-gray-100 px-1 rounded">cl</code> aus dem Dropdown wählen</li>
+              </ul>
+            </section>
+
+            <!-- Volumeneinheiten -->
+            <section>
+              <h4 class="font-bold text-gray-900 mb-2">Andere Volumeneinheiten</h4>
+              <table class="w-full text-xs border-collapse">
+                <thead>
+                  <tr class="bg-gray-50">
+                    <th class="text-left p-2 border border-gray-200">Einheit</th>
+                    <th class="text-left p-2 border border-gray-200">Wann</th>
+                    <th class="text-left p-2 border border-gray-200">Beispiel</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="p-2 border border-gray-200"><code>ml</code></td><td class="p-2 border border-gray-200">Kleine Mengen, z.B. Bitters</td><td class="p-2 border border-gray-200">5 ml Angostura</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200"><code>l</code></td><td class="p-2 border border-gray-200">Bowlen-Rezepte</td><td class="p-2 border border-gray-200">1 l Saft</td></tr>
+                  <tr><td class="p-2 border border-gray-200"><code>TL</code></td><td class="p-2 border border-gray-200">Teelöffel (~5 ml)</td><td class="p-2 border border-gray-200">1 TL Zucker</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200"><code>EL</code></td><td class="p-2 border border-gray-200">Esslöffel (~15 ml)</td><td class="p-2 border border-gray-200">2 EL Honig</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <!-- Bar-Einheiten -->
+            <section>
+              <h4 class="font-bold text-gray-900 mb-2">Bar-Einheiten: Spritzer, Splash, Barlöffel</h4>
+              <p class="mb-2">Für Zutaten, die man nicht genau abmisst:</p>
+              <ul class="list-disc list-inside space-y-1 ml-2">
+                <li><strong>Spritzer:</strong> Ein kleiner Schuss – <em>2 Spritzer Angostura</em></li>
+                <li><strong>Splash:</strong> Eine großzügigere Portion – <em>1 Splash Tonic</em></li>
+                <li><strong>Barlöffel:</strong> ca. 5 ml – <em>1 Barlöffel Zuckersirup</em></li>
+              </ul>
+              <p class="text-gray-500 mt-2 text-xs"><i class="fas fa-info-circle mr-1"></i>Spritzer und Splash skalieren immer auf ganze Zahlen.</p>
+            </section>
+
+            <!-- Stückzahlen -->
+            <section>
+              <h4 class="font-bold text-gray-900 mb-2">Stückzahlen: Früchte, Blätter, Scheiben</h4>
+              <p class="mb-1"><strong>Ohne Einheit</strong> (für Früchte, Eier etc.) – Einheit auf <em>„keine Einheit"</em> lassen:</p>
+              <p class="ml-2 mb-2 text-gray-600">→ <em>1 Limette</em>, <em>2 Eier</em></p>
+              <p class="mb-1"><strong>Mit Einheit</strong> aus der Gruppe „Anzahl":</p>
+              <table class="w-full text-xs border-collapse">
+                <thead>
+                  <tr class="bg-gray-50">
+                    <th class="text-left p-2 border border-gray-200">Einheit</th>
+                    <th class="text-left p-2 border border-gray-200">Beispiel</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="p-2 border border-gray-200">Stück</td><td class="p-2 border border-gray-200">2 Stück Orange</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200">Scheibe / Scheiben</td><td class="p-2 border border-gray-200">1 Scheibe Ingwer</td></tr>
+                  <tr><td class="p-2 border border-gray-200">Blatt / Blätter</td><td class="p-2 border border-gray-200">6 Blätter Minze</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200">Zweig / Zweige</td><td class="p-2 border border-gray-200">1 Zweig Rosmarin</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <!-- Erweiterte Optionen -->
+            <section>
+              <h4 class="font-bold text-gray-900 mb-2">Erweiterte Optionen</h4>
+              <div class="space-y-3">
+                <div>
+                  <p class="font-medium">Anzeigename <span class="text-gray-400 font-normal">(optional)</span></p>
+                  <p class="text-gray-600">Überschreibt den Zutatenname nur für dieses Rezept. Nützlich wenn du z.B. die Zutat <em>Minze</em> als <em>Minzzweig</em> anzeigen möchtest.</p>
+                </div>
+                <div>
+                  <p class="font-medium">Zusätzliche Info <span class="text-gray-400 font-normal">(optional)</span></p>
+                  <p class="text-gray-600">Erscheint in Klammern hinter dem Zutatenname: <em>3 cl Limettensaft (frisch gepresst)</em> oder <em>2 cl Sahne (geschlagen)</em>.</p>
+                </div>
+                <div>
+                  <p class="font-medium">Optional</p>
+                  <p class="text-gray-600">Für Garnierungen oder Alternativen, die nicht zwingend nötig sind. In der Ansicht erscheint ein <em>(optional)</em> hinter der Zutat.</p>
+                </div>
+                <div>
+                  <p class="font-medium">Skalierbar <span class="text-gray-500 text-xs font-normal">(Standard: aktiv)</span></p>
+                  <p class="text-gray-600">Wenn aktiv, wird die Menge beim Skalieren des Rezepts angepasst (z.B. ×2). Deaktivieren bei Garnierungen oder Zutaten „nach Geschmack" – z.B. <em>1 Spritzer Angostura</em> als Akzent oder <em>1 Scheibe Orange</em> zur Deko.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Beispiele -->
+            <section>
+              <h4 class="font-bold text-gray-900 mb-2">Beispiele auf einen Blick</h4>
+              <table class="w-full text-xs border-collapse">
+                <thead>
+                  <tr class="bg-gray-50">
+                    <th class="text-left p-2 border border-gray-200">Anzeige im Rezept</th>
+                    <th class="text-left p-2 border border-gray-200">Menge</th>
+                    <th class="text-left p-2 border border-gray-200">Einheit</th>
+                    <th class="text-left p-2 border border-gray-200">Anzeigename</th>
+                    <th class="text-left p-2 border border-gray-200">Zusätzl. Info</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="p-2 border border-gray-200">4 cl Rum</td><td class="p-2 border border-gray-200">4</td><td class="p-2 border border-gray-200">cl</td><td class="p-2 border border-gray-200">–</td><td class="p-2 border border-gray-200">–</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200">2 cl Sahne (geschlagen)</td><td class="p-2 border border-gray-200">2</td><td class="p-2 border border-gray-200">cl</td><td class="p-2 border border-gray-200">–</td><td class="p-2 border border-gray-200">geschlagen</td></tr>
+                  <tr><td class="p-2 border border-gray-200">1 Limette</td><td class="p-2 border border-gray-200">1</td><td class="p-2 border border-gray-200">keine</td><td class="p-2 border border-gray-200">–</td><td class="p-2 border border-gray-200">–</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200">6 Blätter Minze</td><td class="p-2 border border-gray-200">6</td><td class="p-2 border border-gray-200">Blatt</td><td class="p-2 border border-gray-200">–</td><td class="p-2 border border-gray-200">–</td></tr>
+                  <tr><td class="p-2 border border-gray-200">1 Minzzweig</td><td class="p-2 border border-gray-200">1</td><td class="p-2 border border-gray-200">keine</td><td class="p-2 border border-gray-200">Minzzweig</td><td class="p-2 border border-gray-200">–</td></tr>
+                  <tr class="bg-gray-50"><td class="p-2 border border-gray-200">2 Spritzer Angostura</td><td class="p-2 border border-gray-200">2</td><td class="p-2 border border-gray-200">Spritzer</td><td class="p-2 border border-gray-200">–</td><td class="p-2 border border-gray-200">–</td></tr>
+                  <tr><td class="p-2 border border-gray-200">1 TL Zucker</td><td class="p-2 border border-gray-200">1</td><td class="p-2 border border-gray-200">TL</td><td class="p-2 border border-gray-200">–</td><td class="p-2 border border-gray-200">–</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+          </div>
+        </template>
+      </base-modal>
 
       <div v-for="(ingredient, index) in ingredients" :key="index" class="card p-4 mb-4">
         <!-- Preview Mode -->
@@ -72,9 +210,6 @@
             </span>
             <span v-if="ingredient.isOptional" class="text-sm text-gray-500 italic ml-1">
               (optional)
-            </span>
-            <span v-if="!ingredient.isScalable" class="text-sm text-blue-600 ml-1">
-              <i class="fa-solid fa-lock"></i>
             </span>
           </span>
           <div class="flex items-center gap-2 flex-shrink-0">
@@ -292,6 +427,7 @@
 import { ref, computed, onMounted } from 'vue'
 import IngredientAutocomplete from './IngredientAutocomplete.vue'
 import MarkdownEditor from './MarkdownEditor.vue'
+import BaseModal from './BaseModal.vue'
 
 const props = defineProps({
   initialData: {
@@ -311,6 +447,9 @@ const props = defineProps({
     default: false
   }
 })
+
+// Help modal
+const showHelpModal = ref(false)
 
 // Form fields
 const title = ref(props.initialData.title || '')
