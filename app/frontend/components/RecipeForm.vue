@@ -281,7 +281,7 @@
           <div class="flex gap-4">
             <div class="flex-1">
               <label class="label-field">
-                Menge <span class="text-red-500">*</span>
+                Menge <span v-if="ingredient.isScalable || !ingredient.displayName" class="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -290,7 +290,7 @@
                 placeholder="4"
                 step="0.01"
                 min="0"
-                required
+                :required="ingredient.isScalable || !ingredient.displayName"
               />
             </div>
 

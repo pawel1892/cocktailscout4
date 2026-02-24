@@ -63,6 +63,8 @@ class RecipeIngredient < ApplicationRecord
   def display_text
     if scalable?
       "#{formatted_amount} #{formatted_ingredient_name}"
+    elsif !is_scalable && display_name.present?
+      [ formatted_amount, formatted_ingredient_name ].compact.join(" ")
     else
       old_description  # Fallback to original text
     end
