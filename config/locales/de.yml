@@ -13,6 +13,9 @@ de:
       recipe_comment:
         one: "Kommentar"
         other: "Kommentare"
+      recipe_image:
+        one: "Cocktailfoto"
+        other: "Cocktailfotos"
       user:
         one: "Benutzer"
         other: "Benutzer"
