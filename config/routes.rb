@@ -37,6 +37,8 @@ Rails.application.routes.draw do
         post :approve
         post :reject
         post :restore
+        post :rotate_left
+        post :rotate_right
       end
       collection do
         get :count

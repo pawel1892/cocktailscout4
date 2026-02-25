@@ -23,6 +23,20 @@
     <h2 class="text-lg font-semibold text-gray-900 mb-4">Bild</h2>
     <% if @recipe_image.image.attached? %>
       <%= image_tag @recipe_image.image.variant(:large), class: "max-w-full rounded-lg shadow", alt: "Bild" %>
+      <% if !@recipe_image.soft_deleted? %>
+        <div class="flex gap-2 mt-4">
+          <%= button_to rotate_left_admin_recipe_image_path(@recipe_image), method: :post,
+                class: "btn btn-outline btn-sm",
+                title: "90° nach links drehen" do %>
+            <i class="fa-solid fa-rotate-left"></i> Links drehen
+          <% end %>
+          <%= button_to rotate_right_admin_recipe_image_path(@recipe_image), method: :post,
+                class: "btn btn-outline btn-sm",
+                title: "90° nach rechts drehen" do %>
+            <i class="fa-solid fa-rotate-right"></i> Rechts drehen
+          <% end %>
+        </div>
+      <% end %>
     <% else %>
       <div class="bg-gray-100 rounded-lg p-12 text-center text-gray-500">
         <i class="fa-solid fa-image text-4xl mb-2"></i>
