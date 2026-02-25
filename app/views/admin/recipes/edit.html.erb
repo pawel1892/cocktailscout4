@@ -22,8 +22,8 @@
   <div class="card p-6">
     <%= form_with url: admin_recipe_path(@recipe.id), method: :patch, local: true, class: "space-y-6" do |form| %>
       <recipe-form
-        :initial-data='<%= raw @recipe_form_data.to_json %>'
-        :units='<%= raw Unit.order(:category, :name).map { |u| { id: u.id, name: u.name, display_name: u.display_name, plural_name: u.plural_name, category: u.category, divisible: u.divisible } }.to_json %>'
+        :initial-data='<%= h @recipe_form_data.to_json %>'
+        :units='<%= h Unit.order(:category, :name).map { |u| { id: u.id, name: u.name, display_name: u.display_name, plural_name: u.plural_name, category: u.category, divisible: u.divisible } }.to_json %>'
         form-name="recipe"
         :edit-mode="true"
       ></recipe-form>
