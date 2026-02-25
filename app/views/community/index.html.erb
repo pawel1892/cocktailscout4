@@ -106,15 +106,7 @@
         </div>
         <img src="/images/community_user.jpg" alt="Aktive Benutzer" class="w-full h-48 object-cover">
         <div class="card-body">
-           <% if @online_users.any? %>
-              <div class="flex flex-wrap gap-3">
-                 <% @online_users.each do |user| %>
-                    <%= user_badge(user) %>
-                 <% end %>
-              </div>
-           <% else %>
-              <p class="text-gray-500 italic">Derzeit sind keine User aktiv</p>
-           <% end %>
+          <online-users :initial-users='<%= @online_users.map { |u| { id: u.id, username: u.username, rank: u.rank } }.to_json %>'></online-users>
         </div>
      </div>
   </div>

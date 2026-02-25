@@ -238,6 +238,40 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe ".online scope" do
+    it "includes users active within 5 minutes" do
+      user = create(:user, last_active_at: 4.minutes.ago)
+      expect(User.online).to include(user)
+    end
+
+    it "excludes users active more than 5 minutes ago" do
+      user = create(:user, last_active_at: 6.minutes.ago)
+      expect(User.online).not_to include(user)
+    end
+
+    it "excludes users with no last_active_at" do
+      user = create(:user, last_active_at: nil)
+      expect(User.online).not_to include(user)
+    end
+  end
+
+  describe "#online?" do
+    it "returns true when active within 5 minutes" do
+      user = create(:user, last_active_at: 4.minutes.ago)
+      expect(user.online?).to be true
+    end
+
+    it "returns false when active more than 5 minutes ago" do
+      user = create(:user, last_active_at: 6.minutes.ago)
+      expect(user.online?).to be false
+    end
+
+    it "returns false when last_active_at is nil" do
+      user = create(:user, last_active_at: nil)
+      expect(user.online?).to be false
+    end
+  end
+
   describe "#unread_messages_count" do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }

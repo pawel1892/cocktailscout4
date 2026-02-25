@@ -32,7 +32,7 @@ RSpec.describe "User Activity Tracking", type: :request do
       expect(user.last_active_at).to be_within(1.second).of(Time.current)
     end
 
-    it "does not update last_active_at if updated recently (within 10 minutes)" do
+    it "does not update last_active_at if updated recently (within 2 minutes)" do
       user.update(last_active_at: 1.minute.ago)
       original_time = user.last_active_at
 
@@ -41,13 +41,35 @@ RSpec.describe "User Activity Tracking", type: :request do
       expect(user.reload.last_active_at).to eq(original_time)
     end
 
-    it "updates last_active_at if exactly 10 minutes ago (boundary check)" do
-      # Set it to slightly more than 10 minutes ago to ensure it triggers
-      user.update(last_active_at: 10.minutes.ago - 1.second)
+    it "updates last_active_at if exactly 2 minutes ago (boundary check)" do
+      user.update(last_active_at: 2.minutes.ago - 1.second)
 
       expect {
         get root_path
       }.to change { user.reload.last_active_at }
+    end
+  end
+
+  describe "Last seen at" do
+    before { sign_in(user) }
+
+    it "updates last_seen_at on navigation" do
+      user.update(last_active_at: 1.hour.ago, last_seen_at: 1.hour.ago)
+
+      expect {
+        get root_path
+      }.to change { user.reload.last_seen_at }
+
+      expect(user.last_seen_at).to be_within(1.second).of(Time.current)
+    end
+
+    it "does not update last_seen_at if active recently" do
+      user.update(last_active_at: 1.minute.ago, last_seen_at: 1.minute.ago)
+      original_time = user.last_seen_at
+
+      get root_path
+
+      expect(user.reload.last_seen_at).to eq(original_time)
     end
   end
 end

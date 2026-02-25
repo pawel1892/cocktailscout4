@@ -29,7 +29,11 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   normalizes :username, with: ->(u) { u.strip }
 
-  scope :online, -> { where("last_active_at > ?", 15.minutes.ago) }
+  scope :online, -> { where("last_active_at > ?", 5.minutes.ago) }
+
+  def online?
+    last_active_at? && last_active_at > 5.minutes.ago
+  end
 
   before_create :generate_confirmation_token
 

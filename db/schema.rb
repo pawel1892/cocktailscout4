@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_080757) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_25_114528) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -395,6 +395,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_080757) do
     t.string "gender"
     t.string "homepage"
     t.datetime "last_active_at"
+    t.datetime "last_seen_at"
     t.string "location"
     t.integer "old_id"
     t.string "password_digest", null: false
@@ -406,6 +407,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_080757) do
     t.string "username"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["last_active_at"], name: "index_users_on_last_active_at"
     t.index ["username"], name: "index_users_on_username"
   end
 

@@ -65,6 +65,8 @@ Rails.application.routes.draw do
 
   get "tag/:tag", to: "recipes#index", as: :tag
 
+  post "heartbeat", to: "heartbeats#create"
+
   post "rate", to: "ratings#create"
   delete "rate", to: "ratings#destroy"
 

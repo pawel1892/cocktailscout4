@@ -41,6 +41,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    Current.user&.update_column(:last_active_at, nil)
     terminate_session
     respond_to do |format|
       format.html { redirect_to new_session_path, status: :see_other }

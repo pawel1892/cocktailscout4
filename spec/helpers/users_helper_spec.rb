@@ -89,6 +89,36 @@ RSpec.describe UsersHelper, type: :helper do
       end
     end
 
+    context "online indicator" do
+      it "shows wifi icon when user is online" do
+        user = create(:user, last_active_at: 1.minute.ago)
+        allow(user).to receive(:rank).and_return(1)
+
+        result = helper.user_badge(user)
+
+        expect(result).to include("fa-wifi")
+        expect(result).to include("text-green-500")
+      end
+
+      it "does not show wifi icon when user is offline" do
+        user = create(:user, last_active_at: 10.minutes.ago)
+        allow(user).to receive(:rank).and_return(1)
+
+        result = helper.user_badge(user)
+
+        expect(result).not_to include("fa-wifi")
+      end
+
+      it "does not show wifi icon when last_active_at is nil" do
+        user = create(:user, last_active_at: nil)
+        allow(user).to receive(:rank).and_return(1)
+
+        result = helper.user_badge(user)
+
+        expect(result).not_to include("fa-wifi")
+      end
+    end
+
     context "with different user ranks" do
       it "applies correct rank color for rank 0" do
         user = create(:user)
