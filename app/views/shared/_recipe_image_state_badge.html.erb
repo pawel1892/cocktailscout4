@@ -1,3 +1,9 @@
+<% if recipe_image.soft_deleted? %>
+  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-gray-100 text-gray-600 rounded-full">
+    <i class="fa-solid fa-trash"></i>
+    Gelöscht
+  </span>
+<% else %>
 <% case recipe_image.state %>
 <% when "pending" %>
   <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 rounded-full">
@@ -14,4 +20,5 @@
     <i class="fa-solid fa-times-circle"></i>
     Abgelehnt
   </span>
+<% end %>
 <% end %>

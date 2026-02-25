@@ -11,13 +11,27 @@ class RecipeImage < ApplicationRecord
 
   enum :state, { pending: "pending", approved: "approved", rejected: "rejected" }
 
-  scope :recent, -> { order(created_at: :desc) }
+  scope :recent,          -> { order(created_at: :desc) }
+  scope :not_soft_deleted, -> { where(deleted_at: nil) }
+  scope :soft_deleted,     -> { where.not(deleted_at: nil) }
 
   ALLOWED_CONTENT_TYPES = %w[image/jpeg image/png image/webp image/gif].freeze
   MAX_FILE_SIZE         = 10.megabytes
 
   validates :image, presence: true
   validate :image_content_type_and_size, if: -> { image.attached? }
+
+  def soft_delete!
+    update!(deleted_at: Time.current)
+  end
+
+  def restore!
+    update!(deleted_at: nil)
+  end
+
+  def soft_deleted?
+    deleted_at.present?
+  end
 
   def approve!(moderator)
     update!(state: "approved", moderated_by: moderator, moderated_at: Time.current)

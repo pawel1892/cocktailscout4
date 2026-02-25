@@ -32,10 +32,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :recipe_images, only: [ :index, :show ] do
+    resources :recipe_images, only: [ :index, :show, :destroy ] do
       member do
         post :approve
         post :reject
+        post :restore
       end
       collection do
         get :count

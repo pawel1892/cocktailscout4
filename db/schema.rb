@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_161911) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_25_080757) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -181,6 +181,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_161911) do
 
   create_table "recipe_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.datetime "deleted_at"
     t.datetime "moderated_at"
     t.bigint "moderated_by_id"
     t.text "moderation_reason"
@@ -189,6 +190,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_161911) do
     t.string "state", default: "pending", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["deleted_at"], name: "index_recipe_images_on_deleted_at"
     t.index ["moderated_by_id"], name: "index_recipe_images_on_moderated_by_id"
     t.index ["old_id"], name: "index_recipe_images_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_images_on_recipe_id"
