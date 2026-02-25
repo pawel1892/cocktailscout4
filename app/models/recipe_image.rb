@@ -26,7 +26,10 @@ class RecipeImage < ApplicationRecord
     original_content_type = image.blob.content_type
 
     image.blob.open do |temp_file|
-      processed = ImageProcessing::MiniMagick
+      processor = Rails.application.config.active_storage.variant_processor == :vips ?
+        ImageProcessing::Vips : ImageProcessing::MiniMagick
+
+      processed = processor
         .source(temp_file)
         .rotate(degrees)
         .call
