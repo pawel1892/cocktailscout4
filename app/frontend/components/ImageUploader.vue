@@ -40,7 +40,7 @@
 
         <!-- Preview -->
         <div v-if="previewUrl" class="flex flex-col items-center gap-3">
-          <img :src="previewUrl" alt="Vorschau" class="max-h-64 rounded-lg object-contain" />
+          <img :src="previewUrl" :style="{ transform: `rotate(${rotationAngle}deg)` }" alt="Vorschau" class="max-h-64 rounded-lg object-contain" />
           <span class="text-xs text-gray-500">{{ selectedFile?.name }}</span>
         </div>
 
@@ -53,6 +53,28 @@
           </div>
           <p class="text-xs text-gray-400">JPEG, PNG, WebP oder GIF · max. {{ maxSizeMb }} MB</p>
         </div>
+      </div>
+
+      <!-- Rotation buttons -->
+      <div v-if="previewUrl" class="flex gap-2">
+        <button
+          type="button"
+          class="btn btn-outline btn-sm"
+          :disabled="state === 'uploading'"
+          @click.stop="rotateLeft"
+          title="90° nach links drehen"
+        >
+          <i class="fa-solid fa-rotate-left"></i> Links drehen
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline btn-sm"
+          :disabled="state === 'uploading'"
+          @click.stop="rotateRight"
+          title="90° nach rechts drehen"
+        >
+          <i class="fa-solid fa-rotate-right"></i> Rechts drehen
+        </button>
       </div>
 
       <!-- Client-side error -->
@@ -118,6 +140,7 @@ const state        = ref('idle')   // idle | uploading | success
 const clientError  = ref(null)
 const serverErrors = ref([])
 const successMessage = ref('')
+const rotationAngle = ref(0)
 
 function validateFile(file) {
   const accepted = props.acceptedTypes.split(',')
@@ -133,6 +156,7 @@ function validateFile(file) {
 function applyFile(file) {
   clientError.value  = null
   serverErrors.value = []
+  rotationAngle.value = 0
   const error = validateFile(file)
   if (error) {
     clientError.value = error
@@ -142,6 +166,38 @@ function applyFile(file) {
   const reader = new FileReader()
   reader.onload = e => { previewUrl.value = e.target.result }
   reader.readAsDataURL(file)
+}
+
+function rotateLeft() {
+  rotationAngle.value = (rotationAngle.value - 90 + 360) % 360
+}
+
+function rotateRight() {
+  rotationAngle.value = (rotationAngle.value + 90) % 360
+}
+
+async function getRotatedFile() {
+  if (rotationAngle.value === 0) return selectedFile.value
+
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => {
+      const radians = (rotationAngle.value * Math.PI) / 180
+      const swap = rotationAngle.value === 90 || rotationAngle.value === 270
+      const canvas = document.createElement('canvas')
+      canvas.width  = swap ? img.height : img.width
+      canvas.height = swap ? img.width  : img.height
+      const ctx = canvas.getContext('2d')
+      ctx.translate(canvas.width / 2, canvas.height / 2)
+      ctx.rotate(radians)
+      ctx.drawImage(img, -img.width / 2, -img.height / 2)
+      canvas.toBlob(
+        blob => resolve(new File([blob], selectedFile.value.name, { type: selectedFile.value.type })),
+        selectedFile.value.type
+      )
+    }
+    img.src = previewUrl.value
+  })
 }
 
 function handleFileChange(event) {
@@ -162,7 +218,7 @@ async function upload() {
   serverErrors.value = []
 
   const formData = new FormData()
-  formData.append('image', selectedFile.value)
+  formData.append('image', await getRotatedFile())
 
   try {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
@@ -188,12 +244,13 @@ async function upload() {
 }
 
 function reset() {
-  selectedFile.value = null
-  previewUrl.value   = null
-  clientError.value  = null
-  serverErrors.value = []
-  state.value        = 'idle'
+  selectedFile.value   = null
+  previewUrl.value     = null
+  clientError.value    = null
+  serverErrors.value   = []
+  state.value          = 'idle'
   successMessage.value = ''
+  rotationAngle.value  = 0
   if (fileInput.value) fileInput.value.value = ''
 }
 </script>

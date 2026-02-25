@@ -21,6 +21,31 @@ class RecipeImage < ApplicationRecord
   validates :image, presence: true
   validate :image_content_type_and_size, if: -> { image.attached? }
 
+  def rotate_image!(degrees)
+    original_filename     = image.blob.filename.to_s
+    original_content_type = image.blob.content_type
+
+    image.blob.open do |temp_file|
+      processed = ImageProcessing::MiniMagick
+        .source(temp_file)
+        .rotate(degrees)
+        .call
+
+      image.purge
+
+      image.attach(
+        io:           processed,
+        filename:     original_filename,
+        content_type: original_content_type
+      )
+    end
+
+    if approved?
+      image.variant(:thumb).processed
+      image.variant(:medium).processed
+    end
+  end
+
   def soft_delete!
     update!(deleted_at: Time.current)
   end

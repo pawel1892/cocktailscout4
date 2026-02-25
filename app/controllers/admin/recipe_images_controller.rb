@@ -1,7 +1,7 @@
 module Admin
   class RecipeImagesController < BaseController
     before_action :require_image_moderator!
-    before_action :set_recipe_image, only: [ :show, :approve, :reject, :destroy, :restore ]
+    before_action :set_recipe_image, only: [ :show, :approve, :reject, :destroy, :restore, :rotate_left, :rotate_right ]
 
     def index
       @recipe_images = RecipeImage.includes(:recipe, :user, :moderated_by)
@@ -42,6 +42,20 @@ module Admin
     def restore
       @recipe_image.restore!
       redirect_to admin_recipe_image_path(@recipe_image), notice: "Bild wurde wiederhergestellt."
+    end
+
+    def rotate_left
+      @recipe_image.rotate_image!(-90)
+      redirect_to admin_recipe_image_path(@recipe_image), notice: "Bild wurde nach links gedreht."
+    rescue => e
+      redirect_to admin_recipe_image_path(@recipe_image), alert: "Fehler: #{e.message}"
+    end
+
+    def rotate_right
+      @recipe_image.rotate_image!(90)
+      redirect_to admin_recipe_image_path(@recipe_image), notice: "Bild wurde nach rechts gedreht."
+    rescue => e
+      redirect_to admin_recipe_image_path(@recipe_image), alert: "Fehler: #{e.message}"
     end
 
     def count
