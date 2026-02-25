@@ -262,9 +262,9 @@ const getGenderText = (gender) => {
               <p class="mt-1 text-gray-900">{{ formatDate(profile.created_at) }}</p>
             </div>
 
-            <div v-if="profile.last_active_at">
-              <label class="text-sm font-medium text-gray-700">Zuletzt aktiv</label>
-              <p class="mt-1 text-gray-900">{{ formatDateTime(profile.last_active_at) }}</p>
+            <div v-if="profile.last_seen_at">
+              <label class="text-sm font-medium text-gray-700">Zuletzt gesehen</label>
+              <p class="mt-1 text-gray-900">{{ formatDateTime(profile.last_seen_at) }}</p>
             </div>
           </div>
         </div>

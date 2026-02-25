@@ -43,7 +43,7 @@
   <span class="font-medium text-gray-900">Sortieren:</span>
   <%= sortable "username", "Benutzername" %>
   <%= sortable "user_stats.points", "Punkte" %>
-  <%= sortable "last_active_at", "Zuletzt aktiv" %>
+  <%= sortable "last_seen_at", "Zuletzt gesehen" %>
   <%= sortable "created_at", "Registriert seit" %>
 </div>
 
@@ -69,7 +69,7 @@
             Punkte
           </th>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Zuletzt aktiv
+            Zuletzt gesehen
           </th>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Registriert seit
@@ -99,13 +99,16 @@
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">
-                <% if user.last_active_at %>
-                  <%= time_ago_in_words(user.last_active_at) %> her
-                <% else %>
-                  <span class="text-gray-400">Noch nie</span>
-                <% end %>
-              </div>
+              <% if user.last_seen_at %>
+                <div class="text-sm text-gray-900">
+                  <%= user.last_seen_at.strftime("%d. %b %Y") %>
+                </div>
+                <div class="text-xs text-gray-500">
+                  <%= time_ago_in_words(user.last_seen_at) %> her
+                </div>
+              <% else %>
+                <div class="text-sm text-gray-400">Noch nie</div>
+              <% end %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">
@@ -158,14 +161,17 @@
           </div>
 
           <div class="col-span-2">
-            <div class="text-xs text-gray-500 mb-1">Zuletzt aktiv</div>
-            <div class="font-medium text-gray-900">
-              <% if user.last_active_at %>
-                <%= time_ago_in_words(user.last_active_at) %> her
-              <% else %>
-                <span class="text-gray-400">Noch nie</span>
-              <% end %>
-            </div>
+            <div class="text-xs text-gray-500 mb-1">Zuletzt gesehen</div>
+            <% if user.last_seen_at %>
+              <div class="font-medium text-gray-900">
+                <%= user.last_seen_at.strftime("%d. %b %Y") %>
+              </div>
+              <div class="text-xs text-gray-500">
+                <%= time_ago_in_words(user.last_seen_at) %> her
+              </div>
+            <% else %>
+              <div class="font-medium text-gray-400">Noch nie</div>
+            <% end %>
           </div>
         </div>
       </div>

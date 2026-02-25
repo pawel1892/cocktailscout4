@@ -41,5 +41,16 @@
       <user-profile-modal></user-profile-modal>
       <content-report-modal></content-report-modal>
     </div>
+    <% if Current.user %>
+      <script type="module">
+        const csrf = () => document.querySelector('meta[name="csrf-token"]')?.content
+        const beat = () => fetch('/heartbeat', {
+          method: 'POST',
+          headers: { 'X-CSRF-Token': csrf(), 'Content-Type': 'application/json' }
+        }).catch(() => {})
+        beat()
+        setInterval(beat, 2 * 60 * 1000)
+      </script>
+    <% end %>
   </body>
 </html>

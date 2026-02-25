@@ -34,7 +34,7 @@ RSpec.describe "Users", type: :request do
       get users_path
       expect(response.body).to include("Benutzername")
       expect(response.body).to include("Punkte")
-      expect(response.body).to include("Zuletzt aktiv")
+      expect(response.body).to include("Zuletzt gesehen")
       expect(response.body).to include("Registriert seit")
     end
   end
@@ -221,7 +221,7 @@ RSpec.describe "Users", type: :request do
 
     it "displays last active time" do
       get users_path
-      expect(response.body).to include("Zuletzt aktiv")
+      expect(response.body).to include("Zuletzt gesehen")
     end
 
     it "displays registration date" do

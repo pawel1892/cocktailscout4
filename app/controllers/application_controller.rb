@@ -33,8 +33,8 @@ class ApplicationController < ActionController::Base
   end
 
   def track_user_activity
-    if Current.user && (Current.user.last_active_at.nil? || Current.user.last_active_at < 10.minutes.ago)
-      Current.user.touch(:last_active_at)
+    if Current.user && (Current.user.last_active_at.nil? || Current.user.last_active_at < 2.minutes.ago)
+      Current.user.touch(:last_active_at, :last_seen_at)
     end
   end
 

@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   private
 
   def sort_column
-    %w[username last_active_at user_stats.points created_at].include?(params[:sort]) ? params[:sort] : "user_stats.points"
+    %w[username last_seen_at user_stats.points created_at].include?(params[:sort]) ? params[:sort] : "user_stats.points"
   end
 
   def sort_direction

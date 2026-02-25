@@ -14,6 +14,7 @@ module UsersHelper
     ) do
       concat tag.span(user.username, class: "text-zinc-900")
       concat tag.i(class: "fa-solid fa-user rank-#{user.rank}-color")
+      concat tag.i(class: "fa-solid fa-wifi text-green-500 text-xs", title: "Online") if user.online?
     end
   end
 end
