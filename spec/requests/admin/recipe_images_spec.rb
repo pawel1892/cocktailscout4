@@ -55,6 +55,30 @@ RSpec.describe "Admin::RecipeImages", type: :request do
         expect(response).to have_http_status(:success)
         expect(response.body).to include("Abgelehnt")
       end
+
+      it "filters by recipe name" do
+        get admin_recipe_images_path, params: { q: recipe.title }
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(recipe.title)
+      end
+
+      it "returns no results for an unmatched recipe name" do
+        get admin_recipe_images_path, params: { q: "xyznonexistent" }
+        expect(response).to have_http_status(:success)
+        expect(response.body).not_to include(recipe.title)
+      end
+
+      it "combines recipe name filter with state filter" do
+        get admin_recipe_images_path, params: { q: recipe.title, state: "approved" }
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(recipe.title)
+      end
+
+      it "is case-insensitive" do
+        get admin_recipe_images_path, params: { q: recipe.title.upcase }
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(recipe.title)
+      end
     end
 
     context "as admin" do
@@ -291,6 +315,102 @@ RSpec.describe "Admin::RecipeImages", type: :request do
         post reject_admin_recipe_image_path(pending_image),
              params: { moderation_reason: "Should not work" }
         expect(pending_image.reload.state).to eq("pending")
+      end
+    end
+  end
+
+  describe "DELETE /admin/recipe_images/:id" do
+    context "as image_moderator" do
+      before { sign_in(image_moderator) }
+
+      it "soft-deletes the image" do
+        delete admin_recipe_image_path(approved_image)
+        approved_image.reload
+        expect(approved_image.deleted_at).to be_present
+      end
+
+      it "redirects to show with success notice" do
+        delete admin_recipe_image_path(approved_image)
+        expect(response).to redirect_to(admin_recipe_image_path(approved_image))
+        expect(flash[:notice]).to eq("Bild wurde gelöscht.")
+      end
+
+      it "soft-deletes a rejected image" do
+        delete admin_recipe_image_path(rejected_image)
+        rejected_image.reload
+        expect(rejected_image.deleted_at).to be_present
+      end
+
+      it "does not hard-delete the record" do
+        delete admin_recipe_image_path(approved_image)
+        expect(RecipeImage.exists?(approved_image.id)).to be true
+      end
+
+      it "prevents deleting a pending image" do
+        delete admin_recipe_image_path(pending_image)
+        expect(pending_image.reload.deleted_at).to be_nil
+        expect(response).to redirect_to(admin_recipe_image_path(pending_image))
+        expect(flash[:alert]).to be_present
+      end
+    end
+
+    context "as regular user" do
+      before { sign_in(regular_user) }
+
+      it "redirects to root with error" do
+        delete admin_recipe_image_path(approved_image)
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq("Zugriff verweigert.")
+      end
+
+      it "does not soft-delete the image" do
+        delete admin_recipe_image_path(approved_image)
+        expect(approved_image.reload.deleted_at).to be_nil
+      end
+    end
+
+    context "when not authenticated" do
+      it "redirects to login page" do
+        delete admin_recipe_image_path(approved_image)
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+  end
+
+  describe "POST /admin/recipe_images/:id/restore" do
+    let!(:deleted_image) do
+      img = create_recipe_image(state: "approved", moderator: admin)
+      img.update!(deleted_at: 1.day.ago)
+      img
+    end
+
+    context "as image_moderator" do
+      before { sign_in(image_moderator) }
+
+      it "clears deleted_at on the image" do
+        post restore_admin_recipe_image_path(deleted_image)
+        expect(deleted_image.reload.deleted_at).to be_nil
+      end
+
+      it "redirects to show with success notice" do
+        post restore_admin_recipe_image_path(deleted_image)
+        expect(response).to redirect_to(admin_recipe_image_path(deleted_image))
+        expect(flash[:notice]).to eq("Bild wurde wiederhergestellt.")
+      end
+    end
+
+    context "as regular user" do
+      before { sign_in(regular_user) }
+
+      it "redirects to root with error" do
+        post restore_admin_recipe_image_path(deleted_image)
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq("Zugriff verweigert.")
+      end
+
+      it "does not restore the image" do
+        post restore_admin_recipe_image_path(deleted_image)
+        expect(deleted_image.reload.deleted_at).to be_present
       end
     end
   end

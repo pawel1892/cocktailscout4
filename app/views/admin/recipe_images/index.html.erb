@@ -5,11 +5,26 @@
   </div>
 </div>
 
+<!-- Search -->
+<div class="bg-white rounded-lg shadow border border-gray-200 p-4 mb-6">
+  <%= form_with url: admin_recipe_images_path, method: :get, class: "flex gap-3 items-end" do |f| %>
+    <%= f.hidden_field :state, value: params[:state] if params[:state].present? %>
+    <div class="flex-1">
+      <%= f.label :q, "Rezept suchen", class: "label-field" %>
+      <%= f.text_field :q, value: params[:q], placeholder: "Rezeptname...", class: "input-field" %>
+    </div>
+    <%= f.submit "Suchen", class: "btn btn-primary" %>
+    <% if params[:q].present? %>
+      <%= link_to "Zurücksetzen", admin_recipe_images_path(state: params[:state].presence), class: "btn btn-outline" %>
+    <% end %>
+  <% end %>
+</div>
+
 <!-- State Tabs -->
 <div class="bg-white rounded-lg shadow border border-gray-200 mb-6">
   <div class="border-b border-gray-200">
     <nav class="flex -mb-px">
-      <%= link_to admin_recipe_images_path,
+      <%= link_to admin_recipe_images_path(q: params[:q].presence),
         class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state].blank? ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
         Alle
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-gray-200 text-gray-700 rounded-full">
@@ -17,30 +32,39 @@
         </span>
       <% end %>
 
-      <%= link_to admin_recipe_images_path(state: "pending"),
+      <%= link_to admin_recipe_images_path(state: "pending", q: params[:q].presence),
         class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'pending' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
         <i class="fa-solid fa-clock"></i>
         Wartend
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-yellow-200 text-yellow-800 rounded-full">
-          <%= RecipeImage.pending.count %>
+          <%= RecipeImage.pending.not_soft_deleted.count %>
         </span>
       <% end %>
 
-      <%= link_to admin_recipe_images_path(state: "approved"),
+      <%= link_to admin_recipe_images_path(state: "approved", q: params[:q].presence),
         class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'approved' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
         <i class="fa-solid fa-check-circle"></i>
         Genehmigt
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-green-200 text-green-800 rounded-full">
-          <%= RecipeImage.approved.count %>
+          <%= RecipeImage.approved.not_soft_deleted.count %>
         </span>
       <% end %>
 
-      <%= link_to admin_recipe_images_path(state: "rejected"),
+      <%= link_to admin_recipe_images_path(state: "rejected", q: params[:q].presence),
         class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'rejected' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
         <i class="fa-solid fa-times-circle"></i>
         Abgelehnt
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-red-200 text-red-800 rounded-full">
-          <%= RecipeImage.rejected.count %>
+          <%= RecipeImage.rejected.not_soft_deleted.count %>
+        </span>
+      <% end %>
+
+      <%= link_to admin_recipe_images_path(state: "deleted", q: params[:q].presence),
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'deleted' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        <i class="fa-solid fa-trash"></i>
+        Gelöscht
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-gray-200 text-gray-700 rounded-full">
+          <%= RecipeImage.soft_deleted.count %>
         </span>
       <% end %>
     </nav>
@@ -117,19 +141,25 @@
   <div class="bg-white rounded-lg shadow border border-gray-200 p-12 text-center">
     <i class="fa-solid fa-images text-6xl text-gray-300 mb-4"></i>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">
-      <% case params[:state] %>
-      <% when "pending" %>
-        Keine wartenden Bilder
-      <% when "approved" %>
-        Keine genehmigten Bilder
-      <% when "rejected" %>
-        Keine abgelehnten Bilder
+      <% if params[:q].present? %>
+        Keine Bilder für "<%= params[:q] %>" gefunden
       <% else %>
-        Keine Bilder vorhanden
+        <% case params[:state] %>
+        <% when "pending" %>
+          Keine wartenden Bilder
+        <% when "approved" %>
+          Keine genehmigten Bilder
+        <% when "rejected" %>
+          Keine abgelehnten Bilder
+        <% when "deleted" %>
+          Keine gelöschten Bilder
+        <% else %>
+          Keine Bilder vorhanden
+        <% end %>
       <% end %>
     </h3>
     <p class="text-gray-600">
-      <% if params[:state] == "pending" %>
+      <% if params[:state] == "pending" && params[:q].blank? %>
         Neue Bilder erscheinen hier, sobald Benutzer sie hochladen.
       <% else %>
         Es gibt aktuell keine Bilder in dieser Kategorie.

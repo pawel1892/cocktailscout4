@@ -1,11 +1,12 @@
 module Admin
   class RecipeImagesController < BaseController
     before_action :require_image_moderator!
-    before_action :set_recipe_image, only: [ :show, :approve, :reject ]
+    before_action :set_recipe_image, only: [ :show, :approve, :reject, :destroy, :restore ]
 
     def index
       @recipe_images = RecipeImage.includes(:recipe, :user, :moderated_by)
                                    .then { |q| filter_by_state(q) }
+                                   .then { |q| filter_by_recipe_name(q) }
                                    .recent
       @pagy, @recipe_images = pagy(@recipe_images, limit: 50)
     end
@@ -29,6 +30,20 @@ module Admin
       redirect_to admin_recipe_image_path(@recipe_image), alert: "Fehler: #{e.message}"
     end
 
+    def destroy
+      if @recipe_image.pending?
+        redirect_to admin_recipe_image_path(@recipe_image), alert: "Bild muss zuerst genehmigt oder abgelehnt werden, damit der Uploader eine Rückmeldung erhält."
+        return
+      end
+      @recipe_image.soft_delete!
+      redirect_to admin_recipe_image_path(@recipe_image), notice: "Bild wurde gelöscht."
+    end
+
+    def restore
+      @recipe_image.restore!
+      redirect_to admin_recipe_image_path(@recipe_image), notice: "Bild wurde wiederhergestellt."
+    end
+
     def count
       render json: { count: RecipeImage.pending.count }
     end
@@ -45,11 +60,17 @@ module Admin
       @recipe_image = RecipeImage.includes(:recipe, :user, :moderated_by).find(params[:id])
     end
 
+    def filter_by_recipe_name(query)
+      return query if params[:q].blank?
+      query.joins(:recipe).where("recipes.title LIKE ?", "%#{params[:q]}%")
+    end
+
     def filter_by_state(query)
       case params[:state]
-      when "pending"  then query.pending
-      when "approved" then query.approved
-      when "rejected" then query.rejected
+      when "pending"  then query.pending.not_soft_deleted
+      when "approved" then query.approved.not_soft_deleted
+      when "rejected" then query.rejected.not_soft_deleted
+      when "deleted"  then query.soft_deleted
       else query
       end
     end
