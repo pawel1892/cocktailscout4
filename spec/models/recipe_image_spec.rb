@@ -123,6 +123,62 @@ RSpec.describe RecipeImage, type: :model do
       @rejected_image.save!
     end
 
+    describe ".by_user" do
+      let(:user2) { create(:user) }
+      let(:recipe2) { create(:recipe, user: user2) }
+
+      before do
+        file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
+        @image_user2 = RecipeImage.new(recipe: recipe2, user: user2, state: "approved",
+                                       moderated_at: Time.current, moderated_by: moderator)
+        @image_user2.image.attach(file)
+        @image_user2.save!
+      end
+
+      it "returns only images by the given user" do
+        expect(RecipeImage.by_user(user.id)).to include(@approved_image)
+        expect(RecipeImage.by_user(user.id)).not_to include(@image_user2)
+      end
+
+      it "returns all images if user_id is nil" do
+        expect(RecipeImage.by_user(nil)).to include(@approved_image, @image_user2)
+      end
+
+      it "returns all images if user_id is blank" do
+        expect(RecipeImage.by_user("")).to include(@approved_image, @image_user2)
+      end
+    end
+
+    describe ".by_recipe_name" do
+      let(:recipe2) { create(:recipe, title: "Daiquiri", user: user) }
+
+      before do
+        file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
+        @daiquiri_image = RecipeImage.new(recipe: recipe2, user: user, state: "approved",
+                                          moderated_at: Time.current, moderated_by: moderator)
+        @daiquiri_image.image.attach(file)
+        @daiquiri_image.save!
+      end
+
+      it "returns images whose recipe title matches the query" do
+        expect(RecipeImage.by_recipe_name(recipe.title)).to include(@approved_image)
+        expect(RecipeImage.by_recipe_name(recipe.title)).not_to include(@daiquiri_image)
+      end
+
+      it "matches partial recipe titles" do
+        expect(RecipeImage.by_recipe_name("Daiq")).to include(@daiquiri_image)
+        expect(RecipeImage.by_recipe_name("Daiq")).not_to include(@approved_image)
+      end
+
+      it "returns all images if query is nil" do
+        expect(RecipeImage.by_recipe_name(nil)).to include(@approved_image, @daiquiri_image)
+      end
+
+      it "returns all images if query is blank" do
+        expect(RecipeImage.by_recipe_name("")).to include(@approved_image, @daiquiri_image)
+      end
+    end
+
     describe ".approved" do
       it "returns only approved images" do
         expect(RecipeImage.approved).to include(@approved_image)

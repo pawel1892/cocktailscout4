@@ -74,6 +74,17 @@ RSpec.describe RecipesHelper, type: :helper do
       helper.controller.params = { ingredient_id: -1 }
       expect(helper.active_filters).to be_empty
     end
+
+    it "returns user filter" do
+      user = create(:user, username: "BarMaster")
+      helper.controller.params = { user_id: user.id }
+      expect(helper.active_filters).to contain_exactly({ label: "Benutzer: BarMaster", param: :user_id })
+    end
+
+    it "ignores invalid user_id" do
+      helper.controller.params = { user_id: -1 }
+      expect(helper.active_filters).to be_empty
+    end
   end
 
   describe "#tag_cloud_class" do

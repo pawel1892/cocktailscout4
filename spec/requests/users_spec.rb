@@ -39,6 +39,48 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe "GET /benutzer.json" do
+    let!(:alice) { create(:user, username: "MasterAlice") }
+    let!(:bob)   { create(:user, username: "BobMartini") }
+    let!(:carol) { create(:user, username: "MasterCarol") }
+
+    it "returns JSON with matching users" do
+      get users_path(q: "Alice"), as: :json
+      expect(response).to have_http_status(:success)
+      json = JSON.parse(response.body)
+      expect(json["users"].map { |u| u["username"] }).to include("MasterAlice")
+      expect(json["users"].map { |u| u["username"] }).not_to include("BobMartini")
+    end
+
+    it "returns id and username for each user" do
+      get users_path(q: "Alice"), as: :json
+      json = JSON.parse(response.body)
+      user = json["users"].first
+      expect(user.keys).to include("id", "username")
+    end
+
+    it "returns all matching users for a partial query" do
+      get users_path(q: "Master"), as: :json
+      json = JSON.parse(response.body)
+      usernames = json["users"].map { |u| u["username"] }
+      expect(usernames).to include("MasterAlice", "MasterCarol")
+      expect(usernames).not_to include("BobMartini")
+    end
+
+    it "limits results to 10" do
+      15.times { |i| create(:user, username: "SearchUser#{i}") }
+      get users_path(q: "SearchUser"), as: :json
+      json = JSON.parse(response.body)
+      expect(json["users"].length).to be <= 10
+    end
+
+    it "returns empty array when no users match" do
+      get users_path(q: "zzznomatch"), as: :json
+      json = JSON.parse(response.body)
+      expect(json["users"]).to be_empty
+    end
+  end
+
   describe "Sorting" do
     let!(:user1) { create(:user, username: "Alpha", created_at: 3.days.ago, last_active_at: 1.day.ago) }
     let!(:user2) { create(:user, username: "Zulu", created_at: 1.day.ago, last_active_at: 3.days.ago) }

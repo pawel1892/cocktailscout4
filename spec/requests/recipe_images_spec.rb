@@ -157,6 +157,84 @@ RSpec.describe "RecipeImages", type: :request do
       expect(response.body).to include("jane_smith")
     end
 
+    context "filtering by user" do
+      let(:other_user) { create(:user, username: "other_bartender") }
+      let(:other_recipe) { create(:recipe, title: "Daiquiri", user: other_user) }
+
+      before do
+        make_image(recipe: recipe, user: user)
+        make_image(recipe: other_recipe, user: other_user)
+      end
+
+      it "shows only images by the specified user" do
+        get recipe_images_path(user_id: user.id)
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Mojito")
+        expect(response.body).not_to include("Daiquiri")
+      end
+
+      it "shows the active filter badge" do
+        get recipe_images_path(user_id: user.id)
+        expect(response.body).to include("Benutzer: #{user.username}")
+      end
+
+      it "shows all images when no user filter is applied" do
+        get recipe_images_path
+        expect(response.body).to include("Mojito")
+        expect(response.body).to include("Daiquiri")
+      end
+    end
+
+    context "filtering by recipe name" do
+      let(:other_recipe) { create(:recipe, title: "Daiquiri", user: user) }
+
+      before do
+        make_image(recipe: recipe, user: user)
+        make_image(recipe: other_recipe, user: user)
+      end
+
+      it "shows only images for recipes matching the query" do
+        get recipe_images_path(q: "Mojito")
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Mojito")
+        expect(response.body).not_to include("Daiquiri")
+      end
+
+      it "matches partial recipe names" do
+        get recipe_images_path(q: "Moj")
+        expect(response.body).to include("Mojito")
+        expect(response.body).not_to include("Daiquiri")
+      end
+
+      it "shows the active filter badge" do
+        get recipe_images_path(q: "Mojito")
+        expect(response.body).to include("Suche: Mojito")
+      end
+
+      it "shows all images when query is blank" do
+        get recipe_images_path(q: "")
+        expect(response.body).to include("Mojito")
+        expect(response.body).to include("Daiquiri")
+      end
+    end
+
+    context "combining user and recipe name filters" do
+      let(:other_user) { create(:user, username: "other_bartender") }
+      let(:other_recipe) { create(:recipe, title: "Mojito Special", user: other_user) }
+
+      before do
+        make_image(recipe: recipe, user: user)
+        make_image(recipe: other_recipe, user: other_user)
+      end
+
+      it "applies both filters simultaneously" do
+        get recipe_images_path(user_id: user.id, q: "Mojito")
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Mojito")
+        expect(response.body).not_to include("Special")
+      end
+    end
+
     it "paginates recipe images when there are more than 60" do
       61.times do |i|
         recipe_for_image = create(:recipe, title: "Cocktail #{i}", user: user)
