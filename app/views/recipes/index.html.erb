@@ -16,7 +16,7 @@
     <% active_filters.each do |filter| %>
       <span class="bg-white text-green-800 border border-green-200 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
         <%= filter[:label] %>
-        <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id, :collection_id, :filter).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
+        <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id, :user_id, :collection_id, :filter).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
           <i class="fas fa-times"></i>
         <% end %>
       </span>
@@ -62,6 +62,14 @@
           { include_blank: "Alle" },
           { class: "input-field py-1.5 text-sm", value: params[:ingredient_id] }
       %>
+    </div>
+
+    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
+      <label class="label-field mb-0">Benutzer</label>
+      <user-autocomplete
+        initial-username="<%= @filter_user&.username %>"
+        initial-user-id="<%= params[:user_id] %>"
+      ></user-autocomplete>
     </div>
 
     <% if @collections.any? %>

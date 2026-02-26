@@ -29,6 +29,7 @@ class Recipe < ApplicationRecord
   # Override default scope to exclude deleted recipes from all queries
   default_scope { not_deleted }
 
+  scope :by_user, ->(user_id) { where(user_id: user_id) if user_id.present? }
   scope :by_min_rating, ->(rating) { where("average_rating >= ?", rating) if rating.present? }
   scope :by_ingredient, ->(ingredient_id) { joins(:ingredients).where(ingredients: { id: ingredient_id }) if ingredient_id.present? }
   scope :by_collection, ->(collection_id) {

@@ -15,6 +15,31 @@ RSpec.describe "Recipes", type: :request do
     end
   end
 
+  describe "GET /rezepte with user filter" do
+    let(:user1) { create(:user, username: "BarMixer") }
+    let(:user2) { create(:user, username: "CocktailPro") }
+    let!(:recipe1) { create(:recipe, title: "Negroni", user: user1) }
+    let!(:recipe2) { create(:recipe, title: "Spritz", user: user2) }
+
+    it "returns only recipes by the specified user" do
+      get recipes_path(user_id: user1.id)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include("Negroni")
+      expect(response.body).not_to include("Spritz")
+    end
+
+    it "shows the active filter badge" do
+      get recipes_path(user_id: user1.id)
+      expect(response.body).to include("Benutzer: BarMixer")
+    end
+
+    it "shows all recipes when no user filter is applied" do
+      get recipes_path
+      expect(response.body).to include("Negroni")
+      expect(response.body).to include("Spritz")
+    end
+  end
+
   describe "GET /rezepte/:slug" do
     let(:ingredient) { create(:ingredient, name: "Gin") }
     let!(:recipe_ingredient) { create(:recipe_ingredient, recipe: recipe, ingredient: ingredient, amount: 4) }

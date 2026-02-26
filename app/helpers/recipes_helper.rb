@@ -34,6 +34,10 @@ module RecipesHelper
       collection = IngredientCollection.find_by(id: params[:collection_id])
       filters << { label: "Liste: #{collection.name}", param: :collection_id } if collection
     end
+    if params[:user_id].present?
+      user = User.find_by(id: params[:user_id])
+      filters << { label: "Benutzer: #{user.username}", param: :user_id } if user
+    end
     if params[:filter] == "favorites"
       filters << { label: "Nur Favoriten", param: :filter }
     end

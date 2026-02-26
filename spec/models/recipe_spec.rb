@@ -36,6 +36,26 @@ RSpec.describe Recipe, type: :model do
       end
     end
 
+    describe ".by_user" do
+      let(:user1) { create(:user) }
+      let(:user2) { create(:user) }
+      let!(:recipe_by_user1) { create(:recipe, user: user1) }
+      let!(:recipe_by_user2) { create(:recipe, user: user2) }
+
+      it "returns only recipes by the given user" do
+        expect(Recipe.by_user(user1.id)).to include(recipe_by_user1)
+        expect(Recipe.by_user(user1.id)).not_to include(recipe_by_user2)
+      end
+
+      it "returns all recipes if user_id is nil" do
+        expect(Recipe.by_user(nil)).to include(recipe_by_user1, recipe_by_user2)
+      end
+
+      it "returns all recipes if user_id is blank" do
+        expect(Recipe.by_user("")).to include(recipe_by_user1, recipe_by_user2)
+      end
+    end
+
     describe ".by_ingredient" do
       let(:ingredient) { create(:ingredient) }
       let(:other_ingredient) { create(:ingredient) }

@@ -22,6 +22,7 @@ const components = {
   RecipeScaling: () => import('../components/RecipeScaling.vue'),
   RecipeForm: () => import('../components/RecipeForm.vue'),
   IngredientAutocomplete: () => import('../components/IngredientAutocomplete.vue'),
+  UserAutocomplete: () => import('../components/UserAutocomplete.vue'),
   MarkdownEditor: () => import('../components/MarkdownEditor.vue'),
   ImageUploader: () => import('../components/ImageUploader.vue'),
   OnlineUsers: () => import('../components/OnlineUsers.vue'),

@@ -222,12 +222,16 @@ const getGenderText = (gender) => {
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="text-sm font-medium text-gray-700">Rezepte</label>
-              <p class="mt-1 text-gray-900">{{ profile.recipes_count }}</p>
+              <a :href="`/rezepte?user_id=${profile.id}`" class="mt-1 text-blue-600 hover:underline font-medium block">
+                {{ profile.recipes_count }}
+              </a>
             </div>
 
             <div>
               <label class="text-sm font-medium text-gray-700">Rezeptbilder</label>
-              <p class="mt-1 text-gray-900">{{ profile.recipe_images_count }}</p>
+              <a :href="`/cocktailgalerie?user_id=${profile.id}`" class="mt-1 text-blue-600 hover:underline font-medium block">
+                {{ profile.recipe_images_count }}
+              </a>
             </div>
 
             <div>
