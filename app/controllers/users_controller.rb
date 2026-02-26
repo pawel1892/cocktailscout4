@@ -22,7 +22,15 @@ class UsersController < ApplicationController
                    .distinct
     end
 
-    @pagy, @users = pagy(query.order("#{sort_column} #{sort_direction}"))
+    respond_to do |format|
+      format.html do
+        @pagy, @users = pagy(query.order("#{sort_column} #{sort_direction}"))
+      end
+      format.json do
+        users = query.order(:username).limit(10)
+        render json: { users: users.map { |u| { id: u.id, username: u.username } } }
+      end
+    end
   end
 
   private

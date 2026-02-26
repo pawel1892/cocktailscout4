@@ -19,6 +19,7 @@ class RecipesController < ApplicationController
     query = query.by_ingredient(params[:ingredient_id])
     query = query.tagged_with(params[:tag]) if params[:tag].present?
     query = query.by_collection(params[:collection_id])
+    query = query.by_user(params[:user_id])
 
     # Filter by favorites
     if params[:filter] == "favorites" && authenticated?
@@ -29,6 +30,7 @@ class RecipesController < ApplicationController
     @tags = ActsAsTaggableOn::Tag.order(:name)
     @ingredients = Ingredient.order(:name)
     @collections = authenticated? ? Current.user.ingredient_collections.order(is_default: :desc, name: :asc) : []
+    @filter_user = User.find_by(id: params[:user_id]) if params[:user_id].present?
     @selected_collection = @collections.find { |c| c.id == params[:collection_id].to_i } if params[:collection_id].present?
 
     # Handle specific join sorting

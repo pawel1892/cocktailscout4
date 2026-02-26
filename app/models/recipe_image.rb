@@ -11,6 +11,8 @@ class RecipeImage < ApplicationRecord
 
   enum :state, { pending: "pending", approved: "approved", rejected: "rejected" }
 
+  scope :by_user, ->(user_id) { where(user_id: user_id) if user_id.present? }
+  scope :by_recipe_name, ->(q) { joins(:recipe).where("recipes.title LIKE ?", "%#{q}%") if q.present? }
   scope :recent,          -> { order(created_at: :desc) }
   scope :not_soft_deleted, -> { where(deleted_at: nil) }
   scope :soft_deleted,     -> { where.not(deleted_at: nil) }
