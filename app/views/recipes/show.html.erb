@@ -125,6 +125,8 @@
           id: image.id,
           mediumUrl: url_for(recipe_image_url(image, style: :medium)),
           largeUrl: url_for(recipe_image_url(image, style: :large)),
+          recipeTitle: @recipe.title,
+          recipeUrl: recipe_path(@recipe),
           userBadge: user_badge(image.user),
           uploadDate: l(image.created_at.to_date)
         }
