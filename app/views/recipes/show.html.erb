@@ -1,5 +1,4 @@
 <% content_for :head do %>
-  <%= pagy_seo_tags(@comments_pagy) if @comments_pagy.pages > 1 %>
   <%= recipe_structured_data(@recipe) %>
 <% end %>
 
@@ -152,94 +151,10 @@
 <% end %>
 
 <!-- Comments -->
-<div class="card">
-  <div class="card-body p-4 sm:p-6">
-    <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-      <i class="fas fa-comments text-cs-gold"></i>
-      Kommentare
-      <span class="text-base font-normal text-gray-500">(<%= @recipe.recipe_comments.count %>)</span>
-    </h2>
-
-    <% if @recipe.recipe_comments.any? %>
-      <!-- Pagination Top -->
-      <% if @comments_pagy.pages > 1 %>
-        <div class="mb-4 flex justify-center">
-          <%== @comments_pagy.series_nav %>
-        </div>
-      <% end %>
-
-      <div class="space-y-3 mb-6">
-        <% @comments.each do |comment| %>
-          <div id="comment-<%= comment.id %>" class="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200 relative group">
-            <div class="flex justify-between items-start mb-2">
-              <div class="flex items-center gap-2">
-                <%= user_badge(comment.user) %>
-                <span class="text-xs text-gray-500">
-                  <%= l comment.created_at.to_date %>
-                </span>
-              </div>
-              <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-2 right-2 flex items-center gap-2">
-                <% if can_edit_comment?(comment) %>
-                  <%= link_to edit_recipe_comment_path(comment), class: "text-gray-400 hover:text-cs-gold transition-colors", title: "Bearbeiten" do %>
-                    <i class="fas fa-pencil-alt text-xs"></i>
-                  <% end %>
-                <% end %>
-                <% if can_delete_comment?(comment) %>
-                  <%= button_to recipe_comment_path(comment), method: :delete, onclick: "return confirm('Kommentar wirklich löschen?')", class: "text-gray-400 hover:text-cs-error transition-colors cursor-pointer", title: "Löschen" do %>
-                    <i class="fas fa-trash text-xs"></i>
-                  <% end %>
-                <% end %>
-                <%= report_button(comment) %>
-              </div>
-            </div>
-            <div class="text-gray-700 text-sm">
-              <%= simple_format(comment.body) %>
-            </div>
-            <% if comment.last_editor_id.present? %>
-              <div class="text-xs text-gray-400 mt-2 text-right">
-                Zuletzt bearbeitet von <%= comment.last_editor&.username || "Unbekannt" %> am <%= l comment.updated_at.to_date %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <!-- Pagination Bottom -->
-      <% if @comments_pagy.pages > 1 %>
-        <div class="mb-6 flex justify-center">
-          <%== @comments_pagy.series_nav %>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="text-gray-500 text-sm mb-6">Noch keine Kommentare. Sei der Erste!</p>
-    <% end %>
-
-    <!-- Comment Form -->
-    <div id="comment-form" class="border-t pt-6">
-      <% if Current.user %>
-        <h3 class="text-lg font-semibold mb-3">Kommentar schreiben</h3>
-        <%= form_with model: @comment || RecipeComment.new, url: comment_recipe_path(@recipe), local: true, class: "space-y-3" do |form| %>
-          <div class="form-group">
-            <%= form.label :body, "Dein Kommentar", class: "label-field #{'label-error' if @comment&.errors&.any?}" %>
-            <comment-form
-              textarea-id="recipe_comment_body"
-              textarea-name="recipe_comment[body]"
-              :max-length="3000"
-              :has-error="<%= @comment&.errors&.any? ? 'true' : 'false' %>"
-              model-value="<%= @comment&.body || '' %>"
-            ></comment-form>
-            <% if @comment&.errors&.include?(:body) %>
-              <p class="form-error-message"><%= @comment.errors.full_messages_for(:body).join(', ') %></p>
-            <% end %>
-          </div>
-          <%= form.submit "Kommentar abschicken", class: "btn btn-primary" %>
-        <% end %>
-      <% else %>
-        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center">
-          <p class="text-gray-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
-          <%= link_to "Jetzt anmelden", new_session_path, class: "text-cs-dark-red hover:underline font-medium" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+<% content_for :head do %>
+  <script>
+    window.recipeComments = <%= raw @comments_json %>;
+    window.recipeCommentsMeta = { isModerator: <%= Current.user&.can_moderate_recipe? ? 'true' : 'false' %> };
+  </script>
+<% end %>
+<recipe-comments recipe-slug="<%= @recipe.slug %>"></recipe-comments>

@@ -156,28 +156,27 @@ RSpec.describe "Recipes", type: :request do
 
     context "with many comments" do
       before do
-        # Create 35 comments to trigger pagination (30 per page)
-        create_list(:recipe_comment, 35, recipe: recipe, user: recipe.user)
+        create_list(:recipe_comment, 5, recipe: recipe, user: recipe.user)
       end
 
-      it "paginates comments when there are more than 30" do
+      it "embeds all top-level comments as JSON in the page" do
         get recipe_path(recipe)
         expect(response).to have_http_status(:success)
 
-        # Should show 30 comments on first page (plus 1 from let! above = 36 total, 30 displayed)
-        # Count comment containers by their id attribute (more specific than class)
-        expect(response.body.scan(/id="comment-\d+"/).count).to eq(30)
-
-        # Should have pagination controls with pagy_id parameter
-        expect(response.body).to include('comments=2')
+        # All comments are passed to the Vue component via window.recipeComments
+        expect(response.body).to include("window.recipeComments")
+        # The Vue mount point is present
+        expect(response.body).to include("<recipe-comments")
       end
 
-      it "shows remaining comments on second page" do
-        get recipe_path(recipe), params: { comments: 2 }
-        expect(response).to have_http_status(:success)
+      it "includes comment data in the embedded JSON" do
+        get recipe_path(recipe)
 
-        # Should show remaining 6 comments (36 total - 30 on page 1)
-        expect(response.body.scan(/id="comment-\d+"/).count).to eq(6)
+        # Extract the JSON from the script tag
+        body_comment_ids = recipe.recipe_comments.top_level.pluck(:id)
+        body_comment_ids.each do |id|
+          expect(response.body).to include("\"id\":#{id}")
+        end
       end
     end
 

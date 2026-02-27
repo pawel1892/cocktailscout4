@@ -26,6 +26,8 @@ const components = {
   MarkdownEditor: () => import('../components/MarkdownEditor.vue'),
   ImageUploader: () => import('../components/ImageUploader.vue'),
   OnlineUsers: () => import('../components/OnlineUsers.vue'),
+  RecipeComments: () => import('../components/RecipeComments.vue'),
+  CommentItem: () => import('../components/CommentItem.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

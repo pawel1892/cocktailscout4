@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :recipe_images, dependent: :nullify
 
   has_many :ratings, dependent: :destroy
+  has_many :comment_votes, dependent: :destroy
 
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
