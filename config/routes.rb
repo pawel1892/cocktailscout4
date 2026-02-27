@@ -50,17 +50,25 @@ Rails.application.routes.draw do
   resources :users, path: "benutzer", only: [ :index ]
   resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
     member do
-      post :comment, to: "recipe_comments#create"
-      get  :bilder,  to: "recipe_images#new"
-      post :bilder,  to: "recipe_images#create"
+      get  :comments, to: "recipe_comments#index"
+      post :comment,  to: "recipe_comments#create"
+      get  :bilder,   to: "recipe_images#new"
+      post :bilder,   to: "recipe_images#create"
     end
     resources :recipe_ingredients, only: [ :index ], path: "zutaten"
+  end
+  resources :recipe_comments, only: [ :edit, :update, :destroy ] do
+    member do
+      post   :vote, to: "comment_votes#create"
+      delete :vote, to: "comment_votes#destroy"
+      post   :tag,  to: "comment_tags#create"
+      delete :tag,  to: "comment_tags#destroy"
+    end
   end
   resources :recipe_suggestions, path: "rezeptvorschlaege", only: [ :index, :new, :create, :show, :edit, :update ]
 
   resources :recipe_categories, path: "rezept-kategorien", only: [ :index ]
   resources :top_lists, path: "toplisten", only: [ :index ]
-  resources :recipe_comments, only: [ :edit, :update, :destroy ]
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
   get "tag/:tag", to: "recipes#index", as: :tag

@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   include RecipesHelper
+  include RecipeCommentsHelper
   allow_unauthenticated_access only: %i[ index show ]
   before_action :set_recipe, only: %i[ show ]
   before_action :authorize_view!, only: %i[ show ]
@@ -45,11 +46,7 @@ class RecipesController < ApplicationController
     add_breadcrumb @recipe.title
     set_recipe_meta_tags(@recipe)
 
-    @comments_pagy, @comments = pagy(
-      @recipe.recipe_comments.includes(:user).order(created_at: :desc),
-      limit: 30,
-      page_key: "comments"
-    )
+    @comments_json = build_comments_json(@recipe)
 
     @recipe.track_visit(Current.user)
   end
@@ -69,6 +66,35 @@ class RecipesController < ApplicationController
     unless can_view_recipe?(@recipe)
       redirect_to recipes_path, alert: "Rezept nicht gefunden oder keine Berechtigung."
     end
+  end
+
+  def build_comments_json(recipe)
+    comments = recipe.recipe_comments
+      .top_level
+      .includes(user: :user_stat, comment_votes: [], comment_type_taggings: [], comment_types: [],
+                replies: [ { user: :user_stat }, :comment_votes ])
+      .order(net_votes: :desc, created_at: :desc)
+
+    comments.map { |c| serialize_comment_for_json(c) }.to_json
+  end
+
+  def serialize_comment_for_json(comment)
+    current_vote = Current.user ? comment.comment_votes.find { |v| v.user_id == Current.user.id } : nil
+    {
+      id: comment.id,
+      body: comment.body,
+      user: comment.user ? { id: comment.user.id, username: comment.user.username, rank: comment.user.stat&.rank || 0, online: comment.user.online? } : { id: nil, username: "Gelöschter Benutzer", rank: nil, online: false },
+      created_at: comment.created_at.iso8601,
+      updated_at: comment.updated_at.iso8601,
+      last_editor_username: comment.last_editor&.username,
+      net_votes: comment.net_votes,
+      current_user_vote: current_vote&.value,
+      tags: comment.comment_type_list,
+      can_edit: can_edit_comment?(comment),
+      can_delete: can_delete_comment?(comment),
+      can_tag: Current.user&.can_moderate_recipe? || false,
+      replies: comment.replies.sort_by(&:created_at).map { |r| serialize_comment_for_json(r) }
+    }
   end
 
   def sort_column

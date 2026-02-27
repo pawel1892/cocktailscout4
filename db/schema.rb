@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_114528) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_26_183456) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -48,6 +48,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_114528) do
     t.index ["ingredient_collection_id"], name: "index_collection_ingredients_on_ingredient_collection_id"
     t.index ["ingredient_id", "ingredient_collection_id"], name: "index_collection_ingredients_on_ingredient_and_collection"
     t.index ["ingredient_id"], name: "index_collection_ingredients_on_ingredient_id"
+  end
+
+  create_table "comment_votes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "recipe_comment_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.integer "value", null: false
+    t.index ["recipe_comment_id"], name: "index_comment_votes_on_recipe_comment_id"
+    t.index ["user_id", "recipe_comment_id"], name: "index_comment_votes_on_user_id_and_recipe_comment_id", unique: true
+    t.index ["user_id"], name: "index_comment_votes_on_user_id"
   end
 
   create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -169,12 +180,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_114528) do
     t.text "body"
     t.datetime "created_at", null: false
     t.bigint "last_editor_id"
+    t.integer "net_votes", default: 0, null: false
     t.integer "old_id"
+    t.bigint "parent_id"
     t.bigint "recipe_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["last_editor_id"], name: "index_recipe_comments_on_last_editor_id"
     t.index ["old_id"], name: "index_recipe_comments_on_old_id"
+    t.index ["parent_id"], name: "index_recipe_comments_on_parent_id"
     t.index ["recipe_id"], name: "index_recipe_comments_on_recipe_id"
     t.index ["user_id"], name: "index_recipe_comments_on_user_id"
   end
@@ -440,6 +454,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_114528) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "collection_ingredients", "ingredient_collections"
   add_foreign_key "collection_ingredients", "ingredients"
+  add_foreign_key "comment_votes", "recipe_comments"
+  add_foreign_key "comment_votes", "users"
   add_foreign_key "favorites", "users"
   add_foreign_key "forum_posts", "forum_threads"
   add_foreign_key "forum_posts", "users"
@@ -450,6 +466,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_114528) do
   add_foreign_key "private_messages", "users", column: "receiver_id"
   add_foreign_key "private_messages", "users", column: "sender_id"
   add_foreign_key "ratings", "users"
+  add_foreign_key "recipe_comments", "recipe_comments", column: "parent_id"
   add_foreign_key "recipe_comments", "recipes"
   add_foreign_key "recipe_comments", "users"
   add_foreign_key "recipe_comments", "users", column: "last_editor_id"
