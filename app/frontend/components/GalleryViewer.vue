@@ -4,10 +4,12 @@
       <div
         v-for="image in images"
         :key="image.id"
-        class="card overflow-hidden hover:shadow-md transition-all duration-200 group cursor-pointer"
-        @click="openImage(image)"
+        class="card overflow-hidden hover:shadow-md transition-all duration-200 group"
       >
-        <div class="aspect-square bg-gray-200 relative">
+        <div
+          class="aspect-square bg-gray-200 relative cursor-pointer"
+          @click="openImage(image)"
+        >
           <img
             :src="image.thumbnailUrl"
             :alt="image.recipeTitle"
@@ -19,7 +21,7 @@
 
         <div class="card-body p-2 sm:p-3">
           <h3 class="font-bold text-sm sm:text-base mb-1 truncate">
-            {{ image.recipeTitle }}
+            <a :href="image.recipeUrl" class="hover:text-cs-gold transition-colors">{{ image.recipeTitle }}</a>
           </h3>
           <p class="text-xs text-gray-600 flex items-center gap-1 truncate">
             von <span v-html="image.userBadge"></span>
@@ -29,24 +31,29 @@
       </div>
     </div>
 
-    <ImageModal
+    <FullscreenImageModal
       v-model="showModal"
-      :image-url="selectedImage?.largeUrl || ''"
-      :recipe-title="selectedImage?.recipeTitle || ''"
-      :recipe-url="selectedImage?.recipeUrl || ''"
-      :user-badge="selectedImage?.userBadge || ''"
-      :upload-date="selectedImage?.uploadDate || ''"
+      :image-url="images[currentIndex]?.largeUrl || ''"
+      :recipe-title="images[currentIndex]?.recipeTitle || ''"
+      :recipe-url="images[currentIndex]?.recipeUrl || ''"
+      :user-badge="images[currentIndex]?.userBadge || ''"
+      :show-prev="currentIndex > 0"
+      :show-next="currentIndex < images.length - 1"
+      :image-count="images.length"
+      :current-index="currentIndex"
+      @prev="currentIndex--"
+      @next="currentIndex++"
     />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import ImageModal from './ImageModal.vue'
+import FullscreenImageModal from './FullscreenImageModal.vue'
 
 const images = ref([])
 const showModal = ref(false)
-const selectedImage = ref(null)
+const currentIndex = ref(0)
 
 onMounted(() => {
   if (window.galleryImages) {
@@ -55,7 +62,7 @@ onMounted(() => {
 })
 
 const openImage = (image) => {
-  selectedImage.value = image
+  currentIndex.value = images.value.indexOf(image)
   showModal.value = true
 }
 </script>
