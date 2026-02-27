@@ -8,6 +8,43 @@
         <span class="text-base font-normal text-gray-500">({{ totalCommentCount }})</span>
       </h2>
 
+      <!-- New Comment Form -->
+      <div class="mb-6">
+        <div v-if="isAuthenticated">
+          <button
+            v-if="!showCommentForm"
+            @click="showCommentForm = true"
+            class="btn btn-primary"
+          ><i class="fas fa-pen mr-2"></i>Kommentar schreiben</button>
+          <form v-else @submit.prevent="submitTopLevelComment" class="space-y-3">
+            <textarea
+              v-model="newCommentBody"
+              class="input-field"
+              :class="{ 'input-error': newCommentError }"
+              rows="4"
+              placeholder="Dein Kommentar..."
+              maxlength="3000"
+              autofocus
+            ></textarea>
+            <div class="flex justify-between items-center">
+              <p v-if="newCommentError" class="text-sm text-red-600">{{ newCommentError }}</p>
+              <span class="text-xs text-gray-400 ml-auto">{{ newCommentBody.length }}/3000</span>
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" class="btn btn-primary" :disabled="submitting">
+                <span v-if="submitting"><i class="fas fa-spinner fa-spin mr-1"></i>Speichern...</span>
+                <span v-else>Abschicken</span>
+              </button>
+              <button type="button" @click="showCommentForm = false; newCommentBody = ''; newCommentError = null" class="btn btn-outline">Abbrechen</button>
+            </div>
+          </form>
+        </div>
+        <div v-else class="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center">
+          <p class="text-gray-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
+          <a href="/session/new" class="text-cs-dark-red hover:underline font-medium">Jetzt anmelden</a>
+        </div>
+      </div>
+
       <!-- Filter Toolbar -->
       <div v-if="comments.length > 0" class="mb-4 space-y-2">
         <!-- Search -->
@@ -59,6 +96,7 @@
           v-for="comment in filteredComments"
           :key="comment.id"
           :comment="comment"
+          :expand-replies="replyMatchesSearch(comment)"
           :is-authenticated="isAuthenticated"
           :is-moderator="isModerator"
           :current-user-id="currentUserId"
@@ -76,46 +114,12 @@
         <template v-else>Noch keine Kommentare. Sei der Erste!</template>
       </p>
 
-      <!-- New Comment Form -->
-      <div class="border-t pt-6">
-        <div v-if="isAuthenticated">
-          <h3 class="text-lg font-semibold mb-3">Kommentar schreiben</h3>
-          <form @submit.prevent="submitTopLevelComment" class="space-y-3">
-            <div class="form-group">
-              <textarea
-                v-model="newCommentBody"
-                class="input-field"
-                :class="{ 'input-error': newCommentError }"
-                rows="4"
-                placeholder="Dein Kommentar..."
-                maxlength="3000"
-              ></textarea>
-              <div class="flex justify-between items-center mt-1">
-                <p v-if="newCommentError" class="form-error-message text-sm text-red-600">{{ newCommentError }}</p>
-                <span class="text-xs text-gray-400 ml-auto">{{ newCommentBody.length }}/3000</span>
-              </div>
-            </div>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              :disabled="submitting"
-            >
-              <span v-if="submitting"><i class="fas fa-spinner fa-spin mr-1"></i>Speichern...</span>
-              <span v-else>Kommentar abschicken</span>
-            </button>
-          </form>
-        </div>
-        <div v-else class="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center">
-          <p class="text-gray-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
-          <a href="/session/new" class="text-cs-dark-red hover:underline font-medium">Jetzt anmelden</a>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from 'vue'
+import { ref, computed, defineProps, watch } from 'vue'
 import { useAuth } from '../composables/useAuth'
 import CommentItem from './CommentItem.vue'
 
@@ -129,6 +133,7 @@ const comments = ref(window.recipeComments || [])
 const isModerator = window.recipeCommentsMeta?.isModerator || false
 const tagFilter = ref(null)
 const searchQuery = ref('')
+const showCommentForm = ref(false)
 const newCommentBody = ref('')
 const newCommentError = ref(null)
 const submitting = ref(false)
@@ -162,6 +167,13 @@ const filteredComments = computed(() => {
 
   return result
 })
+
+function replyMatchesSearch(comment) {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) return false
+  return !comment.body.toLowerCase().includes(q) &&
+    comment.replies?.some(r => r.body.toLowerCase().includes(q))
+}
 
 function clearFilters() {
   tagFilter.value = null
@@ -197,6 +209,7 @@ async function submitTopLevelComment() {
     if (response.ok) {
       comments.value.unshift(data)
       newCommentBody.value = ''
+      showCommentForm.value = false
     } else {
       newCommentError.value = data.errors?.join(', ') || 'Fehler beim Speichern.'
     }

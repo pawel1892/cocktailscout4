@@ -1,7 +1,7 @@
 <template>
-  <div :id="`comment-${comment.id}`" :class="isReply ? 'bg-gray-50' : 'bg-white rounded-lg border border-gray-200'" class="group">
-    <!-- Top-level comment body -->
-    <div class="p-3 sm:p-4">
+  <div :id="`comment-${comment.id}`" :class="isReply ? '' : 'callout'" class="group">
+    <!-- Comment body -->
+    <div :class="isReply ? 'py-3' : 'p-0'">
       <div class="flex gap-3">
         <!-- Vote Column -->
         <div v-if="!isReply" class="flex flex-col items-center gap-1 flex-shrink-0 pt-1">
@@ -138,7 +138,7 @@
     </div>
 
     <!-- Reply Form -->
-    <div v-if="!isReply && showReplyForm" class="border-t border-gray-200 px-3 pb-3 sm:px-4 sm:pb-4 pt-3">
+    <div v-if="!isReply && showReplyForm" class="mt-3 px-4 pb-4">
       <form @submit.prevent="submitReply" class="space-y-2">
         <textarea
           v-model="replyBody"
@@ -158,8 +158,8 @@
     </div>
 
     <!-- Replies -->
-    <div v-if="!isReply && repliesExpanded && comment.replies?.length > 0" class="border-t border-gray-200">
-      <div class="pl-4 sm:pl-8 space-y-0 divide-y divide-gray-100">
+    <div v-if="!isReply && repliesExpanded && comment.replies?.length > 0">
+      <div class="ml-4 mt-4 pb-4 border-l-2 border-gray-200 pl-4 divide-y divide-gray-100">
         <CommentItem
           v-for="reply in comment.replies"
           :key="reply.id"
@@ -183,7 +183,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, watch, defineProps, defineEmits } from 'vue'
 import UserBadge from './UserBadge.vue'
 
 const props = defineProps({
@@ -193,13 +193,15 @@ const props = defineProps({
   isAuthenticated: { type: Boolean, default: false },
   isModerator: { type: Boolean, default: false },
   currentUserId: { type: Number, default: null },
-  allowedTags: { type: Array, default: () => [] }
+  allowedTags: { type: Array, default: () => [] },
+  expandReplies: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['vote', 'delete', 'submit-reply', 'tag-added', 'tag-removed', 'edit-saved'])
 
 // Replies collapsed by default when > 3
-const repliesExpanded = ref((props.comment.replies?.length ?? 0) <= 3)
+const repliesExpanded = ref(false)
+watch(() => props.expandReplies, val => { repliesExpanded.value = val })
 const showReplyForm = ref(false)
 const replyBody = ref('')
 const replyError = ref(null)
