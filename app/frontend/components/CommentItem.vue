@@ -46,7 +46,7 @@
                 <button
                   v-if="comment.can_tag && !isReply"
                   @click="editingTags = true"
-                  class="text-gray-300 hover:text-gray-500 transition-colors leading-none opacity-0 group-hover:opacity-100 transition-opacity"
+                  class="text-gray-300 hover:text-gray-500 transition-colors leading-none can-hover:opacity-0 can-hover:group-hover:opacity-100 transition-opacity"
                   title="Tags bearbeiten"
                 ><i class="fas fa-tag text-xs"></i></button>
               </template>
@@ -70,7 +70,7 @@
             </div>
 
             <!-- Action buttons -->
-            <div class="flex items-center gap-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div class="flex items-center gap-2 flex-shrink-0 can-hover:opacity-0 can-hover:group-hover:opacity-100 transition-opacity">
               <button
                 v-if="comment.can_edit && !editing"
                 @click="startEdit"

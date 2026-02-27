@@ -5,10 +5,16 @@
 @theme {
   --color-cs-dark-red: #360D0C;
   --color-cs-gold: #CBB859;
-  
+
   --color-cs-success: #16a34a;
   --color-cs-warning: #ca8a04;
   --color-cs-error: #dc2626;
+}
+
+@variant can-hover {
+  @media (hover: hover) {
+    @slot;
+  }
 }
 
 /* Base Components */
