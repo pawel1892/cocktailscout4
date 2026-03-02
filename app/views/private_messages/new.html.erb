@@ -43,18 +43,6 @@
         <% end %>
 
         <div class="mb-6">
-          <%= f.label :subject, "Betreff", class: "label-field" %>
-          <%= f.text_field :subject,
-            class: "input-field #{'input-error' if @message.errors[:subject].any?}",
-            placeholder: "Betreff der Nachricht" %>
-          <% if @message.errors[:subject].any? %>
-            <div class="form-error-message">
-              <%= @message.errors.full_messages_for(:subject).join(", ") %>
-            </div>
-          <% end %>
-        </div>
-
-        <div class="mb-6">
           <%= f.label :body, "Nachricht", class: "label-field" %>
           <%= f.text_area :body,
             rows: 10,

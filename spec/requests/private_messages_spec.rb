@@ -19,25 +19,33 @@ RSpec.describe "PrivateMessages", type: :request do
       it "displays received messages" do
         message = create(:private_message, sender: sender, receiver: receiver)
         get private_messages_path
-        expect(response.body).to include(message.subject)
+        expect(response.body).to include(message.body)
+      end
+
+      it "displays sent messages (unified conversation view)" do
+        message = create(:private_message, sender: receiver, receiver: other_user)
+        get private_messages_path
+        expect(response.body).to include(message.body)
       end
 
       it "does not display messages deleted by receiver" do
         message = create(:private_message, :deleted_by_receiver, sender: sender, receiver: receiver)
         get private_messages_path
-        expect(response.body).not_to include(message.subject)
-      end
-
-      it "does not display sent messages" do
-        message = create(:private_message, sender: receiver, receiver: other_user)
-        get private_messages_path
-        expect(response.body).not_to include(message.subject)
+        expect(response.body).not_to include(message.body)
       end
 
       it "does not display messages between other users" do
-        message_between_others = create(:private_message, sender: sender, receiver: other_user, subject: "Private between others")
+        message_between_others = create(:private_message, sender: sender, receiver: other_user, body: "Private between others body")
         get private_messages_path
-        expect(response.body).not_to include("Private between others")
+        expect(response.body).not_to include("Private between others body")
+      end
+
+      it "shows only one row per conversation partner" do
+        create(:private_message, sender: sender, receiver: receiver, body: "First message body", created_at: 2.hours.ago)
+        create(:private_message, sender: sender, receiver: receiver, body: "Second message body", created_at: 1.hour.ago)
+        get private_messages_path
+        expect(response.body).to include("Second message body")
+        expect(response.body).not_to include("First message body")
       end
     end
 
@@ -61,25 +69,25 @@ RSpec.describe "PrivateMessages", type: :request do
       it "displays sent messages" do
         message = create(:private_message, sender: sender, receiver: receiver)
         get sent_private_messages_path
-        expect(response.body).to include(message.subject)
+        expect(response.body).to include(message.body)
+      end
+
+      it "displays received messages (unified conversation view)" do
+        message = create(:private_message, sender: other_user, receiver: sender)
+        get sent_private_messages_path
+        expect(response.body).to include(message.body)
       end
 
       it "does not display messages deleted by sender" do
         message = create(:private_message, :deleted_by_sender, sender: sender, receiver: receiver)
         get sent_private_messages_path
-        expect(response.body).not_to include(message.subject)
-      end
-
-      it "does not display received messages" do
-        message = create(:private_message, sender: other_user, receiver: sender)
-        get sent_private_messages_path
-        expect(response.body).not_to include(message.subject)
+        expect(response.body).not_to include(message.body)
       end
 
       it "does not display messages sent by other users" do
-        message_from_others = create(:private_message, sender: other_user, receiver: receiver, subject: "Sent by another user")
+        message_from_others = create(:private_message, sender: other_user, receiver: receiver, body: "Sent by another user body")
         get sent_private_messages_path
-        expect(response.body).not_to include("Sent by another user")
+        expect(response.body).not_to include("Sent by another user body")
       end
     end
 
@@ -104,7 +112,6 @@ RSpec.describe "PrivateMessages", type: :request do
 
       it "displays message content" do
         get private_message_path(message)
-        expect(response.body).to include(message.subject)
         expect(response.body).to include(message.body)
       end
 
@@ -114,10 +121,22 @@ RSpec.describe "PrivateMessages", type: :request do
         }.to change { message.reload.read }.from(false).to(true)
       end
 
+      it "marks all unread messages from sender as read" do
+        message2 = create(:private_message, sender: sender, receiver: receiver, read: false)
+        get private_message_path(message)
+        expect(message.reload.read).to be true
+        expect(message2.reload.read).to be true
+      end
+
       it "does not mark already read message as read again" do
         message.update(read: true)
         get private_message_path(message)
         expect(message.reload.read).to be true
+      end
+
+      it "shows inline reply form" do
+        get private_message_path(message)
+        expect(response.body).to include("Antworten")
       end
     end
 
@@ -205,7 +224,6 @@ RSpec.describe "PrivateMessages", type: :request do
           post private_messages_path, params: {
             private_message: {
               receiver_id: receiver.id,
-              subject: "Test Subject",
               body: "Test Body"
             }
           }
@@ -214,36 +232,21 @@ RSpec.describe "PrivateMessages", type: :request do
         message = PrivateMessage.last
         expect(message.sender).to eq(sender)
         expect(message.receiver).to eq(receiver)
-        expect(message.subject).to eq("Test Subject")
+        expect(message.subject).to eq("Nachricht")
         expect(message.body).to eq("Test Body")
         expect(message.read).to be false
       end
 
-      it "redirects to sent messages on success" do
+      it "redirects to message thread on success" do
         post private_messages_path, params: {
           private_message: {
             receiver_id: receiver.id,
-            subject: "Test Subject",
             body: "Test Body"
           }
         }
-        expect(response).to redirect_to(sent_private_messages_path)
+        expect(response).to redirect_to(private_message_path(PrivateMessage.last))
         follow_redirect!
         expect(response.body).to include("erfolgreich gesendet")
-      end
-
-      it "fails with missing subject" do
-        expect {
-          post private_messages_path, params: {
-            private_message: {
-              receiver_id: receiver.id,
-              subject: "",
-              body: "Test Body"
-            }
-          }
-        }.not_to change(PrivateMessage, :count)
-
-        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it "fails with missing body" do
@@ -251,7 +254,6 @@ RSpec.describe "PrivateMessages", type: :request do
           post private_messages_path, params: {
             private_message: {
               receiver_id: receiver.id,
-              subject: "Test Subject",
               body: ""
             }
           }
@@ -265,7 +267,6 @@ RSpec.describe "PrivateMessages", type: :request do
           post private_messages_path, params: {
             private_message: {
               receiver_id: nil,
-              subject: "Test Subject",
               body: "Test Body"
             }
           }
@@ -280,7 +281,6 @@ RSpec.describe "PrivateMessages", type: :request do
         post private_messages_path, params: {
           private_message: {
             receiver_id: receiver.id,
-            subject: "Test",
             body: "Test"
           }
         }
@@ -300,12 +300,24 @@ RSpec.describe "PrivateMessages", type: :request do
         }.to change { message.reload.deleted_by_receiver }.from(false).to(true)
       end
 
-      it "does not delete the message for sender" do
+      it "does not delete messages for the sender" do
         delete private_message_path(message)
         expect(message.reload.deleted_by_sender).to be false
       end
 
-      it "redirects to inbox" do
+      it "does not delete other messages in the conversation" do
+        message2 = create(:private_message, sender: sender, receiver: receiver)
+        delete private_message_path(message)
+        expect(message2.reload.deleted_by_receiver).to be false
+      end
+
+      it "redirects to remaining message in thread" do
+        message2 = create(:private_message, sender: sender, receiver: receiver)
+        delete private_message_path(message)
+        expect(response).to redirect_to(private_message_path(message2))
+      end
+
+      it "redirects to inbox when no messages remain" do
         delete private_message_path(message)
         expect(response).to redirect_to(private_messages_path)
         follow_redirect!
@@ -323,14 +335,26 @@ RSpec.describe "PrivateMessages", type: :request do
         }.to change { message.reload.deleted_by_sender }.from(false).to(true)
       end
 
-      it "does not delete the message for receiver" do
+      it "does not delete messages for the receiver" do
         delete private_message_path(message)
         expect(message.reload.deleted_by_receiver).to be false
       end
 
-      it "redirects to sent messages" do
+      it "does not delete other messages in the conversation" do
+        message2 = create(:private_message, sender: sender, receiver: receiver)
         delete private_message_path(message)
-        expect(response).to redirect_to(sent_private_messages_path)
+        expect(message2.reload.deleted_by_sender).to be false
+      end
+
+      it "redirects to remaining message in thread" do
+        message2 = create(:private_message, sender: sender, receiver: receiver)
+        delete private_message_path(message)
+        expect(response).to redirect_to(private_message_path(message2))
+      end
+
+      it "redirects to inbox when no messages remain" do
+        delete private_message_path(message)
+        expect(response).to redirect_to(private_messages_path)
         follow_redirect!
         expect(response.body).to include("gelöscht")
       end
@@ -408,15 +432,18 @@ RSpec.describe "PrivateMessages", type: :request do
   describe "Pagination" do
     before { sign_in(receiver) }
 
-    it "paginates inbox messages" do
-      create_list(:private_message, 25, sender: sender, receiver: receiver)
+    it "paginates inbox conversations" do
+      # Need 21+ distinct conversation partners to trigger pagination
+      senders = create_list(:user, 21)
+      senders.each { |s| create(:private_message, sender: s, receiver: receiver) }
       get private_messages_path
 
       expect(response.body).to match(/page=2/)
     end
 
-    it "paginates sent messages" do
-      create_list(:private_message, 25, sender: receiver, receiver: sender)
+    it "paginates sent conversations" do
+      receivers = create_list(:user, 21)
+      receivers.each { |r| create(:private_message, sender: receiver, receiver: r) }
       get sent_private_messages_path
 
       expect(response.body).to match(/page=2/)
