@@ -23,4 +23,10 @@ class PrivateMessage < ApplicationRecord
   scope :unread_by_user, ->(user) {
     where(receiver_id: user.id, read: false, deleted_by_receiver: false)
   }
+  scope :between_users, ->(user1_id, user2_id) {
+    where(
+      "(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)",
+      user1_id, user2_id, user2_id, user1_id
+    ).order(created_at: :asc)
+  }
 end
