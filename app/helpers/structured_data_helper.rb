@@ -19,10 +19,10 @@ module StructuredDataHelper
       "datePublished": recipe.created_at.iso8601,
       "dateModified": recipe.updated_at.iso8601,
       "recipeIngredient": recipe_ingredients_list(recipe),
-      "recipeInstructions": {
-        "@type": "HowToSection",
-        "text": sanitizer.sanitize(recipe.description || "")
-      }
+      "recipeInstructions": recipe_instructions_steps(sanitizer, recipe),
+      "recipeCategory": "Cocktail",
+      "recipeCuisine": "International",
+      "recipeYield": "1 Glas"
     }
 
     # Add aggregate rating if ratings exist
@@ -49,6 +49,50 @@ module StructuredDataHelper
     tag.script(schema.to_json.html_safe, type: "application/ld+json")
   end
 
+  # Generate WebSite schema JSON-LD for the homepage
+  def website_structured_data
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CocktailScout",
+      "url": "https://www.cocktailscout.de",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.cocktailscout.de/rezepte?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+
+    tag.script(schema.to_json.html_safe, type: "application/ld+json")
+  end
+
+  # Generate BreadcrumbList schema JSON-LD for a recipe page
+  def breadcrumb_structured_data(recipe)
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Rezepte",
+          "item": recipes_url
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": recipe.title,
+          "item": recipe_url(recipe)
+        }
+      ]
+    }
+
+    tag.script(schema.to_json.html_safe, type: "application/ld+json")
+  end
+
   private
 
   # Get array of image URLs for recipe
@@ -60,6 +104,15 @@ module StructuredDataHelper
     else
       [ asset_url("icon.png") ]
     end
+  end
+
+  # Build recipeInstructions as array of HowToStep objects
+  def recipe_instructions_steps(sanitizer, recipe)
+    text = sanitizer.sanitize(recipe.description || "")
+    return [] if text.blank?
+
+    steps = text.split(/\n+/).map(&:strip).reject(&:blank?)
+    steps.map { |step| { "@type": "HowToStep", "text": step } }
   end
 
   # Format recipe ingredients as array of strings

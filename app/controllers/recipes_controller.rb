@@ -10,8 +10,13 @@ class RecipesController < ApplicationController
     add_breadcrumb "Rezepte"
     set_meta_tags(
       title: "Cocktail-Rezepte",
-      description: "Entdecke die besten Cocktail-Rezepte unserer Community. Filtere nach Bewertung, Zutaten und Tags."
+      description: "Entdecke die besten Cocktail-Rezepte unserer Community. Filtere nach Bewertung, Zutaten und Tags.",
+      canonical: recipes_url
     )
+    filter_params = %i[q min_rating ingredient_id tag collection_id user_id filter]
+    if filter_params.any? { |p| params[p].present? } || params[:page].to_i > 1
+      set_meta_tags noindex: true, nofollow: false
+    end
     query = Recipe.visible.includes(:user, :taggings, :tags, approved_recipe_images: { image_attachment: :blob })
 
     # Filters
