@@ -28,6 +28,7 @@ const components = {
   OnlineUsers: () => import('../components/OnlineUsers.vue'),
   RecipeComments: () => import('../components/RecipeComments.vue'),
   CommentItem: () => import('../components/CommentItem.vue'),
+  RatingDistribution: () => import('../components/RatingDistribution.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

@@ -50,10 +50,11 @@ Rails.application.routes.draw do
   resources :users, path: "benutzer", only: [ :index ]
   resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
     member do
-      get  :comments, to: "recipe_comments#index"
-      post :comment,  to: "recipe_comments#create"
-      get  :bilder,   to: "recipe_images#new"
-      post :bilder,   to: "recipe_images#create"
+      get  :comments,    to: "recipe_comments#index"
+      post :comment,     to: "recipe_comments#create"
+      get  :bilder,      to: "recipe_images#new"
+      post :bilder,      to: "recipe_images#create"
+      get  :bewertungen, to: "recipe_ratings#index"
     end
     resources :recipe_ingredients, only: [ :index ], path: "zutaten"
   end
