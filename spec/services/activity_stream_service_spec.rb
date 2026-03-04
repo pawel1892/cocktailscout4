@@ -87,18 +87,29 @@ RSpec.describe ActivityStreamService do
       expect(event[:created_at]).to be_within(1.second).of(rating.updated_at)
     end
 
-    it 'shows only the most recent rating per user' do
+    it 'shows only the most recent rating per user per recipe' do
       user = create(:user)
-      recipe2 = create(:recipe)
-      old_rating = create(:rating, user: user, rateable: recipe, updated_at: 2.days.ago)
-      new_rating = create(:rating, user: user, rateable: recipe2, updated_at: 1.hour.ago)
+      # Two ratings for the same recipe — only the newer should appear
+      create(:rating, user: user, rateable: recipe, updated_at: 2.days.ago)
+      create(:rating, user: user, rateable: recipe, updated_at: 1.hour.ago)
 
-      rating_events = result.select { |e| e[:type] == 'rating' && e[:user][:id] == user.id }
+      rating_events = result.select { |e| e[:type] == 'rating' && e[:user][:id] == user.id && e[:meta][:recipe_title] == recipe.title }
       expect(rating_events.size).to eq(1)
-      expect(rating_events.first[:meta][:recipe_title]).to eq(recipe2.title)
+      expect(rating_events.first[:created_at]).to be_within(1.second).of(1.hour.ago)
     end
 
-    it 'shows different users most recent ratings independently' do
+    it 'shows each recipe rated by the same user independently' do
+      user = create(:user)
+      recipe2 = create(:recipe)
+      create(:rating, user: user, rateable: recipe, updated_at: 2.hours.ago)
+      create(:rating, user: user, rateable: recipe2, updated_at: 1.hour.ago)
+
+      rating_events = result.select { |e| e[:type] == 'rating' && e[:user][:id] == user.id }
+      recipe_titles = rating_events.map { |e| e[:meta][:recipe_title] }
+      expect(recipe_titles).to include(recipe.title, recipe2.title)
+    end
+
+    it 'shows different users ratings independently' do
       user1 = create(:user)
       user2 = create(:user)
       recipe2 = create(:recipe)
