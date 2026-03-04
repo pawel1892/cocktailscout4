@@ -29,5 +29,21 @@ RSpec.describe "Home Page", type: :request do
       expect(response.body).to include('Cocktail-Rezepte, Drinks')
       expect(response.body).to include('name="description" content="Willkommen bei CocktailScout.de')
     end
+
+    it "includes the activity stream script tag" do
+      get root_path
+      expect(response.body).to include("window.activityStream")
+    end
+
+    it "mounts the compact activity-stream component" do
+      get root_path
+      expect(response.body).to include("activity-stream compact")
+    end
+
+    it "populates the activity stream with recent events" do
+      recipe = create(:recipe)
+      get root_path
+      expect(response.body).to include(recipe.slug)
+    end
   end
 end

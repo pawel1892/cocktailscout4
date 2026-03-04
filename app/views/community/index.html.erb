@@ -1,101 +1,12 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-  <div class="lg:col-span-2 space-y-8">
-    
-    <%# Forum Section %>
-    <section>
-      <div class="mb-6">
-        <h2 class="text-3xl font-bold text-gray-900">Cocktailforum</h2>
-        <p class="mt-2 text-gray-600">Plaudere mit Gleichgesinnten über Cocktails, Zutaten, Bars, das Leben, das Universum und den ganzen Rest.</p>
-        <div class="mt-4">
-          <%= link_to 'Zum Forum', forum_topics_path, class: "btn btn-primary" %>
-        </div>
+  <div class="lg:col-span-2">
+    <script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
+    <div class="card">
+      <div class="card-header">Aktivitäten</div>
+      <div class="card-body">
+        <activity-stream></activity-stream>
       </div>
-
-      <div class="card">
-        <div class="card-header">
-          Zuletzt aktive Themen
-        </div>
-        <div class="overflow-x-auto">
-          <table class="table-standard">
-            <thead>
-              <tr>
-                <th class="table-th">Titel</th>
-                <th class="table-th">Letzter Beitrag</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <% @last_forum_threads.each do |thread| %>
-                <tr class="table-tr-hover <%= 'bg-blue-50' if Current.user && !thread.read_by?(Current.user) %>">
-                  <td class="table-td">
-                    <div class="text-sm font-medium">
-                        <%= link_to thread.title, forum_thread_path(thread), class: "link" %>
-                    </div>
-                  </td>
-                  <td class="table-td whitespace-nowrap">
-                    <% if thread.last_post_user %>
-                        <div class="flex flex-col items-start">
-                          <%= user_badge(thread.last_post_user) %>
-                          <span class="text-xs text-gray-400 mt-1"><%= time_ago_in_words(thread.last_post_created_at) %></span>
-                        </div>
-                    <% else %>
-                        -
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <%# Comments Section %>
-    <section>
-      <div class="card">
-        <div class="card-header">
-          Neuste Kommentare
-        </div>
-        <div class="overflow-x-auto">
-          <table class="table-standard">
-            <thead>
-              <tr>
-                <th class="table-th" colspan="2">Rezept</th>
-                <th class="table-th">User</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <% @last_recipe_comments.each do |comment| %>
-                <tr class="table-tr-hover">
-                  <td class="table-td whitespace-nowrap w-16">
-                    <%= link_to recipe_path(comment.recipe) do %>
-                        <% if comment.recipe.recipe_images.approved.any? && comment.recipe.recipe_images.approved.first.image.attached? %>
-                            <%= image_tag comment.recipe.recipe_images.approved.first.image.variant(:thumb), class: "rounded object-cover w-[50px] h-[50px]" %>
-                        <% else %>
-                            <div class="w-[50px] h-[50px] bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                              <i class="fa-solid fa-martini-glass"></i>
-                            </div>
-                        <% end %>
-                    <% end %>
-                  </td>
-                  <td class="table-td whitespace-nowrap">
-                    <div class="text-sm font-medium">
-                        <%= link_to comment.recipe.title, recipe_path(comment.recipe), class: "link" %>
-                    </div>
-                  </td>
-                  <td class="table-td whitespace-nowrap">
-                    <div class="flex flex-col items-start">
-                        <%= user_badge(comment.user) %>
-                        <span class="text-xs text-gray-400 mt-1"><%= time_ago_in_words(comment.created_at) %></span>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
+    </div>
   </div>
 
   <%# Sidebar %>

@@ -30,6 +30,7 @@ const components = {
   CommentItem: () => import('../components/CommentItem.vue'),
   RatingDistribution: () => import('../components/RatingDistribution.vue'),
   UserRatingDistribution: () => import('../components/UserRatingDistribution.vue'),
+  ActivityStream: () => import('../components/ActivityStream.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }
