@@ -80,6 +80,34 @@ RSpec.describe ActivityStreamService do
       event = result.find { |e| e[:type] == 'rating' }
       expect(event[:url]).to eq("/rezepte/#{recipe.slug}/bewertungen")
     end
+
+    it 'uses updated_at as the event timestamp' do
+      rating.update_column(:updated_at, 2.hours.ago)
+      event = result.find { |e| e[:type] == 'rating' }
+      expect(event[:created_at]).to be_within(1.second).of(rating.updated_at)
+    end
+
+    it 'shows only the most recent rating per user' do
+      user = create(:user)
+      recipe2 = create(:recipe)
+      old_rating = create(:rating, user: user, rateable: recipe, updated_at: 2.days.ago)
+      new_rating = create(:rating, user: user, rateable: recipe2, updated_at: 1.hour.ago)
+
+      rating_events = result.select { |e| e[:type] == 'rating' && e[:user][:id] == user.id }
+      expect(rating_events.size).to eq(1)
+      expect(rating_events.first[:meta][:recipe_title]).to eq(recipe2.title)
+    end
+
+    it 'shows different users most recent ratings independently' do
+      user1 = create(:user)
+      user2 = create(:user)
+      recipe2 = create(:recipe)
+      create(:rating, user: user1, rateable: recipe, updated_at: 1.hour.ago)
+      create(:rating, user: user2, rateable: recipe2, updated_at: 2.hours.ago)
+
+      user_ids = result.select { |e| e[:type] == 'rating' }.map { |e| e[:user][:id] }
+      expect(user_ids).to include(user1.id, user2.id)
+    end
   end
 
   describe 'recipe_image events' do

@@ -32,10 +32,12 @@ class ActivityStreamService
   def rating_events
     Rating.where(rateable_type: "Recipe")
       .includes(user: :user_stat, rateable: [])
-      .order(created_at: :desc).limit(@limit)
+      .order(updated_at: :desc).limit(@limit * 10)
+      .each_with_object({}) { |r, h| h[r.user_id] ||= r }
+      .values.first(@limit)
       .map do |rating|
         recipe = rating.rateable
-        { type: "rating", created_at: rating.created_at, user: serialize_user(rating.user),
+        { type: "rating", created_at: rating.updated_at, user: serialize_user(rating.user),
           url: recipe ? "/rezepte/#{recipe.slug}/bewertungen" : nil,
           meta: { score: rating.score, recipe_title: recipe&.title,
                   recipe_url: recipe ? "/rezepte/#{recipe.slug}" : nil } }
