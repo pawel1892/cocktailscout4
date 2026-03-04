@@ -2,13 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Community", type: :request do
   describe "GET /community" do
-    let!(:online_user) { create(:user, last_active_at: 2.minutes.ago) }
-    let!(:offline_user) { create(:user, last_active_at: 10.minutes.ago) }
-    let!(:forum_topic) { create(:forum_topic) }
-    let!(:forum_thread) { create(:forum_thread, forum_topic: forum_topic, updated_at: 1.hour.ago) }
-    let!(:recent_forum_thread) { create(:forum_thread, forum_topic: forum_topic, updated_at: 5.minutes.ago) }
-    let!(:recipe) { create(:recipe) }
-    let!(:comment) { create(:recipe_comment, recipe: recipe, created_at: 10.minutes.ago, user: online_user) }
+    let!(:online_user)  { create(:user, last_active_at: 2.minutes.ago) }
+    let!(:offline_user) { create(:user, :unconfirmed, last_active_at: 10.minutes.ago) }
 
     it "returns http success" do
       get community_path
@@ -25,36 +20,63 @@ RSpec.describe "Community", type: :request do
       expect(response.body).not_to include(offline_user.username)
     end
 
-    it "displays recent forum threads" do
+    it "includes the activity stream script tag" do
       get community_path
-      expect(response.body).to include(recent_forum_thread.title)
+      expect(response.body).to include("window.activityStream")
     end
 
-    it "displays recent recipe comments" do
+    it "mounts the activity-stream component" do
       get community_path
-      expect(response.body).to include(comment.recipe.title)
+      expect(response.body).to include("activity-stream")
+    end
+
+    it "does not include the old forum threads section" do
+      get community_path
+      expect(response.body).not_to include("Zuletzt aktive Themen")
+    end
+
+    it "does not include the old recipe comments section" do
+      get community_path
+      expect(response.body).not_to include("Neuste Kommentare")
+    end
+
+    it "populates activity stream with recent events" do
+      recipe = create(:recipe)
+      get community_path
+      expect(response.body).to include(recipe.slug)
     end
   end
 
   describe "GET /community.json" do
-    let!(:online_user) { create(:user, last_active_at: 2.minutes.ago) }
-    let!(:offline_user) { create(:user, last_active_at: 10.minutes.ago) }
+    let!(:online_user)  { create(:user, last_active_at: 2.minutes.ago) }
+    let!(:offline_user) { create(:user, :unconfirmed, last_active_at: 10.minutes.ago) }
 
-    it "returns online users as JSON" do
+    it "returns online users" do
       get community_path, as: :json
 
       expect(response).to have_http_status(:success)
-      json = response.parsed_body
-      ids = json["online_users"].pluck("id")
+      ids = response.parsed_body["online_users"].pluck("id")
       expect(ids).to include(online_user.id)
       expect(ids).not_to include(offline_user.id)
     end
 
-    it "includes id, username and rank for each user" do
+    it "includes id, username and rank for each online user" do
       get community_path, as: :json
 
       user_json = response.parsed_body["online_users"].first
       expect(user_json.keys).to match_array(%w[id username rank])
+    end
+
+    it "includes activity_stream in the response" do
+      get community_path, as: :json
+
+      expect(response.parsed_body).to have_key("activity_stream")
+    end
+
+    it "returns activity_stream as an array" do
+      get community_path, as: :json
+
+      expect(response.parsed_body["activity_stream"]).to be_an(Array)
     end
   end
 end

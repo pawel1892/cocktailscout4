@@ -91,5 +91,15 @@
         </div>
       </div>
     </div>
+
+    <script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
+    <div class="max-w-5xl mx-auto mt-12">
+      <div class="card">
+        <div class="card-header">Neueste Aktivitäten</div>
+        <div class="card-body">
+          <activity-stream compact></activity-stream>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
