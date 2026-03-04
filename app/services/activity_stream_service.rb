@@ -33,7 +33,7 @@ class ActivityStreamService
     Rating.where(rateable_type: "Recipe")
       .includes(user: :user_stat, rateable: [])
       .order(updated_at: :desc).limit(@limit * 10)
-      .each_with_object({}) { |r, h| h[[r.user_id, r.rateable_id]] ||= r }
+      .each_with_object({}) { |r, h| h[[ r.user_id, r.rateable_id ]] ||= r }
       .values.first(@limit)
       .map do |rating|
         recipe = rating.rateable
