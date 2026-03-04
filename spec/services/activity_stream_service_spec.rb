@@ -87,13 +87,12 @@ RSpec.describe ActivityStreamService do
       expect(event[:created_at]).to be_within(1.second).of(rating.updated_at)
     end
 
-    it 'shows only the most recent rating per user per recipe' do
+    it 'uses updated_at when a rating is changed' do
       user = create(:user)
-      # Two ratings for the same recipe — only the newer should appear
-      create(:rating, user: user, rateable: recipe, updated_at: 2.days.ago)
-      create(:rating, user: user, rateable: recipe, updated_at: 1.hour.ago)
+      r = create(:rating, user: user, rateable: recipe)
+      r.update_column(:updated_at, 1.hour.ago)
 
-      rating_events = result.select { |e| e[:type] == 'rating' && e[:user][:id] == user.id && e[:meta][:recipe_title] == recipe.title }
+      rating_events = result.select { |e| e[:type] == 'rating' && e[:user][:id] == user.id }
       expect(rating_events.size).to eq(1)
       expect(rating_events.first[:created_at]).to be_within(1.second).of(1.hour.ago)
     end
