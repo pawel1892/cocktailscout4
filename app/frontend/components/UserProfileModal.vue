@@ -241,7 +241,9 @@ const getGenderText = (gender) => {
 
             <div>
               <label class="text-sm font-medium text-gray-700">Bewertungen</label>
-              <p class="mt-1 text-gray-900">{{ profile.ratings_count }}</p>
+              <a :href="`/benutzer/${profile.id}/bewertungen`" class="mt-1 text-blue-600 hover:underline font-medium block">
+                {{ profile.ratings_count }}
+              </a>
             </div>
 
             <div>

@@ -19,6 +19,16 @@ class RecipeRatingsController < ApplicationController
       }
     end
 
-    @ratings_json = { total: total, average: @recipe.average_rating, distribution: distribution }.to_json
+    recent = ratings
+               .reorder(updated_at: :desc)
+               .select { |r| r.updated_at >= 1.year.ago }
+               .first(20)
+               .map { |r|
+                 u = r.user
+                 { score: r.score, updated_at: r.updated_at.strftime("%d.%m.%Y"),
+                   user_id: u&.id, username: u&.username, rank: u&.stat&.rank || 0, online: u&.online? || false }
+               }
+
+    @ratings_json = { total: total, average: @recipe.average_rating, distribution: distribution, recent: recent }.to_json
   end
 end
