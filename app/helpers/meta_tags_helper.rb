@@ -26,10 +26,15 @@ module MetaTagsHelper
   def set_recipe_meta_tags(recipe)
     image_url = recipe_meta_image_url(recipe)
     description = sanitize_and_truncate(recipe.description, 160)
+    if description.blank?
+      ingredient_names = recipe.recipe_ingredients.first(3).map { |ri| ri.formatted_ingredient_name }.join(", ")
+      description = "#{recipe.title} Cocktail Rezept#{ingredient_names.present? ? " mit #{ingredient_names}" : ""}. Zubereitung, Zutaten und Bewertungen auf CocktailScout."
+    end
 
     set_meta_tags(
       title: recipe.title,
       description: description,
+      canonical: recipe_url(recipe),
       og: {
         title: recipe.title,
         description: description,
