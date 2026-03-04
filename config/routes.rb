@@ -47,7 +47,11 @@ Rails.application.routes.draw do
   end
 
   resources :user_profiles, only: [ :show, :update ]
-  resources :users, path: "benutzer", only: [ :index ]
+  resources :users, path: "benutzer", only: [ :index ] do
+    member do
+      get :bewertungen, to: "user_ratings#index"
+    end
+  end
   resources :recipes, path: "rezepte", param: :slug, only: [ :index, :show ] do
     member do
       get  :comments,    to: "recipe_comments#index"
