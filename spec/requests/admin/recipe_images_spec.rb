@@ -62,6 +62,13 @@ RSpec.describe "Admin::RecipeImages", type: :request do
         expect(response.body).to include(recipe.title)
       end
 
+      it "renders successfully when the associated recipe has been soft-deleted" do
+        recipe.soft_delete!
+        get admin_recipe_images_path
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include("Rezept gelöscht")
+      end
+
       it "returns no results for an unmatched recipe name" do
         get admin_recipe_images_path, params: { q: "xyznonexistent" }
         expect(response).to have_http_status(:success)
