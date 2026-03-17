@@ -16,30 +16,64 @@
       </p>
     </div>
 
-    <!-- Highlighted Feature: Meine Bar -->
-    <div class="max-w-4xl mx-auto mb-16">
-      <div class="callout-gold shadow-lg p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden bg-white border border-cs-gold/30">
-        <!-- Decorative background icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute -right-12 -bottom-12 w-64 h-64 text-cs-gold/10 pointer-events-none transform rotate-12">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-        </svg>
-        
-        <div class="flex-shrink-0 bg-stone-50 p-5 rounded-full border border-cs-gold/20 text-cs-gold z-10">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+    <!-- Meine Bar + Featured Image -->
+    <% if @featured_image && @featured_image.image.attached? %>
+      <div class="max-w-5xl mx-auto mb-16 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Meine Bar: 2/3 width -->
+        <div class="lg:col-span-2 h-full callout-gold shadow-lg p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden bg-white border border-cs-gold/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute -right-12 -bottom-12 w-64 h-64 text-cs-gold/10 pointer-events-none transform rotate-12">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
           </svg>
+          <div class="flex-shrink-0 bg-stone-50 p-5 rounded-full border border-cs-gold/20 text-cs-gold z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+            </svg>
+          </div>
+          <div class="flex-1 z-10 text-center md:text-left">
+            <h2 class="text-3xl font-bold mb-3 text-cs-dark-red font-serif">Meine Bar</h2>
+            <p class="text-base text-gray-700 mb-6 leading-relaxed">
+              Die zentrale Funktion von CocktailScout. Sag uns, welche Zutaten du zu Hause hast,
+              und wir zeigen dir sofort, welche Cocktails du mixen kannst.
+            </p>
+            <%= link_to "Zu Meiner Bar", my_bar_path, class: "btn btn-primary px-6 py-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5" %>
+          </div>
         </div>
-        
-        <div class="flex-1 z-10 text-center md:text-left">
-          <h2 class="text-3xl font-bold mb-3 text-cs-dark-red font-serif">Meine Bar</h2>
-          <p class="text-base text-gray-700 mb-6 leading-relaxed">
-            Die zentrale Funktion von CocktailScout. Sag uns, welche Zutaten du zu Hause hast, 
-            und wir zeigen dir sofort, welche Cocktails du mixen kannst.
-          </p>
-          <%= link_to "Zu Meiner Bar", my_bar_path, class: "btn btn-primary px-6 py-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5" %>
+
+        <!-- Featured Recipe Image — gallery-style card, 1/3 width -->
+        <div class="card h-full hover:shadow-lg transition-shadow duration-200">
+          <div class="aspect-square overflow-hidden">
+            <%= image_tag @featured_image.image.variant(:large), class: "object-cover w-full h-full", alt: @featured_image.recipe.title %>
+          </div>
+          <div class="card-body">
+            <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Rezept-Highlight</p>
+            <h3 class="font-bold text-lg mb-3 leading-tight"><%= @featured_image.recipe.title %></h3>
+            <%= link_to "Zum Rezept", recipe_path(@featured_image.recipe.slug), class: "btn btn-primary btn-sm" %>
+          </div>
         </div>
       </div>
-    </div>
+    <% else %>
+      <!-- Meine Bar only -->
+      <div class="max-w-4xl mx-auto mb-16">
+        <div class="callout-gold shadow-lg p-8 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden bg-white border border-cs-gold/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute -right-12 -bottom-12 w-64 h-64 text-cs-gold/10 pointer-events-none transform rotate-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+          </svg>
+          <div class="flex-shrink-0 bg-stone-50 p-5 rounded-full border border-cs-gold/20 text-cs-gold z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+            </svg>
+          </div>
+          <div class="flex-1 z-10 text-center md:text-left">
+            <h2 class="text-3xl font-bold mb-3 text-cs-dark-red font-serif">Meine Bar</h2>
+            <p class="text-base text-gray-700 mb-6 leading-relaxed">
+              Die zentrale Funktion von CocktailScout. Sag uns, welche Zutaten du zu Hause hast,
+              und wir zeigen dir sofort, welche Cocktails du mixen kannst.
+            </p>
+            <%= link_to "Zu Meiner Bar", my_bar_path, class: "btn btn-primary px-6 py-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
       <!-- Community -->

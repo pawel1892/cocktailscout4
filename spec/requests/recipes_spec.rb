@@ -80,10 +80,10 @@ RSpec.describe "Recipes", type: :request do
         # Should render the Vue recipe-scaling component
         expect(response.body).to include("<recipe-scaling")
         expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
-        # Should pass ingredient data with additional_info in JSON
-        expect(response.body).to include('"ingredient_name":"Tequila"')
-        expect(response.body).to include('"formatted_amount":"1,5 cl"')
-        expect(response.body).to include('"additional_info":"premium"')
+        # Should pass ingredient data with additional_info in JSON (HTML-encoded inside Vue attribute)
+        expect(response.body).to include('&quot;ingredient_name&quot;:&quot;Tequila&quot;')
+        expect(response.body).to include('&quot;formatted_amount&quot;:&quot;1,5 cl&quot;')
+        expect(response.body).to include('&quot;additional_info&quot;:&quot;premium&quot;')
       end
 
       it "shows amount + unit + ingredient name when no additional_info" do
@@ -93,9 +93,9 @@ RSpec.describe "Recipes", type: :request do
         # Should render the Vue recipe-scaling component
         expect(response.body).to include("<recipe-scaling")
         expect(response.body).to include('recipe-slug="' + recipe.slug + '"')
-        # Should pass ingredient data in JSON (from the let! recipe_ingredient)
-        expect(response.body).to include('"ingredient_name":"Gin"')
-        expect(response.body).to include('"formatted_amount":"4 cl"')
+        # Should pass ingredient data in JSON (HTML-encoded inside Vue attribute)
+        expect(response.body).to include('&quot;ingredient_name&quot;:&quot;Gin&quot;')
+        expect(response.body).to include('&quot;formatted_amount&quot;:&quot;4 cl&quot;')
       end
 
       it "handles mix of ingredients with and without additional_info" do
@@ -117,12 +117,12 @@ RSpec.describe "Recipes", type: :request do
         expect(response).to have_http_status(:success)
         # Should render the Vue recipe-scaling component
         expect(response.body).to include("<recipe-scaling")
-        # Should pass both ingredients in JSON with correct data
-        expect(response.body).to include('"ingredient_name":"Vodka"')
-        expect(response.body).to include('"formatted_amount":"2 cl"')
-        expect(response.body).to include('"additional_info":"premium"')
-        expect(response.body).to include('"ingredient_name":"Gin"')
-        expect(response.body).to include('"formatted_amount":"4 cl"')
+        # Should pass both ingredients in JSON (HTML-encoded inside Vue attribute)
+        expect(response.body).to include('&quot;ingredient_name&quot;:&quot;Vodka&quot;')
+        expect(response.body).to include('&quot;formatted_amount&quot;:&quot;2 cl&quot;')
+        expect(response.body).to include('&quot;additional_info&quot;:&quot;premium&quot;')
+        expect(response.body).to include('&quot;ingredient_name&quot;:&quot;Gin&quot;')
+        expect(response.body).to include('&quot;formatted_amount&quot;:&quot;4 cl&quot;')
       end
     end
 

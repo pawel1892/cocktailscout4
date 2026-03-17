@@ -280,4 +280,106 @@ RSpec.describe RecipeImage, type: :model do
       expect { recipe.destroy }.to change { RecipeImage.count }.by(-1)
     end
   end
+
+  describe "featuring" do
+    let(:user)      { create(:user) }
+    let(:moderator) { create(:user) }
+    let(:recipe)    { create(:recipe, user: user, is_public: true) }
+
+    def create_approved_image(recipe: nil, featured_at: nil)
+      target_recipe = recipe || self.recipe
+      ri = RecipeImage.new(
+        recipe: target_recipe, user: user,
+        state: "approved", moderated_at: Time.current, moderated_by: moderator,
+        featured_at: featured_at
+      )
+      file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
+      ri.image.attach(file)
+      ri.save!
+      ri
+    end
+
+    describe ".featured" do
+      it "includes images with featured_at set" do
+        featured = create_approved_image(featured_at: Time.current)
+        expect(RecipeImage.featured).to include(featured)
+      end
+
+      it "excludes images without featured_at" do
+        unfeatured = create_approved_image
+        expect(RecipeImage.featured).not_to include(unfeatured)
+      end
+
+      it "orders by featured_at descending" do
+        recipe2 = create(:recipe, user: user)
+        older   = create_approved_image(featured_at: 1.hour.ago)
+        newer   = create_approved_image(recipe: recipe2, featured_at: Time.current)
+        expect(RecipeImage.featured.first).to eq(newer)
+      end
+    end
+
+    describe "#featured?" do
+      it "returns false when featured_at is nil" do
+        expect(create_approved_image.featured?).to be false
+      end
+
+      it "returns true when featured_at is set" do
+        expect(create_approved_image(featured_at: Time.current).featured?).to be true
+      end
+    end
+
+    describe "#feature!" do
+      it "sets featured_at" do
+        ri = create_approved_image
+        expect { ri.feature! }.to change { ri.reload.featured_at }.from(nil)
+      end
+
+      it "clears featured_at on all other images" do
+        recipe2             = create(:recipe, user: user)
+        previously_featured = create_approved_image(recipe: recipe2, featured_at: 1.hour.ago)
+        ri                  = create_approved_image
+        ri.feature!
+        expect(previously_featured.reload.featured_at).to be_nil
+      end
+
+      it "does not clear featured_at on itself" do
+        ri = create_approved_image
+        ri.feature!
+        expect(ri.reload.featured_at).to be_present
+      end
+
+      it "raises when image is not approved" do
+        ri = RecipeImage.new(recipe: recipe, user: user, state: "pending")
+        file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
+        ri.image.attach(file)
+        ri.save!
+        expect { ri.feature! }.to raise_error(RuntimeError, /Cannot feature/)
+      end
+
+      it "raises when image is soft-deleted" do
+        ri = create_approved_image
+        ri.update_columns(deleted_at: Time.current)
+        expect { ri.feature! }.to raise_error(RuntimeError, /Cannot feature/)
+      end
+
+      it "raises when recipe is not public" do
+        draft_recipe = create(:recipe, user: user, is_public: false)
+        ri = create_approved_image(recipe: draft_recipe)
+        expect { ri.feature! }.to raise_error(RuntimeError, /Cannot feature/)
+      end
+    end
+
+    describe "#unfeature!" do
+      it "clears featured_at" do
+        ri = create_approved_image(featured_at: Time.current)
+        expect { ri.unfeature! }.to change { ri.reload.featured_at }.to(nil)
+      end
+
+      it "is a no-op when already unfeatured" do
+        ri = create_approved_image
+        expect { ri.unfeature! }.not_to raise_error
+        expect(ri.reload.featured_at).to be_nil
+      end
+    end
+  end
 end

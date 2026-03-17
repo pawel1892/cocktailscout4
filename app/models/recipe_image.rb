@@ -16,6 +16,7 @@ class RecipeImage < ApplicationRecord
   scope :recent,          -> { order(created_at: :desc) }
   scope :not_soft_deleted, -> { where(deleted_at: nil) }
   scope :soft_deleted,     -> { where.not(deleted_at: nil) }
+  scope :featured,         -> { where.not(featured_at: nil).order(featured_at: :desc) }
 
   ALLOWED_CONTENT_TYPES = %w[image/jpeg image/png image/webp image/gif].freeze
   MAX_FILE_SIZE         = 10.megabytes
@@ -49,6 +50,22 @@ class RecipeImage < ApplicationRecord
       image.variant(:thumb).processed
       image.variant(:medium).processed
     end
+  end
+
+  def feature!
+    raise "Cannot feature: image must be approved, not deleted, and recipe must be public" unless
+      approved? && !soft_deleted? && recipe.is_public? && !recipe.is_deleted?
+
+    RecipeImage.where.not(id: id).update_all(featured_at: nil)
+    update!(featured_at: Time.current)
+  end
+
+  def unfeature!
+    update!(featured_at: nil)
+  end
+
+  def featured?
+    featured_at.present?
   end
 
   def soft_delete!

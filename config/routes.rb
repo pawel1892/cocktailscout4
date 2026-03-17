@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :featured_recipe_images, only: [ :create, :destroy ]
+
     resources :recipe_images, only: [ :index, :show, :destroy ] do
       member do
         post :approve

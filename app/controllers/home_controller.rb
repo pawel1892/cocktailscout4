@@ -8,6 +8,7 @@ class HomeController < ApplicationController
       title: "Cocktail-Rezepte, Drinks & Mixgetränke",
       description: "Willkommen bei CocktailScout.de - Deine Plattform für die besten Cocktail-Rezepte. Entdecke, erstelle und teile einzigartige Drinks."
     )
+    @featured_image = RecipeImage.featured.joins(:recipe).merge(Recipe.visible).includes(:recipe).first
     @activity_stream = ActivityStreamService.new(limit: 10).call
     enrich_image_events!(@activity_stream)
   end
