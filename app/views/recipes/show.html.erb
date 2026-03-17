@@ -98,7 +98,7 @@
     <recipe-scaling
       recipe-slug="<%= @recipe.slug %>"
       :scalable="<%= @recipe.has_scalable_ingredients? %>"
-      :initial-ingredients='<%= raw @recipe.recipe_ingredients.map { |ri|
+      :initial-ingredients='<%= h @recipe.recipe_ingredients.map { |ri|
         {
           id: ri.id,
           amount: ri.amount,
@@ -114,7 +114,7 @@
           old_description: ri.old_description
         }
       }.to_json %>'
-      :initial-alcohol-info='<%= raw({
+      :initial-alcohol-info='<%= h({
         total_volume_ml: @recipe.total_volume_in_ml.round(1),
         alcohol_volume_ml: @recipe.alcohol_volume_in_ml.round(1),
         alcohol_content_percent: @recipe.calculate_alcohol_content
