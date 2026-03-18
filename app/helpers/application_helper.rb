@@ -6,9 +6,9 @@ module ApplicationHelper
     safe_join(tags)
   end
 
-  def sortable(column, title = nil)
+  def sortable(column, title = nil, default_dir: "asc")
     title ||= column.titleize
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    direction = column == sort_column ? (sort_direction == "asc" ? "desc" : "asc") : default_dir
 
     # Icons for sort direction
     icon = ""

@@ -103,11 +103,11 @@
 <div class="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
   <span class="font-medium text-gray-900">Sortieren:</span>
   <%= sortable "title", Recipe.human_attribute_name(:title) %>
-  <%= sortable "average_rating", Recipe.human_attribute_name(:average_rating) %>
+  <%= sortable "average_rating", Recipe.human_attribute_name(:average_rating), default_dir: "desc" %>
   <%= sortable "users.username", Recipe.human_attribute_name(:user) %>
   <%= sortable "alcohol_content", Recipe.human_attribute_name(:alcohol_content) %>
-  <%= sortable "visits_count", Recipe.human_attribute_name(:visits_count) %>
-  <%= sortable "favorites_count", Recipe.human_attribute_name(:favorites_count) %>
+  <%= sortable "visits_count", Recipe.human_attribute_name(:visits_count), default_dir: "desc" %>
+  <%= sortable "favorites_count", Recipe.human_attribute_name(:favorites_count), default_dir: "desc" %>
 </div>
 
 <% if @pagy.pages > 1 %>
