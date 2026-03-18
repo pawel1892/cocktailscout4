@@ -60,6 +60,7 @@
         <!-- Views -->
         <div class="text-xs text-gray-400 flex items-center sm:justify-end gap-3">
           <span><i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %></span>
+          <span><i class="far fa-heart"></i> <%= number_with_delimiter(@recipe.favorites_count) %></span>
         </div>
       </div>
     </div>

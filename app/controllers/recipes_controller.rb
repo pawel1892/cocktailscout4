@@ -103,7 +103,7 @@ class RecipesController < ApplicationController
   end
 
   def sort_column
-    %w[title average_rating alcohol_content visits_count users.username].include?(params[:sort]) ? params[:sort] : "visits_count"
+    %w[title average_rating alcohol_content visits_count favorites_count users.username].include?(params[:sort]) ? params[:sort] : "visits_count"
   end
 
   def sort_direction

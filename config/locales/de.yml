@@ -33,6 +33,7 @@ de:
         created_at: "Erstellt am"
         views: "Aufrufe"
         visits_count: "Aufrufe"
+        favorites_count: "Likes"
       recipe_comment:
         body: "Kommentar"
   pagy:

@@ -107,6 +107,7 @@
   <%= sortable "users.username", Recipe.human_attribute_name(:user) %>
   <%= sortable "alcohol_content", Recipe.human_attribute_name(:alcohol_content) %>
   <%= sortable "visits_count", Recipe.human_attribute_name(:visits_count) %>
+  <%= sortable "favorites_count", Recipe.human_attribute_name(:favorites_count) %>
 </div>
 
 <% if @pagy.pages > 1 %>
@@ -165,6 +166,9 @@
                  <% end %>
                  <span title="<%= Recipe.human_attribute_name(:visits_count) %>" class="flex items-center gap-1">
                    <i class="far fa-eye"></i> <%= number_with_delimiter recipe.visits_count %>
+                 </span>
+                 <span title="<%= Recipe.human_attribute_name(:favorites_count) %>" class="flex items-center gap-1">
+                   <i class="far fa-heart"></i> <%= number_with_delimiter recipe.favorites_count %>
                  </span>
               </div>
             </div>
