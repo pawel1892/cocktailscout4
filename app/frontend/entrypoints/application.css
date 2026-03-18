@@ -5,6 +5,7 @@
 @theme {
   --color-cs-dark-red: #360D0C;
   --color-cs-gold: #CBB859;
+  --color-cs-link: #2A6496;
 
   --color-cs-success: #16a34a;
   --color-cs-warning: #ca8a04;
@@ -149,11 +150,11 @@
 }
 
 @utility link {
-  @apply text-cs-dark-red hover:opacity-80 transition cursor-pointer;
+  @apply text-cs-link hover:opacity-80 transition cursor-pointer;
 }
 
 @utility link-underline {
-  @apply text-cs-dark-red hover:underline;
+  @apply text-cs-link hover:underline;
 }
 
 @utility table-container {
@@ -217,7 +218,7 @@ nav.pagy a[role="separator"] {
 .prose-cs ul { @apply list-disc list-inside mb-4; }
 .prose-cs ol { @apply list-decimal list-inside mb-4; }
 .prose-cs li { @apply mb-1; }
-.prose-cs a { @apply text-cs-gold underline hover:text-cs-dark-red; }
+.prose-cs a { @apply text-cs-link underline hover:opacity-80; }
 .prose-cs code { @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono; }
 .prose-cs pre { @apply bg-gray-100 p-4 rounded mb-4 overflow-x-auto; }
 .prose-cs blockquote { @apply border-l-4 border-cs-gold pl-4 italic mb-4; }
