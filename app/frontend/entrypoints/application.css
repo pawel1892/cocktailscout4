@@ -250,6 +250,13 @@ nav.pagy a[role="separator"] {
 .rank-9-bg { background-color: #99134F; }
 .rank-10-bg { background-color: #981915; }
 
+/* user-badge custom element — display as inline-flex before Vue hydrates */
+user-badge {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
 /* cropperjs v2 — circular crop indicator */
 .avatar-crop-container {
   height: 480px;

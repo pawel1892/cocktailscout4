@@ -16,7 +16,7 @@
             <%= @forum_thread.title %>
           </h1>
           <div class="text-sm text-gray-500 flex items-center gap-3">
-            <span>Gestartet von <%= user_badge(@forum_thread.user) %></span>
+            <span class="flex items-center gap-1">Gestartet von <%= user_badge(@forum_thread.user) %></span>
             <span>•</span>
             <span><%= l(@forum_thread.created_at, format: :short) %></span>
           </div>

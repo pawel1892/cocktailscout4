@@ -8,7 +8,7 @@
           </a>
         </h3>
         <p class="text-sm text-gray-600 mt-1 flex items-center gap-1">
-          von <span v-html="userBadge"></span>
+          von <UserBadge :user="imageUser" />
         </p>
       </div>
     </template>
@@ -39,6 +39,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import BaseModal from './BaseModal.vue'
+import UserBadge from './UserBadge.vue'
 
 const props = defineProps({
   modelValue: {
@@ -57,9 +58,9 @@ const props = defineProps({
     type: String,
     required: true
   },
-  userBadge: {
-    type: String,
-    required: true
+  imageUser: {
+    type: Object,
+    default: null
   },
   uploadDate: {
     type: String,

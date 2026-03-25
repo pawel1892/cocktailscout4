@@ -6,6 +6,8 @@
     "vite-plugin-ruby": "^5.2.0"
   },
   "dependencies": {
+    "@dicebear/core": "^9.4.2",
+    "@dicebear/thumbs": "^9.4.2",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@vitejs/plugin-vue": "^5.2.4",

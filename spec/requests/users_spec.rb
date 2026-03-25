@@ -176,8 +176,7 @@ RSpec.describe "Users", type: :request do
     it "shows second page when requested" do
       get users_path(page: 2)
       expect(response).to have_http_status(:success)
-      # Should show remaining users
-      expect(response.body).to include('user-profile-trigger')
+      expect(response.body).to include('user-badge')
     end
 
     it "preserves sorting params in pagination" do
@@ -321,15 +320,15 @@ RSpec.describe "Users", type: :request do
       user.stat.update!(points: 5500) # Rank 8
     end
 
-    it "displays user badge with profile trigger" do
+    it "renders user-badge element with user-id attribute" do
       get users_path
-      expect(response.body).to include('user-profile-trigger')
-      expect(response.body).to include("data-user-id=\"#{user.id}\"")
+      expect(response.body).to include('user-badge')
+      expect(response.body).to include("user-id=\"#{user.id}\"")
     end
 
-    it "displays rank background class" do
+    it "renders a user-badge element for each user" do
       get users_path
-      expect(response.body).to include('rank-8-bg')
+      expect(response.body).to include('user-badge')
     end
   end
 

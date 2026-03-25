@@ -6,12 +6,19 @@
       :alt="user?.username"
       class="w-full h-full object-cover rounded-full"
     />
-    <span v-else :class="initialClass">{{ initial }}</span>
+    <img
+      v-else
+      :src="fallbackSvg"
+      :alt="user?.username"
+      class="w-full h-full rounded-full"
+    />
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { createAvatar } from '@dicebear/core'
+import * as thumbs from '@dicebear/thumbs'
 
 const props = defineProps({
   user:      { type: Object, default: null },
@@ -20,32 +27,24 @@ const props = defineProps({
 })
 
 const sizeMap = {
-  sm: { px: 28, text: 'text-xs' },
-  md: { px: 40, text: 'text-sm' },
-  lg: { px: 128, text: 'text-4xl' },
+  sm:    28,
+  md:    40,
+  forum: 64,
+  lg:    128,
 }
 
-const current = computed(() => sizeMap[props.size] || sizeMap.sm)
+const px = computed(() => sizeMap[props.size] ?? sizeMap.sm)
 
 const containerStyle = computed(() => ({
-  width:  `${current.value.px}px`,
-  height: `${current.value.px}px`,
+  width:  `${px.value}px`,
+  height: `${px.value}px`,
 }))
 
-const rank = computed(() => props.user?.rank ?? 0)
+const containerClass = 'rounded-full flex-shrink-0 overflow-hidden'
 
-const containerClass = computed(() => [
-  'rounded-full flex-shrink-0 overflow-hidden flex items-center justify-center',
-  !props.avatarUrl ? `rank-${rank.value}-bg` : '',
-])
-
-const initialClass = computed(() => [
-  'font-bold select-none text-white leading-none',
-  current.value.text,
-])
-
-const initial = computed(() => {
-  const name = props.user?.username
-  return name ? name[0].toUpperCase() : '?'
+const fallbackSvg = computed(() => {
+  const seed = props.user?.username ?? 'unknown'
+  const avatar = createAvatar(thumbs, { seed, size: px.value })
+  return `data:image/svg+xml;utf8,${encodeURIComponent(avatar.toString())}`
 })
 </script>
