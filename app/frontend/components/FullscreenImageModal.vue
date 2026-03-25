@@ -64,8 +64,8 @@
                 {{ recipeTitle }}
               </a>
               <span v-else-if="recipeTitle" class="text-white font-semibold text-lg block">{{ recipeTitle }}</span>
-              <div v-if="userBadge" class="overlay-user-badge text-sm mt-0.5 flex items-center gap-1">
-                von <span v-html="userBadge"></span>
+              <div v-if="imageUser" class="overlay-user-badge text-sm mt-0.5 flex items-center gap-1">
+                von <UserBadge :user="imageUser" layout="text" />
               </div>
             </div>
             <span v-if="imageCount > 1" class="text-white/60 text-sm">
@@ -80,13 +80,14 @@
 
 <script setup>
 import { watch } from 'vue'
+import UserBadge from './UserBadge.vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
   imageUrl: { type: String, required: true },
   recipeTitle: { type: String, default: '' },
   recipeUrl: { type: String, default: '' },
-  userBadge: { type: String, default: '' },
+  imageUser: { type: Object, default: null },
   showPrev: { type: Boolean, default: false },
   showNext: { type: Boolean, default: false },
   imageCount: { type: Number, default: 1 },

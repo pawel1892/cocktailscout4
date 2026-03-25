@@ -31,6 +31,7 @@ const components = {
   RatingDistribution: () => import('../components/RatingDistribution.vue'),
   UserRatingDistribution: () => import('../components/UserRatingDistribution.vue'),
   ActivityStream: () => import('../components/ActivityStream.vue'),
+  UserBadge: () => import('../components/UserBadge.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

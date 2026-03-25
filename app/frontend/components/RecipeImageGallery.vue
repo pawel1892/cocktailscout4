@@ -24,7 +24,7 @@
       :image-url="images[currentIndex]?.largeUrl || ''"
       :recipe-title="images[currentIndex]?.recipeTitle || ''"
       :recipe-url="images[currentIndex]?.recipeUrl || ''"
-      :user-badge="images[currentIndex]?.userBadge || ''"
+      :image-user="images[currentIndex]?.user || null"
       :show-prev="currentIndex > 0"
       :show-next="currentIndex < images.length - 1"
       :image-count="images.length"

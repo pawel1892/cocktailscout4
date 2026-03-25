@@ -18,7 +18,7 @@
               {{ r.score }}
             </div>
             <div class="flex-1 min-w-0">
-              <UserBadge :user="{ id: r.user_id, username: r.username, rank: r.rank, online: r.online }" />
+              <UserBadge :user="{ id: r.user_id, username: r.username, rank: r.rank, online: r.online, avatar_url_small: r.avatar_url_small }" />
             </div>
             <div class="text-xs text-gray-400 flex-shrink-0">{{ r.updated_at }}</div>
           </div>

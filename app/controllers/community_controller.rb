@@ -5,7 +5,7 @@ class CommunityController < ApplicationController
 
   def index
     add_breadcrumb "Community"
-    @online_users = User.online.order(last_active_at: :desc)
+    @online_users = User.online.includes(avatar_attachment: :blob).order(last_active_at: :desc)
     @activity_stream = ActivityStreamService.new(limit: 50).call
     enrich_image_events!(@activity_stream)
 
@@ -13,7 +13,7 @@ class CommunityController < ApplicationController
       format.html
       format.json do
         render json: {
-          online_users: @online_users.map { |u| { id: u.id, username: u.username, rank: u.rank } },
+          online_users: @online_users.map { |u| { id: u.id, username: u.username, rank: u.rank, avatar_url_small: u.avatar_path(:small) } },
           activity_stream: @activity_stream
         }
       end

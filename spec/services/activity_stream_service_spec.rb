@@ -263,7 +263,7 @@ RSpec.describe ActivityStreamService do
 
       it 'returns the deleted-user placeholder' do
         event = result.find { |e| e[:type] == 'forum_post' && e[:url].include?(post.public_id) }
-        expect(event[:user]).to eq(id: nil, username: 'Gelöschter Benutzer', rank: nil)
+        expect(event[:user]).to include(id: nil, username: 'Gelöschter Benutzer', rank: nil, avatar_url_small: nil)
       end
     end
 
@@ -289,9 +289,40 @@ RSpec.describe ActivityStreamService do
       end
     end
 
-    it 'user hash always has id, username, and rank keys' do
+    it 'user hash always has id, username, rank, and avatar_url_small keys' do
       result.each do |event|
-        expect(event[:user]).to include(:id, :username, :rank)
+        expect(event[:user]).to include(:id, :username, :rank, :avatar_url_small)
+      end
+    end
+  end
+
+  describe 'user serialization with avatar' do
+    let!(:user)   { create(:user) }
+    let!(:recipe) { create(:recipe, user: user) }
+
+    it 'includes avatar_url_small as nil when user has no avatar' do
+      event = result.find { |e| e[:type] == 'recipe' && e[:user][:id] == user.id }
+      expect(event[:user][:avatar_url_small]).to be_nil
+    end
+
+    it 'includes avatar_url_small as a path string when user has an avatar' do
+      file = fixture_file_upload(Rails.root.join("spec/fixtures/files/test_image.jpg"), "image/jpeg")
+      user.avatar.attach(file)
+      allow_any_instance_of(User).to receive(:avatar_path).with(:small).and_return("/avatars/small.png")
+
+      event = described_class.new(limit: 50).call.find { |e| e[:type] == 'recipe' && e[:user][:id] == user.id }
+      expect(event[:user][:avatar_url_small]).to be_a(String)
+      expect(event[:user][:avatar_url_small]).to start_with("/")
+    end
+
+    context 'when the user has been deleted (nil association)' do
+      let!(:post) { create(:forum_post) }
+
+      before { post.update_column(:user_id, nil) }
+
+      it 'includes avatar_url_small as nil in the deleted-user placeholder' do
+        event = result.find { |e| e[:type] == 'forum_post' && e[:url].include?(post.public_id) }
+        expect(event[:user][:avatar_url_small]).to be_nil
       end
     end
   end

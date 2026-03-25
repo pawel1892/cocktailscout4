@@ -1,20 +1,17 @@
 module UsersHelper
-  def user_badge(user)
-    unless user
-      return tag.span(class: "inline-flex items-center gap-1 opacity-80") do
-        concat tag.span("Gelöschter Benutzer", class: "text-gray-500 font-medium")
-        concat tag.i(class: "fa-solid fa-user text-gray-400")
-      end
-    end
-
-    tag.button(
-      type: "button",
-      class: "link inline-flex items-center gap-1 font-medium hover:underline cursor-pointer user-profile-trigger",
-      data: { user_id: user.id }
-    ) do
-      concat tag.span(user.username, class: "text-zinc-900")
-      concat tag.i(class: "fa-solid fa-user rank-#{user.rank}-color")
-      concat tag.i(class: "fa-solid fa-wifi text-green-500 text-xs", title: "Online") if user.online?
+  def user_badge(user, layout: :horizontal)
+    if user
+      content_tag(:"user-badge", "",
+        "user-id":           user.id,
+        username:             user.username,
+        rank:                 user.rank,
+        "avatar-url-small":   user.avatar_path(:small).to_s,
+        "avatar-url-medium":  user.avatar_path(:medium).to_s,
+        online:               user.online?,
+        layout:               layout
+      )
+    else
+      content_tag(:"user-badge", "", layout: layout)
     end
   end
 end

@@ -73,7 +73,7 @@
       largeUrl: url_for(image.image.variant(:large)),
       recipeTitle: image.recipe.title,
       recipeUrl: recipe_path(image.recipe),
-      userBadge: user_badge(image.user),
+      user: image.user && { id: image.user.id, username: image.user.username, rank: image.user.rank, avatar_url_small: image.user.avatar_path(:small) },
       uploadDate: l(image.created_at.to_date)
     }
   }.to_json %>;

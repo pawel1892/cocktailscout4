@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   end
 
   resources :user_profiles, only: [ :show, :update ]
+  resource :user_avatar, only: [ :create, :destroy ]
   resources :users, path: "benutzer", only: [ :index ] do
     member do
       get :bewertungen, to: "user_ratings#index"

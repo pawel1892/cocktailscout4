@@ -238,6 +238,41 @@ nav.pagy a[role="separator"] {
 .rank-9-color { color: #99134F; }
 .rank-10-color { color: #981915; }
 
+.rank-0-bg { background-color: #9A9A1E; }
+.rank-1-bg { background-color: #4D9A34; }
+.rank-2-bg { background-color: #0A9A39; }
+.rank-3-bg { background-color: #00994C; }
+.rank-4-bg { background-color: #049999; }
+.rank-5-bg { background-color: #004D98; }
+.rank-6-bg { background-color: #293377; }
+.rank-7-bg { background-color: #472783; }
+.rank-8-bg { background-color: #8A2D88; }
+.rank-9-bg { background-color: #99134F; }
+.rank-10-bg { background-color: #981915; }
+
+/* user-badge custom element — display as inline-flex before Vue hydrates */
+user-badge {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+/* cropperjs v2 — circular crop indicator */
+.avatar-crop-container {
+  height: 480px;
+}
+
+.avatar-crop-container cropper-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-crop-container cropper-selection {
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.55);
+}
+
 /* Tailwind 4 scans files for classes. */
 @source "../../../app/views/**/*.html.erb";
 @source "../../../app/helpers/**/*.rb";

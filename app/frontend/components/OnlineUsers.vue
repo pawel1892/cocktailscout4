@@ -5,11 +5,11 @@
         v-for="user in users"
         :key="user.id"
         type="button"
-        class="link inline-flex items-center gap-1 font-medium hover:underline cursor-pointer user-profile-trigger"
+        class="link inline-flex items-center gap-1.5 font-medium hover:underline cursor-pointer user-profile-trigger"
         :data-user-id="user.id"
       >
+        <AvatarDisplay :user="user" :avatarUrl="user.avatar_url_small" size="sm" />
         <span class="text-zinc-900">{{ user.username }}</span>
-        <i :class="`fa-solid fa-user rank-${user.rank}-color`"></i>
         <i class="fa-solid fa-wifi text-green-500 text-xs" title="Online"></i>
       </button>
     </div>
@@ -19,6 +19,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import AvatarDisplay from './AvatarDisplay.vue'
 
 const props = defineProps({
   initialUsers: {

@@ -24,7 +24,7 @@
             <a :href="image.recipeUrl" class="hover:text-cs-gold transition-colors">{{ image.recipeTitle }}</a>
           </h3>
           <p class="text-xs text-gray-600 flex items-center gap-1 truncate">
-            von <span v-html="image.userBadge"></span>
+            von <UserBadge :user="image.user" layout="text" />
           </p>
           <p class="text-[10px] sm:text-xs text-gray-500">{{ image.uploadDate }}</p>
         </div>
@@ -36,7 +36,7 @@
       :image-url="images[currentIndex]?.largeUrl || ''"
       :recipe-title="images[currentIndex]?.recipeTitle || ''"
       :recipe-url="images[currentIndex]?.recipeUrl || ''"
-      :user-badge="images[currentIndex]?.userBadge || ''"
+      :image-user="images[currentIndex]?.user || null"
       :show-prev="currentIndex > 0"
       :show-next="currentIndex < images.length - 1"
       :image-count="images.length"
@@ -50,6 +50,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import FullscreenImageModal from './FullscreenImageModal.vue'
+import UserBadge from './UserBadge.vue'
 
 const images = ref([])
 const showModal = ref(false)

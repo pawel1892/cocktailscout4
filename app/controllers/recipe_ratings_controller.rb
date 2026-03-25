@@ -3,7 +3,7 @@ class RecipeRatingsController < ApplicationController
 
   def index
     @recipe = Recipe.find_by!(slug: params[:slug])
-    ratings = @recipe.ratings.includes(user: :user_stat).order(score: :desc, created_at: :desc)
+    ratings = @recipe.ratings.includes(user: [ :user_stat, avatar_attachment: :blob ]).order(score: :desc, created_at: :desc)
 
     total = ratings.count
     distribution = 10.downto(1).map do |score|
@@ -14,7 +14,7 @@ class RecipeRatingsController < ApplicationController
         percentage: total > 0 ? (score_ratings.count.to_f / total * 100).round(1) : 0,
         users: score_ratings.map { |r|
           u = r.user
-          { id: u&.id, username: u&.username, rank: u&.stat&.rank || 0, online: u&.online? || false }
+          { id: u&.id, username: u&.username, rank: u&.stat&.rank || 0, online: u&.online? || false, avatar_url_small: u&.avatar_path(:small) }
         }
       }
     end
@@ -26,7 +26,7 @@ class RecipeRatingsController < ApplicationController
                .map { |r|
                  u = r.user
                  { score: r.score, updated_at: r.updated_at.strftime("%d.%m.%Y"),
-                   user_id: u&.id, username: u&.username, rank: u&.stat&.rank || 0, online: u&.online? || false }
+                   user_id: u&.id, username: u&.username, rank: u&.stat&.rank || 0, online: u&.online? || false, avatar_url_small: u&.avatar_path(:small) }
                }
 
     @ratings_json = { total: total, average: @recipe.average_rating, distribution: distribution, recent: recent }.to_json

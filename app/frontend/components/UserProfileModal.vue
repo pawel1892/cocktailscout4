@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import BaseModal from './BaseModal.vue'
 import ProfileEditForm from './ProfileEditForm.vue'
 import UserRoleBadges from './UserRoleBadges.vue'
+import AvatarDisplay from './AvatarDisplay.vue'
 
 const show = ref(false)
 const userId = ref(null)
@@ -71,6 +72,14 @@ const cancelEditing = () => {
 const handleSaved = (updatedProfile) => {
   profile.value = updatedProfile
   isEditing.value = false
+}
+
+const handleAvatarUploaded = (avatarUrls) => {
+  profile.value = { ...profile.value, ...avatarUrls }
+}
+
+const handleAvatarDeleted = (avatarUrls) => {
+  profile.value = { ...profile.value, ...avatarUrls }
 }
 
 onMounted(() => {
@@ -157,6 +166,8 @@ const getGenderText = (gender) => {
           :profile="profile"
           @saved="handleSaved"
           @cancel="cancelEditing"
+          @avatar-uploaded="handleAvatarUploaded"
+          @avatar-deleted="handleAvatarDeleted"
         />
       </div>
 
@@ -164,7 +175,7 @@ const getGenderText = (gender) => {
         <!-- User Header -->
         <div class="border-b pb-4">
           <div class="flex items-center gap-3">
-            <i class="fa-solid fa-user text-3xl" :class="getRankColor(profile.rank)"></i>
+            <AvatarDisplay :user="profile" :avatarUrl="profile.avatar_url_medium" size="lg" />
             <div>
               <h2 class="text-2xl font-bold text-gray-900">{{ profile.username }}</h2>
               <div class="flex items-center gap-2 mt-1">

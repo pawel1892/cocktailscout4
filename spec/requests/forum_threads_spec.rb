@@ -266,7 +266,7 @@ RSpec.describe "ForumThreads", type: :request do
         get forum_thread_path(forum_thread.slug)
         expect(response).to have_http_status(:success)
         expect(response.body).to include("Orphaned post")
-        expect(response.body).to include("Gelöschter Benutzer")
+        expect(response.body).to include("<user-badge")
       end
     end
 

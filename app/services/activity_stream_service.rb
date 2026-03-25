@@ -18,7 +18,7 @@ class ActivityStreamService
 
   def forum_post_events
     ForumPost.unscoped.where(deleted: false)
-      .includes(user: :user_stat, forum_thread: [])
+      .includes(user: [ :user_stat, avatar_attachment: :blob ], forum_thread: [])
       .order(created_at: :desc).limit(@limit)
       .map do |post|
         { type: "forum_post", created_at: post.created_at, user: serialize_user(post.user),
@@ -31,7 +31,7 @@ class ActivityStreamService
 
   def rating_events
     Rating.where(rateable_type: "Recipe")
-      .includes(user: :user_stat, rateable: [])
+      .includes(user: [ :user_stat, avatar_attachment: :blob ], rateable: [])
       .order(updated_at: :desc).limit(@limit * 10)
       .each_with_object({}) { |r, h| h[[ r.user_id, r.rateable_id ]] ||= r }
       .values.first(@limit)
@@ -46,7 +46,7 @@ class ActivityStreamService
 
   def recipe_image_events
     RecipeImage.approved.not_soft_deleted
-      .includes(user: :user_stat, recipe: [])
+      .includes(user: [ :user_stat, avatar_attachment: :blob ], recipe: [])
       .order(created_at: :desc).limit(@limit)
       .map do |img|
         recipe = img.recipe
@@ -58,7 +58,7 @@ class ActivityStreamService
 
   def recipe_events
     Recipe.where(is_public: true, is_deleted: false)
-      .includes(user: :user_stat)
+      .includes(user: [ :user_stat, avatar_attachment: :blob ])
       .order(created_at: :desc).limit(@limit)
       .map do |recipe|
         { type: "recipe", created_at: recipe.created_at, user: serialize_user(recipe.user),
@@ -69,7 +69,7 @@ class ActivityStreamService
 
   def user_events
     User.where.not(confirmed_at: nil)
-      .includes(:user_stat)
+      .includes(:user_stat, avatar_attachment: :blob)
       .order(confirmed_at: :desc).limit(@limit)
       .map do |user|
         { type: "user_registration", created_at: user.confirmed_at,
@@ -78,7 +78,7 @@ class ActivityStreamService
   end
 
   def recipe_comment_events
-    RecipeComment.includes(user: :user_stat, recipe: [])
+    RecipeComment.includes(user: [ :user_stat, avatar_attachment: :blob ], recipe: [])
       .order(created_at: :desc).limit(@limit)
       .map do |comment|
         recipe = comment.recipe
@@ -90,8 +90,9 @@ class ActivityStreamService
   end
 
   def serialize_user(user)
-    return { id: nil, username: "Gelöschter Benutzer", rank: nil } unless user
-    { id: user.id, username: user.username, rank: user.user_stat&.rank || 0 }
+    return { id: nil, username: "Gelöschter Benutzer", rank: nil, avatar_url_small: nil } unless user
+    { id: user.id, username: user.username, rank: user.user_stat&.rank || 0,
+      avatar_url_small: user.avatar_path(:small) }
   end
 
   def truncate_body(text, length)
