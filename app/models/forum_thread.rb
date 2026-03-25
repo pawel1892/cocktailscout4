@@ -15,7 +15,12 @@ class ForumThread < ApplicationRecord
 
   before_validation :generate_slug, if: -> { slug.blank? && title.present? }
 
-  scope :last_active_threads, -> { order(updated_at: :desc) }
+  scope :last_active_threads, -> {
+    joins("LEFT JOIN forum_posts ON forum_posts.forum_thread_id = forum_threads.id AND forum_posts.deleted = false")
+      .select("forum_threads.*, COALESCE(MAX(forum_posts.created_at), forum_threads.created_at) AS last_post_at")
+      .group("forum_threads.id")
+      .order(Arel.sql("COALESCE(MAX(forum_posts.created_at), forum_threads.created_at) DESC"))
+  }
   scope :search_by_title, ->(query) {
     return all if query.blank?
     if Rails.env.test?

@@ -190,11 +190,23 @@ RSpec.describe ForumThread, type: :model do
   end
 
   describe ".last_active_threads scope" do
-    let!(:thread1) { create(:forum_thread, updated_at: 3.days.ago) }
-    let!(:thread2) { create(:forum_thread, updated_at: 1.day.ago) }
-    let!(:thread3) { create(:forum_thread, updated_at: 2.days.ago) }
+    let!(:thread1) { create(:forum_thread) }
+    let!(:thread2) { create(:forum_thread) }
+    let!(:thread3) { create(:forum_thread) }
 
-    it "returns threads ordered by updated_at descending" do
+    it "returns threads ordered by last post created_at descending" do
+      create(:forum_post, forum_thread: thread1, created_at: 3.days.ago)
+      create(:forum_post, forum_thread: thread2, created_at: 1.day.ago)
+      create(:forum_post, forum_thread: thread3, created_at: 2.days.ago)
+
+      expect(ForumThread.last_active_threads).to eq([ thread2, thread3, thread1 ])
+    end
+
+    it "falls back to thread created_at when no posts exist" do
+      thread1.update_columns(created_at: 3.days.ago)
+      thread2.update_columns(created_at: 1.day.ago)
+      thread3.update_columns(created_at: 2.days.ago)
+
       expect(ForumThread.last_active_threads).to eq([ thread2, thread3, thread1 ])
     end
   end

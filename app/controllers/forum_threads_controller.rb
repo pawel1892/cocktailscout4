@@ -9,7 +9,14 @@ class ForumThreadsController < ApplicationController
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
     @forum_topic = ForumTopic.find_by!(slug: params[:id])
-    @pagy, @forum_threads = pagy(@forum_topic.forum_threads.order(sticky: :desc, updated_at: :desc), limit: 20)
+    @pagy, @forum_threads = pagy(
+      @forum_topic.forum_threads
+        .joins("LEFT JOIN forum_posts ON forum_posts.forum_thread_id = forum_threads.id AND forum_posts.deleted = false")
+        .select("forum_threads.*, COALESCE(MAX(forum_posts.created_at), forum_threads.created_at) AS last_post_at")
+        .group("forum_threads.id")
+        .order(Arel.sql("forum_threads.sticky DESC, COALESCE(MAX(forum_posts.created_at), forum_threads.created_at) DESC")),
+      limit: 20
+    )
   end
 
   def show
