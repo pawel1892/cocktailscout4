@@ -3,6 +3,14 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+  has_one_attached :avatar do |attachable|
+    attachable.variant :small,  resize_to_fill: [ 40, 40 ]
+    attachable.variant :medium, resize_to_fill: [ 200, 200 ]
+  end
+
+  AVATAR_CONTENT_TYPES = %w[image/jpeg image/png image/webp image/gif].freeze
+  MAX_AVATAR_SIZE = 5.megabytes
+
   has_many :recipes, dependent: :nullify
   has_many :recipe_comments, dependent: :nullify
   has_many :forum_threads, dependent: :nullify
@@ -43,6 +51,7 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :unconfirmed_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validate :unconfirmed_email_available
+  validate :avatar_content_type_and_size, if: -> { avatar.attached? }
 
   generates_token_for :email_change, expires_in: 2.hours do
     unconfirmed_email
@@ -125,5 +134,23 @@ class User < ApplicationRecord
 
   def unread_messages_count
     PrivateMessage.unread_by_user(self).count
+  end
+
+  def avatar_path(size = :small)
+    return nil unless avatar.attached?
+    Rails.application.routes.url_helpers.rails_representation_path(avatar.variant(size))
+  rescue StandardError
+    nil
+  end
+
+  private
+
+  def avatar_content_type_and_size
+    unless AVATAR_CONTENT_TYPES.include?(avatar.blob.content_type)
+      errors.add(:avatar, "muss ein JPEG, PNG, WebP oder GIF sein")
+    end
+    if avatar.blob.byte_size > MAX_AVATAR_SIZE
+      errors.add(:avatar, "darf nicht größer als 5 MB sein")
+    end
   end
 end

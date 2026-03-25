@@ -76,8 +76,8 @@ class RecipesController < ApplicationController
   def build_comments_json(recipe)
     comments = recipe.recipe_comments
       .top_level
-      .includes(user: :user_stat, comment_votes: [], comment_type_taggings: [], comment_types: [],
-                replies: [ { user: :user_stat }, :comment_votes ])
+      .includes(user: [ :user_stat, avatar_attachment: :blob ], comment_votes: [], comment_type_taggings: [], comment_types: [],
+                replies: [ { user: [ :user_stat, avatar_attachment: :blob ] }, :comment_votes ])
       .order(net_votes: :desc, created_at: :desc)
 
     comments.map { |c| serialize_comment_for_json(c) }.to_json
@@ -88,7 +88,7 @@ class RecipesController < ApplicationController
     {
       id: comment.id,
       body: comment.body,
-      user: comment.user ? { id: comment.user.id, username: comment.user.username, rank: comment.user.stat&.rank || 0, online: comment.user.online? } : { id: nil, username: "Gelöschter Benutzer", rank: nil, online: false },
+      user: comment.user ? { id: comment.user.id, username: comment.user.username, rank: comment.user.stat&.rank || 0, online: comment.user.online?, avatar_url_small: comment.user.avatar_path(:small) } : { id: nil, username: "Gelöschter Benutzer", rank: nil, online: false, avatar_url_small: nil },
       created_at: comment.created_at.iso8601,
       updated_at: comment.updated_at.iso8601,
       last_editor_username: comment.last_editor&.username,

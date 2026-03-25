@@ -301,4 +301,93 @@ RSpec.describe User, type: :model do
       expect(user.unread_messages_count).to eq(0)
     end
   end
+
+  describe "Avatar" do
+    let(:user) { create(:user) }
+    let(:image_file) { fixture_file_upload(Rails.root.join("spec/fixtures/files/test_image.jpg"), "image/jpeg") }
+
+    describe "attachment" do
+      it "has one attached avatar" do
+        expect(user).to respond_to(:avatar)
+      end
+
+      it "defines small variant" do
+        user.avatar.attach(image_file)
+        expect(user.avatar.variant(:small)).to be_present
+      end
+
+      it "defines medium variant" do
+        user.avatar.attach(image_file)
+        expect(user.avatar.variant(:medium)).to be_present
+      end
+    end
+
+    describe "content type validation" do
+      %w[image/jpeg image/png image/webp image/gif].each do |type|
+        it "accepts #{type}" do
+          user.avatar.attach(image_file)
+          allow(user.avatar.blob).to receive(:content_type).and_return(type)
+          expect(user).to be_valid
+        end
+      end
+
+      it "rejects unsupported content types" do
+        user.avatar.attach(image_file)
+        allow(user.avatar.blob).to receive(:content_type).and_return("application/pdf")
+        expect(user).not_to be_valid
+        expect(user.errors[:avatar]).to include("muss ein JPEG, PNG, WebP oder GIF sein")
+      end
+    end
+
+    describe "size validation" do
+      it "accepts files within 5 MB" do
+        user.avatar.attach(image_file)
+        expect(user).to be_valid
+      end
+
+      it "rejects files larger than 5 MB" do
+        user.avatar.attach(image_file)
+        allow(user.avatar.blob).to receive(:byte_size).and_return(6.megabytes.to_i)
+        expect(user).not_to be_valid
+        expect(user.errors[:avatar]).to include("darf nicht größer als 5 MB sein")
+      end
+    end
+
+    describe "#avatar_path" do
+      it "returns nil when no avatar is attached" do
+        expect(user.avatar_path).to be_nil
+      end
+
+      it "returns nil for medium size when no avatar is attached" do
+        expect(user.avatar_path(:medium)).to be_nil
+      end
+
+      # rails_representation_path requires routing context (host/url_options) that isn't
+      # available in model scope — stub it to test the method's own logic in isolation.
+      it "returns the representation path when avatar is attached" do
+        user.avatar.attach(image_file)
+        allow(Rails.application.routes.url_helpers)
+          .to receive(:rails_representation_path)
+          .and_return("/rails/active_storage/representations/test")
+        expect(user.avatar_path(:small)).to eq("/rails/active_storage/representations/test")
+      end
+
+      it "calls rails_representation_path with the correct variant" do
+        user.avatar.attach(image_file)
+        expect(Rails.application.routes.url_helpers)
+          .to receive(:rails_representation_path)
+          .with(an_instance_of(ActiveStorage::VariantWithRecord))
+          .and_return("/mocked")
+        user.avatar_path(:small)
+      end
+
+      it "returns nil when URL generation raises" do
+        user.avatar.attach(image_file)
+        allow(Rails.application.routes.url_helpers)
+          .to receive(:rails_representation_path)
+          .and_raise(StandardError)
+        expect(user.avatar_path(:small)).to be_nil
+      end
+    end
+  end
 end

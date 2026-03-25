@@ -6,51 +6,14 @@ class UserProfilesController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        render json: {
-          id: @user.id,
-          username: @user.username,
-          prename: @user.prename,
-          gender: @user.gender,
-          location: @user.location,
-          homepage: @user.homepage,
-          rank: @user.rank,
-          points: @user.points,
-          sign_in_count: @user.sign_in_count,
-          last_seen_at: @user.last_seen_at,
-          created_at: @user.created_at,
-          roles: @user.roles.map { |r| { name: r.name, display_name: r.display_name } },
-          # Stats for display
-          recipes_count: @user.recipes.count,
-          recipe_images_count: @user.recipe_images.approved.count,
-          recipe_comments_count: @user.recipe_comments.count,
-          ratings_count: @user.ratings.where(rateable_type: "Recipe").count,
-          forum_posts_count: @user.forum_posts.count
-        }
+        render json: profile_json
       end
     end
   end
 
   def update
     if @user.update(profile_params)
-      render json: {
-        id: @user.id,
-        username: @user.username,
-        prename: @user.prename,
-        gender: @user.gender,
-        location: @user.location,
-        homepage: @user.homepage,
-        rank: @user.rank,
-        points: @user.points,
-        sign_in_count: @user.sign_in_count,
-        last_active_at: @user.last_active_at,
-        created_at: @user.created_at,
-        roles: @user.roles.map { |r| { name: r.name, display_name: r.display_name } },
-        recipes_count: @user.recipes.count,
-        recipe_images_count: @user.recipe_images.approved.count,
-        recipe_comments_count: @user.recipe_comments.count,
-        ratings_count: @user.ratings.where(rateable_type: "Recipe").count,
-        forum_posts_count: @user.forum_posts.count
-      }
+      render json: profile_json
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_content
     end
@@ -66,6 +29,31 @@ class UserProfilesController < ApplicationController
     unless Current.user && Current.user.id == @user.id
       render json: { error: "Unauthorized" }, status: :forbidden
     end
+  end
+
+  def profile_json
+    {
+      id: @user.id,
+      username: @user.username,
+      prename: @user.prename,
+      gender: @user.gender,
+      location: @user.location,
+      homepage: @user.homepage,
+      rank: @user.rank,
+      points: @user.points,
+      sign_in_count: @user.sign_in_count,
+      last_seen_at: @user.last_seen_at,
+      last_active_at: @user.last_active_at,
+      created_at: @user.created_at,
+      roles: @user.roles.map { |r| { name: r.name, display_name: r.display_name } },
+      avatar_url_small:  @user.avatar_path(:small),
+      avatar_url_medium: @user.avatar_path(:medium),
+      recipes_count: @user.recipes.count,
+      recipe_images_count: @user.recipe_images.approved.count,
+      recipe_comments_count: @user.recipe_comments.count,
+      ratings_count: @user.ratings.where(rateable_type: "Recipe").count,
+      forum_posts_count: @user.forum_posts.count
+    }
   end
 
   def profile_params

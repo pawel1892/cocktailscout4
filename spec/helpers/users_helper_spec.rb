@@ -30,11 +30,10 @@ RSpec.describe UsersHelper, type: :helper do
         expect(result).to include('user-profile-trigger')
       end
 
-      it "includes rank-based color class on user icon" do
+      it "includes rank-based background class on avatar circle" do
         result = helper.user_badge(user)
 
-        expect(result).to include('fa-user')
-        expect(result).to include('rank-5-color')
+        expect(result).to include('rank-5-bg')
       end
 
       it "includes proper styling classes" do
@@ -120,20 +119,20 @@ RSpec.describe UsersHelper, type: :helper do
     end
 
     context "with different user ranks" do
-      it "applies correct rank color for rank 0" do
+      it "applies correct rank background for rank 0" do
         user = create(:user)
         allow(user).to receive(:rank).and_return(0)
 
         result = helper.user_badge(user)
-        expect(result).to include('rank-0-color')
+        expect(result).to include('rank-0-bg')
       end
 
-      it "applies correct rank color for rank 10" do
+      it "applies correct rank background for rank 10" do
         user = create(:user)
         allow(user).to receive(:rank).and_return(10)
 
         result = helper.user_badge(user)
-        expect(result).to include('rank-10-color')
+        expect(result).to include('rank-10-bg')
       end
     end
   end

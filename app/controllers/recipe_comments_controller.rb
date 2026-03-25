@@ -10,8 +10,8 @@ class RecipeCommentsController < ApplicationController
     recipe = Recipe.find_by!(slug: params[:slug])
     comments = recipe.recipe_comments
       .top_level
-      .includes(user: :user_stat, comment_votes: [], comment_type_taggings: [], comment_types: [],
-                replies: [ { user: :user_stat }, :comment_votes ])
+      .includes(user: [ :user_stat, avatar_attachment: :blob ], comment_votes: [], comment_type_taggings: [], comment_types: [],
+                replies: [ { user: [ :user_stat, avatar_attachment: :blob ] }, :comment_votes ])
       .order(net_votes: :desc, created_at: :desc)
 
     render json: comments.map { |c| serialize_comment(c, include_replies: true) }
@@ -135,12 +135,13 @@ class RecipeCommentsController < ApplicationController
   end
 
   def serialize_user(user)
-    return { id: nil, username: "Gelöschter Benutzer", rank: nil, online: false } unless user
+    return { id: nil, username: "Gelöschter Benutzer", rank: nil, online: false, avatar_url_small: nil } unless user
     {
       id: user.id,
       username: user.username,
       rank: user.stat&.rank || 0,
-      online: user.online?
+      online: user.online?,
+      avatar_url_small: user.avatar_path(:small)
     }
   end
 end

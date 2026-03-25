@@ -1,5 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
+import AvatarDisplay from './AvatarDisplay.vue'
+import AvatarUploader from './AvatarUploader.vue'
 
 const props = defineProps({
   profile: {
@@ -8,7 +10,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['saved', 'cancel'])
+const emit = defineEmits(['saved', 'cancel', 'avatar-uploaded', 'avatar-deleted'])
 
 const formData = ref({
   prename: '',
@@ -66,10 +68,32 @@ const cancel = () => {
   errors.value = []
   emit('cancel')
 }
+
+const onAvatarUploaded = (avatarUrls) => {
+  emit('avatar-uploaded', avatarUrls)
+}
+
+const onAvatarDeleted = (avatarUrls) => {
+  emit('avatar-deleted', avatarUrls)
+}
 </script>
 
 <template>
   <div class="space-y-4">
+    <!-- Avatar section -->
+    <div class="flex items-center gap-4 pb-4 border-b">
+      <AvatarDisplay
+        :user="profile"
+        :avatarUrl="profile.avatar_url_medium"
+        size="lg"
+      />
+      <AvatarUploader
+        :hasAvatar="!!profile.avatar_url_small"
+        @uploaded="onAvatarUploaded"
+        @deleted="onAvatarDeleted"
+      />
+    </div>
+
     <div v-if="errors.length > 0" class="bg-red-50 border border-red-200 rounded-md p-3">
       <ul class="text-sm text-red-600">
         <li v-for="error in errors" :key="error">{{ error }}</li>

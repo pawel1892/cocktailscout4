@@ -64,7 +64,7 @@ RSpec.describe "Community", type: :request do
       get community_path, as: :json
 
       user_json = response.parsed_body["online_users"].first
-      expect(user_json.keys).to match_array(%w[id username rank])
+      expect(user_json.keys).to match_array(%w[id username rank avatar_url_small])
     end
 
     it "includes activity_stream in the response" do

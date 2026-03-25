@@ -94,6 +94,27 @@ RSpec.describe "User Profiles API", type: :request do
         expect(json["homepage"]).to be_nil
       end
 
+      it "returns nil avatar URLs when user has no avatar" do
+        get user_profile_path(user), as: :json
+
+        json = JSON.parse(response.body)
+        expect(json["avatar_url_small"]).to be_nil
+        expect(json["avatar_url_medium"]).to be_nil
+      end
+
+      it "returns avatar URL paths when user has an avatar" do
+        file = fixture_file_upload(Rails.root.join("spec/fixtures/files/test_image.jpg"), "image/jpeg")
+        user.avatar.attach(file)
+        allow_any_instance_of(User).to receive(:avatar_path).with(:small).and_return("/avatars/small.png")
+        allow_any_instance_of(User).to receive(:avatar_path).with(:medium).and_return("/avatars/medium.png")
+
+        get user_profile_path(user), as: :json
+
+        json = JSON.parse(response.body)
+        expect(json["avatar_url_small"]).to be_a(String)
+        expect(json["avatar_url_medium"]).to be_a(String)
+      end
+
       it "returns user roles with display names" do
         admin_role = create(:role, name: "admin", display_name: "Administrator")
         user.roles << admin_role

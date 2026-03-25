@@ -327,9 +327,9 @@ RSpec.describe "Users", type: :request do
       expect(response.body).to include("data-user-id=\"#{user.id}\"")
     end
 
-    it "displays rank color class" do
+    it "displays rank background class" do
       get users_path
-      expect(response.body).to include('rank-8-color')
+      expect(response.body).to include('rank-8-bg')
     end
   end
 
