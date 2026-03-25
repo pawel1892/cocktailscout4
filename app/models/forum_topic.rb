@@ -1,6 +1,8 @@
 class ForumTopic < ApplicationRecord
   has_paper_trail limit: 10
 
+  NEWS_FORUM_SLUG = "news"
+
   has_many :forum_threads
 
   validates :name, presence: true
@@ -26,6 +28,10 @@ class ForumTopic < ApplicationRecord
       .where(forum_threads[:updated_at].gt(1.week.ago))
       .distinct
   }
+
+  def news?
+    slug == NEWS_FORUM_SLUG
+  end
 
   def post_count
     forum_threads.joins(:forum_posts).count

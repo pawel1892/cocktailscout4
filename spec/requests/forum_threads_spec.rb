@@ -537,6 +537,126 @@ RSpec.describe "ForumThreads", type: :request do
     end
   end
 
+  describe "news forum restrictions" do
+    let!(:news_topic) { create(:forum_topic, slug: ForumTopic::NEWS_FORUM_SLUG) }
+    let!(:regular_topic) { create(:forum_topic, slug: "general") }
+
+    describe "GET new thread form" do
+      context "when not authenticated" do
+        it "redirects to login for news forum" do
+          get new_forum_thread_path(news_topic)
+          expect(response).to redirect_to(new_session_path)
+        end
+
+        it "redirects to login for regular forum" do
+          get new_forum_thread_path(regular_topic)
+          expect(response).to redirect_to(new_session_path)
+        end
+      end
+
+      context "when authenticated as regular user" do
+        let(:user) { create(:user) }
+        before { sign_in(user) }
+
+        it "denies access to news forum" do
+          get new_forum_thread_path(news_topic)
+          expect(response).to redirect_to(root_path)
+        end
+
+        it "allows access to regular forum" do
+          get new_forum_thread_path(regular_topic)
+          expect(response).to have_http_status(:success)
+        end
+      end
+
+      context "when authenticated as admin" do
+        let(:admin) { create(:user, :admin) }
+        before { sign_in(admin) }
+
+        it "allows access to news forum" do
+          get new_forum_thread_path(news_topic)
+          expect(response).to have_http_status(:success)
+        end
+      end
+    end
+
+    describe "POST create thread" do
+      let(:valid_params) { { forum_thread_form: { thread_title: "Test", post_content: "Hello" } } }
+
+      context "when authenticated as regular user" do
+        let(:user) { create(:user) }
+        before { sign_in(user) }
+
+        it "denies creating a thread in news forum" do
+          post create_forum_thread_path(news_topic), params: valid_params
+          expect(response).to redirect_to(root_path)
+          expect(ForumThread.where(forum_topic: news_topic)).to be_empty
+        end
+
+        it "allows creating a thread in regular forum" do
+          post create_forum_thread_path(regular_topic), params: valid_params
+          expect(response).not_to redirect_to(root_path)
+        end
+      end
+
+      context "when authenticated as admin" do
+        let(:admin) { create(:user, :admin) }
+        before { sign_in(admin) }
+
+        it "allows creating a thread in news forum" do
+          post create_forum_thread_path(news_topic), params: valid_params
+          expect(ForumThread.where(forum_topic: news_topic)).to exist
+        end
+      end
+    end
+
+    describe "news forum index page" do
+      before { create(:forum_thread, forum_topic: news_topic) }
+
+      context "when not authenticated" do
+        it "shows lock message instead of new thread button" do
+          get forum_topic_path(news_topic)
+          expect(response.body).to include("fa-lock")
+          expect(response.body).to include("Nur Admins können hier neue Themen erstellen")
+          expect(response.body).not_to include("Neues Thema erstellen")
+        end
+      end
+
+      context "when authenticated as regular user" do
+        let(:user) { create(:user) }
+        before { sign_in(user) }
+
+        it "shows lock message instead of new thread button" do
+          get forum_topic_path(news_topic)
+          expect(response.body).to include("fa-lock")
+          expect(response.body).to include("Nur Admins können hier neue Themen erstellen")
+          expect(response.body).not_to include("Neues Thema erstellen")
+        end
+      end
+
+      context "when authenticated as admin" do
+        let(:admin) { create(:user, :admin) }
+        before { sign_in(admin) }
+
+        it "shows new thread button" do
+          get forum_topic_path(news_topic)
+          expect(response.body).to include("Neues Thema erstellen")
+          expect(response.body).not_to include("Nur Admins können hier neue Themen erstellen")
+        end
+      end
+
+      context "for a regular forum" do
+        it "always shows new thread button for authenticated users" do
+          user = create(:user)
+          sign_in(user)
+          get forum_topic_path(regular_topic)
+          expect(response.body).to include("Neues Thema erstellen")
+          expect(response.body).not_to include("Nur Admins können hier neue Themen erstellen")
+        end
+      end
+    end
+  end
+
   describe "sticky thread ordering in index" do
     let(:forum_topic) { create(:forum_topic) }
     let!(:normal_thread) { create(:forum_thread, forum_topic: forum_topic, title: "Normal Thread", sticky: false, updated_at: 1.hour.ago) }

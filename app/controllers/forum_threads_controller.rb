@@ -1,6 +1,8 @@
 class ForumThreadsController < ApplicationController
   allow_unauthenticated_access only: %i[index show]
 
+  before_action :require_admin_for_news_forum!, only: %i[new create]
+
   helper_method :current_user
 
   def index
@@ -47,6 +49,11 @@ class ForumThreadsController < ApplicationController
 
   def find_forum_topic
     ForumTopic.find_by(slug: params[:topic_id]) || ForumTopic.find(params[:topic_id])
+  end
+
+  def require_admin_for_news_forum!
+    topic = find_forum_topic
+    authorization_redirect if topic.news? && !Current.user&.admin?
   end
 
   def forum_thread_form_params

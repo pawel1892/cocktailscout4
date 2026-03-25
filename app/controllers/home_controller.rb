@@ -11,5 +11,7 @@ class HomeController < ApplicationController
     @featured_image = RecipeImage.featured.joins(:recipe).merge(Recipe.visible).includes(:recipe).first
     @activity_stream = ActivityStreamService.new(limit: 10).call
     enrich_image_events!(@activity_stream)
+    news_topic = ForumTopic.find_by(slug: ForumTopic::NEWS_FORUM_SLUG)
+    @news_threads = news_topic&.forum_threads&.order(created_at: :desc)&.limit(3) || []
   end
 end

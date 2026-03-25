@@ -126,6 +126,24 @@
       </div>
     </div>
 
+    <% if @news_threads.any? %>
+      <div class="max-w-5xl mx-auto mt-12">
+        <div class="card">
+          <div class="card-header">Neuigkeiten</div>
+          <div class="card-body p-0">
+            <ul class="divide-y divide-gray-100">
+              <% @news_threads.each do |thread| %>
+                <li class="px-6 py-4 flex items-baseline justify-between gap-4 hover:bg-stone-50 transition-colors">
+                  <%= link_to thread.title, forum_thread_path(thread), class: "link font-semibold hover:underline flex-1 min-w-0 truncate" %>
+                  <span class="text-xs text-gray-400 whitespace-nowrap"><%= thread.created_at.strftime("%d.%m.%Y") %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
     <div class="max-w-5xl mx-auto mt-12">
       <div class="card">

@@ -3,8 +3,14 @@
 <div class="flex flex-col gap-6">
   <%# Top Actions and Pagination %>
   <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-    <%= link_to new_forum_thread_path(@forum_topic), class: 'btn btn-primary w-full sm:w-auto' do %>
-      <i class="fas fa-plus mr-2"></i> Neues Thema erstellen
+    <% if @forum_topic.news? && !current_user&.admin? %>
+      <div class="flex items-center gap-2 text-sm text-gray-400 italic">
+        <i class="fas fa-lock"></i> Nur Admins können hier neue Themen erstellen
+      </div>
+    <% else %>
+      <%= link_to new_forum_thread_path(@forum_topic), class: 'btn btn-primary w-full sm:w-auto' do %>
+        <i class="fas fa-plus mr-2"></i> Neues Thema erstellen
+      <% end %>
     <% end %>
     
     <% if @pagy.pages > 1 %>
@@ -127,9 +133,11 @@
   <% end %>
 
   <%# Bottom Action %>
-  <div class="flex justify-center sm:justify-start">
-    <%= link_to new_forum_thread_path(@forum_topic), class: 'btn btn-outline w-full sm:w-auto' do %>
-      <i class="fas fa-plus mr-2"></i> Neues Thema erstellen
-    <% end %>
-  </div>
+  <% unless @forum_topic.news? && !current_user&.admin? %>
+    <div class="flex justify-center sm:justify-start">
+      <%= link_to new_forum_thread_path(@forum_topic), class: 'btn btn-outline w-full sm:w-auto' do %>
+        <i class="fas fa-plus mr-2"></i> Neues Thema erstellen
+      <% end %>
+    </div>
+  <% end %>
 </div>

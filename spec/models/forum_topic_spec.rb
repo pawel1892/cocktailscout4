@@ -59,6 +59,18 @@ RSpec.describe ForumTopic, type: :model do
     end
   end
 
+  describe "#news?" do
+    it "returns true when slug matches NEWS_FORUM_SLUG" do
+      topic = build(:forum_topic, slug: ForumTopic::NEWS_FORUM_SLUG)
+      expect(topic.news?).to be true
+    end
+
+    it "returns false for any other slug" do
+      topic = build(:forum_topic, slug: "general")
+      expect(topic.news?).to be false
+    end
+  end
+
   describe ".unread_by scope" do
     let(:user) { create(:user) }
     let(:topic_with_unread) { create(:forum_topic) }

@@ -46,6 +46,59 @@ RSpec.describe "Home Page", type: :request do
       expect(response.body).to include(recipe.slug)
     end
 
+    describe "news threads section" do
+      context "when the news forum exists with threads" do
+        let!(:news_topic) { create(:forum_topic, slug: ForumTopic::NEWS_FORUM_SLUG) }
+        let!(:oldest) { create(:forum_thread, forum_topic: news_topic, title: "Old News", created_at: 3.days.ago) }
+        let!(:middle) { create(:forum_thread, forum_topic: news_topic, title: "Mid News", created_at: 2.days.ago) }
+        let!(:newest) { create(:forum_thread, forum_topic: news_topic, title: "New News", created_at: 1.day.ago) }
+        let!(:fourth) { create(:forum_thread, forum_topic: news_topic, title: "Even Older", created_at: 4.days.ago) }
+
+        it "shows the Neuigkeiten section" do
+          get root_path
+          expect(response.body).to include("Neuigkeiten")
+        end
+
+        it "shows the three most recent threads" do
+          get root_path
+          expect(response.body).to include("New News")
+          expect(response.body).to include("Mid News")
+          expect(response.body).to include("Old News")
+        end
+
+        it "does not show the fourth thread" do
+          get root_path
+          expect(response.body).not_to include("Even Older")
+        end
+
+        it "shows thread dates" do
+          get root_path
+          expect(response.body).to include(newest.created_at.strftime("%d.%m.%Y"))
+        end
+
+        it "links to each thread" do
+          get root_path
+          expect(response.body).to include(forum_thread_path(newest))
+        end
+      end
+
+      context "when the news forum does not exist" do
+        it "does not show the Neuigkeiten section" do
+          get root_path
+          expect(response.body).not_to include("Neuigkeiten")
+        end
+      end
+
+      context "when the news forum exists but has no threads" do
+        before { create(:forum_topic, slug: ForumTopic::NEWS_FORUM_SLUG) }
+
+        it "does not show the Neuigkeiten section" do
+          get root_path
+          expect(response.body).not_to include("Neuigkeiten")
+        end
+      end
+    end
+
     describe "featured image" do
       let(:uploader)  { create(:user) }
       let(:moderator) { create(:user) }
