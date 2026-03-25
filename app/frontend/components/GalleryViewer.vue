@@ -24,7 +24,7 @@
             <a :href="image.recipeUrl" class="hover:text-cs-gold transition-colors">{{ image.recipeTitle }}</a>
           </h3>
           <p class="text-xs text-gray-600 flex items-center gap-1 truncate">
-            von <UserBadge :user="image.user" />
+            von <UserBadge :user="image.user" layout="text" />
           </p>
           <p class="text-[10px] sm:text-xs text-gray-500">{{ image.uploadDate }}</p>
         </div>

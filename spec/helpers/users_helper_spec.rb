@@ -69,9 +69,11 @@ RSpec.describe UsersHelper, type: :helper do
         user = create(:user)
         allow(user).to receive(:online?).and_return(false)
         allow(user).to receive(:avatar_path).with(:small).and_return("/avatars/small.png")
+        allow(user).to receive(:avatar_path).with(:medium).and_return("/avatars/medium.png")
 
         result = helper.user_badge(user)
         expect(result).to include('avatar-url-small="/avatars/small.png"')
+        expect(result).to include('avatar-url-medium="/avatars/medium.png"')
       end
     end
   end

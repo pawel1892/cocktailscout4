@@ -65,7 +65,7 @@
               </a>
               <span v-else-if="recipeTitle" class="text-white font-semibold text-lg block">{{ recipeTitle }}</span>
               <div v-if="imageUser" class="overlay-user-badge text-sm mt-0.5 flex items-center gap-1">
-                von <UserBadge :user="imageUser" />
+                von <UserBadge :user="imageUser" layout="text" />
               </div>
             </div>
             <span v-if="imageCount > 1" class="text-white/60 text-sm">
