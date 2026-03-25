@@ -20,7 +20,7 @@
     :class="buttonClass"
     :data-user-id="resolvedUser.id"
   >
-    <AvatarDisplay :user="resolvedUser" :avatarUrl="resolvedUser.avatar_url_small" :size="avatarSize" />
+    <AvatarDisplay :user="resolvedUser" :avatarUrl="isVertical ? (resolvedUser.avatar_url_medium || resolvedUser.avatar_url_small) : resolvedUser.avatar_url_small" :size="avatarSize" />
     <span :class="usernameClass">{{ resolvedUser.username }}</span>
     <i v-if="resolvedUser.online" class="fa-solid fa-wifi text-green-500 text-xs" title="Online"></i>
   </button>
@@ -37,7 +37,8 @@ const props = defineProps({
   userId:        { type: [Number, String], default: null },
   username:      { type: String, default: null },
   rank:          { type: [Number, String], default: 0 },
-  avatarUrlSmall:{ type: String, default: null },
+  avatarUrlSmall:  { type: String, default: null },
+  avatarUrlMedium: { type: String, default: null },
   online:        { type: [Boolean, String], default: false },
   // Layout: 'horizontal' (default inline) | 'vertical' (avatar above username) | 'text' (username only)
   layout:        { type: String, default: 'horizontal' },
@@ -69,7 +70,8 @@ const resolvedUser = computed(() => {
       id: props.userId ? Number(props.userId) : null,
       username: props.username,
       rank: Number(props.rank) || 0,
-      avatar_url_small: props.avatarUrlSmall || null,
+      avatar_url_small:  props.avatarUrlSmall  || null,
+      avatar_url_medium: props.avatarUrlMedium || null,
       online: props.online === true || props.online === 'true',
     }
   }
