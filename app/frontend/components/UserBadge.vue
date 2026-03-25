@@ -48,7 +48,7 @@ const isText     = computed(() => props.layout === 'text')
 const avatarSize = computed(() => isVertical.value ? 'forum' : 'sm')
 
 const buttonClass = computed(() => isVertical.value
-  ? 'link flex flex-col items-center gap-1 hover:opacity-80 cursor-pointer user-profile-trigger text-center'
+  ? 'link flex flex-col items-center gap-0.5 hover:opacity-80 cursor-pointer user-profile-trigger text-center'
   : 'link inline-flex items-center gap-1.5 font-medium hover:underline cursor-pointer user-profile-trigger'
 )
 
@@ -58,7 +58,7 @@ const deletedClass = computed(() => isVertical.value
 )
 
 const usernameClass = computed(() => isVertical.value
-  ? 'text-sm text-zinc-800 font-bold leading-tight max-w-[80px] truncate'
+  ? 'text-xs text-zinc-800 font-bold leading-tight max-w-[100px] break-words'
   : 'text-zinc-900'
 )
 
