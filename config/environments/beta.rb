@@ -66,6 +66,12 @@ Rails.application.configure do
     protocol: "https"
   }
 
+  # Required for Active Storage URL generation (e.g. avatar_path in User model).
+  config.action_controller.default_url_options = {
+    host: ENV.fetch("APP_HOST", "beta.cocktailscout.de"),
+    protocol: "https"
+  }
+
   # Configure Resend for email delivery
   config.action_mailer.delivery_method = :resend
   config.action_mailer.resend_settings = {
