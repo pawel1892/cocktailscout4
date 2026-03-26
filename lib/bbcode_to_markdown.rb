@@ -27,11 +27,17 @@ class BbcodeToMarkdown
   private
 
   def convert_bold(t)
-    t.gsub(/\[b\](.*?)\[\/b\]/mi) { "**#{Regexp.last_match(1)}**" }
+    t.gsub(/\[b\](.*?)\[\/b\]/mi) do
+      inner = Regexp.last_match(1)
+      "#{inner[/\A\s*/]}**#{inner.strip}**#{inner[/\s*\z/]}"
+    end
   end
 
   def convert_italic(t)
-    t.gsub(/\[i\](.*?)\[\/i\]/mi) { "*#{Regexp.last_match(1)}*" }
+    t.gsub(/\[i\](.*?)\[\/i\]/mi) do
+      inner = Regexp.last_match(1)
+      "#{inner[/\A\s*/]}*#{inner.strip}*#{inner[/\s*\z/]}"
+    end
   end
 
   def convert_underline(t)
@@ -39,8 +45,18 @@ class BbcodeToMarkdown
   end
 
   def convert_color(t)
-    # Strip color tag, keep content
-    t.gsub(/\[color=[^\]]*\](.*?)\[\/color\]/mi) { Regexp.last_match(1) }
+    t.gsub(/\[color=([^\]]*)\](.*?)\[\/color\]/mi) do
+      invisible_color?(Regexp.last_match(1)) ? "" : Regexp.last_match(2)
+    end
+  end
+
+  def invisible_color?(color)
+    hex = color.strip.delete("#")
+    return false unless hex.match?(/\A[0-9a-f]{6}\z/i)
+    r = hex[0, 2].to_i(16)
+    g = hex[2, 2].to_i(16)
+    b = hex[4, 2].to_i(16)
+    r > 200 && g > 200 && b > 200
   end
 
   def convert_urls(t)
