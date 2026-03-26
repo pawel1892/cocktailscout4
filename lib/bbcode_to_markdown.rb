@@ -69,31 +69,34 @@ class BbcodeToMarkdown
   end
 
   def convert_quotes(t)
-    # Process innermost quotes first (same approach as BBCode renderer)
+    # Process innermost quotes first. Authored quotes output a shortcode that
+    # would re-match the same regex, so we replace them with sentinel tokens
+    # during the loop and restore after all anonymous quotes are resolved.
+    authored = []
+
     loop do
       found = false
-      t.gsub!(/\[quote(?:([^\]]*?))\]((?:(?!\[quote).)*?)\[\/quote\]/mi) do
+      t.gsub!(/\[quote(?:=([^\]]*))?\]((?:(?!\[quote).)*?)\[\/quote\]/mi) do
         found   = true
-        params  = Regexp.last_match(1)
+        author  = Regexp.last_match(1)&.strip
         content = Regexp.last_match(2).strip
 
-        author = parse_quote_author(params)
-
-        if author
-          # Keep as shortcode — renderer handles the HTML wrapping
-          "[quote=#{author}]\n#{content}\n[/quote]"
+        if author && !author.empty?
+          token = "QSENT#{authored.length}QSENT"
+          authored << "[quote=#{author}]\n#{content}\n[/quote]"
+          token
         else
           content.split("\n").map { |line| "> #{line}" }.join("\n")
         end
       end
       break unless found
     end
-    t
-  end
 
-  def parse_quote_author(params)
-    return nil if params.nil? || params.strip.empty?
-    clean = params.strip
-    clean.start_with?("=") ? clean[1..] : clean
+    # Restore sentinels in reverse insertion order (outer quotes contain
+    # inner sentinel tokens, so restore inner first).
+    (authored.length - 1).downto(0) do |idx|
+      t.gsub!("QSENT#{idx}QSENT", authored[idx])
+    end
+    t
   end
 end
