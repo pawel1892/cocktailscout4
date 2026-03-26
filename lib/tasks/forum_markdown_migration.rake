@@ -31,18 +31,21 @@ namespace :forum do
         end
 
         begin
-          markdown = BbcodeToMarkdown.convert(post.body)
+          # If already migrated, convert from the preserved original (body_bbcode).
+          # Never overwrite body_bbcode once it is set — it is the source of truth.
+          already_migrated = post.body_bbcode.present?
+          source           = already_migrated ? post.body_bbcode : post.body
+          markdown         = BbcodeToMarkdown.convert(source)
 
           if dry_run
-            puts "=== Post #{post.public_id} (id: #{post.id}) ==="
-            puts "VORHER: #{post.body.truncate(300)}"
+            puts "=== Post #{post.public_id} (id: #{post.id})#{" [re-migration]" if already_migrated} ==="
+            puts "VORHER: #{source.truncate(300)}"
             puts "NACHHER: #{markdown.truncate(300)}"
             puts ""
           else
-            post.update_columns(
-              body_bbcode: post.body,
-              body:        markdown
-            )
+            updates = { body: markdown }
+            updates[:body_bbcode] = source unless already_migrated
+            post.update_columns(**updates)
 
             total_done += 1
             if (total_done % 1000).zero?
