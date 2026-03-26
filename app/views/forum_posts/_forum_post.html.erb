@@ -32,7 +32,7 @@
     <%# Post Body %>
     <div class="flex-1 p-4 lg:p-6 min-w-0 flex flex-col">
       <div class="prose prose-sm [&_p]:mb-4 max-w-none text-gray-800 flex-1">
-        <%= render_bbcode(forum_post.body) %>
+        <%= render_markdown(forum_post.body) %>
       </div>
 
       <% if forum_post.last_editor %>

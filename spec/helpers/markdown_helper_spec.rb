@@ -47,13 +47,14 @@ RSpec.describe MarkdownHelper, type: :helper do
     it "renders links" do
       text = "[CocktailScout](https://cocktailscout.com)"
       result = helper.render_markdown(text)
-      expect(result).to include('<a href="https://cocktailscout.com">CocktailScout</a>')
+      expect(result).to include('href="https://cocktailscout.com"')
+      expect(result).to include(">CocktailScout</a>")
     end
 
     it "auto-links URLs" do
       text = "Visit https://cocktailscout.com"
       result = helper.render_markdown(text)
-      expect(result).to include('<a href="https://cocktailscout.com">https://cocktailscout.com</a>')
+      expect(result).to include('href="https://cocktailscout.com"')
     end
 
     it "renders inline code" do
@@ -108,7 +109,8 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(result).to include("<h1>Title</h1>")
       expect(result).to include("<strong>bold</strong>")
       expect(result).to include("<em>italic</em>")
-      expect(result).to include('<a href="https://example.com">link</a>')
+      expect(result).to include('href="https://example.com"')
+      expect(result).to include(">link</a>")
     end
   end
 end

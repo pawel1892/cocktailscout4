@@ -42,8 +42,19 @@ class RecipesController < ApplicationController
     # Handle specific join sorting
     query = query.left_joins(:user) if sort_column == "users.username"
 
-    @pagy, @recipes = pagy(query.order("#{sort_column} #{sort_direction}"))
-    @favorite_recipe_ids = Current.user ? Current.user.favorites.where(favoritable_type: "Recipe", favoritable_id: @recipes.map(&:id)).pluck(:favoritable_id) : []
+    respond_to do |format|
+      format.html do
+        @pagy, @recipes = pagy(query.order("#{sort_column} #{sort_direction}"))
+        @favorite_recipe_ids = Current.user ? Current.user.favorites.where(favoritable_type: "Recipe", favoritable_id: @recipes.map(&:id)).pluck(:favoritable_id) : []
+      end
+      format.json do
+        @pagy, recipes = pagy(query.order("#{sort_column} #{sort_direction}"), limit: (params[:limit] || 20).to_i.clamp(1, 100))
+        render json: {
+          recipes: recipes.map { |r| recipe_json(r) },
+          meta: { total: @pagy.count, page: @pagy.page, pages: @pagy.last }
+        }
+      end
+    end
   end
 
   def show
@@ -99,6 +110,21 @@ class RecipesController < ApplicationController
       can_delete: can_delete_comment?(comment),
       can_tag: Current.user&.can_moderate_recipe? || false,
       replies: comment.replies.sort_by(&:created_at).map { |r| serialize_comment_for_json(r) }
+    }
+  end
+
+  def recipe_json(recipe)
+    thumbnail_url = if recipe.approved_recipe_images.loaded? && recipe.approved_recipe_images.any?
+      url_for(recipe.approved_recipe_images.first.image.variant(resize_to_limit: [ 200, 200 ]))
+    end
+    {
+      slug: recipe.slug,
+      title: recipe.title,
+      url: recipe_path(recipe),
+      description: recipe.description&.truncate(200),
+      thumbnail_url: thumbnail_url,
+      tags: recipe.tag_list,
+      created_at: recipe.created_at.iso8601
     }
   end
 

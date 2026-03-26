@@ -112,6 +112,17 @@
   @apply italic text-gray-700;
 }
 
+/* Markdown quote block (rendered from [quote=Author]...[/quote] shortcode) */
+.md-quote {
+  @apply bg-gray-50 border-l-4 border-cs-gold my-4 rounded-r;
+}
+.md-quote figcaption {
+  @apply font-bold text-sm text-cs-dark-red px-4 pt-3 block;
+}
+.md-quote blockquote {
+  @apply italic text-gray-700 px-4 pb-3 m-0 border-0;
+}
+
 /* Tags / Labels */
 @utility tag {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border;

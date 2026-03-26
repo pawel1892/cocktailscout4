@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_18_104959) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_140801) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -74,8 +74,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_104959) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
+  create_table "forum_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_forum_images_on_user_id"
+  end
+
   create_table "forum_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body"
+    t.text "body_bbcode"
     t.datetime "created_at", null: false
     t.boolean "deleted", default: false, null: false
     t.bigint "forum_thread_id", null: false
@@ -459,6 +467,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_104959) do
   add_foreign_key "comment_votes", "recipe_comments"
   add_foreign_key "comment_votes", "users"
   add_foreign_key "favorites", "users"
+  add_foreign_key "forum_images", "users"
   add_foreign_key "forum_posts", "forum_threads"
   add_foreign_key "forum_posts", "users"
   add_foreign_key "forum_posts", "users", column: "last_editor_id"

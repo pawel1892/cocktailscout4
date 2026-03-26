@@ -5,12 +5,14 @@
       <div class="text-cs-error text-sm mb-2"><%= forum_post.errors.full_messages_for(:body).join(", ") %></div>
     <% end %>
     
-    <bbcode-editor
+    <markdown-editor
       model-value="<%= forum_post.body %>"
       textarea-id="forum_post_body"
       textarea-name="<%= form.object_name %>[body]"
+      upload-url="<%= forum_images_path %>"
       :smileys="<%= BbcodeHelper::SMILEYS.to_json %>"
-    ></bbcode-editor>
+      :show-internal-links="true"
+    ></markdown-editor>
   </div>
   
   <div class="flex justify-end gap-2">

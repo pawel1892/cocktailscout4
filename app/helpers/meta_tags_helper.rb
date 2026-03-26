@@ -92,8 +92,13 @@ module MetaTagsHelper
   def sanitize_and_truncate(text, length)
     return "" if text.blank?
 
+    # Strip Markdown/wikilink shortcodes before sanitizing
+    cleaned = text
+      .gsub(/\[\[(?:recipe|thread|post):[^\]]+\]\]/, "") # wikilinks
+      .gsub(/\[quote[^\]]*\]|\[\/quote\]/i, "")          # quote shortcodes
+
     # Remove HTML tags
-    sanitized = Rails::Html::FullSanitizer.new.sanitize(text)
+    sanitized = Rails::Html::FullSanitizer.new.sanitize(cleaned)
 
     # Truncate to specified length at word boundary
     if sanitized.length > length
