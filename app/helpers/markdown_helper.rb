@@ -63,7 +63,7 @@ module MarkdownHelper
     # Quotes — process innermost first
     loop do
       found = false
-      t.gsub!(/\[quote(?:=([^\]]*))?\]((?:(?!\[quote).)*?)\[\/quote\]/mi) do
+      t.gsub!(/\[quote(?:[= ]([^\]]*?))?\s*\]((?:(?!\[quote).)*?)\[\/quote\]/mi) do
         found = true
         author  = Regexp.last_match(1)&.strip
         content = Regexp.last_match(2)
