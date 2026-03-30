@@ -28,16 +28,76 @@
 
       <!-- Image upload (only when uploadUrl provided) -->
       <template v-if="uploadUrl">
-        <button
-          type="button"
-          @click="triggerFileInput"
-          :disabled="uploadState === 'uploading'"
-          class="toolbar-btn"
-          :title="uploadState === 'uploading' ? 'Hochladen...' : 'Bild hochladen oder einfügen'"
-        >
-          <i v-if="uploadState === 'uploading'" class="fas fa-spinner fa-spin"></i>
-          <i v-else class="far fa-image"></i>
-        </button>
+        <div class="relative">
+          <button
+            type="button"
+            @click="toggleImagePopover"
+            :disabled="uploadState === 'uploading'"
+            class="toolbar-btn"
+            :title="uploadState === 'uploading' ? 'Hochladen...' : 'Bild einfügen'"
+          >
+            <i v-if="uploadState === 'uploading'" class="fas fa-spinner fa-spin"></i>
+            <i v-else class="far fa-image"></i>
+          </button>
+
+          <div
+            v-if="showImagePopover"
+            class="absolute left-0 top-full mt-1 w-72 bg-white border border-gray-200 shadow-lg rounded z-20"
+          >
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200">
+              <button
+                type="button"
+                @click="imageTab = 'upload'"
+                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'upload' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-gray-500 hover:text-gray-700']"
+              >Hochladen</button>
+              <button
+                type="button"
+                @click="imageTab = 'url'"
+                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'url' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-gray-500 hover:text-gray-700']"
+              >URL</button>
+            </div>
+
+            <!-- Upload tab -->
+            <div v-if="imageTab === 'upload'" class="p-3">
+              <button type="button" @click="triggerFileInput" class="btn btn-outline btn-sm w-full">
+                <i class="fas fa-upload mr-1"></i> Datei auswählen
+              </button>
+              <p class="text-xs text-gray-400 mt-2">oder per Drag &amp; Drop / Einfügen (Strg+V)</p>
+            </div>
+
+            <!-- URL tab -->
+            <div v-if="imageTab === 'url'" class="p-3">
+              <input
+                v-model="imageUrlInput"
+                type="url"
+                placeholder="https://..."
+                class="input-field w-full text-sm mb-2"
+                @keydown.enter.prevent="insertImageFromUrl"
+              />
+              <button
+                type="button"
+                @click="insertImageFromUrl"
+                :disabled="!imageUrlInput.trim()"
+                class="btn btn-primary btn-sm w-full"
+              >Einfügen</button>
+            </div>
+
+            <!-- Size selector -->
+            <div class="px-3 pb-3 border-t border-gray-100 pt-2">
+              <p class="text-xs text-gray-500 mb-1">Größe:</p>
+              <div class="flex gap-1">
+                <button
+                  v-for="size in imageSizes"
+                  :key="size.value"
+                  type="button"
+                  @click="imageSize = size.value"
+                  :class="['toolbar-btn text-xs flex-1', imageSize === size.value ? '!bg-cs-dark-red !border-cs-dark-red text-white' : '']"
+                >{{ size.label }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <input ref="fileInputRef" type="file" accept="image/*" class="hidden" @change="onFileSelected" />
         <div class="border-l border-gray-300 mx-1"></div>
       </template>
@@ -94,7 +154,7 @@
         <div class="relative ml-auto">
           <button
             type="button"
-            @click="showSmileys = !showSmileys"
+            @click="() => { const next = !showSmileys; closeAllPopovers(); showSmileys = next }"
             class="toolbar-btn"
             title="Smileys"
           >
@@ -198,7 +258,8 @@
           <div><strong>Beitrag verlinken:</strong> [[post:abc123xy]] oder [[post:abc123xy|Eigener Text]]</div>
         </template>
         <template v-if="uploadUrl">
-          <div><strong>Bild hochladen:</strong> Bild in den Editor einfügen (Strg+V) oder per Drag &amp; Drop</div>
+          <div><strong>Bild:</strong> Hochladen oder URL einfügen über den Bild-Button</div>
+          <div><strong>Bild (schnell):</strong> Bild per Strg+V oder Drag &amp; Drop – nutzt die zuletzt gewählte Größe</div>
         </template>
       </div>
     </div>
@@ -237,6 +298,17 @@ const showSmileys    = ref(false)
 const showHelp       = ref(false)
 const uploadState    = ref('idle') // 'idle' | 'uploading'
 const uploadError    = ref('')
+
+// Image popover
+const showImagePopover = ref(false)
+const imageTab         = ref('upload') // 'upload' | 'url'
+const imageUrlInput    = ref('')
+const imageSize        = ref('full')   // 'full' | 'medium' | 'small'
+const imageSizes       = [
+  { value: 'full',   label: 'Voll'   },
+  { value: 'medium', label: 'Mittel' },
+  { value: 'small',  label: 'Klein'  },
+]
 
 // Recipe autocomplete
 const showRecipeSearch = ref(false)
@@ -355,12 +427,19 @@ function insertMarkdown(type) {
   }
 }
 
+// ── Popover management ────────────────────────────────────────────────────────
+function closeAllPopovers() {
+  showRecipeSearch.value = false
+  showImagePopover.value = false
+  showSmileys.value      = false
+}
+
 // ── Internal link buttons ─────────────────────────────────────────────────────
 function toggleRecipeSearch() {
-  showRecipeSearch.value = !showRecipeSearch.value
-  if (showRecipeSearch.value) {
-    nextTick(() => recipeSearchRef.value?.focus())
-  }
+  const next = !showRecipeSearch.value
+  closeAllPopovers()
+  showRecipeSearch.value = next
+  if (next) nextTick(() => recipeSearchRef.value?.focus())
 }
 
 async function searchRecipes() {
@@ -409,8 +488,33 @@ function insertPostLink() {
 }
 
 // ── Image upload ──────────────────────────────────────────────────────────────
+function toggleImagePopover() {
+  const next = !showImagePopover.value
+  closeAllPopovers()
+  showImagePopover.value = next
+  if (next) {
+    imageTab.value = 'upload'
+    imageUrlInput.value = ''
+  }
+}
+
 function triggerFileInput() {
   fileInputRef.value?.click()
+}
+
+function insertImageWithSize(url) {
+  const md = imageSize.value === 'full'
+    ? `![](${url})`
+    : `![](${url} "${imageSize.value}")`
+  insertText(md)
+  showImagePopover.value = false
+}
+
+function insertImageFromUrl() {
+  const url = imageUrlInput.value.trim()
+  if (!url) return
+  insertImageWithSize(url)
+  imageUrlInput.value = ''
 }
 
 function onFileSelected(event) {
@@ -457,7 +561,7 @@ async function uploadAndInsert(file) {
     })
     const data = await res.json()
     if (data.success) {
-      insertText(`![](${data.url})`)
+      insertImageWithSize(data.url)
     } else {
       uploadError.value = data.errors?.join(', ') || 'Upload fehlgeschlagen'
     }

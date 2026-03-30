@@ -2,6 +2,20 @@ import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import { SMILEYS } from './smileys.js'
 
+const IMAGE_SIZE_CLASSES = { medium: 'max-w-lg', small: 'max-w-xs' }
+
+marked.use({
+  renderer: {
+    image(href, title, text) {
+      const sizeKey      = title?.toLowerCase() ?? ''
+      const sizeClass    = IMAGE_SIZE_CLASSES[sizeKey] ?? 'max-w-full'
+      const displayTitle = IMAGE_SIZE_CLASSES[sizeKey] ? null : title
+      const titleAttr    = displayTitle ? ` title="${displayTitle}"` : ''
+      return `<img src="${href}" alt="${text ?? ''}"${titleAttr} class="${sizeClass} h-auto rounded my-2">`
+    }
+  }
+})
+
 // Wikilink pattern: [[type:ref]] or [[type:ref|Display Text]]
 const WIKILINK = /\[\[([a-z]+):([a-zA-Z0-9-]+)(?:\|([^\]]+))?\]\]/g
 

@@ -91,6 +91,8 @@ module MarkdownHelper
   end
 
   class RichHtmlRenderer < Redcarpet::Render::HTML
+    IMAGE_SIZE_CLASSES = { "medium" => "max-w-lg", "small" => "max-w-xs" }.freeze
+
     def link(link, title, content)
       title_attr = title ? %( title="#{ERB::Util.html_escape(title)}") : ""
       external   = !link.to_s.start_with?("/")
@@ -99,8 +101,12 @@ module MarkdownHelper
     end
 
     def image(link, title, alt)
-      title_attr = title ? %( title="#{ERB::Util.html_escape(title)}") : ""
-      %(<img src="#{ERB::Util.html_escape(link.to_s)}" alt="#{ERB::Util.html_escape(alt.to_s)}"#{title_attr} class="max-w-full h-auto rounded my-2">)
+      size_key   = title.to_s.strip.downcase
+      size_class = IMAGE_SIZE_CLASSES.fetch(size_key, "max-w-full")
+      # Don't render size keywords as a visible title attribute
+      display_title = IMAGE_SIZE_CLASSES.key?(size_key) ? nil : title
+      title_attr    = display_title ? %( title="#{ERB::Util.html_escape(display_title)}") : ""
+      %(<img src="#{ERB::Util.html_escape(link.to_s)}" alt="#{ERB::Util.html_escape(alt.to_s)}"#{title_attr} class="#{size_class} h-auto rounded my-2">)
     end
   end
 end
