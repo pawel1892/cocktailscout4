@@ -32,9 +32,15 @@
 
       <%= render "layouts/flash_messages" %>
 
-      <div class="container mx-auto px-4 py-6 grow">
-        <%= yield %>
-      </div>
+      <% if content_for?(:full_bleed_page) %>
+        <div class="w-full grow">
+          <%= yield %>
+        </div>
+      <% else %>
+        <div class="container mx-auto px-4 py-6 grow">
+          <%= yield %>
+        </div>
+      <% end %>
 
       <%= render "layouts/footer" %>
 
