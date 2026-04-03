@@ -360,7 +360,7 @@ const props = defineProps({
   modelValue: { type: String, default: '' },
   textareaId: { type: String, default: '' },
   textareaName: { type: String, default: '' },
-  placeholder: { type: String, default: 'Markdown-Text eingeben...' },
+  placeholder: { type: String, default: 'Schreib etwas...' },
   required: { type: Boolean, default: false },
   // Image upload endpoint — if absent, image upload toolbar button is hidden
   uploadUrl: { type: String, default: '' },
