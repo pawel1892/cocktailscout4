@@ -17,7 +17,7 @@ namespace :forum do
     errors     = 0
     total_done = 0
 
-    ForumPost.unscoped.order(id: :desc).find_in_batches(batch_size: 500) do |batch|
+    ForumPost.unscoped.in_batches(of: 500, order: :desc) do |batch|
       batch.each do |post|
         if post.body.blank?
           skipped += 1
