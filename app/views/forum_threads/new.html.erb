@@ -26,12 +26,14 @@
              <div class="text-cs-error text-sm mb-2"><%= @forum_thread_form.errors.full_messages_for(:post_content).join(", ") %></div>
           <% end %>
           
-          <bbcode-editor
+          <markdown-editor
             model-value="<%= @forum_thread_form.post_content %>"
             textarea-id="forum_thread_form_post_content"
             textarea-name="forum_thread_form[post_content]"
+            upload-url="<%= forum_images_path %>"
             :smileys="<%= BbcodeHelper::SMILEYS.to_json %>"
-          ></bbcode-editor>
+            :show-internal-links="true"
+          ></markdown-editor>
         </div>
 
         <div class="flex justify-end gap-2">

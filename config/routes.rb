@@ -32,6 +32,15 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :images, only: [ :index, :destroy ] do
+      member do
+        post :restore
+      end
+      collection do
+        delete "avatar/:id", action: :destroy_avatar, as: :destroy_avatar
+      end
+    end
+
     resources :featured_recipe_images, only: [ :create, :destroy ]
 
     resources :recipe_images, only: [ :index, :show, :destroy ] do
@@ -128,6 +137,8 @@ Rails.application.routes.draw do
   # Forum Posts
   get "cocktailforum/thema/:thread_id/beitrag/neu", to: "forum_posts#new", as: :new_forum_post
   post "cocktailforum/thema/:thread_id/beitrag", to: "forum_posts#create", as: :forum_posts
+
+  post "cocktailforum/bilder", to: "forum_images#create", as: :forum_images
 
   get "cocktailforum/beitrag/:public_id", to: "forum_posts#show", as: :show_forum_post
   get "cocktailforum/beitrag/:id/bearbeiten", to: "forum_posts#edit", as: :edit_forum_post

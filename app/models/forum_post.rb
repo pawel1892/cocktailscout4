@@ -26,6 +26,8 @@ class ForumPost < ApplicationRecord
   }
 
   after_save :soft_delete_empty_thread, if: -> { saved_change_to_deleted? && deleted? }
+  after_update :orphan_removed_images, if: :saved_change_to_body?
+  after_update :orphan_deleted_post_images, if: -> { saved_change_to_deleted? && deleted? }
 
   def page(per_page = 20)
     position = forum_thread.ordered_posts.where("created_at <= ?", created_at).count
@@ -42,6 +44,27 @@ class ForumPost < ApplicationRecord
     loop do
       self.public_id = SecureRandom.alphanumeric(8)
       break unless ForumPost.unscoped.exists?(public_id: public_id)
+    end
+  end
+
+  def orphan_removed_images
+    old_body, new_body = saved_change_to_body
+    removed = ForumImage.signed_ids_in_body(old_body) - ForumImage.signed_ids_in_body(new_body)
+
+    removed.each do |signed_id|
+      blob = ActiveStorage::Blob.find_signed(signed_id) rescue next
+      fi = ForumImage.joins(:image_attachment)
+                     .find_by(active_storage_attachments: { blob_id: blob.id })
+      fi&.mark_as_orphan! unless fi&.referenced_in_any_live_post?(exclude_post_id: id)
+    end
+  end
+
+  def orphan_deleted_post_images
+    ForumImage.signed_ids_in_body(body).each do |signed_id|
+      blob = ActiveStorage::Blob.find_signed(signed_id) rescue next
+      fi = ForumImage.joins(:image_attachment)
+                     .find_by(active_storage_attachments: { blob_id: blob.id })
+      fi&.mark_as_orphan! unless fi&.referenced_in_any_live_post?(exclude_post_id: id)
     end
   end
 
