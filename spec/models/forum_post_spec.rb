@@ -88,6 +88,83 @@ RSpec.describe ForumPost, type: :model do
     end
   end
 
+  describe "forum image orphan callbacks" do
+    let(:forum_thread) { create(:forum_thread) }
+
+    def create_image_with_url
+      fi = create(:forum_image, :with_image)
+      url = "/rails/active_storage/blobs/redirect/#{fi.image.blob.signed_id}/test_image.jpg"
+      [ fi, url ]
+    end
+
+    describe "#orphan_removed_images — on body update" do
+      it "marks images removed from the body as orphaned" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+
+        post.update!(body: "updated without image")
+
+        expect(fi.reload.orphaned_at).to be_present
+      end
+
+      it "does not mark images still present in the body" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+
+        post.update!(body: "still here: #{url}")
+
+        expect(fi.reload.orphaned_at).to be_nil
+      end
+
+      it "does not mark images that are still used in another live post" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+        _other = create(:forum_post, forum_thread: forum_thread, body: "also: #{url}")
+
+        post.update!(body: "updated without image")
+
+        expect(fi.reload.orphaned_at).to be_nil
+      end
+
+      it "does not fire when body is unchanged" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+
+        expect(fi).not_to receive(:mark_as_orphan!)
+        post.update!(body: "![img](#{url})")
+      end
+    end
+
+    describe "#orphan_deleted_post_images — on soft-delete" do
+      it "marks images in the deleted post as orphaned" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+
+        post.update!(deleted: true)
+
+        expect(fi.reload.orphaned_at).to be_present
+      end
+
+      it "does not mark images also used in another live post" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+        _other = create(:forum_post, forum_thread: forum_thread, body: "also: #{url}")
+
+        post.update!(deleted: true)
+
+        expect(fi.reload.orphaned_at).to be_nil
+      end
+
+      it "does not fire when post is not being deleted" do
+        fi, url = create_image_with_url
+        post = create(:forum_post, forum_thread: forum_thread, body: "![img](#{url})")
+
+        expect(fi).not_to receive(:mark_as_orphan!)
+        post.update!(body: "![img](#{url})")
+      end
+    end
+  end
+
   describe "user stats update" do
     let(:user) { create(:user) }
     let(:forum_thread) { create(:forum_thread) }

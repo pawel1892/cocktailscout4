@@ -32,6 +32,15 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :images, only: [ :index, :destroy ] do
+      member do
+        post :restore
+      end
+      collection do
+        delete "avatar/:id", action: :destroy_avatar, as: :destroy_avatar
+      end
+    end
+
     resources :featured_recipe_images, only: [ :create, :destroy ]
 
     resources :recipe_images, only: [ :index, :show, :destroy ] do
