@@ -238,7 +238,8 @@ nav.pagy a[role="separator"] {
 .prose-cs li { @apply mb-1; }
 .prose-cs a { @apply text-cs-link underline hover:opacity-80; }
 .prose-cs code { @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono; }
-.prose-cs pre { @apply bg-gray-100 p-4 rounded mb-4 overflow-x-auto; }
+.prose-cs pre { @apply !bg-gray-50 border border-gray-200 p-4 rounded mb-4 overflow-x-auto; }
+.prose-cs pre code { @apply bg-transparent p-0 rounded-none; }
 .prose-cs blockquote { @apply border-l-4 border-cs-gold pl-4 italic mb-4; }
 .prose-cs strong { @apply font-bold; }
 .prose-cs em { @apply italic; }
