@@ -1,6 +1,6 @@
 module MarkdownHelper
   MARKDOWN_ALLOWED_TAGS = %w[
-    p br strong em u del s blockquote figure figcaption
+    p br hr strong em u del s blockquote figure figcaption
     a img ul ol li pre code h1 h2 h3 h4 h5 h6
     table thead tbody tr th td
   ].freeze
@@ -34,6 +34,27 @@ module MarkdownHelper
 
   def preprocess_markdown_shortcodes(text)
     t = text.dup
+
+    # Protect fenced code blocks and inline code spans from shortcode processing.
+    # Extract them, replace with placeholders, restore after.
+    placeholders = {}
+    idx = 0
+
+    # Fenced code blocks: ```...```
+    t.gsub!(/^(`{3,}|~{3,}).*?\n.*?\n\1[ \t]*$/m) do |match|
+      key = "\x00PLACEHOLDER_#{idx}\x00"
+      placeholders[key] = match
+      idx += 1
+      key
+    end
+
+    # Inline code spans: `...` or ``...``
+    t.gsub!(/(`{1,2})(?!`)(.+?)\1(?!`)/m) do |match|
+      key = "\x00PLACEHOLDER_#{idx}\x00"
+      placeholders[key] = match
+      idx += 1
+      key
+    end
 
     # Wikilinks: [[recipe:slug]], [[recipe:slug|Custom Text]],
     #            [[thread:slug]], [[thread:slug|Custom Text]],
@@ -78,15 +99,31 @@ module MarkdownHelper
       break unless found
     end
 
+    # Restore protected code spans and blocks
+    placeholders.each { |key, value| t.gsub!(key, value) }
+
     t
   end
 
   def apply_markdown_smileys(html)
     t = html.dup
+
+    # Protect <code> and <pre> blocks from smiley replacement
+    code_blocks = {}
+    idx = 0
+    t.gsub!(/<(pre|code)(\s[^>]*)?>.*?<\/\1>/mi) do |match|
+      key = "\x00SMILEY_SAFE_#{idx}\x00"
+      code_blocks[key] = match
+      idx += 1
+      key
+    end
+
     BbcodeHelper::SMILEYS.each do |s|
       img = %(<img src="/images/smileys/#{s[:filename]}" alt="#{ERB::Util.html_escape(s[:name])}" title="#{ERB::Util.html_escape(s[:shortcut])}" class="inline-block align-middle h-5 w-auto">)
       t.gsub!(s[:expr], img)
     end
+
+    code_blocks.each { |key, value| t.gsub!(key, value) }
     t
   end
 

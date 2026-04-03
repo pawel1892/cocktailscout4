@@ -244,23 +244,93 @@
         <i class="fas fa-info-circle"></i>
         <span>{{ showHelp ? 'Formatierungs-Hilfe ausblenden' : 'Formatierungs-Hilfe einblenden' }}</span>
       </button>
-      <div v-if="showHelp" class="mt-2 space-y-1">
-        <div><strong>Fett:</strong> **Text** oder __Text__</div>
-        <div><strong>Kursiv:</strong> *Text* oder _Text_</div>
-        <div><strong>Unterstrichen:</strong> &lt;u&gt;Text&lt;/u&gt;</div>
-        <div><strong>Link:</strong> [Link-Text](https://example.com)</div>
-        <div><strong>Bild:</strong> ![Alt-Text](https://example.com/bild.jpg)</div>
-        <div><strong>Zitat:</strong> &gt; Text</div>
-        <div><strong>Zitat mit Autor:</strong> [quote=Name]Text[/quote]</div>
-        <template v-if="showInternalLinks">
-          <div><strong>Rezept verlinken:</strong> [[recipe:rezept-slug]] oder [[recipe:rezept-slug|Eigener Text]]</div>
-          <div><strong>Thema verlinken:</strong> [[thread:thema-slug]] oder [[thread:thema-slug|Eigener Text]]</div>
-          <div><strong>Beitrag verlinken:</strong> [[post:abc123xy]] oder [[post:abc123xy|Eigener Text]]</div>
-        </template>
-        <template v-if="uploadUrl">
-          <div><strong>Bild:</strong> Hochladen oder URL einfügen über den Bild-Button</div>
-          <div><strong>Bild (schnell):</strong> Bild per Strg+V oder Drag &amp; Drop – nutzt die zuletzt gewählte Größe</div>
-        </template>
+      <div v-if="showHelp" class="mt-3">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="text-left text-gray-400 border-b border-gray-200">
+              <th class="pb-1 pr-4 font-medium w-1/2">Eingabe</th>
+              <th class="pb-1 font-medium w-1/2">Ergebnis</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">**fetter Text**</code></td>
+              <td class="py-1.5"><strong>fetter Text</strong></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">*kursiver Text*</code></td>
+              <td class="py-1.5"><em>kursiver Text</em></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">~~durchgestrichen~~</code></td>
+              <td class="py-1.5"><s>durchgestrichen</s></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">&lt;u&gt;unterstrichen&lt;/u&gt;</code></td>
+              <td class="py-1.5"><u>unterstrichen</u></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">## Überschrift 2</code></td>
+              <td class="py-1.5 text-base font-bold leading-tight">Überschrift 2</td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">### Überschrift 3</code></td>
+              <td class="py-1.5 font-bold leading-tight">Überschrift 3</td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">[Link-Text](https://...)</code></td>
+              <td class="py-1.5"><a class="text-cs-link underline">Link-Text</a></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">- Punkt 1<br>- Punkt 2</code></td>
+              <td class="py-1.5"><ul class="list-disc list-inside"><li>Punkt 1</li><li>Punkt 2</li></ul></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">1. Erster<br>2. Zweiter</code></td>
+              <td class="py-1.5"><ol class="list-decimal list-inside"><li>Erster</li><li>Zweiter</li></ol></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">&gt; Zitat-Text</code></td>
+              <td class="py-1.5 border-l-2 border-cs-gold pl-2 italic text-gray-600">Zitat-Text</td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">[quote=Name]Text[/quote]</code></td>
+              <td class="py-1.5"><span class="text-cs-dark-red font-semibold">Name</span> <span class="italic text-gray-600">schrieb: Text</span></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">`inline code`</code></td>
+              <td class="py-1.5"><code class="bg-gray-100 px-1 rounded">inline code</code></td>
+            </tr>
+            <tr>
+              <td class="py-1.5 pr-4"><code class="help-code">---</code></td>
+              <td class="py-1.5"><hr class="border-0 border-t border-gray-300 mx-2"></td>
+            </tr>
+            <template v-if="uploadUrl">
+              <tr>
+                <td class="py-1.5 pr-4"><code class="help-code">![Alt](url "medium")</code></td>
+                <td class="py-1.5 text-gray-500">Bild (Größe: voll / medium / klein)</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 pr-4 text-gray-500 italic">Strg+V oder Drag &amp; Drop</td>
+                <td class="py-1.5 text-gray-500">Bild direkt einfügen</td>
+              </tr>
+            </template>
+            <template v-if="showInternalLinks">
+              <tr>
+                <td class="py-1.5 pr-4"><code class="help-code">[[recipe:rezept-slug]]</code></td>
+                <td class="py-1.5 text-gray-500">Rezept verlinken</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 pr-4"><code class="help-code">[[thread:thema-slug]]</code></td>
+                <td class="py-1.5 text-gray-500">Forum-Thema verlinken</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 pr-4"><code class="help-code">[[post:abc123xy]]</code></td>
+                <td class="py-1.5 text-gray-500">Forum-Beitrag verlinken</td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -587,6 +657,10 @@ function onKeydown(event) {
 
 <style>
 @reference "../entrypoints/application.css";
+
+.help-code {
+  @apply bg-gray-100 px-1 py-0.5 rounded font-mono whitespace-pre;
+}
 
 .toolbar-btn {
   @apply px-2 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cs-gold;

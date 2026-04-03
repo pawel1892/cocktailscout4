@@ -22,6 +22,25 @@ const WIKILINK = /\[\[([a-z]+):([a-zA-Z0-9-]+)(?:\|([^\]]+))?\]\]/g
 function preprocessShortcodes(text) {
   let t = text
 
+  // Protect fenced code blocks and inline code spans from shortcode processing.
+  const placeholders = new Map()
+  let idx = 0
+  const placeholder = () => `\x00PLACEHOLDER_${idx++}\x00`
+
+  // Fenced code blocks: ```...```
+  t = t.replace(/^(`{3,}|~{3,}).*?\n[\s\S]*?\n\1[ \t]*$/gm, match => {
+    const key = placeholder()
+    placeholders.set(key, match)
+    return key
+  })
+
+  // Inline code spans: ` or ``
+  t = t.replace(/(`{1,2})(?!`)(.+?)\1(?!`)/gs, match => {
+    const key = placeholder()
+    placeholders.set(key, match)
+    return key
+  })
+
   // Internal wikilinks — client-side preview uses slug/id as label when no custom text;
   // the server-side renderer does DB lookups for actual titles.
   t = t.replace(WIKILINK, (_, type, ref, label) => {
@@ -45,22 +64,37 @@ function preprocessShortcodes(text) {
     })
   }
 
+  // Restore protected code spans and blocks
+  for (const [key, value] of placeholders) {
+    t = t.replaceAll(key, value)
+  }
+
   return t
 }
 
 function applySmileys(html, smileys) {
-  let result = html
+  // Protect <code> and <pre> content from smiley replacement
+  const safe = new Map()
+  let idx = 0
+  let result = html.replace(/<(pre|code)(\s[^>]*)?>[\s\S]*?<\/\1>/gi, match => {
+    const key = `\x00SMILEY_SAFE_${idx++}\x00`
+    safe.set(key, match)
+    return key
+  })
+
   for (const s of smileys) {
     result = result.replace(
       s.expr,
       `<img src="/images/smileys/${s.filename}" alt="${s.name}" title="${s.shortcut}" class="inline-block align-middle h-5 w-auto">`
     )
   }
+
+  for (const [key, value] of safe) result = result.replaceAll(key, value)
   return result
 }
 
 const ALLOWED_TAGS = [
-  'p', 'br', 'strong', 'em', 'u', 'del', 's',
+  'p', 'br', 'hr', 'strong', 'em', 'u', 'del', 's',
   'blockquote', 'figure', 'figcaption',
   'a', 'img',
   'ul', 'ol', 'li',

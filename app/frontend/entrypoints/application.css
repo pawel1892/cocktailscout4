@@ -127,7 +127,7 @@
   @apply font-bold text-sm text-cs-dark-red px-4 pt-3 block;
 }
 .md-quote blockquote {
-  @apply italic text-gray-700 px-4 pb-3 m-0 border-0;
+  @apply italic text-gray-700 px-4 pb-3 m-0 !border-0;
 }
 
 /* Tags / Labels */
@@ -243,6 +243,7 @@ nav.pagy a[role="separator"] {
 .prose-cs blockquote { @apply border-l-4 border-cs-gold pl-4 italic mb-4; }
 .prose-cs strong { @apply font-bold; }
 .prose-cs em { @apply italic; }
+.prose-cs hr { @apply border-0 border-t border-gray-300 my-6 mx-8; }
 
 /* User Ranks */
 .rank-0-color { color: #9A9A1E; }
