@@ -33,7 +33,7 @@
   <div class="card-body p-4 sm:p-6">
     <image-uploader
       upload-url="<%= bilder_recipe_path(@recipe) %>"
-      :max-size-mb="10"
+      :max-size-mb="<%= RecipeImage::MAX_FILE_SIZE / 1.megabyte %>"
     ></image-uploader>
   </div>
 </div>

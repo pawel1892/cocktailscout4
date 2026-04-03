@@ -19,7 +19,7 @@ class RecipeImage < ApplicationRecord
   scope :featured,         -> { where.not(featured_at: nil).order(featured_at: :desc) }
 
   ALLOWED_CONTENT_TYPES = %w[image/jpeg image/png image/webp image/gif].freeze
-  MAX_FILE_SIZE         = 10.megabytes
+  MAX_FILE_SIZE         = 25.megabytes
 
   validates :image, presence: true
   validate :image_content_type_and_size, if: -> { image.attached? }
@@ -98,7 +98,7 @@ class RecipeImage < ApplicationRecord
       errors.add(:image, "muss ein JPEG, PNG, WebP oder GIF sein")
     end
     if image.blob.byte_size > MAX_FILE_SIZE
-      errors.add(:image, "darf nicht größer als 10 MB sein")
+      errors.add(:image, "darf nicht größer als 25 MB sein")
     end
   end
 end
