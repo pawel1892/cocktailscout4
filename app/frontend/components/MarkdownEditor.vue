@@ -63,7 +63,10 @@
               <button type="button" @click="triggerFileInput" class="btn btn-outline btn-sm w-full">
                 <i class="fas fa-upload mr-1"></i> Datei auswählen
               </button>
-              <p class="text-xs text-gray-400 mt-2">oder per Drag &amp; Drop / Einfügen (Strg+V)</p>
+              <p v-if="pendingFile" class="text-xs text-gray-600 mt-2 truncate">
+                <i class="fas fa-file-image mr-1"></i>{{ pendingFile.name }}
+              </p>
+              <p v-else class="text-xs text-gray-400 mt-2">oder per Drag &amp; Drop / Einfügen (Strg+V)</p>
             </div>
 
             <!-- URL tab -->
@@ -72,15 +75,28 @@
                 v-model="imageUrlInput"
                 type="url"
                 placeholder="https://..."
+                class="input-field w-full text-sm"
+                @keydown.enter.prevent="insertImage"
+              />
+            </div>
+
+            <!-- Alt text + Insert button (shared) -->
+            <div class="px-3 pb-3 border-t border-gray-100 pt-2">
+              <input
+                v-model="imageAltInput"
+                type="text"
+                placeholder="Alternativer Text (optional)"
                 class="input-field w-full text-sm mb-2"
-                @keydown.enter.prevent="insertImageFromUrl"
               />
               <button
                 type="button"
-                @click="insertImageFromUrl"
-                :disabled="!imageUrlInput.trim()"
+                @click="insertImage"
+                :disabled="uploadState === 'uploading' || (imageTab === 'upload' ? !pendingFile : !imageUrlInput.trim())"
                 class="btn btn-primary btn-sm w-full"
-              >Einfügen</button>
+              >
+                <i v-if="uploadState === 'uploading'" class="fas fa-spinner fa-spin mr-1"></i>
+                Einfügen
+              </button>
             </div>
 
             <!-- Size selector -->
@@ -373,6 +389,8 @@ const uploadError    = ref('')
 const showImagePopover = ref(false)
 const imageTab         = ref('upload') // 'upload' | 'url'
 const imageUrlInput    = ref('')
+const imageAltInput    = ref('')
+const pendingFile      = ref(null)
 const imageSize        = ref('full')   // 'full' | 'medium' | 'small'
 const imageSizes       = [
   { value: 'full',   label: 'Voll'   },
@@ -565,6 +583,8 @@ function toggleImagePopover() {
   if (next) {
     imageTab.value = 'upload'
     imageUrlInput.value = ''
+    imageAltInput.value = ''
+    pendingFile.value = null
   }
 }
 
@@ -572,24 +592,33 @@ function triggerFileInput() {
   fileInputRef.value?.click()
 }
 
-function insertImageWithSize(url) {
+function insertImageWithSize(url, alt = '') {
   const md = imageSize.value === 'full'
-    ? `![](${url})`
-    : `![](${url} "${imageSize.value}")`
+    ? `![${alt}](${url})`
+    : `![${alt}](${url} "${imageSize.value}")`
   insertText(md)
   showImagePopover.value = false
 }
 
-function insertImageFromUrl() {
-  const url = imageUrlInput.value.trim()
-  if (!url) return
-  insertImageWithSize(url)
-  imageUrlInput.value = ''
+async function insertImage() {
+  if (imageTab.value === 'url') {
+    const url = imageUrlInput.value.trim()
+    if (!url) return
+    insertImageWithSize(url, imageAltInput.value.trim())
+    imageUrlInput.value = ''
+    imageAltInput.value = ''
+  } else {
+    if (!pendingFile.value) return
+    const alt = imageAltInput.value.trim()
+    await uploadAndInsert(pendingFile.value, alt)
+    pendingFile.value = null
+    imageAltInput.value = ''
+  }
 }
 
 function onFileSelected(event) {
   const file = event.target.files?.[0]
-  if (file) uploadAndInsert(file)
+  if (file) pendingFile.value = file
   // Reset input so the same file can be re-selected
   event.target.value = ''
 }
@@ -614,7 +643,7 @@ function onDrop(event) {
   if (file?.type.startsWith('image/')) uploadAndInsert(file)
 }
 
-async function uploadAndInsert(file) {
+async function uploadAndInsert(file, alt = '') {
   if (!props.uploadUrl) return
   uploadError.value = ''
   uploadState.value = 'uploading'
@@ -631,7 +660,7 @@ async function uploadAndInsert(file) {
     })
     const data = await res.json()
     if (data.success) {
-      insertImageWithSize(data.url)
+      insertImageWithSize(data.url, alt)
     } else {
       uploadError.value = data.errors?.join(', ') || 'Upload fehlgeschlagen'
     }
