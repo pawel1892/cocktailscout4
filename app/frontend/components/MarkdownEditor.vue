@@ -321,6 +321,16 @@
               <td class="py-1.5 pr-4"><code class="help-code">---</code></td>
               <td class="py-1.5"><hr class="border-0 border-t border-gray-300 mx-2"></td>
             </tr>
+            <tr>
+              <td class="py-1.5 pr-4 align-top"><code class="help-code">| Spalte 1 | Spalte 2 |<br>|---|---|<br>| Wert 1 | Wert 2 |<br>| Wert 3 | Wert 4 |</code></td>
+              <td class="py-1.5 align-top">
+                <table class="border-collapse text-xs">
+                  <thead><tr><th class="border border-gray-300 bg-gray-50 px-2 py-0.5 font-semibold">Spalte 1</th><th class="border border-gray-300 bg-gray-50 px-2 py-0.5 font-semibold">Spalte 2</th></tr></thead>
+                  <tbody><tr><td class="border border-gray-300 px-2 py-0.5">Wert 1</td><td class="border border-gray-300 px-2 py-0.5">Wert 2</td></tr><tr><td class="border border-gray-300 px-2 py-0.5">Wert 3</td><td class="border border-gray-300 px-2 py-0.5">Wert 4</td></tr></tbody>
+                </table>
+                <p class="text-gray-500 mt-1">Leerzeile davor nötig</p>
+              </td>
+            </tr>
             <template v-if="uploadUrl">
               <tr>
                 <td class="py-1.5 pr-4"><code class="help-code">![Alt](url "medium")</code></td>
