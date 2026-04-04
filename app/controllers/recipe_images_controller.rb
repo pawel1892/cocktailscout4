@@ -11,7 +11,7 @@ class RecipeImagesController < ApplicationController
   def index
     add_breadcrumb "Rezepte", recipes_path
     add_breadcrumb "Cocktailgalerie"
-    query = RecipeImage.approved.not_soft_deleted.includes(:recipe, :user, image_attachment: :blob).order(created_at: :desc)
+    query = RecipeImage.approved.not_soft_deleted.where.associated(:recipe).includes(:recipe, :user, image_attachment: :blob).order(created_at: :desc)
     query = query.by_user(params[:user_id])
     query = query.by_recipe_name(params[:q])
     @filter_user = User.find_by(id: params[:user_id]) if params[:user_id].present?
