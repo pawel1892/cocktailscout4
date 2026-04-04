@@ -244,6 +244,10 @@ nav.pagy a[role="separator"] {
 .prose-cs strong { @apply font-bold; }
 .prose-cs em { @apply italic; }
 .prose-cs hr { @apply border-0 border-t border-gray-300 my-6 mx-8; }
+.prose-cs table { @apply w-full border-collapse mb-4 text-sm; }
+.prose-cs th { @apply border border-gray-300 bg-gray-50 px-3 py-2 text-left font-semibold; }
+.prose-cs td { @apply border border-gray-300 px-3 py-2 align-top; }
+.prose-cs tbody tr:nth-child(even) td { @apply bg-gray-50; }
 
 /* User Ranks */
 .rank-0-color { color: #9A9A1E; }
