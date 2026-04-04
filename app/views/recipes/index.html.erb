@@ -148,10 +148,15 @@
                     </div>
                  </div>
                  <div class="flex flex-col items-center gap-1">
-                   <div class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center">
-                      <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
-                   </div>
-                   <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>)</span>
+                   <% if recipe.show_rating? %>
+                     <div class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center">
+                       <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
+                     </div>
+                     <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>)</span>
+                   <% else %>
+                     <div class="bg-gray-400 px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center text-white">–</div>
+                     <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>/4)</span>
+                   <% end %>
                  </div>
               </div>
 
