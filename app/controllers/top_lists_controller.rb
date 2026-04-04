@@ -27,6 +27,7 @@ class TopListsController < ApplicationController
       {
         name: category[:name],
         recipes: Recipe.tagged_with(category[:tag])
+                      .where("ratings_count >= ?", Rateable::MIN_RATINGS_FOR_DISPLAY)
                       .order(average_rating: :desc, ratings_count: :desc)
                       .limit(10)
       }

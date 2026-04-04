@@ -9,6 +9,13 @@ RSpec.describe "Ratings API", type: :request do
       before { sign_in(user) }
 
       it "creates a new rating" do
+        other_user2 = create(:user)
+        other_user3 = create(:user)
+        other_user4 = create(:user)
+        Rating.create!(user: other_user2, rateable: recipe, score: 8)
+        Rating.create!(user: other_user3, rateable: recipe, score: 8)
+        Rating.create!(user: other_user4, rateable: recipe, score: 8)
+
         expect {
           post rate_path, params: { rateable_type: "Recipe", rateable_id: recipe.id, score: 8 }
         }.to change { Rating.count }.by(1)
@@ -18,11 +25,17 @@ RSpec.describe "Ratings API", type: :request do
         expect(json["success"]).to be true
         expect(json["rating"]["score"]).to eq(8)
         expect(json["average"].to_f).to eq(8.0)
-        expect(json["count"]).to eq(1)
+        expect(json["count"]).to eq(4)
       end
 
       it "updates an existing rating" do
+        other_user2 = create(:user)
+        other_user3 = create(:user)
+        other_user4 = create(:user)
         Rating.create!(user: user, rateable: recipe, score: 5)
+        Rating.create!(user: other_user2, rateable: recipe, score: 9)
+        Rating.create!(user: other_user3, rateable: recipe, score: 9)
+        Rating.create!(user: other_user4, rateable: recipe, score: 9)
 
         expect {
           post rate_path, params: { rateable_type: "Recipe", rateable_id: recipe.id, score: 9 }
@@ -33,19 +46,23 @@ RSpec.describe "Ratings API", type: :request do
         expect(json["success"]).to be true
         expect(json["rating"]["score"]).to eq(9)
         expect(json["average"].to_f).to eq(9.0)
-        expect(json["count"]).to eq(1)
+        expect(json["count"]).to eq(4)
       end
 
       it "returns the updated average and count with multiple ratings" do
         other_user = create(:user)
+        user3 = create(:user)
+        user4 = create(:user)
         Rating.create!(user: other_user, rateable: recipe, score: 6)
+        Rating.create!(user: user3, rateable: recipe, score: 6)
+        Rating.create!(user: user4, rateable: recipe, score: 8)
 
         post rate_path, params: { rateable_type: "Recipe", rateable_id: recipe.id, score: 8 }
 
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
-        expect(json["average"].to_f).to eq(7.0) # (6 + 8) / 2
-        expect(json["count"]).to eq(2)
+        expect(json["average"].to_f).to eq(7.0) # (6 + 6 + 8 + 8) / 4
+        expect(json["count"]).to eq(4)
       end
 
       it "accepts valid scores from 1 to 10" do
@@ -108,11 +125,18 @@ RSpec.describe "Ratings API", type: :request do
       end
 
       it "updates the recipe's rating cache" do
+        other_user2 = create(:user)
+        other_user3 = create(:user)
+        other_user4 = create(:user)
+        Rating.create!(user: other_user2, rateable: recipe, score: 7)
+        Rating.create!(user: other_user3, rateable: recipe, score: 7)
+        Rating.create!(user: other_user4, rateable: recipe, score: 7)
+
         post rate_path, params: { rateable_type: "Recipe", rateable_id: recipe.id, score: 7 }
 
         recipe.reload
         expect(recipe.average_rating).to eq(7.0)
-        expect(recipe.ratings_count).to eq(1)
+        expect(recipe.ratings_count).to eq(4)
       end
     end
 
@@ -152,15 +176,21 @@ RSpec.describe "Ratings API", type: :request do
 
       it "updates the average after deletion" do
         other_user = create(:user)
+        user3 = create(:user)
+        user4 = create(:user)
+        user5 = create(:user)
         Rating.create!(user: user, rateable: recipe, score: 8)
         Rating.create!(user: other_user, rateable: recipe, score: 6)
+        Rating.create!(user: user3, rateable: recipe, score: 6)
+        Rating.create!(user: user4, rateable: recipe, score: 6)
+        Rating.create!(user: user5, rateable: recipe, score: 6)
 
         delete rate_path, params: { rateable_type: "Recipe", rateable_id: recipe.id }
 
         expect(response).to have_http_status(:success)
         json = JSON.parse(response.body)
         expect(json["average"].to_f).to eq(6.0)
-        expect(json["count"]).to eq(1)
+        expect(json["count"]).to eq(4)
       end
 
       it "returns 404 when rating does not exist" do

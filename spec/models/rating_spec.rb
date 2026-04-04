@@ -119,31 +119,55 @@ RSpec.describe Rating, type: :model do
     end
 
     describe "rating cache updates" do
-      it "calculates correct average with one rating" do
-        Rating.create!(user: user, rateable: recipe, score: 8)
-
-        recipe.reload
-        expect(recipe.average_rating).to eq(8.0)
-        expect(recipe.ratings_count).to eq(1)
-      end
-
-      it "calculates correct average with multiple ratings" do
+      it "returns 0.0 average when fewer than #{Rateable::MIN_RATINGS_FOR_DISPLAY} ratings exist" do
         user2 = create(:user)
         user3 = create(:user)
-
         Rating.create!(user: user, rateable: recipe, score: 8)
         Rating.create!(user: user2, rateable: recipe, score: 6)
         Rating.create!(user: user3, rateable: recipe, score: 10)
 
         recipe.reload
-        expect(recipe.average_rating).to eq(8.0)
+        expect(recipe.average_rating).to eq(0.0)
         expect(recipe.ratings_count).to eq(3)
+      end
+
+      it "calculates correct average with minimum ratings threshold" do
+        user2 = create(:user)
+        user3 = create(:user)
+        user4 = create(:user)
+        Rating.create!(user: user, rateable: recipe, score: 8)
+        Rating.create!(user: user2, rateable: recipe, score: 8)
+        Rating.create!(user: user3, rateable: recipe, score: 8)
+        Rating.create!(user: user4, rateable: recipe, score: 8)
+
+        recipe.reload
+        expect(recipe.average_rating).to eq(8.0)
+        expect(recipe.ratings_count).to eq(4)
+      end
+
+      it "calculates correct average with multiple ratings" do
+        user2 = create(:user)
+        user3 = create(:user)
+        user4 = create(:user)
+
+        Rating.create!(user: user, rateable: recipe, score: 8)
+        Rating.create!(user: user2, rateable: recipe, score: 6)
+        Rating.create!(user: user3, rateable: recipe, score: 10)
+        Rating.create!(user: user4, rateable: recipe, score: 8)
+
+        recipe.reload
+        expect(recipe.average_rating).to eq(8.0)
+        expect(recipe.ratings_count).to eq(4)
       end
 
       it "updates average when a rating is changed" do
         user2 = create(:user)
-        rating1 = Rating.create!(user: user, rateable: recipe, score: 8)
+        user3 = create(:user)
+        user4 = create(:user)
+        rating1 = Rating.create!(user: user, rateable: recipe, score: 6)
         Rating.create!(user: user2, rateable: recipe, score: 6)
+        Rating.create!(user: user3, rateable: recipe, score: 8)
+        Rating.create!(user: user4, rateable: recipe, score: 8)
 
         recipe.reload
         expect(recipe.average_rating).to eq(7.0)
@@ -152,23 +176,29 @@ RSpec.describe Rating, type: :model do
 
         recipe.reload
         expect(recipe.average_rating).to eq(8.0)
-        expect(recipe.ratings_count).to eq(2)
+        expect(recipe.ratings_count).to eq(4)
       end
 
       it "updates average when a rating is destroyed" do
         user2 = create(:user)
-        rating1 = Rating.create!(user: user, rateable: recipe, score: 8)
-        Rating.create!(user: user2, rateable: recipe, score: 6)
+        user3 = create(:user)
+        user4 = create(:user)
+        user5 = create(:user)
+        rating1 = Rating.create!(user: user, rateable: recipe, score: 3)
+        Rating.create!(user: user2, rateable: recipe, score: 8)
+        Rating.create!(user: user3, rateable: recipe, score: 8)
+        Rating.create!(user: user4, rateable: recipe, score: 8)
+        Rating.create!(user: user5, rateable: recipe, score: 8)
 
         recipe.reload
         expect(recipe.average_rating).to eq(7.0)
-        expect(recipe.ratings_count).to eq(2)
+        expect(recipe.ratings_count).to eq(5)
 
         rating1.destroy
 
         recipe.reload
-        expect(recipe.average_rating).to eq(6.0)
-        expect(recipe.ratings_count).to eq(1)
+        expect(recipe.average_rating).to eq(8.0)
+        expect(recipe.ratings_count).to eq(4)
       end
 
       it "handles removal of all ratings" do

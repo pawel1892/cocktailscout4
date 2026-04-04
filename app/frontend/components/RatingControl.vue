@@ -49,6 +49,7 @@ const props = defineProps({
   rateableId: { type: Number, required: true },
   initialAverage: { type: Number, default: 0 },
   initialCount: { type: Number, default: 0 },
+  minRatings: { type: Number, default: 1 },
   userRating: { type: Number, default: null }
 })
 
@@ -63,12 +64,16 @@ const loading = ref(false)
 
 const canRate = computed(() => isAuthenticated.value)
 
+const hasEnoughRatings = computed(() => count.value >= props.minRatings)
+
 const displayAverage = computed(() => {
+  if (!hasEnoughRatings.value) return '–'
   return Number(average.value).toFixed(1).replace('.', ',')
 })
 
 const countLabel = computed(() => {
   if (count.value === 0) return 'Keine Bewertungen'
+  if (!hasEnoughRatings.value) return `${count.value} von ${props.minRatings} Bewertungen`
   return `${count.value} Bewertung${count.value !== 1 ? 'en' : ''}`
 })
 
@@ -82,6 +87,7 @@ const getColorForScore = (score) => {
 }
 
 const badgeColorClass = computed(() => {
+  if (!hasEnoughRatings.value) return 'bg-gray-400'
   const score = average.value
   if (score === 0) return 'bg-gray-400'
   if (score < 4) return 'bg-red-600'

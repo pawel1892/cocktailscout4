@@ -31,7 +31,7 @@ RSpec.describe "TopLists", type: :request do
     context "when there are tagged recipes" do
       let!(:gin_recipe_1) { create(:recipe, average_rating: 9.5, ratings_count: 10) }
       let!(:gin_recipe_2) { create(:recipe, average_rating: 8.5, ratings_count: 5) }
-      let!(:gin_recipe_3) { create(:recipe, average_rating: 7.0, ratings_count: 3) }
+      let!(:gin_recipe_3) { create(:recipe, average_rating: 7.0, ratings_count: 4) }
       let!(:rum_recipe) { create(:recipe, average_rating: 9.0, ratings_count: 8) }
 
       before do

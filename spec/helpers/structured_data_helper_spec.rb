@@ -39,7 +39,7 @@ RSpec.describe StructuredDataHelper, type: :helper do
     end
 
     it "includes aggregate rating if ratings exist" do
-      create(:rating, rateable: recipe, score: 5)
+      4.times { create(:rating, rateable: recipe, score: 5) }
       recipe.reload # reload to update counter cache or calculation
 
       output = helper.recipe_structured_data(recipe)
