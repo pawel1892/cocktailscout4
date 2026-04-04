@@ -41,6 +41,9 @@ function preprocessShortcodes(text) {
     return key
   })
 
+  // Strip leading spaces from table row lines so marked recognises them as tables.
+  t = t.replace(/^ +(\|)/gm, '$1')
+
   // Internal wikilinks — client-side preview uses slug/id as label when no custom text;
   // the server-side renderer does DB lookups for actual titles.
   t = t.replace(WIKILINK, (_, type, ref, label) => {
@@ -102,7 +105,7 @@ const ALLOWED_TAGS = [
   'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
   'table', 'thead', 'tbody', 'tr', 'th', 'td',
 ]
-const ALLOWED_ATTR = ['href', 'src', 'alt', 'title', 'class', 'rel', 'target']
+const ALLOWED_ATTR = ['href', 'src', 'alt', 'title', 'class', 'rel', 'target', 'align']
 
 export function renderMarkdown(text, smileys = SMILEYS) {
   if (!text) return ''

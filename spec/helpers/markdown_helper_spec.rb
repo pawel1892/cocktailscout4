@@ -103,6 +103,22 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(result).to include("This is a quote")
     end
 
+    it "renders a basic table" do
+      text = "| A | B |\n|---|---|\n| 1 | 2 |"
+      result = helper.render_markdown(text)
+      expect(result).to include("<table>")
+      expect(result).to include("<th>A</th>")
+      expect(result).to include("<td>1</td>")
+    end
+
+    it "renders a table with leading indentation" do
+      text = "  | A | B |\n  |---|---|\n  | 1 | 2 |"
+      result = helper.render_markdown(text)
+      expect(result).to include("<table>")
+      expect(result).to include("<th>A</th>")
+      expect(result).to include("<td>1</td>")
+    end
+
     it "handles mixed formatting" do
       text = "# Title\n\nThis is **bold** and *italic* with a [link](https://example.com)"
       result = helper.render_markdown(text)

@@ -6,7 +6,7 @@ module MarkdownHelper
   ].freeze
 
   # Rails sanitize() takes a flat list of allowed attribute names (not per-tag)
-  MARKDOWN_ALLOWED_ATTRIBUTES = %w[href src alt title class rel target].freeze
+  MARKDOWN_ALLOWED_ATTRIBUTES = %w[href src alt title class rel target align].freeze
 
   # Wikilink pattern: [[type:ref]] or [[type:ref|Custom Text]]
   WIKILINK_PATTERN = /\[\[([a-z]+):([a-zA-Z0-9\-]+)(?:\|([^\]]+))?\]\]/
@@ -55,6 +55,10 @@ module MarkdownHelper
       idx += 1
       key
     end
+
+    # Strip leading spaces from table row lines so Redcarpet recognises them as tables.
+    # Indented pipes (e.g. "  | col |") are not detected as table rows.
+    t.gsub!(/^ +(\|)/, '\\1')
 
     # Wikilinks: [[recipe:slug]], [[recipe:slug|Custom Text]],
     #            [[thread:slug]], [[thread:slug|Custom Text]],
