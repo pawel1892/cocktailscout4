@@ -16,7 +16,7 @@ module ApplicationHelper
       icon = sort_direction == "asc" ? " ▲" : " ▼"
     end
 
-    link_to recipes_path(request.query_parameters.merge(sort: column, direction: direction)), class: "flex items-center group" do
+    link_to "#{request.path}?#{request.query_parameters.merge(sort: column, direction: direction).to_query}", class: "flex items-center group" do
       tag.span(title, class: "group-hover:text-gray-700 transition-colors") +
       tag.span(icon, class: "ml-1 text-xs text-cs-gold")
     end
