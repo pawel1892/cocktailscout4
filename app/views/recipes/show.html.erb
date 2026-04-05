@@ -43,7 +43,7 @@
           :min-ratings="<%= Rateable::MIN_RATINGS_FOR_DISPLAY %>"
           :user-rating="<%= (Current.user && @recipe.ratings.find_by(user: Current.user)&.score) || 'null' %>"
         ></rating-control>
-        <% if @recipe.show_rating? %>
+        <% if @recipe.has_ratings? %>
           <%= link_to bewertungen_recipe_path(@recipe), class: "text-sm text-cs-dark-red hover:underline mt-1 inline-block" do %>
             <i class="fas fa-chart-bar mr-1"></i> Alle Bewertungen ansehen
           <% end %>

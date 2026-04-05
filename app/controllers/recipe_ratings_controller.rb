@@ -29,6 +29,7 @@ class RecipeRatingsController < ApplicationController
                    user_id: u&.id, username: u&.username, rank: u&.stat&.rank || 0, online: u&.online? || false, avatar_url_small: u&.avatar_path(:small) }
                }
 
-    @ratings_json = { total: total, average: @recipe.average_rating, distribution: distribution, recent: recent }.to_json
+    display_average = total >= Rateable::MIN_RATINGS_FOR_DISPLAY ? @recipe.average_rating : 0.0
+    @ratings_json = { total: total, average: display_average, distribution: distribution, recent: recent }.to_json
   end
 end

@@ -115,14 +115,21 @@ RSpec.describe "Recipe Ratings Page", type: :request do
         expect(score7["users"].first["id"]).to eq(user.id)
       end
 
-      it "reflects the recipe average" do
-        create(:rating, user: create(:user), rateable: recipe, score: 8)
-        create(:rating, user: create(:user), rateable: recipe, score: 6)
+      it "reflects the recipe average when ratings count meets the minimum" do
+        4.times { |i| create(:rating, user: create(:user), rateable: recipe, score: 6 + i) }
         recipe.reload
 
         get bewertungen_recipe_path(recipe)
 
         expect(rating_data["average"].to_f).to eq(recipe.average_rating)
+      end
+
+      it "returns average 0 when ratings count is below the minimum" do
+        3.times { create(:rating, user: create(:user), rateable: recipe, score: 8) }
+
+        get bewertungen_recipe_path(recipe)
+
+        expect(rating_data["average"].to_f).to eq(0.0)
       end
     end
 
