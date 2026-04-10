@@ -76,3 +76,6 @@ gem "sitemap_generator", "~> 6.3"
 gem "paper_trail", "~> 17.0"
 
 gem "redcarpet", "~> 3.6"
+
+gem "sentry-ruby", "~> 5.0"
+gem "sentry-rails", "~> 5.0"
