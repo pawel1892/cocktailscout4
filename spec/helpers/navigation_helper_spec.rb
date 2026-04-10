@@ -6,7 +6,7 @@ RSpec.describe NavigationHelper, type: :helper do
       items = helper.main_navigation_items
 
       expect(items).to be_an(Array)
-      expect(items.length).to eq(3)
+      expect(items.length).to eq(4)
     end
 
     it "includes Rezepte navigation item" do

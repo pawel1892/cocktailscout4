@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_225233) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -460,6 +460,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
     t.index ["user_id"], name: "index_visits_on_user_id"
     t.index ["visitable_type", "visitable_id", "user_id"], name: "index_visits_on_visitable_and_user_id", unique: true
     t.index ["visitable_type", "visitable_id"], name: "index_visits_on_visitable"
+  end
+
+  create_table "wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "body", size: :long
+    t.datetime "created_at", null: false
+    t.bigint "ingredient_id"
+    t.bigint "last_editor_id"
+    t.boolean "published", default: false, null: false
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["ingredient_id"], name: "index_wiki_articles_on_ingredient_id", unique: true
+    t.index ["published"], name: "index_wiki_articles_on_published"
+    t.index ["slug"], name: "index_wiki_articles_on_slug", unique: true
+    t.index ["user_id"], name: "index_wiki_articles_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

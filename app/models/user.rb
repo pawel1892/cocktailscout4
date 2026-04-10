@@ -109,6 +109,14 @@ class User < ApplicationRecord
     role?("super_moderator")
   end
 
+  def wiki_editor?
+    role?("wiki_editor")
+  end
+
+  def can_edit_wiki?
+    admin? || wiki_editor? || super_moderator?
+  end
+
   def moderator?
     admin? || forum_moderator? || recipe_moderator? || image_moderator? || super_moderator?
   end

@@ -354,6 +354,10 @@
                 <td class="py-1.5 pr-4"><code class="help-code">[[post:abc123xy]]</code></td>
                 <td class="py-1.5 text-gray-500">Forum-Beitrag verlinken</td>
               </tr>
+              <tr>
+                <td class="py-1.5 pr-4"><code class="help-code">[[wiki:artikel-slug]]</code></td>
+                <td class="py-1.5 text-gray-500">Wiki-Artikel verlinken</td>
+              </tr>
             </template>
           </tbody>
         </table>

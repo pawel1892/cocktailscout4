@@ -13,6 +13,12 @@ module NavigationHelper
         ]
       },
       {
+        label: "Wiki",
+        path: wiki_articles_path,
+        controllers: [ "wiki_articles" ],
+        dropdown: nil
+      },
+      {
         label: "Community",
         path: community_path,
         controllers: [ "community", "users", "forum_topics", "forum_threads", "forum_posts", "forum_search" ],

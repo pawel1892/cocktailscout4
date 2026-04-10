@@ -153,6 +153,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :wiki_articles,
+    path: "wiki",
+    param: :slug,
+    path_names: { new: "neu", edit: "bearbeiten" },
+    only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
+
   get "design-system", to: "design_system#index"
 
   get "impressum", to: "pages#impressum"

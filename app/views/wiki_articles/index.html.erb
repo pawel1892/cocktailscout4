@@ -1,0 +1,49 @@
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+  <h1 class="text-3xl font-bold">Wiki</h1>
+  <% if Current.user&.can_edit_wiki? %>
+    <%= link_to new_wiki_article_path, class: "btn btn-primary w-full sm:w-auto" do %>
+      <i class="fas fa-plus mr-2"></i> Neuer Artikel
+    <% end %>
+  <% end %>
+</div>
+
+<% if @wiki_articles.empty? %>
+  <div class="card">
+    <div class="card-body p-8 text-center text-gray-500">
+      <i class="fas fa-book-open text-4xl mb-3 block text-gray-300"></i>
+      <p>Noch keine Wiki-Artikel vorhanden.</p>
+    </div>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-body p-0">
+      <ul class="divide-y divide-gray-100">
+        <% @wiki_articles.each do |article| %>
+          <li class="p-4 hover:bg-gray-50 transition-colors">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <h2 class="font-bold text-lg">
+                  <%= link_to article.title, wiki_article_path(article), class: "link hover:underline" %>
+                </h2>
+                <% if article.ingredient %>
+                  <span class="tag tag-neutral mt-1"><i class="fas fa-flask mr-1"></i><%= article.ingredient.name %></span>
+                <% end %>
+                <% excerpt = article.body.gsub(/[#*_\[\]`>]/, '').strip.truncate(160) %>
+                <p class="text-sm text-gray-500 mt-1"><%= excerpt %></p>
+              </div>
+              <div class="text-xs text-gray-400 whitespace-nowrap">
+                <%= l(article.updated_at, format: :short) %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <% if @pagy.pages > 1 %>
+    <div class="flex justify-center mt-6">
+      <%== @pagy.series_nav %>
+    </div>
+  <% end %>
+<% end %>

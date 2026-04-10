@@ -1,0 +1,69 @@
+<% unless @wiki_article.published? %>
+  <div class="callout callout-gold mb-4">
+    <i class="fas fa-file-alt"></i>
+    <strong>Entwurf:</strong> Dieser Artikel ist noch nicht veröffentlicht und nur für Wiki-Editoren sichtbar.
+  </div>
+<% end %>
+
+<div class="mb-6 flex items-start justify-between gap-4">
+  <div class="min-w-0 flex-1">
+    <h1 class="text-3xl md:text-4xl font-bold mb-1 break-words"><%= @wiki_article.title %></h1>
+    <% if @wiki_article.ingredient %>
+      <span class="tag tag-neutral"><i class="fas fa-flask mr-1"></i><%= @wiki_article.ingredient.name %></span>
+    <% end %>
+    <div class="text-sm text-gray-500 mt-2">
+      Erstellt von <%= user_badge(@wiki_article.user) %>
+      <% if @wiki_article.last_editor %>
+        &nbsp;·&nbsp; Zuletzt bearbeitet von <%= user_badge(@wiki_article.last_editor) %> (<%= l(@wiki_article.updated_at, format: :short) %>)
+      <% else %>
+        &nbsp;·&nbsp; <%= l(@wiki_article.updated_at, format: :short) %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if Current.user&.can_edit_wiki? %>
+    <div class="flex items-center gap-2 flex-shrink-0 pt-1">
+      <%= link_to edit_wiki_article_path(@wiki_article), class: "btn btn-outline btn-sm" do %>
+        <i class="fas fa-edit mr-1"></i> Bearbeiten
+      <% end %>
+      <% if Current.user.admin? || Current.user.super_moderator? %>
+        <%= button_to wiki_article_path(@wiki_article), method: :delete,
+            class: "btn btn-sm btn-outline text-cs-error border-cs-error hover:bg-cs-error hover:text-white",
+            data: { turbo_confirm: "Artikel '#{@wiki_article.title}' wirklich löschen?" } do %>
+          <i class="fas fa-trash"></i>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="card mb-6">
+  <div class="card-body p-4 sm:p-6">
+    <div class="prose prose-cs max-w-none">
+      <%= render_markdown(@wiki_article.body) %>
+    </div>
+  </div>
+</div>
+
+<% if @linked_recipes.any? %>
+  <div class="card mt-6">
+    <div class="card-body p-4 sm:p-6">
+      <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+        <i class="fas fa-cocktail text-cs-gold"></i>
+        Rezepte mit <%= @wiki_article.ingredient.name %>
+      </h2>
+      <ul class="divide-y divide-gray-100">
+        <% @linked_recipes.each do |recipe| %>
+          <li class="py-2 flex items-center justify-between gap-2">
+            <%= link_to recipe.title, recipe_path(recipe), class: "link hover:underline font-medium" %>
+            <% if recipe.average_rating&.positive? %>
+              <span class="text-sm text-gray-500 whitespace-nowrap">
+                <i class="fas fa-star text-cs-gold"></i> <%= recipe.average_rating %>
+              </span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

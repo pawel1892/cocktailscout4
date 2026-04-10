@@ -50,6 +50,7 @@ function preprocessShortcodes(text) {
     if (type === 'recipe') return `[${label || ref}](/rezepte/${ref})`
     if (type === 'thread') return `[${label || ref}](/cocktailforum/thema/${ref})`
     if (type === 'post')   return `[${label || `Beitrag #${ref}`}](/cocktailforum/beitrag/${ref})`
+    if (type === 'wiki')   return `[${label || ref}](/wiki/${ref})`
     return _ // unknown type: leave unchanged
   })
 

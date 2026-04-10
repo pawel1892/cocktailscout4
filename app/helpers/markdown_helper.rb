@@ -80,6 +80,10 @@ module MarkdownHelper
       when "post"
         label = custom_text.presence || "Beitrag \##{ref}"
         "[#{label}](#{show_forum_post_path(ref)})"
+      when "wiki"
+        article = WikiArticle.find_by(slug: ref)
+        label = custom_text.presence || article&.title || ref
+        "[#{label}](#{wiki_article_path(ref)})"
       else
         Regexp.last_match(0) # unknown type: leave unchanged
       end
