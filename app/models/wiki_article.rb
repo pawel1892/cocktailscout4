@@ -3,7 +3,9 @@ class WikiArticle < ApplicationRecord
 
   belongs_to :user
   belongs_to :last_editor, class_name: "User", optional: true
-  belongs_to :ingredient, optional: true
+
+  has_many :ingredient_wiki_articles, dependent: :destroy
+  has_many :ingredients, through: :ingredient_wiki_articles
 
   validates :title, presence: true
   validates :body, presence: true
@@ -18,8 +20,11 @@ class WikiArticle < ApplicationRecord
   end
 
   def linked_recipes
-    return Recipe.none unless ingredient
-    ingredient.recipes.visible.order(average_rating: :desc, title: :asc)
+    return Recipe.none if ingredients.empty?
+    Recipe.visible.joins(:recipe_ingredients)
+      .where(recipe_ingredients: { ingredient_id: ingredient_ids })
+      .distinct
+      .order(average_rating: :desc, title: :asc)
   end
 
   private

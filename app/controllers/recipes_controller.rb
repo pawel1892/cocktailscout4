@@ -65,8 +65,15 @@ class RecipesController < ApplicationController
     @comments_json = build_comments_json(@recipe)
 
     ingredient_ids = @recipe.recipe_ingredients.map(&:ingredient_id).compact
-    @wiki_articles_by_ingredient_id = ingredient_ids.any? ?
-      WikiArticle.published.where(ingredient_id: ingredient_ids).index_by(&:ingredient_id) : {}
+    @wiki_articles_by_ingredient_id = if ingredient_ids.any?
+      WikiArticle.published
+        .joins(:ingredient_wiki_articles)
+        .where(ingredient_wiki_articles: { ingredient_id: ingredient_ids })
+        .select("wiki_articles.*, ingredient_wiki_articles.ingredient_id AS linked_ingredient_id")
+        .group_by(&:linked_ingredient_id)
+    else
+      {}
+    end
 
     @recipe.track_visit(Current.user)
   end

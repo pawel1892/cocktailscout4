@@ -126,11 +126,10 @@
     <% if @wiki_articles_by_ingredient_id&.any? %>
       <div class="mt-3 space-y-1">
         <% @recipe.recipe_ingredients.each do |ri| %>
-          <% article = @wiki_articles_by_ingredient_id[ri.ingredient_id] %>
-          <% if article %>
+          <% (@wiki_articles_by_ingredient_id[ri.ingredient_id] || []).each do |article| %>
             <div class="text-sm">
               <%= link_to wiki_article_path(article), class: "link text-cs-dark-red" do %>
-                <i class="fas fa-book-open mr-1"></i> Wiki: <%= ri.ingredient.name %>
+                <i class="fas fa-book-open mr-1"></i> Wiki: <%= article.title %>
               <% end %>
             </div>
           <% end %>

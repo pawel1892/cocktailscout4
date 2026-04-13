@@ -4,6 +4,9 @@ class Ingredient < ApplicationRecord
   has_many :recipe_ingredients, dependent: :destroy
   has_many :recipes, through: :recipe_ingredients
 
+  has_many :ingredient_wiki_articles, dependent: :destroy
+  has_many :wiki_articles, through: :ingredient_wiki_articles
+
   validates :name, presence: true, uniqueness: true
   validates :alcoholic_content, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 

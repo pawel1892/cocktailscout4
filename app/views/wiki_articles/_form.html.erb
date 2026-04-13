@@ -8,11 +8,11 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :ingredient_id, "Zutat (optional)", class: "label-field" %>
-    <p class="text-sm text-gray-500 mb-2">Verknüpft diesen Artikel mit einer Zutat. Auf dem Artikel werden alle Rezepte mit dieser Zutat angezeigt.</p>
-    <%= form.collection_select :ingredient_id, Ingredient.order(:name), :id, :name,
-        { include_blank: "— Kein Bezug zu einer Zutat —" },
-        { class: "input-field" } %>
+    <%= form.label :ingredient_ids, "Zutaten (optional)", class: "label-field" %>
+    <p class="text-sm text-gray-500 mb-2">Verknüpft diesen Artikel mit Zutaten. Auf dem Artikel werden alle Rezepte mit diesen Zutaten angezeigt. Mehrfachauswahl mit Ctrl/Cmd möglich.</p>
+    <%= form.collection_select :ingredient_ids, Ingredient.order(:name), :id, :name,
+        { include_blank: false },
+        { class: "input-field", multiple: true, size: 8 } %>
   </div>
 
   <div class="form-group">

@@ -8,8 +8,8 @@
 <div class="mb-6 flex items-start justify-between gap-4">
   <div class="min-w-0 flex-1">
     <h1 class="text-3xl md:text-4xl font-bold mb-1 break-words"><%= @wiki_article.title %></h1>
-    <% if @wiki_article.ingredient %>
-      <span class="tag tag-neutral"><i class="fas fa-flask mr-1"></i><%= @wiki_article.ingredient.name %></span>
+    <% @wiki_article.ingredients.each do |ingredient| %>
+      <span class="tag tag-neutral"><i class="fas fa-flask mr-1"></i><%= ingredient.name %></span>
     <% end %>
     <div class="text-sm text-gray-500 mt-2">
       Erstellt von <%= user_badge(@wiki_article.user) %>
@@ -50,7 +50,7 @@
     <div class="card-body p-4 sm:p-6">
       <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
         <i class="fas fa-cocktail text-cs-gold"></i>
-        Rezepte mit <%= @wiki_article.ingredient.name %>
+        Rezepte mit verknüpften Zutaten
       </h2>
       <ul class="divide-y divide-gray-100">
         <% @linked_recipes.each do |recipe| %>

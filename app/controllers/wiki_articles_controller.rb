@@ -65,7 +65,7 @@ class WikiArticlesController < ApplicationController
   private
 
   def set_article
-    @wiki_article = WikiArticle.includes(:ingredient, :user, :last_editor).find_by!(slug: params[:slug])
+    @wiki_article = WikiArticle.includes(:ingredients, :user, :last_editor).find_by!(slug: params[:slug])
   end
 
   def authorize_write!
@@ -81,6 +81,6 @@ class WikiArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:wiki_article).permit(:title, :body, :ingredient_id, :published)
+    params.require(:wiki_article).permit(:title, :body, :published, ingredient_ids: [])
   end
 end

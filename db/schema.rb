@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_225233) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_13_133004) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -142,6 +142,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_225233) do
     t.bigint "user_id", null: false
     t.index ["user_id", "name"], name: "index_ingredient_collections_on_user_and_name", unique: true
     t.index ["user_id"], name: "index_ingredient_collections_on_user_id"
+  end
+
+  create_table "ingredient_wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "ingredient_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "wiki_article_id", null: false
+    t.index ["ingredient_id", "wiki_article_id"], name: "index_ingredient_wiki_articles_unique", unique: true
+    t.index ["ingredient_id"], name: "index_ingredient_wiki_articles_on_ingredient_id"
+    t.index ["wiki_article_id"], name: "index_ingredient_wiki_articles_on_wiki_article_id"
   end
 
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -465,14 +475,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_225233) do
   create_table "wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body", size: :long
     t.datetime "created_at", null: false
-    t.bigint "ingredient_id"
     t.bigint "last_editor_id"
     t.boolean "published", default: false, null: false
     t.string "slug", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["ingredient_id"], name: "index_wiki_articles_on_ingredient_id", unique: true
     t.index ["published"], name: "index_wiki_articles_on_published"
     t.index ["slug"], name: "index_wiki_articles_on_slug", unique: true
     t.index ["user_id"], name: "index_wiki_articles_on_user_id"
@@ -492,6 +500,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_225233) do
   add_foreign_key "forum_threads", "forum_topics"
   add_foreign_key "forum_threads", "users"
   add_foreign_key "ingredient_collections", "users"
+  add_foreign_key "ingredient_wiki_articles", "ingredients"
+  add_foreign_key "ingredient_wiki_articles", "wiki_articles"
   add_foreign_key "private_messages", "users", column: "receiver_id"
   add_foreign_key "private_messages", "users", column: "sender_id"
   add_foreign_key "ratings", "users"
