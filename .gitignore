@@ -62,3 +62,6 @@ node_modules
 # Ignore key files for decrypting credentials and more.
 /config/credentials/*.key
 
+# Ignore graphify knowledge graph output
+graphify-out/
+
