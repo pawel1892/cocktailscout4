@@ -87,7 +87,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     bcrypt_pbkdf (1.1.2)
-    bigdecimal (4.1.0)
+    bigdecimal (4.1.1)
     bindex (0.8.1)
     bootsnap (1.23.0)
       msgpack (~> 1.2)
@@ -374,12 +374,15 @@ GEM
       ffi (~> 1.12)
       logger
     securerandom (0.4.1)
-    sentry-rails (5.28.1)
+    sentry-rails (5.3.1)
       railties (>= 5.0)
-      sentry-ruby (~> 5.28.1)
-    sentry-ruby (5.28.1)
+      sentry-ruby-core (~> 5.3.1)
+    sentry-ruby (6.5.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      logger
+    sentry-ruby-core (5.3.1)
+      concurrent-ruby
     shoulda-matchers (7.0.1)
       activesupport (>= 7.1)
     simplecov (0.22.0)
@@ -491,7 +494,7 @@ DEPENDENCIES
   rubocop-rails-omakase
   rubocop-rspec
   sentry-rails (~> 5.0)
-  sentry-ruby (~> 5.0)
+  sentry-ruby (~> 6.5)
   shoulda-matchers
   simplecov
   sitemap_generator (~> 6.3)
