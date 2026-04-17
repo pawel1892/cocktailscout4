@@ -2,12 +2,19 @@ class WikiArticlesController < ApplicationController
   allow_unauthenticated_access only: %i[index show]
 
   before_action :set_article, only: %i[show edit update destroy]
-  before_action :authorize_write!, only: %i[new create edit update]
+  before_action :authorize_write!, only: %i[new create edit update drafts]
   before_action :authorize_delete!, only: %i[destroy]
 
   def index
-    add_breadcrumb "Wiki"
-    @pagy, @wiki_articles = pagy(WikiArticle.published.order(title: :asc), limit: 30)
+    add_breadcrumb "Wiki", wiki_dashboard_path
+    add_breadcrumb "Alle Artikel"
+    @pagy, @wiki_articles = pagy(WikiArticle.published.includes(:ingredients).order(title: :asc), limit: 50)
+  end
+
+  def drafts
+    add_breadcrumb "Wiki", wiki_dashboard_path
+    add_breadcrumb "Entwürfe"
+    @draft_articles = WikiArticle.unpublished.includes(:ingredients).order(title: :asc)
   end
 
   def show
@@ -28,7 +35,9 @@ class WikiArticlesController < ApplicationController
   end
 
   def create
-    @wiki_article = WikiArticle.new(article_params)
+    p = article_params
+    p.delete("remove_cover_image") || p.delete(:remove_cover_image)
+    @wiki_article = WikiArticle.new(p)
     @wiki_article.user = Current.user
 
     if @wiki_article.save
@@ -44,10 +53,14 @@ class WikiArticlesController < ApplicationController
     add_breadcrumb "Wiki", wiki_articles_path
     add_breadcrumb @wiki_article.title, wiki_article_path(@wiki_article)
     add_breadcrumb "Bearbeiten"
+    @whodunnit_suggestions = @wiki_article.whodunnit_suggestions
   end
 
   def update
-    if @wiki_article.update(article_params.merge(last_editor: Current.user))
+    p = article_params
+    remove = p.delete("remove_cover_image") || p.delete(:remove_cover_image)
+    @wiki_article.cover_image.purge if remove == "1"
+    if @wiki_article.update(p.merge(last_editor: Current.user))
       redirect_to wiki_article_path(@wiki_article), notice: "Artikel aktualisiert."
     else
       add_breadcrumb "Wiki", wiki_articles_path
@@ -65,7 +78,7 @@ class WikiArticlesController < ApplicationController
   private
 
   def set_article
-    @wiki_article = WikiArticle.includes(:ingredients, :user, :last_editor).find_by!(slug: params[:slug])
+    @wiki_article = WikiArticle.includes(:ingredients, :collaborators, :user, :last_editor, :versions, cover_image_attachment: :blob).find_by!(slug: params[:slug])
   end
 
   def authorize_write!
@@ -81,6 +94,9 @@ class WikiArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:wiki_article).permit(:title, :body, :published, ingredient_ids: [])
+    params.require(:wiki_article).permit(:title, :body, :published, :featured, :featured_position, :cover_image, :remove_cover_image, ingredient_ids: [], collaborator_ids: []).tap do |p|
+      p[:ingredient_ids]&.reject!(&:blank?)
+      p[:collaborator_ids]&.reject!(&:blank?)
+    end
   end
 end

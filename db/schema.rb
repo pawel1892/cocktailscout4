@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_13_133004) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_17_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -472,15 +472,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_13_133004) do
     t.index ["visitable_type", "visitable_id"], name: "index_visits_on_visitable"
   end
 
+  create_table "wiki_article_collaborators", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.bigint "wiki_article_id", null: false
+    t.index ["user_id"], name: "index_wiki_article_collaborators_on_user_id"
+    t.index ["wiki_article_id", "user_id"], name: "index_wiki_article_collaborators_unique", unique: true
+    t.index ["wiki_article_id"], name: "index_wiki_article_collaborators_on_wiki_article_id"
+  end
+
   create_table "wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body", size: :long
     t.datetime "created_at", null: false
+    t.boolean "featured", default: false, null: false
+    t.integer "featured_position"
     t.bigint "last_editor_id"
     t.boolean "published", default: false, null: false
     t.string "slug", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["featured"], name: "index_wiki_articles_on_featured"
     t.index ["published"], name: "index_wiki_articles_on_published"
     t.index ["slug"], name: "index_wiki_articles_on_slug", unique: true
     t.index ["user_id"], name: "index_wiki_articles_on_user_id"
@@ -531,4 +544,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_13_133004) do
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_stats", "users"
   add_foreign_key "visits", "users"
+  add_foreign_key "wiki_article_collaborators", "users"
+  add_foreign_key "wiki_article_collaborators", "wiki_articles"
 end

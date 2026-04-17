@@ -297,6 +297,25 @@ user-badge {
   box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.55);
 }
 
+/* Wiki article cover image — floats top-right on desktop, stacks on mobile */
+.wiki-cover-image {
+  max-height: 40vh;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.wiki-cover-image img {
+  max-height: 40vh;
+}
+@media (min-width: 640px) {
+  .wiki-cover-image {
+    float: right;
+    clear: right;
+    width: 40%;
+    max-height: 40vh;
+    margin: 0 0 1.25rem 1.5rem;
+  }
+}
+
 /* Tailwind 4 scans files for classes. */
 @source "../../../app/views/**/*.html.erb";
 @source "../../../app/helpers/**/*.rb";

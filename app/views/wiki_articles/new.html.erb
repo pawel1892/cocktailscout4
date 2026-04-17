@@ -4,7 +4,7 @@
 
 <div class="card">
   <div class="card-body p-4 sm:p-6">
-    <%= form_with model: @wiki_article, url: wiki_articles_path do |form| %>
+    <%= form_with model: @wiki_article, url: wiki_articles_path, multipart: true do |form| %>
       <%= render "form", form: form, wiki_article: @wiki_article %>
     <% end %>
   </div>

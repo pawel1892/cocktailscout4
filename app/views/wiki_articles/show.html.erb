@@ -11,27 +11,20 @@
     <% @wiki_article.ingredients.each do |ingredient| %>
       <span class="tag tag-neutral"><i class="fas fa-flask mr-1"></i><%= ingredient.name %></span>
     <% end %>
-    <div class="text-sm text-gray-500 mt-2">
-      Erstellt von <%= user_badge(@wiki_article.user) %>
+    <div class="text-sm text-gray-500 mt-2 flex flex-col gap-1">
+      <div class="flex items-center gap-1">Erstellt von <%= user_badge(@wiki_article.user) %></div>
       <% if @wiki_article.last_editor %>
-        &nbsp;·&nbsp; Zuletzt bearbeitet von <%= user_badge(@wiki_article.last_editor) %> (<%= l(@wiki_article.updated_at, format: :short) %>)
+        <div>Zuletzt bearbeitet von <strong class="text-gray-700"><%= @wiki_article.last_editor.username %></strong> &middot; <%= l(@wiki_article.updated_at, format: :short) %></div>
       <% else %>
-        &nbsp;·&nbsp; <%= l(@wiki_article.updated_at, format: :short) %>
+        <div><%= l(@wiki_article.updated_at, format: :short) %></div>
       <% end %>
     </div>
   </div>
 
   <% if Current.user&.can_edit_wiki? %>
-    <div class="flex items-center gap-2 flex-shrink-0 pt-1">
+    <div class="flex-shrink-0 pt-1">
       <%= link_to edit_wiki_article_path(@wiki_article), class: "btn btn-outline btn-sm" do %>
         <i class="fas fa-edit mr-1"></i> Bearbeiten
-      <% end %>
-      <% if Current.user.admin? || Current.user.super_moderator? %>
-        <%= button_to wiki_article_path(@wiki_article), method: :delete,
-            class: "btn btn-sm btn-outline text-cs-error border-cs-error hover:bg-cs-error hover:text-white",
-            data: { turbo_confirm: "Artikel '#{@wiki_article.title}' wirklich löschen?" } do %>
-          <i class="fas fa-trash"></i>
-        <% end %>
       <% end %>
     </div>
   <% end %>
@@ -39,11 +32,27 @@
 
 <div class="card mb-6">
   <div class="card-body p-4 sm:p-6">
-    <div class="prose prose-cs max-w-none">
+    <% if @wiki_article.cover_image.attached? %>
+      <div class="wiki-cover-image">
+        <%= image_tag @wiki_article.cover_image.variant(:hero),
+            class: "rounded-lg object-contain w-full",
+            alt: @wiki_article.title %>
+      </div>
+    <% end %>
+    <div class="prose prose-cs max-w-none clearfix">
       <%= render_markdown(@wiki_article.body) %>
     </div>
   </div>
 </div>
+
+<% if @wiki_article.collaborators.any? %>
+  <div class="text-sm text-gray-500 mt-4 flex items-center flex-wrap gap-2">
+    <span>Mitwirkende:</span>
+    <% @wiki_article.collaborators.each do |user| %>
+      <%= user_badge(user) %>
+    <% end %>
+  </div>
+<% end %>
 
 <% if @linked_recipes.any? %>
   <div class="card mt-6">
@@ -65,5 +74,15 @@
         <% end %>
       </ul>
     </div>
+  </div>
+<% end %>
+
+<% if Current.user&.admin? || Current.user&.super_moderator? %>
+  <div class="mt-8 text-right">
+    <%= button_to wiki_article_path(@wiki_article), method: :delete,
+        class: "text-xs text-gray-400 hover:text-cs-error transition-colors bg-transparent border-none cursor-pointer",
+        data: { turbo_confirm: "Artikel '#{@wiki_article.title}' wirklich löschen?" } do %>
+      <i class="fas fa-trash mr-1"></i> Artikel löschen
+    <% end %>
   </div>
 <% end %>

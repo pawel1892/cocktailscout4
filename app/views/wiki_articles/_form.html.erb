@@ -8,14 +8,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :ingredient_ids, "Zutaten (optional)", class: "label-field" %>
-    <p class="text-sm text-gray-500 mb-2">Verknüpft diesen Artikel mit Zutaten. Auf dem Artikel werden alle Rezepte mit diesen Zutaten angezeigt. Mehrfachauswahl mit Ctrl/Cmd möglich.</p>
-    <%= form.collection_select :ingredient_ids, Ingredient.order(:name), :id, :name,
-        { include_blank: false },
-        { class: "input-field", multiple: true, size: 8 } %>
-  </div>
-
-  <div class="form-group">
     <%= form.label :body, "Inhalt", class: "label-field" %>
     <% if wiki_article.errors[:body].any? %>
       <div class="text-cs-error text-sm mb-2"><%= wiki_article.errors.full_messages_for(:body).join(", ") %></div>
@@ -36,6 +28,60 @@
     </label>
     <p class="text-sm text-gray-500 mt-1">Unveröffentlichte Artikel sind nur für Wiki-Editoren sichtbar.</p>
   </div>
+
+  <hr class="border-gray-200">
+
+  <div class="form-group">
+    <%= form.label :cover_image, "Titelbild (optional)", class: "label-field" %>
+    <wiki-cover-image-picker
+      initial-url="<%= wiki_article.cover_image.attached? ? url_for(wiki_article.cover_image.variant(:thumb)) : '' %>"
+    ></wiki-cover-image-picker>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :ingredient_ids, "Zutaten (optional)", class: "label-field" %>
+    <p class="text-sm text-gray-500 mb-2">Verknüpft diesen Artikel mit Zutaten. Auf dem Artikel werden alle Rezepte mit diesen Zutaten angezeigt.</p>
+    <wiki-tag-picker
+      :initial-items="<%= wiki_article.ingredients.map { |i| { id: i.id, label: i.name } }.to_json %>"
+      :suggestions="[]"
+      search-url="/ingredients.json?q="
+      response-key="ingredients"
+      display-key="name"
+      sub-key="recipes_count"
+      input-name="wiki_article[ingredient_ids][]"
+      placeholder="Zutat suchen…"
+    ></wiki-tag-picker>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :collaborator_ids, "Mitwirkende (optional)", class: "label-field" %>
+    <p class="text-sm text-gray-500 mb-2">Benutzer, die an diesem Artikel mitgearbeitet haben.</p>
+    <wiki-tag-picker
+      :initial-items="<%= wiki_article.collaborators.map { |u| { id: u.id, label: u.username } }.to_json %>"
+      :suggestions="<%= (@whodunnit_suggestions || User.none).map { |u| { id: u.id, label: u.username } }.to_json %>"
+      search-url="/benutzer.json?q="
+      response-key="users"
+      display-key="username"
+      input-name="wiki_article[collaborator_ids][]"
+      placeholder="Benutzer suchen…"
+    ></wiki-tag-picker>
+  </div>
+
+  <% if Current.user&.admin? || Current.user&.super_moderator? %>
+    <hr class="border-gray-200">
+    <div class="form-group">
+      <h3 class="label-field mb-3">Dashboard (Admin)</h3>
+      <label class="flex items-center gap-3 cursor-pointer mb-3">
+        <%= form.check_box :featured, class: "w-4 h-4 accent-cs-dark-red" %>
+        <span class="text-sm font-medium">Auf Wiki-Dashboard hervorheben</span>
+      </label>
+      <div class="flex items-center gap-3">
+        <%= form.label :featured_position, "Position", class: "text-sm text-gray-600 whitespace-nowrap" %>
+        <%= form.number_field :featured_position, class: "input-field w-24", placeholder: "1, 2, 3…", min: 1 %>
+        <span class="text-sm text-gray-500">Niedrigere Zahl = weiter vorne</span>
+      </div>
+    </div>
+  <% end %>
 
   <div class="flex justify-end gap-2">
     <%= link_to "Abbrechen", :back, class: "btn btn-outline" %>

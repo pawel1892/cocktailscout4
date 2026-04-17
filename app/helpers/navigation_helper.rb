@@ -14,8 +14,8 @@ module NavigationHelper
       },
       {
         label: "Wiki",
-        path: wiki_articles_path,
-        controllers: [ "wiki_articles" ],
+        path: wiki_dashboard_path,
+        controllers: [ "wiki_articles", "wiki/dashboard" ],
         dropdown: nil
       },
       {
