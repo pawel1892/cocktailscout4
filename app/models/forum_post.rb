@@ -53,6 +53,7 @@ class ForumPost < ApplicationRecord
 
     removed.each do |signed_id|
       blob = ActiveStorage::Blob.find_signed(signed_id) rescue next
+      next unless blob
       fi = ForumImage.joins(:image_attachment)
                      .find_by(active_storage_attachments: { blob_id: blob.id })
       fi&.mark_as_orphan! unless fi&.referenced_in_any_live_post?(exclude_post_id: id)
@@ -62,6 +63,7 @@ class ForumPost < ApplicationRecord
   def orphan_deleted_post_images
     ForumImage.signed_ids_in_body(body).each do |signed_id|
       blob = ActiveStorage::Blob.find_signed(signed_id) rescue next
+      next unless blob
       fi = ForumImage.joins(:image_attachment)
                      .find_by(active_storage_attachments: { blob_id: blob.id })
       fi&.mark_as_orphan! unless fi&.referenced_in_any_live_post?(exclude_post_id: id)
