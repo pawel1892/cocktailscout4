@@ -1,281 +1,766 @@
-<div class="space-y-12">
-  <section>
-    <h1 class="text-3xl font-bold mb-6">Kitchen Sink - Design System</h1>
-    <p class="text-gray-600">Standard-Komponenten für CocktailScout</p>
-  </section>
+<% content_for :full_bleed_page, true %>
 
-  <!-- Links -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Links</h2>
-    <div class="flex flex-wrap gap-8 items-start">
-      <a href="#" class="link">Standard Link</a>
-      <a href="#" class="link-underline">Link with Underline</a>
-    </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;a href="#" class="link"&gt;Standard Link&lt;/a&gt;
-&lt;a href="#" class="link-underline"&gt;Link with Underline&lt;/a&gt;</code></pre>
-    </div>
-  </section>
+<% content_for :head do %>
+<style>
+/* Design-system page chrome — not part of the shared system */
+*,*::before,*::after{box-sizing:border-box}
+.ds-body{font-family:'Inter',system-ui,sans-serif;background:var(--color-cs-ink-50);color:var(--color-cs-ink-900);-webkit-font-smoothing:antialiased;line-height:1.5}
+.sg-topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid var(--color-cs-ink-200);background:var(--color-cs-ink-50);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+.sg-topbar h1{margin:0;font-family:var(--font-display),serif;font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--color-cs-red-900);display:flex;align-items:center;gap:10px}
+.sg-topbar h1 .glyph{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--color-cs-gold-300),var(--color-cs-gold-600));box-shadow:inset 0 -2px 4px rgba(0,0,0,.2)}
+.sg-topbar .meta{font-size:13px;color:var(--color-cs-ink-500);font-family:'JetBrains Mono',monospace}
+.sg-wrap{max-width:1180px;margin:0 auto;padding:48px 32px 96px}
+.sg-nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 40px;padding:6px;background:var(--color-cs-ink-100);border-radius:10px;border:1px solid var(--color-cs-ink-200)}
+.sg-nav a{padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--color-cs-ink-700);text-decoration:none;transition:all .15s}
+.sg-nav a:hover{background:var(--color-cs-ink-50);color:var(--color-cs-red-900)}
+.sg-section{margin:0 0 72px;scroll-margin-top:88px}
+.sg-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 24px;padding:0 0 12px;border-bottom:1px solid var(--color-cs-ink-200)}
+.sg-section-head h2{margin:0;font-family:var(--font-display),serif;font-weight:700;font-size:30px;letter-spacing:-.015em;color:var(--color-cs-red-900)}
+.sg-section-head .kbd{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.12em}
+.sg-lede{color:var(--color-cs-ink-600);font-size:14px;max-width:720px;margin:0 0 28px}
+.sg-subhead{margin:32px 0 14px;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-cs-ink-500)}
+/* Color scales */
+.scale-row{display:grid;grid-template-columns:120px repeat(11,1fr);gap:0;border-radius:10px;overflow:hidden;box-shadow:0 2px 4px rgba(24,21,19,.06);margin-bottom:10px;border:1px solid var(--color-cs-ink-200)}
+.scale-label{background:#fff;padding:14px;font-size:12px;font-weight:600;color:var(--color-cs-ink-800);display:flex;align-items:center;border-right:1px solid var(--color-cs-ink-200);flex-direction:column;justify-content:center}
+.scale-label small{display:block;font-weight:400;color:var(--color-cs-ink-500);font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:2px}
+.swatch{padding:14px 10px;min-height:78px;display:flex;flex-direction:column;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:transform .15s}
+.swatch:hover{transform:translateY(-2px);z-index:2;box-shadow:0 6px 14px -4px rgba(24,21,19,.12)}
+.swatch .step{font-weight:600;font-size:11px}
+.swatch .hex{opacity:.85}
+.swatch[data-dark="0"]{color:#1a1310}
+.swatch[data-dark="1"]{color:#fff}
+/* Semantic grid */
+.semantic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.sem-card{border-radius:10px;overflow:hidden;border:1px solid var(--color-cs-ink-200);background:#fff;box-shadow:0 1px 2px rgba(24,21,19,.06)}
+.sem-card .bar{display:grid;grid-template-columns:1fr 1fr 1fr;height:58px}
+.sem-card .bar div{display:flex;align-items:flex-end;justify-content:flex-start;padding:6px 8px;font-family:'JetBrains Mono',monospace;font-size:9px;color:#fff}
+.sem-card .meta{padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.sem-card .meta strong{color:var(--color-cs-ink-900)}
+.sem-card .meta code{font-family:'JetBrains Mono',monospace;color:var(--color-cs-ink-500);font-size:11px}
+/* Type specimens */
+.type-row{display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--color-cs-ink-200)}
+.type-row .lab{font:500 11px 'JetBrains Mono';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.08em}
+.type-row .sam{color:var(--color-cs-ink-900)}
+.type-row .spec{font:400 11px 'JetBrains Mono';color:var(--color-cs-ink-500);text-align:right}
+/* Hero preview */
+.hero-preview{border-radius:12px;overflow:hidden;background:linear-gradient(90deg,rgba(54,13,12,.88) 0%,rgba(54,13,12,.78) 55%,rgba(54,13,12,.55) 100%),repeating-linear-gradient(135deg,var(--color-cs-red-950) 0 18px,var(--color-cs-red-900) 18px 36px);color:#fff;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;box-shadow:0 18px 36px -12px rgba(24,21,19,.22);border:1px solid var(--color-cs-red-950);margin-bottom:72px}
+.hero-preview .photo-ph{aspect-ratio:4/3;border-radius:10px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 12px,transparent 12px 24px),linear-gradient(135deg,var(--color-cs-red-800),var(--color-cs-red-950));display:flex;align-items:center;justify-content:center;color:var(--color-cs-gold-300);font:500 12px 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--color-cs-red-700)}
+.hero-preview h2{font-family:var(--font-display),serif;font-weight:700;font-size:40px;line-height:1.05;letter-spacing:-.02em;color:var(--color-cs-gold-400);margin:0 0 14px}
+.hero-preview p{color:rgba(255,255,255,.82);margin:0 0 22px;font-size:15px;line-height:1.55;max-width:380px}
+.hero-preview .cta{display:flex;gap:10px;flex-wrap:wrap}
+/* Grid helpers */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:820px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+/* Button row helper */
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+/* Tag row helper */
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+/* Cocktail card composite */
+.cocktail-card{background:#fff;border:1px solid var(--color-cs-ink-200);border-radius:12px;display:grid;grid-template-columns:108px 1fr auto;gap:16px;padding:14px;align-items:center;box-shadow:0 2px 4px rgba(24,21,19,.06)}
+.cocktail-card .thumb{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(45deg,var(--color-cs-ink-100) 0 8px,var(--color-cs-ink-50) 8px 16px);display:flex;align-items:center;justify-content:center;color:var(--color-cs-ink-400);font-size:22px}
+.cocktail-card h4{margin:0 0 4px;font:700 16px 'Inter';color:var(--color-cs-info-500)}
+.cocktail-card .author{font-size:12px;color:var(--color-cs-ink-500);margin-bottom:8px}
+.cocktail-card .tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.cocktail-card .stats{font-size:11px;color:var(--color-cs-ink-500);font-family:'JetBrains Mono',monospace}
+.rating-chip{min-width:56px;text-align:center;font-weight:700;font-size:20px;padding:10px 8px;border-radius:8px;color:#fff;font-family:var(--font-display),serif}
+.rating-chip.high{background:var(--color-cs-success-500)}
+.rating-chip.mid{background:var(--color-cs-gold-600)}
+.rating-chip.low{background:var(--color-cs-error-500)}
+.rating-chip small{display:block;font:500 10px 'JetBrains Mono',monospace;opacity:.8;margin-top:2px}
+/* Avatar */
+.ds-avatar{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--color-cs-gold-300),var(--color-cs-gold-700));display:inline-flex;align-items:center;justify-content:center;color:var(--color-cs-red-950);font:700 14px 'Inter';border:2px solid #fff;box-shadow:0 1px 2px rgba(24,21,19,.06)}
+/* Code block */
+.ds-code{background:var(--color-cs-ink-900);color:var(--color-cs-gold-200);padding:14px 16px;border-radius:8px;font:400 12px/1.6 'JetBrains Mono',monospace;overflow-x:auto;white-space:pre;border:1px solid var(--color-cs-ink-950)}
+/* Tweaks panel */
+#tweaks{position:fixed;right:18px;bottom:18px;width:280px;z-index:50;background:#fff;border:1px solid var(--color-cs-ink-200);border-radius:12px;box-shadow:0 18px 36px -12px rgba(24,21,19,.22);overflow:hidden;display:none}
+#tweaks.on{display:block}
+#tweaks header{padding:10px 14px;background:var(--color-cs-red-900);color:var(--color-cs-gold-300);font:700 12px 'Inter';letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+#tweaks header small{font:500 10px 'JetBrains Mono';color:var(--color-cs-gold-500);text-transform:none;letter-spacing:0}
+#tweaks .body{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+#tweaks label{font:600 11px 'Inter';color:var(--color-cs-ink-700);display:flex;justify-content:space-between;align-items:center}
+#tweaks input[type="color"]{width:46px;height:26px;border:1px solid var(--color-cs-ink-200);padding:0;border-radius:4px;background:transparent;cursor:pointer}
+#tweaks input[type="range"]{width:110px}
+#tweaks .val{font:500 10px 'JetBrains Mono';color:var(--color-cs-ink-500)}
+#tweaks .hint{font:400 11px 'Inter';color:var(--color-cs-ink-500);line-height:1.4;padding-top:4px;border-top:1px dashed var(--color-cs-ink-200);margin-top:2px}
+</style>
+<% end %>
 
-  <!-- Buttons -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Buttons</h2>
-    <div class="flex flex-wrap gap-4 items-center">
-      <button class="btn btn-primary">Primary Button</button>
-      <button class="btn btn-gold">Gold Button</button>
-      <button class="btn btn-outline">Outline Button</button>
-      <button class="btn btn-primary btn-sm">Small Button</button>
-    </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;button class="btn btn-primary"&gt;Primary Button&lt;/button&gt;
-&lt;button class="btn btn-gold"&gt;Gold Button&lt;/button&gt;
-&lt;button class="btn btn-outline"&gt;Outline Button&lt;/button&gt;
-&lt;button class="btn btn-primary btn-sm"&gt;Small Button&lt;/button&gt;</code></pre>
-    </div>
-  </section>
+<div class="ds-body">
 
-  <!-- Form Fields -->
-  <section class="space-y-6 max-w-2xl">
-    <h2 class="text-xl font-semibold border-b pb-2">Formulare</h2>
-    
+<div class="sg-topbar">
+  <h1><span class="glyph"></span> CocktailScout — Design System <span style="color:var(--color-cs-gold-600);font-weight:500">v2</span></h1>
+  <span class="meta">/design-tokens.css · 2026.04</span>
+</div>
+
+<div class="sg-wrap">
+
+  <p class="sg-lede">
+    A fuller tonal system for CocktailScout — brand oxblood and brass each expanded into an 11-step scale,
+    a warm neutral to replace flat gray, and semantic colors with light/base/dark triads.
+    Components below are re-composed on top of these tokens so buttons, cards, tags, callouts and forms
+    have real hover / pressed / muted states instead of relying on <code>opacity-80</code>.
+  </p>
+
+  <nav class="sg-nav">
+    <a href="#colors">01 · Colors</a>
+    <a href="#type">02 · Type</a>
+    <a href="#links">03 · Links</a>
+    <a href="#buttons">04 · Buttons</a>
+    <a href="#cards">05 · Cards</a>
+    <a href="#tags">06 · Tags</a>
+    <a href="#callouts">07 · Callouts</a>
+    <a href="#forms">08 · Forms</a>
+    <a href="#tables">09 · Tables</a>
+    <a href="#composite">10 · In-use</a>
+    <a href="#tokens">11 · CSS tokens</a>
+  </nav>
+
+  <!-- HERO PREVIEW -->
+  <section class="hero-preview">
     <div>
-      <label class="label-field">Standard Label</label>
-      <input type="text" class="input-field" placeholder="Eingabefeld...">
+      <span class="tag tag-gold-soft" style="margin-bottom:14px">Design System v2</span>
+      <h2>Scales, not single notes.</h2>
+      <p>Brand oxblood and brass each get eleven steps — enough range for muted surfaces, confident accents, and deep nav chrome — without inventing new hues.</p>
+      <div class="cta">
+        <a class="btn btn-gold btn-lg" href="<%= recipes_path %>">Rezepte entdecken</a>
+        <a class="btn btn-lg" style="background:transparent;color:var(--color-cs-gold-300);border-color:var(--color-cs-gold-500)" href="#">Meine Bar</a>
+      </div>
     </div>
+    <div class="photo-ph">Bar photography</div>
+  </section>
 
-    <div>
-      <label class="label-field">Email Adresse</label>
-      <input type="email" class="input-field" placeholder="name@example.com">
-      <p class="mt-1 text-sm text-gray-500">Ein kleiner Hilfetext.</p>
+  <!-- ================= 01 COLORS ================= -->
+  <section id="colors" class="sg-section">
+    <div class="sg-section-head">
+      <h2>Color</h2><span class="kbd">01</span>
     </div>
+    <p class="sg-lede" style="margin-bottom:20px">
+      Three tonal scales anchor everything. Brand anchors stay put: <code>red-900 = #360D0C</code>, <code>gold-500 = #CBB859</code>.
+      The neutral is <em>warm</em> (slight red/amber undertone) so it reads as paper-and-ink under gold light, not blue-gray.
+    </p>
 
-    <div>
-      <label class="label-field">Select Box</label>
-      <select class="input-field">
-        <option>Option 1</option>
-        <option>Option 2</option>
-      </select>
-    </div>
+    <div class="sg-subhead">Brand — Oxblood (Dark Red)</div>
+    <div id="scale-red"></div>
 
-    <div class="mt-4">
-       <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Text Input --&gt;
-&lt;div&gt;
-  &lt;label class="label-field"&gt;Standard Label&lt;/label&gt;
-  &lt;input type="text" class="input-field" placeholder="..."&gt;
-&lt;/div&gt;
+    <div class="sg-subhead">Brand — Brass (Gold)</div>
+    <div id="scale-gold"></div>
 
-&lt;!-- With Helper Text --&gt;
-&lt;div&gt;
-  &lt;label class="label-field"&gt;Email Adresse&lt;/label&gt;
-  &lt;input type="email" class="input-field" placeholder="..."&gt;
-  &lt;p class="mt-1 text-sm text-gray-500"&gt;Ein kleiner Hilfetext.&lt;/p&gt;
-&lt;/div&gt;
+    <div class="sg-subhead">Warm Neutral — Ink</div>
+    <div id="scale-ink"></div>
 
-&lt;!-- Select --&gt;
-&lt;select class="input-field"&gt;
-  &lt;option&gt;Option 1&lt;/option&gt;
-&lt;/select&gt;</code></pre>
+    <div class="sg-subhead">Link — Blue</div>
+    <div id="scale-link"></div>
+
+    <div class="sg-subhead">Semantic — Success · Warning · Error · Info</div>
+    <div class="semantic-grid">
+      <div class="sem-card">
+        <div class="bar">
+          <div style="background:var(--color-cs-success-100);color:var(--color-cs-success-900)">100</div>
+          <div style="background:var(--color-cs-success-500)">500</div>
+          <div style="background:var(--color-cs-success-900)">900</div>
+        </div>
+        <div class="meta"><strong>Success</strong><code>cs-success</code></div>
+      </div>
+      <div class="sem-card">
+        <div class="bar">
+          <div style="background:var(--color-cs-warning-100);color:var(--color-cs-warning-900)">100</div>
+          <div style="background:var(--color-cs-warning-500)">500</div>
+          <div style="background:var(--color-cs-warning-900)">900</div>
+        </div>
+        <div class="meta"><strong>Warning</strong><code>cs-warning</code></div>
+      </div>
+      <div class="sem-card">
+        <div class="bar">
+          <div style="background:var(--color-cs-error-100);color:var(--color-cs-error-900)">100</div>
+          <div style="background:var(--color-cs-error-500)">500</div>
+          <div style="background:var(--color-cs-error-900)">900</div>
+        </div>
+        <div class="meta"><strong>Error</strong><code>cs-error</code></div>
+      </div>
+      <div class="sem-card">
+        <div class="bar">
+          <div style="background:var(--color-cs-info-100);color:var(--color-cs-info-900)">100</div>
+          <div style="background:var(--color-cs-info-500)">500</div>
+          <div style="background:var(--color-cs-info-900)">900</div>
+        </div>
+        <div class="meta"><strong>Info / Link</strong><code>cs-info</code></div>
+      </div>
     </div>
   </section>
 
-  <!-- Form Validation -->
-  <section class="space-y-6 max-w-2xl">
-    <h2 class="text-xl font-semibold border-b pb-2">Formular Validierung</h2>
-    
-    <!-- Standard Group -->
-    <div class="form-group">
-      <label class="label-field">Benutzername</label>
-      <input type="text" class="input-field" placeholder="Gültige Eingabe">
-      <p class="form-hint">Darf nur Buchstaben und Zahlen enthalten.</p>
-    </div>
-
-    <!-- Error State -->
-    <div class="form-group">
-      <label class="label-field label-error">Passwort</label>
-      <input type="password" class="input-field input-error" value="123">
-      <p class="form-error-message">Das Passwort ist zu kurz (mind. 8 Zeichen).</p>
-    </div>
-
-    <div class="mt-4">
-       <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Standard Group with Hint --&gt;
-&lt;div class="form-group"&gt;
-  &lt;label class="label-field"&gt;Benutzername&lt;/label&gt;
-  &lt;input type="text" class="input-field"&gt;
-  &lt;p class="form-hint"&gt;Hilfetext...&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;!-- Error State --&gt;
-&lt;div class="form-group"&gt;
-  &lt;label class="label-field label-error"&gt;Passwort&lt;/label&gt;
-  &lt;input type="password" class="input-field input-error"&gt;
-  &lt;p class="form-error-message"&gt;Fehlermeldung...&lt;/p&gt;
-&lt;/div&gt;</code></pre>
+  <!-- ================= 02 TYPE ================= -->
+  <section id="type" class="sg-section">
+    <div class="sg-section-head"><h2>Typography</h2><span class="kbd">02</span></div>
+    <p class="sg-lede">
+      <strong>Fraunces</strong> (display serif) for headings and ratings — evokes classic bar menus.
+      <strong>Inter</strong> for UI and body copy. <strong>JetBrains&nbsp;Mono</strong> for token values, stats and counts.
+    </p>
+    <div>
+      <div class="type-row">
+        <span class="lab">Display</span>
+        <span class="sam" style="font:900 44px/1 var(--font-display);letter-spacing:-.02em;color:var(--color-cs-red-900)">Cocktail Rezepte</span>
+        <span class="spec">Fraunces 900 · 44/46</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">H1 / Hero</span>
+        <span class="sam" style="font:700 34px var(--font-display);letter-spacing:-.015em;color:var(--color-cs-red-900)">Long Island Iced Tea</span>
+        <span class="spec">Fraunces 700 · 34/40</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">H2</span>
+        <span class="sam" style="font:700 24px var(--font-display);color:var(--color-cs-red-900)">Heute frisch gemixt</span>
+        <span class="spec">Fraunces 700 · 24/32</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">H3 / Card</span>
+        <span class="sam" style="font:600 18px 'Inter';color:var(--color-cs-ink-900)">Espresso Martini</span>
+        <span class="spec">Inter 600 · 18/24</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">Body</span>
+        <span class="sam" style="font:400 15px 'Inter';color:var(--color-cs-ink-800)">1.500+ Cocktail Rezepte — und mit Meine Bar siehst du sofort, was du mixen kannst.</span>
+        <span class="spec">Inter 400 · 15/24</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">Small</span>
+        <span class="sam" style="font:400 13px 'Inter';color:var(--color-cs-ink-600)">vor 19 Minuten · von Ripuli</span>
+        <span class="spec">Inter 400 · 13/18</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">Mono / Stat</span>
+        <span class="sam" style="font:500 13px 'JetBrains Mono';color:var(--color-cs-ink-700)">1.124.100 views · 14.3% ABV</span>
+        <span class="spec">JBMono 500 · 13/18</span>
+      </div>
+      <div class="type-row">
+        <span class="lab">Eyebrow</span>
+        <span class="sam" style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.12em">KATEGORIE · KLASSIKER</span>
+        <span class="spec">Inter 600 · 11/14 · 0.12em</span>
+      </div>
     </div>
   </section>
 
-  <!-- Boxes & Cards -->
-  <section class="space-y-6">
-    <h2 class="text-xl font-semibold border-b pb-2">Boxen & Karten</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-      <!-- Standard Card -->
+  <!-- ================= 03 LINKS ================= -->
+  <section id="links" class="sg-section">
+    <div class="sg-section-head"><h2>Links</h2><span class="kbd">03</span></div>
+    <p class="sg-lede">
+      A dedicated blue scale (<code>cs-link-*</code>) anchored at <code>500&nbsp;=&nbsp;#2A6496</code> — the site's existing link blue, now with ten companion steps.
+      The default state uses the muted <code>-600</code> step so hover can darken to <code>-700</code>. Underline appears on hover via border-bottom rather than text-decoration, so it stays sharp at any weight.
+    </p>
+
+    <div class="sg-subhead">Variants</div>
+    <div style="background:#fff;border:1px solid var(--color-cs-ink-200);border-radius:10px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;font-size:15px;line-height:1.7">
+      <div>
+        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Default — <code>.link</code></div>
+        <p>Unser <a href="#" class="link">Mojito-Rezept</a> ist heute dreimal so beliebt wie gestern. Alle Klassiker findest du <a href="#" class="link">in der Rezeptübersicht</a>.</p>
+      </div>
+      <div>
+        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Underline — <code>.link.link-underline</code></div>
+        <p>Teil unserer <a href="#" class="link link-underline">Allgemeinen Geschäftsbedingungen</a> und <a href="#" class="link link-underline">Datenschutzerklärung</a> — auffälliger für Fließtext.</p>
+      </div>
+      <div>
+        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Muted — <code>.link.link-muted</code></div>
+        <p>Breadcrumbs &amp; Footer: <a href="#" class="link link-muted">Startseite</a> › <a href="#" class="link link-muted">Rezepte</a> › <strong>Long Island Iced Tea</strong>.</p>
+      </div>
+      <div>
+        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Arrow — <code>.link-arrow</code></div>
+        <p><a href="#" class="link-arrow">Alle Rezepte ansehen <span class="arr">→</span></a><br /><a href="#" class="link-arrow">Zur Community <span class="arr">→</span></a></p>
+      </div>
+      <div>
+        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Danger — <code>.link.link-danger</code></div>
+        <p>Achtung: <a href="#" class="link link-danger">Konto löschen</a> oder <a href="#" class="link link-danger">Beitrag melden</a> — rot für destruktive Aktionen.</p>
+      </div>
+      <div style="background:var(--color-cs-red-900);margin:-22px -26px -22px 0;padding:18px 22px;border-radius:0 10px 10px 0;color:var(--color-cs-gold-100)">
+        <div style="font:600 11px 'Inter';color:var(--color-cs-gold-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">On dark — <code>.link-on-dark</code></div>
+        <p>Im Footer oder auf dem Hero: <a href="#" class="link link-on-dark">Impressum</a>, <a href="#" class="link link-on-dark">Datenschutz</a>, <a href="#" class="link link-on-dark">Kontakt</a>.</p>
+      </div>
+    </div>
+
+    <div class="sg-subhead">Button-shaped link — <code>.btn.btn-link</code></div>
+    <p class="sg-lede" style="margin-bottom:12px">For actions that read as links but sit in a button row — spacing matches the rest of the button family.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary">Speichern</button>
+      <button class="btn btn-outline">Vorschau</button>
+      <button class="btn btn-link">Abbrechen</button>
+    </div>
+  </section>
+
+  <!-- ================= 04 BUTTONS ================= -->
+  <section id="buttons" class="sg-section">
+    <div class="sg-section-head"><h2>Buttons</h2><span class="kbd">04</span></div>
+    <p class="sg-lede">
+      Seven variants spanning the commitment ladder: <strong>primary</strong> (oxblood) for main actions,
+      <strong>gold</strong> for the hero "go" moment, <strong>outline / soft / ghost</strong> for secondary weight,
+      <strong>danger</strong> for destructive. Hovers use adjacent scale steps — no more <code>opacity-80</code>.
+    </p>
+
+    <div class="sg-subhead">Variants — default size</div>
+    <div class="btn-row">
+      <button class="btn btn-primary">Rezept speichern</button>
+      <button class="btn btn-gold">Rezepte entdecken</button>
+      <button class="btn btn-outline">Meine Bar</button>
+      <button class="btn btn-soft">Zur Favoritenliste</button>
+      <button class="btn btn-ghost">Abbrechen</button>
+      <button class="btn btn-danger"><i class="fa-solid fa-trash"></i> Löschen</button>
+      <button class="btn btn-link">Mehr erfahren</button>
+      <button class="btn btn-primary" disabled>Disabled</button>
+    </div>
+
+    <div class="sg-subhead">Sizes</div>
+    <div class="btn-row">
+      <button class="btn btn-primary btn-sm">Filtern</button>
+      <button class="btn btn-primary">Filtern</button>
+      <button class="btn btn-primary btn-lg">Filtern</button>
+    </div>
+
+    <div class="sg-subhead">Button Group (e.g. sortieren)</div>
+    <div class="btn-row">
+      <div class="btn-group" role="group">
+        <button aria-pressed="false">Name</button>
+        <button aria-pressed="true">Bewertung ↓</button>
+        <button aria-pressed="false">Benutzer</button>
+        <button aria-pressed="false">Alkoholgehalt</button>
+        <button aria-pressed="false">Aufrufe</button>
+      </div>
+    </div>
+
+    <div class="sg-subhead">On dark surfaces</div>
+    <div style="background:var(--color-cs-red-900);padding:20px;border-radius:10px">
+      <div class="btn-row" style="margin:0">
+        <button class="btn btn-gold">Rezepte entdecken</button>
+        <button class="btn btn-outline-gold">Meine Bar</button>
+        <button class="btn btn-ghost-dark">Später</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 CARDS ================= -->
+  <section id="cards" class="sg-section">
+    <div class="sg-section-head"><h2>Cards</h2><span class="kbd">05</span></div>
+    <p class="sg-lede">Five card treatments cover most needs: neutral standard, elevated, ghost (empty-state), gold feature, and dark (inline hero / stat).</p>
+
+    <div class="grid-3">
       <div class="card">
         <div class="card-header">Standard Card</div>
+        <div class="card-body">The default container — white, thin stroke, soft shadow. Use for lists, detail panels, recipe headers.</div>
+        <div class="card-footer">Zuletzt aktualisiert · vor 3&nbsp;Min.</div>
+      </div>
+
+      <div class="card card-elevated">
+        <div class="card-header">Elevated <span class="tag tag-mini">Hover</span></div>
+        <div class="card-body">Rises off the page — good for hover states, dropdown panels and modal promotion.</div>
+        <div class="card-footer">shadow-md · no border</div>
+      </div>
+
+      <div class="card card-ghost">
+        <div class="card-header" style="background:transparent">Empty State</div>
         <div class="card-body">
-          <p>This is a standard card with header, body, and footer. Great for grouping related content like a single cocktail recipe or user profile.</p>
-        </div>
-        <div class="card-footer">Last updated 3 mins ago</div>
-      </div>
-
-      <!-- Callouts -->
-      <div class="space-y-4">
-        <div class="callout">
-          <strong>Neutral Callout</strong>
-          <p class="text-sm mt-1">Useful for general notes or side information.</p>
-        </div>
-        <div class="callout-gold">
-          <strong>Gold Feature</strong>
-          <p class="text-sm mt-1">Highlighting a premium feature or "Pro Tip".</p>
-        </div>
-        <div class="callout-red">
-          <strong>Important Note</strong>
-          <p class="text-sm mt-1">Critical information that shouldn't be ignored.</p>
+          <span style="color:var(--color-cs-ink-500)">Noch keine Zutaten in deiner Bar — <a href="#" style="color:var(--color-cs-info-500)">jetzt hinzufügen</a>.</span>
         </div>
       </div>
-    </div>
 
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Card Component --&gt;
-&lt;div class="card"&gt;
-  &lt;div class="card-header"&gt;Header&lt;/div&gt;
-  &lt;div class="card-body"&gt;Content...&lt;/div&gt;
-  &lt;div class="card-footer"&gt;Footer...&lt;/div&gt;
-&lt;/div&gt;
+      <div class="card card-gold">
+        <div class="card-header">Gold Feature</div>
+        <div class="card-body">Für Pro-Tipps, Editor's Picks oder Klassiker-Empfehlungen.</div>
+        <div class="card-footer" style="background:var(--color-cs-gold-50);color:var(--color-cs-gold-800);border-top-color:var(--color-cs-gold-200)">Kuratiert von CocktailScout</div>
+      </div>
 
-&lt;!-- Callouts --&gt;
-&lt;div class="callout"&gt;...&lt;/div&gt;
-&lt;div class="callout-gold"&gt;...&lt;/div&gt;
-&lt;div class="callout-red"&gt;...&lt;/div&gt;</code></pre>
+      <div class="card card-dark">
+        <div class="card-header">Dark Hero</div>
+        <div class="card-body">
+          Invert for stat tiles, promo callouts, or in-line bar sections.
+          <div style="display:flex;gap:18px;margin-top:14px">
+            <div><div style="font:700 28px var(--font-display);color:var(--color-cs-gold-400)">1.581</div><div style="font:500 11px 'JetBrains Mono';color:var(--color-cs-gold-600);text-transform:uppercase;letter-spacing:.1em">Rezepte</div></div>
+            <div><div style="font:700 28px var(--font-display);color:var(--color-cs-gold-400)">14.7k</div><div style="font:500 11px 'JetBrains Mono';color:var(--color-cs-gold-600);text-transform:uppercase;letter-spacing:.1em">Mitglieder</div></div>
+          </div>
+        </div>
+        <div class="card-footer">Community · aktualisiert täglich</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Interactive · with actions
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-ghost btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn btn-ghost btn-sm" title="More"><i class="fa-solid fa-ellipsis"></i></button>
+          </div>
+        </div>
+        <div class="card-body">Headers accept right-aligned action clusters for edit / overflow menus.</div>
+      </div>
     </div>
   </section>
 
-  <!-- Tags -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Tags / Labels</h2>
-    <div class="flex flex-wrap gap-2">
+  <!-- ================= 06 TAGS ================= -->
+  <section id="tags" class="sg-section">
+    <div class="sg-section-head"><h2>Tags &amp; Labels</h2><span class="kbd">06</span></div>
+    <p class="sg-lede">Each semantic color now has both a <em>filled</em> and <em>soft</em> variant — soft for category/filter tags, filled for status and emphasis.</p>
+
+    <div class="sg-subhead">Filled</div>
+    <div class="tag-row" style="margin-bottom:18px">
       <span class="tag tag-neutral">Neutral</span>
       <span class="tag tag-primary">Primary</span>
-      <span class="tag tag-light-blue">Light Blue</span>
       <span class="tag tag-gold">Gold</span>
-      <span class="tag tag-success">Success</span>
-      <span class="tag tag-warning">Warning</span>
-      <span class="tag tag-error">Error</span>
+      <span class="tag tag-info">Info</span>
+      <span class="tag tag-success">Active</span>
+      <span class="tag tag-warning">Review</span>
+      <span class="tag tag-error">Archiv</span>
     </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;span class="tag tag-neutral"&gt;Neutral&lt;/span&gt;
-&lt;span class="tag tag-primary"&gt;Primary&lt;/span&gt;
-&lt;span class="tag tag-light-blue"&gt;Light Blue&lt;/span&gt;
-&lt;span class="tag tag-gold"&gt;Gold&lt;/span&gt;
-&lt;span class="tag tag-success"&gt;Success&lt;/span&gt;
-&lt;span class="tag tag-warning"&gt;Warning&lt;/span&gt;
-&lt;span class="tag tag-error"&gt;Error&lt;/span&gt;</code></pre>
+
+    <div class="sg-subhead">Soft (use for recipe categories)</div>
+    <div class="tag-row" style="margin-bottom:18px">
+      <span class="tag tag-primary-soft">Klassiker</span>
+      <span class="tag tag-gold-soft">Aperitif</span>
+      <span class="tag tag-info">Longdrink</span>
+      <span class="tag tag-success">Erfrischend</span>
+      <span class="tag tag-warning">Stark</span>
+      <span class="tag tag-neutral">Sauer</span>
+    </div>
+
+    <div class="sg-subhead">Mini — mono, uppercase, for meta</div>
+    <div class="tag-row">
+      <span class="tag-mini">IBA</span>
+      <span class="tag-mini">14.3% ABV</span>
+      <span class="tag-mini">5 min</span>
+      <span class="tag-mini">★ 8.6</span>
     </div>
   </section>
 
-  <!-- Tables -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Tabellen</h2>
+  <!-- ================= 07 CALLOUTS ================= -->
+  <section id="callouts" class="sg-section">
+    <div class="sg-section-head"><h2>Callouts</h2><span class="kbd">07</span></div>
+
+    <div class="grid-2">
+      <div class="callout"><span style="flex-shrink:0;font-size:14px;margin-top:1px"><i class="fa-regular fa-circle-question"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px">Neutral Callout</strong>Nützlich für allgemeine Hinweise oder Randnotizen.</div></div>
+      <div class="callout callout-gold"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-gold-700)"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-gold-900)">Pro-Tipp</strong>Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
+      <div class="callout callout-red"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-red-700)"><i class="fa-solid fa-circle-exclamation"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-red-900)">Important</strong>Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
+      <div class="callout callout-info"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-info-700)"><i class="fa-solid fa-circle-info"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-info-900)">Community Notiz</strong>Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
+      <div class="callout callout-success"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-success-700)"><i class="fa-solid fa-circle-check"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-success-900)">Gespeichert</strong>Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
+      <div class="callout callout-warning"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-warning-700)"><i class="fa-solid fa-triangle-exclamation"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-warning-900)">Achtung</strong>Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
+    </div>
+  </section>
+
+  <!-- ================= 08 FORMS ================= -->
+  <section id="forms" class="sg-section">
+    <div class="sg-section-head"><h2>Forms</h2><span class="kbd">08</span></div>
+
+    <div class="grid-2">
+      <div>
+        <div class="form-group">
+          <label class="label-field">Rezeptname</label>
+          <input class="input-field" placeholder="z.B. Espresso Martini" />
+          <p class="form-hint">Nur Buchstaben, Zahlen und Leerzeichen.</p>
+        </div>
+        <div class="form-group">
+          <label class="label-field">Email Adresse</label>
+          <input class="input-field" type="email" placeholder="name@example.com" />
+        </div>
+        <div class="form-group">
+          <label class="label-field">Kategorie</label>
+          <select class="input-field">
+            <option>Klassiker</option><option>Longdrink</option><option>Sauer</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="form-group">
+          <label class="label-field">Benutzername</label>
+          <input class="input-field" value="zoidberg" />
+          <p class="form-hint">Darf nur Buchstaben und Zahlen enthalten.</p>
+        </div>
+        <div class="form-group">
+          <label class="label-field label-error">Passwort</label>
+          <input class="input-field input-error" type="password" value="•••" />
+          <p class="form-error-message"><i class="fa-solid fa-circle-exclamation"></i> Das Passwort ist zu kurz (mind. 8 Zeichen).</p>
+        </div>
+        <div class="form-group">
+          <label class="label-field">Beschreibung</label>
+          <textarea class="input-field" rows="3" placeholder="Tasting Notes, Geschichte, Tipps..."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 TABLES ================= -->
+  <section id="tables" class="sg-section">
+    <div class="sg-section-head"><h2>Tables</h2><span class="kbd">09</span></div>
     <div class="table-container">
       <table class="table-standard">
         <thead>
           <tr>
-            <th class="table-th">Name</th>
-            <th class="table-th">Status</th>
+            <th class="table-th">Benutzer</th>
             <th class="table-th">Rolle</th>
+            <th class="table-th">Rezepte</th>
+            <th class="table-th">Status</th>
+            <th class="table-th" style="text-align:right">Bewertung</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200">
+        <tbody>
           <tr class="table-tr-hover">
-            <td class="table-td">Max Mustermann</td>
-            <td class="table-td"><span class="tag tag-success">Aktiv</span></td>
+            <td class="table-td" style="display:flex;align-items:center;gap:10px"><span class="ds-avatar">MM</span> Max Mustermann</td>
             <td class="table-td">Admin</td>
+            <td class="table-td"><span class="meta-chip">42</span></td>
+            <td class="table-td"><span class="tag tag-success">Aktiv</span></td>
+            <td class="table-td" style="text-align:right;font-family:'JetBrains Mono',monospace">8.6</td>
           </tr>
           <tr class="table-tr-hover">
-            <td class="table-td">Erika Musterfrau</td>
-            <td class="table-td"><span class="tag tag-neutral">Inaktiv</span></td>
+            <td class="table-td" style="display:flex;align-items:center;gap:10px"><span class="ds-avatar" style="background:radial-gradient(circle at 30% 30%,var(--color-cs-red-400),var(--color-cs-red-800));color:#fff">EM</span> Erika Musterfrau</td>
             <td class="table-td">User</td>
+            <td class="table-td"><span class="meta-chip">12</span></td>
+            <td class="table-td"><span class="tag tag-neutral">Inaktiv</span></td>
+            <td class="table-td" style="text-align:right;font-family:'JetBrains Mono',monospace">7.2</td>
+          </tr>
+          <tr class="table-tr-hover">
+            <td class="table-td" style="display:flex;align-items:center;gap:10px"><span class="ds-avatar">RI</span> Ripuli</td>
+            <td class="table-td">Moderator</td>
+            <td class="table-td"><span class="meta-chip">127</span></td>
+            <td class="table-td"><span class="tag tag-gold">Top Contributor</span></td>
+            <td class="table-td" style="text-align:right;font-family:'JetBrains Mono',monospace">9.1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;div class="table-container"&gt;
-  &lt;table class="table-standard"&gt;
-    &lt;thead&gt;
-      &lt;tr&gt;
-        &lt;th class="table-th"&gt;Name&lt;/th&gt;
-        ...
-      &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody class="divide-y divide-gray-200"&gt;
-      &lt;tr class="table-tr-hover"&gt;
-        &lt;td class="table-td"&gt;...&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-&lt;/div&gt;</code></pre>
+  </section>
+
+  <!-- ================= 10 IN-USE ================= -->
+  <section id="composite" class="sg-section">
+    <div class="sg-section-head"><h2>In use — composite examples</h2><span class="kbd">10</span></div>
+    <p class="sg-lede">Tokens &amp; components working together on the kinds of surfaces CocktailScout actually has.</p>
+
+    <div class="sg-subhead">Recipe list rows</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
+      <div class="cocktail-card">
+        <div class="thumb"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+        <div>
+          <h4>Long Island Iced Tea <i class="fa-solid fa-heart" style="color:var(--color-cs-error-500);font-size:14px"></i></h4>
+          <div class="author">von <strong style="color:var(--color-cs-ink-800)">Ripuli</strong></div>
+          <div class="tags">
+            <span class="tag tag-success">Erfrischend</span>
+            <span class="tag tag-info">Longdrink</span>
+            <span class="tag tag-primary-soft">Wodka</span>
+            <span class="tag tag-primary-soft">Gin</span>
+            <span class="tag tag-primary-soft">Rum</span>
+            <span class="tag tag-gold-soft">IBA</span>
+          </div>
+          <div class="stats">&#9749; 18.0% &nbsp;•&nbsp; 1.124.100 Aufrufe &nbsp;•&nbsp; ♥ 97</div>
+        </div>
+        <div class="rating-chip mid">7.2<small>(169)</small></div>
+      </div>
+      <div class="cocktail-card">
+        <div class="thumb"><i class="fa-solid fa-mug-hot"></i></div>
+        <div>
+          <h4>Mojito <i class="fa-regular fa-heart" style="color:var(--color-cs-ink-400);font-size:14px"></i></h4>
+          <div class="author">von <strong style="color:var(--color-cs-ink-800)">zoidberg</strong> <span class="tag-mini" style="margin-left:4px;background:var(--color-cs-gold-100);color:var(--color-cs-gold-800)">ME</span></div>
+          <div class="tags">
+            <span class="tag tag-success">Erfrischend</span>
+            <span class="tag tag-primary-soft">Rum</span>
+            <span class="tag tag-primary-soft">Klassiker</span>
+            <span class="tag tag-info">Karibisch</span>
+          </div>
+          <div class="stats">&#9749; 14.3% &nbsp;•&nbsp; 1.087.325 Aufrufe &nbsp;•&nbsp; ♥ 153</div>
+        </div>
+        <div class="rating-chip high">8.6<small>(249)</small></div>
+      </div>
+      <div class="cocktail-card">
+        <div class="thumb"><i class="fa-solid fa-whiskey-glass"></i></div>
+        <div>
+          <h4>Whiskey Sour <i class="fa-regular fa-heart" style="color:var(--color-cs-ink-400);font-size:14px"></i></h4>
+          <div class="author">von <strong style="color:var(--color-cs-ink-800)">Ripuli</strong></div>
+          <div class="tags">
+            <span class="tag tag-warning">Stark</span>
+            <span class="tag tag-neutral">Sauer</span>
+            <span class="tag tag-gold-soft">Aperitif</span>
+            <span class="tag tag-primary-soft">Whiskey</span>
+          </div>
+          <div class="stats">&#9749; 18.0% &nbsp;•&nbsp; 586.597 Aufrufe &nbsp;•&nbsp; ♥ 46</div>
+        </div>
+        <div class="rating-chip high">7.8<small>(48)</small></div>
+      </div>
+    </div>
+
+    <div class="sg-subhead">Filter toolbar</div>
+    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid var(--color-cs-ink-200);display:grid;grid-template-columns:repeat(6,1fr) auto auto;gap:12px;align-items:end;margin-bottom:28px">
+      <div><label class="label-field">Suche</label><input class="input-field" placeholder="Rezeptname..." /></div>
+      <div><label class="label-field">Bewertung</label><select class="input-field"><option>Alle</option></select></div>
+      <div><label class="label-field">Kategorie</label><select class="input-field"><option>Alle</option></select></div>
+      <div><label class="label-field">Zutat</label><select class="input-field"><option>Alle</option></select></div>
+      <div><label class="label-field">Benutzer</label><input class="input-field" placeholder="Benutzer..." /></div>
+      <div><label class="label-field">Liste</label><select class="input-field"><option>Alle</option></select></div>
+      <button class="btn btn-outline"><i class="fa-regular fa-heart"></i> Favoriten</button>
+      <button class="btn btn-primary">Filtern</button>
     </div>
   </section>
 
-  <!-- Colors -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Farben</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="p-4 rounded bg-cs-dark-red text-white">
-        <strong class="block mb-1 text-lg">Dark Red</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-dark-red</code>
-        </div>
-        <div class="text-sm font-mono opacity-80">#360D0C</div>
-      </div>
-      <div class="p-4 rounded bg-cs-gold text-cs-dark-red">
-        <strong class="block mb-1 text-lg">Gold</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-white/30 p-1 rounded">bg-cs-gold</code>
-        </div>
-        <div class="text-sm font-mono opacity-80">#CBB859</div>
-      </div>
-      <div class="p-4 rounded bg-black text-cs-gold border border-gray-700">
-        <strong class="block mb-1 text-lg">Black</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-white/20 p-1 rounded text-white">bg-black</code>
-        </div>
-        <div class="text-sm font-mono opacity-80 text-white">#000000</div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-      <div class="p-4 rounded bg-cs-success text-white">
-        <strong class="block mb-1 text-lg">Success</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-success</code>
-        </div>
-        <div class="text-sm font-mono opacity-80">#16A34A</div>
-      </div>
-      <div class="p-4 rounded bg-cs-warning text-white">
-        <strong class="block mb-1 text-lg">Warning</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-warning</code>
-        </div>
-        <div class="text-sm font-mono opacity-80">#CA8A04</div>
-      </div>
-      <div class="p-4 rounded bg-cs-error text-white">
-        <strong class="block mb-1 text-lg">Error</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-error</code>
-        </div>
-        <div class="text-sm font-mono opacity-80">#DC2626</div>
-      </div>
-    </div>
+  <!-- ================= 11 TOKENS ================= -->
+  <section id="tokens" class="sg-section">
+    <div class="sg-section-head"><h2>CSS tokens — paste into <code>application.css</code></h2><span class="kbd">11</span></div>
+    <p class="sg-lede">These tokens are already live in your <code>@theme</code> block. The dump below is for reference — copy individual values as needed.</p>
+    <div class="ds-code" id="token-dump"></div>
   </section>
+
+</div><!-- /.sg-wrap -->
+</div><!-- /.ds-body -->
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks" role="dialog" aria-label="Tweaks">
+  <header><span>Tweaks</span><small>Design System v2</small></header>
+  <div class="body">
+    <label>Brand red <input id="tw-red" type="color" value="#360D0C" /></label>
+    <label>Brand gold <input id="tw-gold" type="color" value="#CBB859" /></label>
+    <label>Neutral hue <span class="val" id="tw-hue-v">28°</span><input id="tw-hue" type="range" min="0" max="60" value="28" /></label>
+    <label>Neutral chroma <span class="val" id="tw-chroma-v">.014</span><input id="tw-chroma" type="range" min="0" max="40" value="14" /></label>
+    <label>Radius <span class="val" id="tw-radius-v">6 / 10</span><input id="tw-radius" type="range" min="2" max="18" value="6" /></label>
+    <div class="hint">Tokens regenerate live. Flip the toolbar toggle to hide.</div>
+  </div>
 </div>
+
+<script>
+function oklchToRgb(L, C, h) {
+  const a = Math.cos(h * Math.PI / 180) * C;
+  const b = Math.sin(h * Math.PI / 180) * C;
+  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+  const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+  let r = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
+  let g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
+  let bl = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
+  const toSrgb = (c) => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1/2.4) - 0.055;
+  r = toSrgb(r); g = toSrgb(g); bl = toSrgb(bl);
+  return [Math.max(0,Math.min(1,r)),Math.max(0,Math.min(1,g)),Math.max(0,Math.min(1,bl))];
+}
+function rgbToHex([r,g,b]){return '#'+[r,g,b].map(v=>Math.round(v*255).toString(16).padStart(2,'0')).join('').toUpperCase()}
+function hexToRgb(hex){hex=hex.replace('#','');return [parseInt(hex.slice(0,2),16)/255,parseInt(hex.slice(2,4),16)/255,parseInt(hex.slice(4,6),16)/255]}
+function rgbToOklch([r,g,b]){
+  const toLin = c=>c<=.04045?c/12.92:Math.pow((c+.055)/1.055,2.4);
+  r=toLin(r);g=toLin(g);b=toLin(b);
+  const l=.4122214708*r+.5363325363*g+.0514459929*b;
+  const m=.2119034982*r+.6806995451*g+.1073969566*b;
+  const s=.0883024619*r+.2817188376*g+.6299787005*b;
+  const l_=Math.cbrt(l),m_=Math.cbrt(m),s_=Math.cbrt(s);
+  const L=.2104542553*l_+.7936177850*m_-.0040720468*s_;
+  const a=1.9779984951*l_-2.4285922050*m_+.4505937099*s_;
+  const b2=.0259040371*l_+.7827717662*m_-.8086757660*s_;
+  const C=Math.sqrt(a*a+b2*b2);
+  let h=Math.atan2(b2,a)*180/Math.PI;if(h<0)h+=360;
+  return {L,C,h};
+}
+
+const LSTEPS = [0.985, 0.955, 0.90, 0.82, 0.72, 0.60, 0.49, 0.39, 0.30, 0.22, 0.12];
+const STEPS  = [50,100,200,300,400,500,600,700,800,900,950];
+
+function buildScale(anchorHex, anchorStepIdx){
+  const {L: aL, C: aC, h} = rgbToOklch(hexToRgb(anchorHex));
+  return LSTEPS.map((L, i) => {
+    let C = aC;
+    const dist = Math.abs(i - anchorStepIdx);
+    C = aC * Math.max(0.25, 1 - dist * 0.12);
+    if (i <= 1) C *= 0.35;
+    if (i >= 10) C *= 0.55;
+    const [r,g,b] = oklchToRgb(L, C, h);
+    const hex = rgbToHex([r,g,b]);
+    const lum = 0.2126*r + 0.7152*g + 0.0722*b;
+    return {step: STEPS[i], hex, dark: lum < 0.55 ? 1 : 0};
+  });
+}
+
+function renderScale(targetId, name, scale){
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  el.innerHTML = '';
+  const row = document.createElement('div');
+  row.className = 'scale-row';
+  row.innerHTML = `<div class="scale-label">${name}<small>cs-${name.toLowerCase()}</small></div>`;
+  scale.forEach(s => {
+    row.innerHTML += `<div class="swatch" data-dark="${s.dark}" style="background:${s.hex}" title="Copy ${s.hex}" data-hex="${s.hex}">
+      <span class="step">${s.step}</span>
+      <span class="hex">${s.hex}</span>
+    </div>`;
+  });
+  el.appendChild(row);
+}
+
+const state = { red: '#360D0C', gold: '#CBB859', link: '#2A6496', inkHue: 28, inkChroma: 0.014, radius: 6 };
+
+function buildAll(){
+  const redScale  = buildScale(state.red, 9);
+  const goldScale = buildScale(state.gold, 5);
+  const linkScale = buildScale(state.link, 5);
+  const inkScale = LSTEPS.map((L, i) => {
+    const h = state.inkHue;
+    let C = state.inkChroma * (1 - Math.abs(i - 5) * 0.12);
+    if (i <= 1) C *= 0.5;
+    if (i >= 10) C *= 0.7;
+    const [r,g,b] = oklchToRgb(L, Math.max(0, C), h);
+    const hex = rgbToHex([r,g,b]);
+    const lum = 0.2126*r + 0.7152*g + 0.0722*b;
+    return {step: STEPS[i], hex, dark: lum < 0.55 ? 1 : 0};
+  });
+
+  renderScale('scale-red', 'Red',  redScale);
+  renderScale('scale-gold','Gold', goldScale);
+  renderScale('scale-link','Link', linkScale);
+  renderScale('scale-ink', 'Ink',  inkScale);
+
+  const root = document.documentElement;
+  redScale.forEach(s  => root.style.setProperty(`--color-cs-red-${s.step}`,  s.hex));
+  goldScale.forEach(s => root.style.setProperty(`--color-cs-gold-${s.step}`, s.hex));
+  linkScale.forEach(s => root.style.setProperty(`--color-cs-link-${s.step}`, s.hex));
+  inkScale.forEach(s  => root.style.setProperty(`--color-cs-ink-${s.step}`,  s.hex));
+
+  root.style.setProperty('--ds-radius', state.radius + 'px');
+
+  const dump = [
+    '/* --- paste into @theme { ... } in application.css --- */',
+    '',
+    '/* Brand — Oxblood (Dark Red) */',
+    ...redScale.map(s => `--color-cs-red-${s.step}: ${s.hex};`),
+    '',
+    '/* Brand — Brass (Gold) */',
+    ...goldScale.map(s => `--color-cs-gold-${s.step}: ${s.hex};`),
+    '',
+    '/* Link — Blue */',
+    ...linkScale.map(s => `--color-cs-link-${s.step}: ${s.hex};`),
+    '',
+    '/* Warm Neutral — Ink */',
+    ...inkScale.map(s => `--color-cs-ink-${s.step}: ${s.hex};`),
+    '',
+    '/* Semantic */',
+    '--color-cs-success-50: #E8F6EC;  --color-cs-success-100: #C7E8D1;  --color-cs-success-500: #16A34A;  --color-cs-success-700: #0D7A35;  --color-cs-success-900: #074720;',
+    '--color-cs-warning-50: #FDF6DF;  --color-cs-warning-100: #FAE8A8;  --color-cs-warning-500: #CA8A04;  --color-cs-warning-700: #8D6002;  --color-cs-warning-900: #523701;',
+    '--color-cs-error-50:   #FCECEC;  --color-cs-error-100:   #F6CACA;  --color-cs-error-500:   #DC2626;  --color-cs-error-700:   #A01818;  --color-cs-error-900:   #5C0A0A;',
+    '--color-cs-info-50:    #EAF1F8;  --color-cs-info-100:    #CBDBEC;  --color-cs-info-500:    #2A6496;  --color-cs-info-700:    #1B4468;  --color-cs-info-900:    #0F293F;',
+    '',
+    '/* Aliases */',
+    '--color-cs-dark-red: var(--color-cs-red-900);',
+    '--color-cs-gold:     var(--color-cs-gold-500);',
+    '--color-cs-link:     var(--color-cs-info-500);',
+  ].join('\n');
+  document.getElementById('token-dump').textContent = dump;
+}
+
+window.addEventListener('message', (e) => {
+  if (!e?.data?.type) return;
+  if (e.data.type === '__activate_edit_mode')   document.getElementById('tweaks').classList.add('on');
+  if (e.data.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('on');
+});
+window.parent.postMessage({type:'__edit_mode_available'}, '*');
+
+const $ = (id) => document.getElementById(id);
+$('tw-red').addEventListener('input',  e => { state.red  = e.target.value; buildAll(); });
+$('tw-gold').addEventListener('input', e => { state.gold = e.target.value; buildAll(); });
+$('tw-hue').addEventListener('input',  e => { state.inkHue = +e.target.value; $('tw-hue-v').textContent = state.inkHue + '°'; buildAll(); });
+$('tw-chroma').addEventListener('input', e => { state.inkChroma = +e.target.value / 1000; $('tw-chroma-v').textContent = state.inkChroma.toFixed(3); buildAll(); });
+$('tw-radius').addEventListener('input', e => { state.radius = +e.target.value; $('tw-radius-v').textContent = state.radius + ' / ' + (state.radius*1.6).toFixed(0); buildAll(); });
+
+document.addEventListener('click', (e) => {
+  const sw = e.target.closest('.swatch');
+  if (!sw) return;
+  const hex = sw.dataset.hex;
+  navigator.clipboard?.writeText(hex);
+  const prev = sw.querySelector('.hex').textContent;
+  sw.querySelector('.hex').textContent = 'copied';
+  setTimeout(() => sw.querySelector('.hex').textContent = prev, 900);
+});
+
+buildAll();
+</script>

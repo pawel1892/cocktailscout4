@@ -30,7 +30,7 @@ RSpec.describe "Tag Filtering", type: :request do
 
     it "shows active filter when filtered by tag" do
       get tag_path(tag: "Rum")
-      expect(response.body).to include("Aktive Filter")
+      expect(response.body).to include("Filter aktiv:")
       expect(response.body).to include("Tag: Rum")
     end
   end
