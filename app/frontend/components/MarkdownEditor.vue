@@ -365,6 +365,7 @@
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
 import { renderMarkdown } from '../lib/markdownPreview.js'
+import { useWikilinkPaste } from '../composables/useWikilinkPaste.js'
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -414,6 +415,9 @@ const recipeQuery      = ref('')
 const recipeResults    = ref([])
 const recipeSearchRef  = ref(null)
 let recipeDebounceTimer = null
+
+// ── Composables ───────────────────────────────────────────────────────────────
+const { handlePaste: handleWikilinkPaste } = useWikilinkPaste({ insertText: (t) => insertText(t) })
 
 // ── Watch ────────────────────────────────────────────────────────────────────
 watch(() => props.modelValue, (v) => { markdownText.value = v })
@@ -634,6 +638,8 @@ function onFileSelected(event) {
 }
 
 function onPaste(event) {
+  if (handleWikilinkPaste(event)) return
+
   if (!props.uploadUrl) return
   const items = event.clipboardData?.items
   if (!items) return
