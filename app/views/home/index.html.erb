@@ -84,7 +84,7 @@
             <%= recipe_thumbnail(recipe, size_class: "w-full h-full") %>
           </div>
           <div class="min-w-0">
-            <h4><%= link_to recipe.title, recipe_path(recipe.slug) %></h4>
+            <h4><%= link_to recipe.title, recipe_path(recipe.slug), class: "link" %></h4>
             <div class="author">von <strong class="text-cs-ink-800"><%= recipe.user.username %></strong></div>
             <div class="tags">
               <% recipe.tags.first(4).each do |tag| %>
