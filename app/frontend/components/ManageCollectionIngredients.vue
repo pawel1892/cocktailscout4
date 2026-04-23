@@ -55,7 +55,8 @@
           :key="ingredient.id"
           @click.prevent.stop="removeIngredient(ingredient)"
           type="button"
-          class="px-3 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/80 transition text-sm font-medium flex items-center gap-2"
+          :disabled="pendingIds.has(ingredient.id)"
+          class="px-3 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/80 transition text-sm font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {{ ingredient.name }} <span class="opacity-75">({{ ingredient.recipes_count }})</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
@@ -79,7 +80,8 @@
           :key="ingredient.id"
           @click.prevent="addIngredient(ingredient)"
           type="button"
-          class="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm font-medium flex items-center gap-2"
+          :disabled="pendingIds.has(ingredient.id)"
+          class="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -92,13 +94,6 @@
       </div>
     </div>
 
-    <!-- Loading State -->
-    <div v-if="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-6 shadow-xl">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cs-dark-red mx-auto"></div>
-        <p class="mt-4 text-gray-700">Wird gespeichert...</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -120,7 +115,7 @@ const searchQuery = ref('')
 const sortBy = ref('alphabetical')
 const currentIngredients = ref([])
 const allIngredients = ref([])
-const loading = ref(false)
+const pendingIds = ref(new Set())
 const doableRecipesCount = ref(0)
 
 const getCSRFToken = () => {
@@ -199,9 +194,11 @@ const loadAllIngredients = async () => {
   }
 }
 
-// Add ingredient
+// Add ingredient (optimistic)
 const addIngredient = async (ingredient) => {
-  loading.value = true
+  if (pendingIds.value.has(ingredient.id)) return
+  pendingIds.value = new Set([...pendingIds.value, ingredient.id])
+  currentIngredients.value.push(ingredient)
   try {
     const response = await fetch(`/ingredient_collections/${props.collectionId}/ingredients`, {
       method: 'POST',
@@ -212,32 +209,28 @@ const addIngredient = async (ingredient) => {
       },
       body: JSON.stringify({ ingredient_id: ingredient.id })
     })
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
     const data = await response.json()
     if (data.success || data.added?.length > 0) {
-      // Add to current (sorting handled by computed property)
-      currentIngredients.value.push(ingredient)
-      // Update doable recipes count
       doableRecipesCount.value = data.collection?.doable_recipes_count || 0
     } else {
+      currentIngredients.value = currentIngredients.value.filter(i => i.id !== ingredient.id)
       console.error('Failed to add ingredient:', data.errors)
-      alert('Fehler beim Hinzufügen der Zutat')
     }
   } catch (e) {
+    currentIngredients.value = currentIngredients.value.filter(i => i.id !== ingredient.id)
     console.error('Network error adding ingredient:', e)
-    alert('Netzwerkfehler beim Hinzufügen der Zutat')
   } finally {
-    loading.value = false
+    const next = new Set(pendingIds.value)
+    next.delete(ingredient.id)
+    pendingIds.value = next
   }
 }
 
-// Remove ingredient
+// Remove ingredient (optimistic)
 const removeIngredient = async (ingredient) => {
-  loading.value = true
+  if (pendingIds.value.has(ingredient.id)) return
+  pendingIds.value = new Set([...pendingIds.value, ingredient.id])
+  currentIngredients.value = currentIngredients.value.filter(i => i.id !== ingredient.id)
   try {
     const response = await fetch(`/ingredient_collections/${props.collectionId}/ingredients/${ingredient.id}`, {
       method: 'DELETE',
@@ -246,26 +239,20 @@ const removeIngredient = async (ingredient) => {
         'X-CSRF-Token': getCSRFToken()
       }
     })
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
     const data = await response.json()
     if (data.success) {
-      // Remove from current
-      currentIngredients.value = currentIngredients.value.filter(i => i.id !== ingredient.id)
-      // Update doable recipes count
       doableRecipesCount.value = data.collection?.doable_recipes_count || 0
     } else {
+      currentIngredients.value.push(ingredient)
       console.error('Failed to remove ingredient:', data.error)
-      alert('Fehler beim Entfernen der Zutat')
     }
   } catch (e) {
+    currentIngredients.value.push(ingredient)
     console.error('Network error removing ingredient:', e)
-    alert('Netzwerkfehler beim Entfernen der Zutat')
   } finally {
-    loading.value = false
+    const next = new Set(pendingIds.value)
+    next.delete(ingredient.id)
+    pendingIds.value = next
   }
 }
 
