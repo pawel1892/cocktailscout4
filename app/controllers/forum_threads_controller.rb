@@ -25,6 +25,10 @@ class ForumThreadsController < ApplicationController
     @forum_thread = ForumThread.find_by!(slug: params[:id])
     @forum_thread.track_visit(Current.user)
     @forum_topic = @forum_thread.forum_topic
+    if Current.user&.can_moderate_forum?
+      base = ForumTopic.where.not(id: @forum_topic.id)
+      @movable_topics = Current.user.admin? ? base : base.where.not(slug: ForumTopic::NEWS_FORUM_SLUG)
+    end
     @pagy, @forum_posts = pagy(@forum_thread.ordered_posts, limit: 20)
     set_forum_thread_meta_tags(@forum_thread)
   end

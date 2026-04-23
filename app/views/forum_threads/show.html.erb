@@ -51,6 +51,19 @@
           <i class="fas fa-thumbtack mr-1"></i> Anpinnen
         <% end %>
       <% end %>
+
+      <details class="group">
+        <summary class="btn btn-sm btn-secondary list-none cursor-pointer">
+          <i class="fas fa-arrows-alt mr-1"></i> Verschieben
+        </summary>
+        <%= form_with url: move_forum_thread_path(@forum_thread), method: :post, class: 'flex items-center gap-2 mt-2' do |f| %>
+          <%= f.select :forum_topic_id,
+            @movable_topics.order(:position).map { |t| [t.name, t.id] },
+            {},
+            class: 'input-field' %>
+          <%= f.submit "Verschieben", class: 'btn btn-sm btn-primary' %>
+        <% end %>
+      </details>
     </div>
   <% end %>
 

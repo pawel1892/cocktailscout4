@@ -657,6 +657,153 @@ RSpec.describe "ForumThreads", type: :request do
     end
   end
 
+  describe "POST /cocktailforum/thema/:thread_id/verschieben (move thread)" do
+    let!(:news_topic)    { create(:forum_topic, slug: ForumTopic::NEWS_FORUM_SLUG, name: "News", position: 1) }
+    let!(:source_topic)  { create(:forum_topic, slug: "general", name: "General", position: 2) }
+    let!(:target_topic)  { create(:forum_topic, slug: "other", name: "Other", position: 3) }
+    let!(:forum_thread)  { create(:forum_thread, forum_topic: source_topic) }
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+      before { sign_in(admin) }
+
+      it "moves the thread to a regular topic" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: target_topic.id }
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.forum_topic).to eq(target_topic)
+        expect(flash[:notice]).to include("Other")
+      end
+
+      it "moves the thread to the news topic" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: news_topic.id }
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.forum_topic).to eq(news_topic)
+      end
+    end
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+      before { sign_in(moderator) }
+
+      it "moves the thread to a regular topic" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: target_topic.id }
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.forum_topic).to eq(target_topic)
+      end
+
+      it "cannot move the thread to the news topic" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: news_topic.id }
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(flash[:alert]).to be_present
+        expect(forum_thread.reload.forum_topic).to eq(source_topic)
+      end
+    end
+
+    context "when authenticated as super moderator" do
+      let(:super_mod) { create(:user, :super_moderator) }
+      before { sign_in(super_mod) }
+
+      it "moves the thread to a regular topic" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: target_topic.id }
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(forum_thread.reload.forum_topic).to eq(target_topic)
+      end
+
+      it "cannot move the thread to the news topic" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: news_topic.id }
+
+        expect(response).to redirect_to(forum_thread_path(forum_thread))
+        expect(flash[:alert]).to be_present
+        expect(forum_thread.reload.forum_topic).to eq(source_topic)
+      end
+    end
+
+    context "when authenticated as regular user" do
+      let(:user) { create(:user) }
+      before { sign_in(user) }
+
+      it "denies access" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: target_topic.id }
+
+        expect(response).to redirect_to(root_path)
+        expect(forum_thread.reload.forum_topic).to eq(source_topic)
+      end
+    end
+
+    context "when not authenticated" do
+      it "redirects to login" do
+        post move_forum_thread_path(forum_thread), params: { forum_topic_id: target_topic.id }
+
+        expect(response).to redirect_to(new_session_path)
+        expect(forum_thread.reload.forum_topic).to eq(source_topic)
+      end
+    end
+  end
+
+  describe "move thread UI on thread show page" do
+    let!(:news_topic)   { create(:forum_topic, slug: ForumTopic::NEWS_FORUM_SLUG, name: "News") }
+    let!(:source_topic) { create(:forum_topic, slug: "general", name: "General") }
+    let!(:target_topic) { create(:forum_topic, slug: "other", name: "Other") }
+    let!(:forum_thread) { create(:forum_thread, forum_topic: source_topic) }
+
+    context "when authenticated as forum moderator" do
+      let(:moderator) { create(:user, :forum_moderator) }
+      before { sign_in(moderator) }
+
+      it "shows the Verschieben form" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).to include("Verschieben")
+      end
+
+      it "includes the target topic in the dropdown" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).to include("Other")
+      end
+
+      it "excludes the current topic from the dropdown" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).not_to include(%(<option value="#{source_topic.id}">General</option>))
+      end
+
+      it "excludes the news topic from the dropdown" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).not_to include("News")
+      end
+    end
+
+    context "when authenticated as admin" do
+      let(:admin) { create(:user, :admin) }
+      before { sign_in(admin) }
+
+      it "includes the news topic in the dropdown" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).to include("News")
+      end
+    end
+
+    context "when authenticated as regular user" do
+      let(:user) { create(:user) }
+      before { sign_in(user) }
+
+      it "does not show the Verschieben form" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).not_to include("Verschieben")
+      end
+    end
+
+    context "when not authenticated" do
+      it "does not show the Verschieben form" do
+        get forum_thread_path(forum_thread)
+        expect(response.body).not_to include("Verschieben")
+      end
+    end
+  end
+
   describe "sticky thread ordering in index" do
     let(:forum_topic) { create(:forum_topic) }
     let!(:normal_thread) { create(:forum_thread, forum_topic: forum_topic, title: "Normal Thread", sticky: false, updated_at: 1.hour.ago) }
