@@ -65,3 +65,6 @@ node_modules
 # Ignore graphify knowledge graph output
 graphify-out/
 
+# Local-only files (not for the repo)
+/local/
+
