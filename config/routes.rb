@@ -132,6 +132,7 @@ Rails.application.routes.draw do
   delete "cocktailforum/thema/:thread_id/sperren", to: "forum_thread_locks#destroy", as: :unlock_forum_thread
   post "cocktailforum/thema/:thread_id/anpinnen", to: "forum_thread_pins#create", as: :pin_forum_thread
   delete "cocktailforum/thema/:thread_id/anpinnen", to: "forum_thread_pins#destroy", as: :unpin_forum_thread
+  post "cocktailforum/thema/:thread_id/verschieben", to: "forum_thread_moves#create", as: :move_forum_thread
   get "cocktailforum/suche", to: "forum_search#index", as: :forum_search
 
   # Forum Posts

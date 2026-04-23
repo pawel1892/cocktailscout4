@@ -110,6 +110,7 @@
   <%= sortable "alcohol_content", Recipe.human_attribute_name(:alcohol_content) %>
   <%= sortable "visits_count", Recipe.human_attribute_name(:visits_count), default_dir: "desc" %>
   <%= sortable "favorites_count", Recipe.human_attribute_name(:favorites_count), default_dir: "desc" %>
+  <%= sortable "created_at", "Neueste", default_dir: "desc" %>
 </div>
 
 <% if @pagy.pages > 1 %>

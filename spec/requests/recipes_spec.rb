@@ -256,6 +256,32 @@ RSpec.describe "Recipes", type: :request do
       get recipes_path(sort: "average_rating", direction: "desc")
       expect(response.body).to match(/#{recipe2.title}.*#{recipe1.title}.*#{recipe3.title}/m)
     end
+
+    describe "sort by newest" do
+      let!(:oldest)  { create(:recipe, title: "Oldest",  created_at: 3.days.ago) }
+      let!(:middle)  { create(:recipe, title: "Middle",  created_at: 2.days.ago) }
+      let!(:newest)  { create(:recipe, title: "Newest",  created_at: 1.day.ago) }
+
+      it "sorts by created_at desc" do
+        get recipes_path(sort: "created_at", direction: "desc")
+        expect(response.body).to match(/#{newest.title}.*#{middle.title}.*#{oldest.title}/m)
+      end
+
+      it "sorts by created_at asc" do
+        get recipes_path(sort: "created_at", direction: "asc")
+        expect(response.body).to match(/#{oldest.title}.*#{middle.title}.*#{newest.title}/m)
+      end
+
+      it "renders the Neueste sort link" do
+        get recipes_path
+        expect(response.body).to include("Neueste")
+      end
+
+      it "does not accept arbitrary columns as created_at sort" do
+        get recipes_path(sort: "created_at")
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 
   describe "Pagination" do
