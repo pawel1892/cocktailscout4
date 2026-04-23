@@ -20,18 +20,18 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
           </div>
-          <p class="text-gray-800 font-medium">{{ successMessage }}</p>
+          <p class="text-cs-ink-800 font-medium">{{ successMessage }}</p>
           <button @click="close" class="mt-4 btn btn-primary w-full">Schließen</button>
         </div>
 
         <form v-else @submit.prevent="submitReport" class="space-y-4">
-          <p class="text-sm text-gray-600 mb-4">
+          <p class="text-sm text-cs-ink-600 mb-4">
             Bitte gib an, warum du diesen Inhalt melden möchtest. Unsere Moderatoren werden sich das ansehen.
           </p>
 
           <!-- Reason -->
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Grund</label>
+            <label class="block text-sm font-medium text-cs-ink-700">Grund</label>
             <div class="space-y-2">
               <label class="flex items-center gap-2 cursor-pointer">
                 <input type="radio" v-model="form.reason" value="spam" class="text-cs-dark-red focus:ring-cs-dark-red">
@@ -54,14 +54,14 @@
 
           <!-- Description -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
+            <label class="block text-sm font-medium text-cs-ink-700 mb-1">
               Beschreibung
               <span v-if="form.reason === 'other'" class="text-red-500">*</span>
             </label>
             <textarea
               v-model="form.description"
               rows="3"
-              class="w-full rounded border-gray-300 focus:border-cs-dark-red focus:ring focus:ring-cs-dark-red/20 text-sm"
+              class="w-full rounded border-cs-ink-300 focus:border-cs-dark-red focus:ring focus:ring-cs-dark-red/20 text-sm"
               placeholder="Zusätzliche Informationen..."
               :required="form.reason === 'other'"
             ></textarea>

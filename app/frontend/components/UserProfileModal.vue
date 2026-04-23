@@ -127,7 +127,7 @@ const getGenderText = (gender) => {
   <BaseModal :model-value="show" @close="closeModal" max-width="max-w-2xl">
     <template #header>
       <div class="flex items-center justify-between">
-        <h3 class="text-xl font-bold text-gray-900">Benutzerprofil</h3>
+        <h3 class="text-xl font-bold text-cs-ink-900">Benutzerprofil</h3>
         <div class="flex gap-2">
           <a
             v-if="!isOwnProfile && !loading && profile && currentUser"
@@ -141,7 +141,7 @@ const getGenderText = (gender) => {
             v-if="isOwnProfile && !isEditing && !loading"
             @click="startEditing"
             type="button"
-            class="px-3 py-1.5 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+            class="px-3 py-1.5 text-sm text-cs-ink-700 bg-cs-ink-100 rounded-lg hover:bg-cs-ink-200 transition"
           >
             <i class="fa-solid fa-pen mr-2"></i>
             Bearbeiten
@@ -152,8 +152,8 @@ const getGenderText = (gender) => {
 
     <template #content>
       <div v-if="loading" class="py-8 text-center">
-        <i class="fa-solid fa-spinner fa-spin text-3xl text-gray-400"></i>
-        <p class="mt-2 text-gray-600">Profil wird geladen...</p>
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-cs-ink-400"></i>
+        <p class="mt-2 text-cs-ink-600">Profil wird geladen...</p>
       </div>
 
       <div v-else-if="error" class="py-8 text-center">
@@ -177,9 +177,9 @@ const getGenderText = (gender) => {
           <div class="flex items-center gap-3">
             <AvatarDisplay :user="profile" :avatarUrl="profile.avatar_url_medium" size="lg" />
             <div>
-              <h2 class="text-2xl font-bold text-gray-900">{{ profile.username }}</h2>
+              <h2 class="text-2xl font-bold text-cs-ink-900">{{ profile.username }}</h2>
               <div class="flex items-center gap-2 mt-1">
-                <span class="text-sm font-medium text-gray-900">
+                <span class="text-sm font-medium text-cs-ink-900">
                   {{ profile.points }} Punkte
                 </span>
               </div>
@@ -195,27 +195,27 @@ const getGenderText = (gender) => {
 
         <!-- Profile Data -->
         <div class="space-y-4">
-          <h3 class="font-semibold text-gray-900">Profildaten</h3>
+          <h3 class="font-semibold text-cs-ink-900">Profildaten</h3>
 
           <div class="grid grid-cols-2 gap-4">
             <div v-if="profile.prename">
-              <label class="text-sm font-medium text-gray-700">Vorname</label>
-              <p class="mt-1 text-gray-900">{{ profile.prename }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Vorname</label>
+              <p class="mt-1 text-cs-ink-900">{{ profile.prename }}</p>
             </div>
 
             <div v-if="profile.gender">
-              <label class="text-sm font-medium text-gray-700">Geschlecht</label>
-              <p class="mt-1 text-gray-900">{{ getGenderText(profile.gender) }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Geschlecht</label>
+              <p class="mt-1 text-cs-ink-900">{{ getGenderText(profile.gender) }}</p>
             </div>
 
             <div v-if="profile.location">
-              <label class="text-sm font-medium text-gray-700">Ort</label>
-              <p class="mt-1 text-gray-900">{{ profile.location }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Ort</label>
+              <p class="mt-1 text-cs-ink-900">{{ profile.location }}</p>
             </div>
           </div>
 
           <div v-if="profile.homepage">
-            <label class="text-sm font-medium text-gray-700">Homepage</label>
+            <label class="text-sm font-medium text-cs-ink-700">Homepage</label>
             <p class="mt-1">
               <a :href="profile.homepage" target="_blank" rel="noopener noreferrer"
                  class="text-blue-600 hover:underline">
@@ -228,60 +228,60 @@ const getGenderText = (gender) => {
 
         <!-- Statistics -->
         <div class="space-y-4 border-t pt-4">
-          <h3 class="font-semibold text-gray-900">Statistiken</h3>
+          <h3 class="font-semibold text-cs-ink-900">Statistiken</h3>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="text-sm font-medium text-gray-700">Rezepte</label>
+              <label class="text-sm font-medium text-cs-ink-700">Rezepte</label>
               <a :href="`/rezepte?user_id=${profile.id}`" class="mt-1 text-blue-600 hover:underline font-medium block">
                 {{ profile.recipes_count }}
               </a>
             </div>
 
             <div>
-              <label class="text-sm font-medium text-gray-700">Rezeptbilder</label>
+              <label class="text-sm font-medium text-cs-ink-700">Rezeptbilder</label>
               <a :href="`/cocktailgalerie?user_id=${profile.id}`" class="mt-1 text-blue-600 hover:underline font-medium block">
                 {{ profile.recipe_images_count }}
               </a>
             </div>
 
             <div>
-              <label class="text-sm font-medium text-gray-700">Kommentare</label>
-              <p class="mt-1 text-gray-900">{{ profile.recipe_comments_count }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Kommentare</label>
+              <p class="mt-1 text-cs-ink-900">{{ profile.recipe_comments_count }}</p>
             </div>
 
             <div>
-              <label class="text-sm font-medium text-gray-700">Bewertungen</label>
+              <label class="text-sm font-medium text-cs-ink-700">Bewertungen</label>
               <a :href="`/benutzer/${profile.id}/bewertungen`" class="mt-1 text-blue-600 hover:underline font-medium block">
                 {{ profile.ratings_count }}
               </a>
             </div>
 
             <div>
-              <label class="text-sm font-medium text-gray-700">Forenbeiträge</label>
-              <p class="mt-1 text-gray-900">{{ profile.forum_posts_count }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Forenbeiträge</label>
+              <p class="mt-1 text-cs-ink-900">{{ profile.forum_posts_count }}</p>
             </div>
 
             <div>
-              <label class="text-sm font-medium text-gray-700">Anmeldungen</label>
-              <p class="mt-1 text-gray-900">{{ profile.sign_in_count }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Anmeldungen</label>
+              <p class="mt-1 text-cs-ink-900">{{ profile.sign_in_count }}</p>
             </div>
           </div>
         </div>
 
         <!-- Account Info -->
         <div class="space-y-4 border-t pt-4">
-          <h3 class="font-semibold text-gray-900">Account-Informationen</h3>
+          <h3 class="font-semibold text-cs-ink-900">Account-Informationen</h3>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="text-sm font-medium text-gray-700">Mitglied seit</label>
-              <p class="mt-1 text-gray-900">{{ formatDate(profile.created_at) }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Mitglied seit</label>
+              <p class="mt-1 text-cs-ink-900">{{ formatDate(profile.created_at) }}</p>
             </div>
 
             <div v-if="profile.last_seen_at">
-              <label class="text-sm font-medium text-gray-700">Zuletzt gesehen</label>
-              <p class="mt-1 text-gray-900">{{ formatDateTime(profile.last_seen_at) }}</p>
+              <label class="text-sm font-medium text-cs-ink-700">Zuletzt gesehen</label>
+              <p class="mt-1 text-cs-ink-900">{{ formatDateTime(profile.last_seen_at) }}</p>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@
           <button
             @click="vote(1)"
             :disabled="!isAuthenticated"
-            :class="comment.current_user_vote === 1 ? 'text-green-600' : 'text-gray-400 hover:text-green-500'"
+            :class="comment.current_user_vote === 1 ? 'text-green-600' : 'text-cs-ink-400 hover:text-green-500'"
             class="transition-colors disabled:opacity-40 disabled:cursor-not-allowed leading-none"
             title="Hilfreich"
           >
@@ -16,12 +16,12 @@
           </button>
           <span
             class="text-xs font-bold leading-none"
-            :class="comment.net_votes > 0 ? 'text-green-600' : comment.net_votes < 0 ? 'text-red-500' : 'text-gray-500'"
+            :class="comment.net_votes > 0 ? 'text-green-600' : comment.net_votes < 0 ? 'text-red-500' : 'text-cs-ink-500'"
           >{{ comment.net_votes }}</span>
           <button
             @click="vote(-1)"
             :disabled="!isAuthenticated"
-            :class="comment.current_user_vote === -1 ? 'text-red-500' : 'text-gray-400 hover:text-red-400'"
+            :class="comment.current_user_vote === -1 ? 'text-red-500' : 'text-cs-ink-400 hover:text-red-400'"
             class="transition-colors disabled:opacity-40 disabled:cursor-not-allowed leading-none"
             title="Nicht hilfreich"
           >
@@ -35,7 +35,7 @@
           <div class="flex justify-between items-start mb-2 gap-2">
             <div class="flex items-center gap-2 flex-wrap">
               <UserBadge :user="comment.user" class="text-sm" />
-              <span class="text-xs text-gray-400">{{ formatDate(comment.created_at) }}</span>
+              <span class="text-xs text-cs-ink-400">{{ formatDate(comment.created_at) }}</span>
               <!-- Tags: view mode (static badges + edit trigger for mods) -->
               <template v-if="!editingTags">
                 <span
@@ -46,7 +46,7 @@
                 <button
                   v-if="comment.can_tag && !isReply"
                   @click="editingTags = true"
-                  class="text-gray-300 hover:text-gray-500 transition-colors leading-none can-hover:opacity-0 can-hover:group-hover:opacity-100 transition-opacity"
+                  class="text-cs-ink-300 hover:text-cs-ink-500 transition-colors leading-none can-hover:opacity-0 can-hover:group-hover:opacity-100 transition-opacity"
                   title="Tags bearbeiten"
                 ><i class="fas fa-tag text-xs"></i></button>
               </template>
@@ -59,12 +59,12 @@
                   @click="toggleTag(tag)"
                   :class="comment.tags?.includes(tag)
                     ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'"
+                    : 'bg-cs-ink-100 text-cs-ink-500 hover:bg-cs-ink-200'"
                   class="text-xs px-2 py-0.5 rounded-full font-medium transition-colors"
                 >{{ tag }}</button>
                 <button
                   @click="editingTags = false"
-                  class="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  class="text-xs text-cs-ink-400 hover:text-cs-ink-600 transition-colors"
                 >Fertig</button>
               </template>
             </div>
@@ -74,7 +74,7 @@
               <button
                 v-if="comment.can_edit && !editing"
                 @click="startEdit"
-                class="text-gray-400 hover:text-cs-gold transition-colors"
+                class="text-cs-ink-400 hover:text-cs-gold transition-colors"
                 title="Bearbeiten"
               >
                 <i class="fas fa-pencil-alt text-xs"></i>
@@ -82,7 +82,7 @@
               <button
                 v-if="comment.can_delete"
                 @click="confirmDelete"
-                class="text-gray-400 hover:text-cs-error transition-colors"
+                class="text-cs-ink-400 hover:text-cs-error transition-colors"
                 title="Löschen"
               >
                 <i class="fas fa-trash text-xs"></i>
@@ -91,7 +91,7 @@
           </div>
 
           <!-- Body (view mode) -->
-          <div v-if="!editing" class="text-gray-700 text-sm whitespace-pre-wrap break-words">{{ comment.body }}</div>
+          <div v-if="!editing" class="text-cs-ink-700 text-sm whitespace-pre-wrap break-words">{{ comment.body }}</div>
 
           <!-- Body (edit mode) -->
           <div v-else class="space-y-2">
@@ -111,12 +111,12 @@
           </div>
 
           <!-- Last editor note -->
-          <div v-if="comment.last_editor_username" class="text-xs text-gray-400 mt-1">
+          <div v-if="comment.last_editor_username" class="text-xs text-cs-ink-400 mt-1">
             Bearbeitet von {{ comment.last_editor_username }}
           </div>
 
           <!-- Reply + collapse controls (top-level only) -->
-          <div v-if="!isReply" class="mt-3 flex items-center gap-4 text-xs text-gray-500">
+          <div v-if="!isReply" class="mt-3 flex items-center gap-4 text-xs text-cs-ink-500">
             <button
               v-if="isAuthenticated"
               @click="showReplyForm = !showReplyForm"
@@ -127,7 +127,7 @@
             <button
               v-if="comment.replies?.length > 0"
               @click="repliesExpanded = !repliesExpanded"
-              class="hover:text-gray-700 transition-colors"
+              class="hover:text-cs-ink-700 transition-colors"
             >
               <i :class="repliesExpanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'" class="mr-1"></i>
               {{ repliesExpanded ? 'Antworten ausblenden' : `${comment.replies.length} Antwort${comment.replies.length !== 1 ? 'en' : ''} anzeigen` }}
@@ -159,7 +159,7 @@
 
     <!-- Replies -->
     <div v-if="!isReply && repliesExpanded && comment.replies?.length > 0">
-      <div class="ml-4 mt-4 pb-4 border-l-2 border-gray-200 pl-4 divide-y divide-gray-100">
+      <div class="ml-4 mt-4 pb-4 border-l-2 border-cs-ink-200 pl-4 divide-y divide-cs-ink-100">
         <CommentItem
           v-for="reply in comment.replies"
           :key="reply.id"

@@ -21,7 +21,7 @@
 
           <div class="mb-6">
             <label class="label-field">Empfänger</label>
-            <div class="p-3 bg-gray-50 rounded border border-gray-200">
+            <div class="p-3 bg-cs-ink-50 rounded border border-cs-ink-200">
               <%= user_badge(@receiver) %>
             </div>
           </div>
@@ -36,7 +36,7 @@
                 <%= @message.errors.full_messages_for(:receiver_id).join(", ") %>
               </div>
             <% end %>
-            <p class="text-sm text-gray-500 mt-1">
+            <p class="text-sm text-cs-ink-500 mt-1">
               Hinweis: Klicken Sie auf das Profil eines Benutzers, um ihm eine Nachricht zu senden.
             </p>
           </div>

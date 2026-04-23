@@ -7,7 +7,7 @@
         class="card overflow-hidden hover:shadow-md transition-all duration-200 group"
       >
         <div
-          class="aspect-square bg-gray-200 relative cursor-pointer"
+          class="aspect-square bg-cs-ink-200 relative cursor-pointer"
           @click="openImage(image)"
         >
           <img
@@ -23,10 +23,10 @@
           <h3 class="font-bold text-sm sm:text-base mb-1 truncate">
             <a :href="image.recipeUrl" class="hover:text-cs-gold transition-colors">{{ image.recipeTitle }}</a>
           </h3>
-          <p class="text-xs text-gray-600 flex items-center gap-1 truncate">
+          <p class="text-xs text-cs-ink-600 flex items-center gap-1 truncate">
             von <UserBadge :user="image.user" layout="text" />
           </p>
-          <p class="text-[10px] sm:text-xs text-gray-500">{{ image.uploadDate }}</p>
+          <p class="text-[10px] sm:text-xs text-cs-ink-500">{{ image.uploadDate }}</p>
         </div>
       </div>
     </div>

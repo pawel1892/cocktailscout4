@@ -4,13 +4,13 @@
 
 <div class="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
   <h1 class="text-3xl font-bold">Benutzer</h1>
-  <div class="text-sm text-gray-500">
+  <div class="text-sm text-cs-ink-500">
     <%= @pagy.count %> <%= User.model_name.human(count: @pagy.count) %> gefunden
   </div>
 </div>
 
 <!-- Search Bar -->
-<div class="mb-6 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+<div class="mb-6 bg-white p-4 rounded-lg shadow-sm border border-cs-ink-100">
   <%= form_with url: users_path, method: :get, class: "flex flex-col sm:flex-row gap-4 items-end", data: { turbo_frame: "_top" } do |f| %>
     <%# Preserve sort params %>
     <%= f.hidden_field :sort, value: params[:sort] if params[:sort] %>
@@ -20,13 +20,13 @@
       <%= f.label :q, "Suche", class: "label-field mb-0" %>
       <div class="relative">
         <%= f.text_field :q, value: params[:q], placeholder: "Benutzername...", class: "input-field py-1.5 text-sm pl-8" %>
-        <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+        <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-cs-ink-400 text-xs"></i>
       </div>
     </div>
 
     <div class="flex items-center gap-2 pb-1">
-      <%= f.check_box :moderators_only, { checked: params[:moderators_only] == "1", class: "rounded border-gray-300 text-cs-gold focus:ring-cs-gold" }, "1", "0" %>
-      <%= f.label :moderators_only, "Nur Admins / Moderatoren", class: "text-sm text-gray-700 cursor-pointer" %>
+      <%= f.check_box :moderators_only, { checked: params[:moderators_only] == "1", class: "rounded border-cs-ink-300 text-cs-gold focus:ring-cs-gold" }, "1", "0" %>
+      <%= f.label :moderators_only, "Nur Admins / Moderatoren", class: "text-sm text-cs-ink-700 cursor-pointer" %>
     </div>
 
     <div class="flex gap-2">
@@ -39,8 +39,8 @@
 </div>
 
 <!-- Sort Bar -->
-<div class="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
-  <span class="font-medium text-gray-900">Sortieren:</span>
+<div class="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-cs-ink-600 bg-cs-ink-50 p-3 rounded-lg border border-cs-ink-100">
+  <span class="font-medium text-cs-ink-900">Sortieren:</span>
   <%= sortable "username", "Benutzername" %>
   <%= sortable "user_stats.points", "Punkte" %>
   <%= sortable "last_seen_at", "Zuletzt gesehen" %>
@@ -55,30 +55,30 @@
 
 <!-- Desktop Table View -->
 <div class="hidden md:block">
-  <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
+  <div class="bg-white rounded-lg shadow-sm border border-cs-ink-100 overflow-hidden">
+    <table class="min-w-full divide-y divide-cs-ink-200">
+      <thead class="bg-cs-ink-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Benutzer
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Rolle
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Punkte
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Zuletzt gesehen
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Registriert seit
           </th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
+      <tbody class="bg-white divide-y divide-cs-ink-200">
         <% @users.each do |user| %>
-          <tr class="hover:bg-gray-50 transition-colors">
+          <tr class="hover:bg-cs-ink-50 transition-colors">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <%= user_badge(user) %>
@@ -87,34 +87,34 @@
             <td class="px-6 py-4 whitespace-nowrap">
               <%= render 'users/role_badges', user: user, inline: true %>
               <% unless user.roles.any? %>
-                <span class="text-sm text-gray-400">-</span>
+                <span class="text-sm text-cs-ink-400">-</span>
               <% end %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm font-medium text-gray-900">
+              <div class="text-sm font-medium text-cs-ink-900">
                 <%= number_with_delimiter(user.points) %>
               </div>
-              <div class="text-xs text-gray-500">
+              <div class="text-xs text-cs-ink-500">
                 Rang <%= user.rank %>
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <% if user.last_seen_at %>
-                <div class="text-sm text-gray-900">
+                <div class="text-sm text-cs-ink-900">
                   <%= user.last_seen_at.strftime("%d. %b %Y") %>
                 </div>
-                <div class="text-xs text-gray-500">
+                <div class="text-xs text-cs-ink-500">
                   <%= time_ago_in_words(user.last_seen_at) %> her
                 </div>
               <% else %>
-                <div class="text-sm text-gray-400">Noch nie</div>
+                <div class="text-sm text-cs-ink-400">Noch nie</div>
               <% end %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">
+              <div class="text-sm text-cs-ink-900">
                 <%= user.created_at.strftime("%d. %b %Y") %>
               </div>
-              <div class="text-xs text-gray-500">
+              <div class="text-xs text-cs-ink-500">
                 <%= time_ago_in_words(user.created_at) %> her
               </div>
             </td>
@@ -138,10 +138,10 @@
             </div>
           </div>
           <div class="text-right">
-            <div class="text-lg font-bold text-gray-900">
+            <div class="text-lg font-bold text-cs-ink-900">
               <%= number_with_delimiter(user.points) %>
             </div>
-            <div class="text-xs text-gray-500">
+            <div class="text-xs text-cs-ink-500">
               Punkte
             </div>
           </div>
@@ -149,28 +149,28 @@
 
         <div class="grid grid-cols-2 gap-3 text-sm">
           <div>
-            <div class="text-xs text-gray-500 mb-1">Rang</div>
-            <div class="font-medium text-gray-900"><%= user.rank %></div>
+            <div class="text-xs text-cs-ink-500 mb-1">Rang</div>
+            <div class="font-medium text-cs-ink-900"><%= user.rank %></div>
           </div>
 
           <div>
-            <div class="text-xs text-gray-500 mb-1">Registriert</div>
-            <div class="font-medium text-gray-900">
+            <div class="text-xs text-cs-ink-500 mb-1">Registriert</div>
+            <div class="font-medium text-cs-ink-900">
               <%= user.created_at.strftime("%d. %b %Y") %>
             </div>
           </div>
 
           <div class="col-span-2">
-            <div class="text-xs text-gray-500 mb-1">Zuletzt gesehen</div>
+            <div class="text-xs text-cs-ink-500 mb-1">Zuletzt gesehen</div>
             <% if user.last_seen_at %>
-              <div class="font-medium text-gray-900">
+              <div class="font-medium text-cs-ink-900">
                 <%= user.last_seen_at.strftime("%d. %b %Y") %>
               </div>
-              <div class="text-xs text-gray-500">
+              <div class="text-xs text-cs-ink-500">
                 <%= time_ago_in_words(user.last_seen_at) %> her
               </div>
             <% else %>
-              <div class="font-medium text-gray-400">Noch nie</div>
+              <div class="font-medium text-cs-ink-400">Noch nie</div>
             <% end %>
           </div>
         </div>
@@ -180,12 +180,12 @@
 </div>
 
 <% if @users.empty? %>
-  <div class="card p-12 text-center bg-gray-50 border-dashed border-2 border-gray-200">
-    <div class="text-gray-300 mb-4">
+  <div class="card p-12 text-center bg-cs-ink-50 border-dashed border-2 border-cs-ink-200">
+    <div class="text-cs-ink-300 mb-4">
       <i class="fas fa-users text-5xl"></i>
     </div>
-    <h3 class="text-xl font-bold text-gray-800 mb-2">Keine Benutzer gefunden</h3>
-    <p class="text-gray-500 mb-8 max-w-md mx-auto">Leider konnten wir keine Benutzer finden, die deiner Suche entsprechen.</p>
+    <h3 class="text-xl font-bold text-cs-ink-800 mb-2">Keine Benutzer gefunden</h3>
+    <p class="text-cs-ink-500 mb-8 max-w-md mx-auto">Leider konnten wir keine Benutzer finden, die deiner Suche entsprechen.</p>
     <%= link_to "Zurücksetzen", users_path, class: "btn btn-primary" %>
   </div>
 <% end %>

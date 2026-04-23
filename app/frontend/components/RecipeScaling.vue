@@ -9,7 +9,7 @@
         </h2>
         <!-- Scaling controls (only shown if recipe is scalable) -->
         <div v-if="scalable" class="flex items-center gap-2 flex-wrap">
-          <span class="text-sm text-gray-600">Portionen:</span>
+          <span class="text-sm text-cs-ink-600">Portionen:</span>
           <div class="flex gap-1 flex-wrap">
             <button v-for="factor in scaleFactors"
                     :key="factor.value"
@@ -48,7 +48,7 @@
             <strong>{{ ingredient.formatted_amount }}</strong>
             {{ ingredient.ingredient_name }}
             <span v-if="ingredient.additional_info"
-                  class="text-gray-600">({{ ingredient.additional_info }})</span>
+                  class="text-cs-ink-600">({{ ingredient.additional_info }})</span>
           </span>
           <span v-else>
             <!-- Unstructured data: formatted_amount already contains everything -->
@@ -66,8 +66,8 @@
       </div>
 
       <!-- Alcohol information (compact with icons) -->
-      <div v-if="!loading && alcoholInfo && alcoholInfo.total_volume_ml > 0" class="mt-4 pt-3 border-t border-gray-200">
-        <div class="text-xs text-gray-500 flex items-center gap-3 flex-wrap">
+      <div v-if="!loading && alcoholInfo && alcoholInfo.total_volume_ml > 0" class="mt-4 pt-3 border-t border-cs-ink-200">
+        <div class="text-xs text-cs-ink-500 flex items-center gap-3 flex-wrap">
           <span title="Gesamtvolumen">
             <i class="fas fa-flask"></i> {{ formatVolume(alcoholInfo.total_volume_ml / 10) }} cl
           </span>
@@ -162,7 +162,7 @@ async function fetchScaledIngredients(factor) {
 function buttonClasses(value) {
   const baseClasses = 'px-3 py-1 rounded text-sm transition-colors disabled:opacity-50'
   const activeClasses = 'bg-cs-dark-red text-white font-semibold'
-  const inactiveClasses = 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+  const inactiveClasses = 'bg-cs-ink-100 text-cs-ink-700 hover:bg-cs-ink-200'
 
   return scaleFactor.value === value
     ? `${baseClasses} ${activeClasses}`

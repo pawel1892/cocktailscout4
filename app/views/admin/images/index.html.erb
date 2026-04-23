@@ -1,16 +1,16 @@
 <div class="mb-8 flex items-center justify-between">
-  <h1 class="text-3xl font-bold text-gray-800">Bilderverwaltung</h1>
+  <h1 class="text-3xl font-bold text-cs-ink-800">Bilderverwaltung</h1>
 </div>
 
 <!-- Tabs -->
-<div class="bg-white rounded-lg shadow border border-gray-200 mb-6">
-  <div class="border-b border-gray-200">
+<div class="bg-white rounded-lg shadow border border-cs-ink-200 mb-6">
+  <div class="border-b border-cs-ink-200">
     <nav class="flex -mb-px">
       <%= link_to admin_images_path(tab: "forum"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{(@tab == 'forum' || @tab.nil?) ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{(@tab == 'forum' || @tab.nil?) ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-comments"></i>
         Forum-Bilder
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-gray-200 text-gray-700 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">
           <%= ForumImage.count %>
         </span>
         <% orphan_count = ForumImage.marked_as_orphaned.count %>
@@ -22,16 +22,16 @@
       <% end %>
 
       <%= link_to admin_images_path(tab: "avatar"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{@tab == 'avatar' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{@tab == 'avatar' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-user-circle"></i>
         Avatare
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-gray-200 text-gray-700 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">
           <%= ActiveStorage::Attachment.where(record_type: "User", name: "avatar").count %>
         </span>
       <% end %>
 
       <%= link_to admin_images_path(tab: "recipe"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300" do %>
         <i class="fa-solid fa-cocktail"></i>
         Rezept-Bilder
         <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
@@ -57,42 +57,42 @@
   </div>
 
   <% if @images.any? %>
-    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
+    <div class="bg-white rounded-lg shadow border border-cs-ink-200 overflow-hidden">
+      <table class="min-w-full divide-y divide-cs-ink-200">
+        <thead class="bg-cs-ink-50">
           <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vorschau</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hochgeladen von</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Größe</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Datum</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Vorschau</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Hochgeladen von</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Größe</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Datum</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Status</th>
+            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Aktionen</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-white divide-y divide-cs-ink-200">
           <% @images.each do |forum_image| %>
-            <tr class="hover:bg-gray-50 <%= 'bg-orange-50' if forum_image.orphaned? %>">
+            <tr class="hover:bg-cs-ink-50 <%= 'bg-orange-50' if forum_image.orphaned? %>">
               <td class="px-6 py-4">
                 <% if forum_image.image.attached? %>
                   <%= image_tag forum_image.image, class: "h-12 w-12 object-cover rounded", alt: "Vorschau" %>
                 <% else %>
-                  <div class="h-12 w-12 bg-gray-200 rounded flex items-center justify-center">
-                    <i class="fa-solid fa-image text-gray-400"></i>
+                  <div class="h-12 w-12 bg-cs-ink-200 rounded flex items-center justify-center">
+                    <i class="fa-solid fa-image text-cs-ink-400"></i>
                   </div>
                 <% end %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900"><%= forum_image.user&.username || "(gelöschter Benutzer)" %></div>
+                <div class="text-sm text-cs-ink-900"><%= forum_image.user&.username || "(gelöschter Benutzer)" %></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-500">
+                <div class="text-sm text-cs-ink-500">
                   <% if forum_image.image.attached? %>
                     <%= number_to_human_size(forum_image.image.blob.byte_size) %>
                   <% end %>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900"><%= l(forum_image.created_at, format: :short) %></div>
+                <div class="text-sm text-cs-ink-900"><%= l(forum_image.created_at, format: :short) %></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <% if forum_image.orphaned? %>
@@ -102,7 +102,7 @@
                     Verwaist – Löschung in <%= days_left %> <%= days_left == 1 ? 'Tag' : 'Tagen' %>
                   </span>
                 <% else %>
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cs-success-100 text-cs-success-900">
                     <i class="fa-solid fa-check mr-1"></i>
                     In Verwendung
                   </span>
@@ -138,9 +138,9 @@
       </div>
     <% end %>
   <% else %>
-    <div class="bg-white rounded-lg shadow border border-gray-200 p-12 text-center">
-      <i class="fa-solid fa-images text-6xl text-gray-300 mb-4"></i>
-      <h3 class="text-xl font-semibold text-gray-700 mb-2">
+    <div class="bg-white rounded-lg shadow border border-cs-ink-200 p-12 text-center">
+      <i class="fa-solid fa-images text-6xl text-cs-ink-300 mb-4"></i>
+      <h3 class="text-xl font-semibold text-cs-ink-700 mb-2">
         <% if params[:filter] == "orphan" %>
           Keine verwaisten Bilder
         <% else %>
@@ -153,31 +153,31 @@
 <% elsif @tab == "avatar" %>
 
   <% if @images.any? %>
-    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
+    <div class="bg-white rounded-lg shadow border border-cs-ink-200 overflow-hidden">
+      <table class="min-w-full divide-y divide-cs-ink-200">
+        <thead class="bg-cs-ink-50">
           <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avatar</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Benutzer</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Größe</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hochgeladen</th>
-            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Avatar</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Benutzer</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Größe</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Hochgeladen</th>
+            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-cs-ink-500 uppercase tracking-wider">Aktionen</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-white divide-y divide-cs-ink-200">
           <% @images.each do |attachment| %>
-            <tr class="hover:bg-gray-50">
+            <tr class="hover:bg-cs-ink-50">
               <td class="px-6 py-4">
                 <%= image_tag rails_blob_path(attachment.blob), class: "h-12 w-12 object-cover rounded-full", alt: "Avatar" %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900"><%= attachment.record&.username || "(gelöschter Benutzer)" %></div>
+                <div class="text-sm text-cs-ink-900"><%= attachment.record&.username || "(gelöschter Benutzer)" %></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-500"><%= number_to_human_size(attachment.blob.byte_size) %></div>
+                <div class="text-sm text-cs-ink-500"><%= number_to_human_size(attachment.blob.byte_size) %></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900"><%= l(attachment.created_at, format: :short) %></div>
+                <div class="text-sm text-cs-ink-900"><%= l(attachment.created_at, format: :short) %></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right">
                 <% if attachment.record %>
@@ -202,9 +202,9 @@
       </div>
     <% end %>
   <% else %>
-    <div class="bg-white rounded-lg shadow border border-gray-200 p-12 text-center">
-      <i class="fa-solid fa-user-circle text-6xl text-gray-300 mb-4"></i>
-      <h3 class="text-xl font-semibold text-gray-700 mb-2">Keine Avatare vorhanden</h3>
+    <div class="bg-white rounded-lg shadow border border-cs-ink-200 p-12 text-center">
+      <i class="fa-solid fa-user-circle text-6xl text-cs-ink-300 mb-4"></i>
+      <h3 class="text-xl font-semibold text-cs-ink-700 mb-2">Keine Avatare vorhanden</h3>
     </div>
   <% end %>
 

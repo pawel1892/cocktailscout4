@@ -1,23 +1,23 @@
 <template>
   <div class="bbcode-editor">
     <!-- Toolbar -->
-    <div class="flex flex-wrap gap-2 mb-2 p-2 bg-gray-50 border border-gray-200 rounded-t">
-      <button type="button" @click="wrapText('[b]', '[/b]')" class="p-1 px-2 rounded hover:bg-gray-200 font-bold" title="Fett">B</button>
-      <button type="button" @click="wrapText('[i]', '[/i]')" class="p-1 px-2 rounded hover:bg-gray-200 italic" title="Kursiv">I</button>
-      <button type="button" @click="wrapText('[u]', '[/u]')" class="p-1 px-2 rounded hover:bg-gray-200 underline" title="Unterstrichen">U</button>
-      <button type="button" @click="insertUrl" class="p-1 px-2 rounded hover:bg-gray-200" title="Link"><i class="fas fa-link"></i></button>
-      <button type="button" @click="insertImage" class="p-1 px-2 rounded hover:bg-gray-200" title="Bild"><i class="far fa-image"></i></button>
-      <button type="button" @click="wrapText('[quote]', '[/quote]')" class="p-1 px-2 rounded hover:bg-gray-200" title="Zitat"><i class="fas fa-quote-right"></i></button>
-      <button type="button" @click="insertPost" class="p-1 px-2 rounded hover:bg-gray-200" title="Beitrag verlinken"><i class="fas fa-comment"></i></button>
-      <button type="button" @click="insertThread" class="p-1 px-2 rounded hover:bg-gray-200" title="Thema verlinken"><i class="fas fa-comments"></i></button>
+    <div class="flex flex-wrap gap-2 mb-2 p-2 bg-cs-ink-50 border border-cs-ink-200 rounded-t">
+      <button type="button" @click="wrapText('[b]', '[/b]')" class="p-1 px-2 rounded hover:bg-cs-ink-200 font-bold" title="Fett">B</button>
+      <button type="button" @click="wrapText('[i]', '[/i]')" class="p-1 px-2 rounded hover:bg-cs-ink-200 italic" title="Kursiv">I</button>
+      <button type="button" @click="wrapText('[u]', '[/u]')" class="p-1 px-2 rounded hover:bg-cs-ink-200 underline" title="Unterstrichen">U</button>
+      <button type="button" @click="insertUrl" class="p-1 px-2 rounded hover:bg-cs-ink-200" title="Link"><i class="fas fa-link"></i></button>
+      <button type="button" @click="insertImage" class="p-1 px-2 rounded hover:bg-cs-ink-200" title="Bild"><i class="far fa-image"></i></button>
+      <button type="button" @click="wrapText('[quote]', '[/quote]')" class="p-1 px-2 rounded hover:bg-cs-ink-200" title="Zitat"><i class="fas fa-quote-right"></i></button>
+      <button type="button" @click="insertPost" class="p-1 px-2 rounded hover:bg-cs-ink-200" title="Beitrag verlinken"><i class="fas fa-comment"></i></button>
+      <button type="button" @click="insertThread" class="p-1 px-2 rounded hover:bg-cs-ink-200" title="Thema verlinken"><i class="fas fa-comments"></i></button>
       
       <!-- Smiley Toggle -->
       <div class="relative ml-auto">
-        <button type="button" @click="showSmileys = !showSmileys" class="p-1 px-2 rounded hover:bg-gray-200" title="Smileys">
+        <button type="button" @click="showSmileys = !showSmileys" class="p-1 px-2 rounded hover:bg-cs-ink-200" title="Smileys">
           <i class="far fa-smile"></i>
         </button>
         <!-- Smiley Picker -->
-        <div v-if="showSmileys" class="absolute right-0 top-full mt-1 w-64 p-2 bg-white border border-gray-200 shadow-lg rounded z-10 grid grid-cols-5 gap-1">
+        <div v-if="showSmileys" class="absolute right-0 top-full mt-1 w-64 p-2 bg-white border border-cs-ink-200 shadow-lg rounded z-10 grid grid-cols-5 gap-1">
           <img 
             v-for="smiley in smileys" 
             :key="smiley.filename"
@@ -37,13 +37,13 @@
       v-model="content"
       :id="textareaId"
       :name="textareaName"
-      class="w-full px-4 py-3 border border-gray-300 rounded-b-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
+      class="w-full px-4 py-3 border border-cs-ink-300 rounded-b-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
       placeholder="Schreibe deinen Beitrag..."
       @input="$emit('update:modelValue', content)"
     ></textarea>
 
     <!-- BBCode Help -->
-    <div class="mt-2 p-3 bg-gray-50 border border-gray-200 rounded text-xs text-gray-600">
+    <div class="mt-2 p-3 bg-cs-ink-50 border border-cs-ink-200 rounded text-xs text-cs-ink-600">
       <button
         type="button"
         @click="showHelp = !showHelp"

@@ -5,7 +5,7 @@
       <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
         <i class="fas fa-comments text-cs-gold"></i>
         Kommentare
-        <span class="text-base font-normal text-gray-500">({{ totalCommentCount }})</span>
+        <span class="text-base font-normal text-cs-ink-500">({{ totalCommentCount }})</span>
       </h2>
 
       <!-- New Comment Form -->
@@ -28,7 +28,7 @@
             ></textarea>
             <div class="flex justify-between items-center">
               <p v-if="newCommentError" class="text-sm text-red-600">{{ newCommentError }}</p>
-              <span class="text-xs text-gray-400 ml-auto">{{ newCommentBody.length }}/3000</span>
+              <span class="text-xs text-cs-ink-400 ml-auto">{{ newCommentBody.length }}/3000</span>
             </div>
             <div class="flex gap-2">
               <button type="submit" class="btn btn-primary" :disabled="submitting">
@@ -39,8 +39,8 @@
             </div>
           </form>
         </div>
-        <div v-else class="bg-gray-50 rounded-lg p-4 border border-gray-200 text-center">
-          <p class="text-gray-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
+        <div v-else class="bg-cs-ink-50 rounded-lg p-4 border border-cs-ink-200 text-center">
+          <p class="text-cs-ink-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
           <a href="/session/new" class="text-cs-dark-red hover:underline font-medium">Jetzt anmelden</a>
         </div>
       </div>
@@ -49,7 +49,7 @@
       <div v-if="comments.length > 0" class="mb-4 space-y-2">
         <!-- Search -->
         <div class="relative">
-          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-cs-ink-400 text-sm pointer-events-none"></i>
           <input
             v-model="searchQuery"
             type="text"
@@ -59,7 +59,7 @@
           <button
             v-if="searchQuery"
             @click="searchQuery = ''"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-cs-ink-400 hover:text-cs-ink-600 transition-colors"
             title="Suche zurücksetzen"
           >
             <i class="fas fa-times text-sm"></i>
@@ -68,23 +68,23 @@
 
         <!-- Tag Filter -->
         <div v-if="availableTags.length > 0" class="flex flex-wrap gap-1.5 items-center">
-          <span class="text-xs text-gray-500">Tag:</span>
+          <span class="text-xs text-cs-ink-500">Tag:</span>
           <button
             @click="tagFilter = null"
-            :class="tagFilter === null ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'"
+            :class="tagFilter === null ? 'bg-blue-500 text-white' : 'bg-cs-ink-100 text-cs-ink-500 hover:bg-cs-ink-200'"
             class="text-xs px-2 py-0.5 rounded-full font-medium transition-colors"
           >Alle</button>
           <button
             v-for="tag in availableTags"
             :key="tag"
             @click="tagFilter = tagFilter === tag ? null : tag"
-            :class="tagFilter === tag ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'"
+            :class="tagFilter === tag ? 'bg-blue-500 text-white' : 'bg-cs-ink-100 text-cs-ink-500 hover:bg-cs-ink-200'"
             class="text-xs px-2 py-0.5 rounded-full font-medium transition-colors"
           >{{ tag }}</button>
         </div>
 
         <!-- Active filter summary -->
-        <p v-if="isFiltering" class="text-xs text-gray-500">
+        <p v-if="isFiltering" class="text-xs text-cs-ink-500">
           {{ filteredComments.length }} von {{ comments.length }} Kommentar{{ comments.length !== 1 ? 'en' : '' }}
           <button @click="clearFilters" class="ml-1 text-cs-dark-red hover:underline">zurücksetzen</button>
         </p>
@@ -109,7 +109,7 @@
           @edit-saved="handleEditSaved"
         />
       </div>
-      <p v-else class="text-gray-500 text-sm mb-6">
+      <p v-else class="text-cs-ink-500 text-sm mb-6">
         <template v-if="isFiltering">Keine Kommentare gefunden.</template>
         <template v-else>Noch keine Kommentare. Sei der Erste!</template>
       </p>

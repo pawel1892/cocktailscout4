@@ -18,15 +18,15 @@
           @click.stop
         >
           <!-- Header -->
-          <div class="flex items-center justify-between p-4 border-b border-gray-200">
+          <div class="flex items-center justify-between p-4 border-b border-cs-ink-200">
             <div class="flex-1">
               <slot name="header">
-                <h3 class="text-xl font-bold text-gray-900">Modal Title</h3>
+                <h3 class="text-xl font-bold text-cs-ink-900">Modal Title</h3>
               </slot>
             </div>
             <button
               @click="closeModal"
-              class="ml-4 text-gray-400 hover:text-gray-600 transition-colors"
+              class="ml-4 text-cs-ink-400 hover:text-cs-ink-600 transition-colors"
               aria-label="Close modal"
             >
               <svg
@@ -48,12 +48,12 @@
           <!-- Content -->
           <div class="flex-1 overflow-y-auto p-4">
             <slot name="content">
-              <p class="text-gray-600">Modal content goes here</p>
+              <p class="text-cs-ink-600">Modal content goes here</p>
             </slot>
           </div>
 
           <!-- Footer (optional) -->
-          <div v-if="$slots.footer" class="border-t border-gray-200 p-4">
+          <div v-if="$slots.footer" class="border-t border-cs-ink-200 p-4">
             <slot name="footer"></slot>
           </div>
         </div>

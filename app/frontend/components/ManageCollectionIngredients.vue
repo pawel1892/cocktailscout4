@@ -13,9 +13,9 @@
     <!-- Header -->
     <div class="mb-8">
       <h1 class="text-3xl font-bold mb-2">{{ collectionName }}</h1>
-      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-gray-600">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-cs-ink-600">
         <p>Klicke auf Zutaten, um sie hinzuzufügen oder zu entfernen</p>
-        <span class="hidden sm:inline text-gray-400">•</span>
+        <span class="hidden sm:inline text-cs-ink-400">•</span>
         <a
           v-if="doableRecipesCount > 0"
           :href="`/rezepte?collection_id=${collectionId}`"
@@ -26,7 +26,7 @@
           </svg>
           {{ doableRecipesCount }} {{ doableRecipesCount === 1 ? 'Rezept möglich' : 'Rezepte möglich' }}
         </a>
-        <span v-else class="text-gray-400 italic">Keine Rezepte möglich</span>
+        <span v-else class="text-cs-ink-400 italic">Keine Rezepte möglich</span>
       </div>
     </div>
 
@@ -63,14 +63,14 @@
           </svg>
         </button>
       </div>
-      <div v-else class="text-gray-500 italic">
+      <div v-else class="text-cs-ink-500 italic">
         {{ searchQuery ? 'Keine passenden Zutaten in deiner Liste' : 'Noch keine Zutaten hinzugefügt' }}
       </div>
     </div>
 
     <!-- Available Ingredients -->
     <div>
-      <h2 class="text-xl font-semibold mb-4 text-gray-700">
+      <h2 class="text-xl font-semibold mb-4 text-cs-ink-700">
         Verfügbare Zutaten ({{ availableIngredients.length }})
       </h2>
       <div v-if="filteredAvailableIngredients.length > 0" class="flex flex-wrap gap-2">
@@ -79,7 +79,7 @@
           :key="ingredient.id"
           @click.prevent="addIngredient(ingredient)"
           type="button"
-          class="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm font-medium flex items-center gap-2"
+          class="px-3 py-2 bg-cs-ink-100 text-cs-ink-700 rounded-lg hover:bg-cs-ink-200 transition text-sm font-medium flex items-center gap-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -87,7 +87,7 @@
           {{ ingredient.name }} <span class="opacity-60">({{ ingredient.recipes_count }})</span>
         </button>
       </div>
-      <div v-else class="text-gray-500 italic">
+      <div v-else class="text-cs-ink-500 italic">
         {{ searchQuery ? 'Keine passenden Zutaten gefunden' : 'Alle Zutaten wurden hinzugefügt' }}
       </div>
     </div>
@@ -96,7 +96,7 @@
     <div v-if="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg p-6 shadow-xl">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cs-dark-red mx-auto"></div>
-        <p class="mt-4 text-gray-700">Wird gespeichert...</p>
+        <p class="mt-4 text-cs-ink-700">Wird gespeichert...</p>
       </div>
     </div>
   </div>

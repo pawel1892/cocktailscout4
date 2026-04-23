@@ -8,7 +8,7 @@
     <% end %>
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-      <h1 class="text-3xl font-bold text-gray-900"><%= @suggestion.title %></h1>
+      <h1 class="text-3xl font-bold text-cs-ink-900"><%= @suggestion.title %></h1>
       <% if @suggestion.editable_by?(Current.user) %>
         <%= link_to edit_recipe_suggestion_path(@suggestion), class: "btn btn-primary" do %>
           <i class="fa-solid fa-edit"></i>
@@ -21,26 +21,26 @@
   <!-- Status Card -->
   <div class="card p-6 mb-6">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold text-gray-900">Status</h2>
+      <h2 class="text-lg font-semibold text-cs-ink-900">Status</h2>
       <%= render "shared/suggestion_status_badge", suggestion: @suggestion %>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
       <div>
-        <span class="text-gray-600">Eingereicht:</span>
+        <span class="text-cs-ink-600">Eingereicht:</span>
         <span class="font-medium"><%= l(@suggestion.created_at, format: :long) %></span>
       </div>
 
       <% if @suggestion.reviewed_at %>
         <div>
-          <span class="text-gray-600">Geprüft:</span>
+          <span class="text-cs-ink-600">Geprüft:</span>
           <span class="font-medium"><%= l(@suggestion.reviewed_at, format: :long) %></span>
         </div>
       <% end %>
 
       <% if @suggestion.reviewed_by %>
         <div>
-          <span class="text-gray-600">Geprüft von:</span>
+          <span class="text-cs-ink-600">Geprüft von:</span>
           <span class="font-medium"><%= @suggestion.reviewed_by.username %></span>
         </div>
       <% end %>
@@ -59,12 +59,12 @@
 
     <!-- Published recipe link for approved suggestions -->
     <% if @suggestion.status_approved? && @suggestion.published_recipe %>
-      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
-        <p class="font-semibold text-green-900 mb-1 flex items-center gap-2">
+      <div class="bg-cs-success-50 border border-cs-success-100 rounded-lg p-4 mt-4">
+        <p class="font-semibold text-cs-success-900 mb-1 flex items-center gap-2">
           <i class="fa-solid fa-check-circle"></i>
           Veröffentlicht als:
         </p>
-        <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "text-green-800 link text-lg" do %>
+        <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "text-cs-success-900 link text-lg" do %>
           <%= @suggestion.published_recipe.title %>
           <i class="fa-solid fa-arrow-right ml-1"></i>
         <% end %>
@@ -74,7 +74,7 @@
 
   <!-- Recipe Details -->
   <div class="card p-6 mb-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Beschreibung</h2>
+    <h2 class="text-lg font-semibold text-cs-ink-900 mb-4">Beschreibung</h2>
     <div class="prose max-w-none">
       <%= simple_format(@suggestion.description) %>
     </div>
@@ -83,10 +83,10 @@
   <!-- Tags -->
   <% if @suggestion.tag_list.present? %>
     <div class="card p-6 mb-6">
-      <h2 class="text-lg font-semibold text-gray-900 mb-4">Tags</h2>
+      <h2 class="text-lg font-semibold text-cs-ink-900 mb-4">Tags</h2>
       <div class="flex flex-wrap gap-2">
         <% @suggestion.tag_list.split(',').map(&:strip).each do |tag| %>
-          <span class="inline-flex items-center px-3 py-1 text-sm font-medium bg-gray-100 text-gray-800 rounded-full">
+          <span class="inline-flex items-center px-3 py-1 text-sm font-medium bg-cs-ink-100 text-cs-ink-800 rounded-full">
             <%= tag %>
           </span>
         <% end %>
@@ -96,11 +96,11 @@
 
   <!-- Ingredients -->
   <div class="card p-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Zutaten</h2>
+    <h2 class="text-lg font-semibold text-cs-ink-900 mb-4">Zutaten</h2>
     <ul class="space-y-2">
       <% @suggestion.recipe_suggestion_ingredients.each do |rsi| %>
         <li class="flex items-start gap-2">
-          <i class="fa-solid fa-circle text-xs text-gray-400 mt-1.5"></i>
+          <i class="fa-solid fa-circle text-xs text-cs-ink-400 mt-1.5"></i>
           <span>
             <% if rsi.amount && rsi.unit %>
               <strong><%= rsi.amount %> <%= rsi.unit.display_name_for(rsi.amount) %></strong>
@@ -109,10 +109,10 @@
             <% end %>
             <%= rsi.display_name.presence || rsi.ingredient.name %>
             <% if rsi.additional_info.present? %>
-              <span class="text-gray-600">(<%= rsi.additional_info %>)</span>
+              <span class="text-cs-ink-600">(<%= rsi.additional_info %>)</span>
             <% end %>
             <% if rsi.is_optional %>
-              <span class="text-sm text-gray-500 italic">(optional)</span>
+              <span class="text-sm text-cs-ink-500 italic">(optional)</span>
             <% end %>
           </span>
         </li>

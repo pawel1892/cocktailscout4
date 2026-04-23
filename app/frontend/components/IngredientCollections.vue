@@ -15,13 +15,13 @@
     />
 
     <!-- Empty State -->
-    <div v-if="collections.length === 0" class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+    <div v-if="collections.length === 0" class="bg-white rounded-lg shadow-sm border border-cs-ink-200 p-12 text-center">
       <div class="max-w-sm mx-auto">
-        <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="mx-auto h-16 w-16 text-cs-ink-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
         </svg>
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Noch keine Liste erstellt</h3>
-        <p class="text-gray-600 mb-6">Erstelle deine erste Zutatenliste und verwalte deine Bar.</p>
+        <h3 class="text-lg font-semibold text-cs-ink-900 mb-2">Noch keine Liste erstellt</h3>
+        <p class="text-cs-ink-600 mb-6">Erstelle deine erste Zutatenliste und verwalte deine Bar.</p>
         <button
           @click="showCreateModal = true"
           class="bg-cs-dark-red text-white px-6 py-2 rounded-lg hover:bg-cs-dark-red/90 transition"
@@ -51,14 +51,14 @@
         <div
           v-for="collection in collections"
           :key="collection.id"
-          class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition"
+          class="bg-white rounded-lg shadow-sm border border-cs-ink-200 overflow-hidden hover:shadow-md transition"
         >
           <div class="p-6">
             <!-- Header -->
             <div class="flex items-start justify-between mb-4">
               <div class="flex-1">
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-xl font-semibold text-gray-900">{{ collection.name }}</h3>
+                  <h3 class="text-xl font-semibold text-cs-ink-900">{{ collection.name }}</h3>
                   <span
                     v-if="collection.is_default"
                     class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cs-gold text-white"
@@ -66,7 +66,7 @@
                     Standard
                   </span>
                 </div>
-                <p class="text-sm text-gray-500">
+                <p class="text-sm text-cs-ink-500">
                   {{ collection.ingredient_count }} {{ collection.ingredient_count === 1 ? 'Zutat' : 'Zutaten' }}
                 </p>
                 <a
@@ -79,13 +79,13 @@
                   </svg>
                   {{ collection.doable_recipes_count }} {{ collection.doable_recipes_count === 1 ? 'Rezept möglich' : 'Rezepte möglich' }}
                 </a>
-                <p v-else class="text-sm text-gray-400 italic">
+                <p v-else class="text-sm text-cs-ink-400 italic">
                   Keine Rezepte möglich
                 </p>
               </div>
               <button
                 @click="openEditModal(collection)"
-                class="text-gray-400 hover:text-gray-600 transition p-1"
+                class="text-cs-ink-400 hover:text-cs-ink-600 transition p-1"
                 title="Bearbeiten"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -95,7 +95,7 @@
             </div>
 
             <!-- Notes Preview -->
-            <div v-if="collection.notes" class="mb-4 p-3 bg-gray-50 rounded text-sm text-gray-700">
+            <div v-if="collection.notes" class="mb-4 p-3 bg-cs-ink-50 rounded text-sm text-cs-ink-700">
               {{ truncate(collection.notes, 100) }}
             </div>
 
@@ -105,24 +105,24 @@
                 <span
                   v-for="ingredient in collection.ingredients.slice(0, 8)"
                   :key="ingredient.id"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700"
+                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-cs-ink-100 text-cs-ink-700"
                 >
                   {{ ingredient.name }}
                 </span>
                 <span
                   v-if="collection.ingredients.length > 8"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-600"
+                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-cs-ink-200 text-cs-ink-600"
                 >
                   +{{ collection.ingredients.length - 8 }} weitere
                 </span>
               </div>
             </div>
-            <div v-else class="mb-4 text-sm text-gray-500 italic">
+            <div v-else class="mb-4 text-sm text-cs-ink-500 italic">
               Noch keine Zutaten hinzugefügt
             </div>
 
             <!-- Actions -->
-            <div class="pt-4 border-t border-gray-100">
+            <div class="pt-4 border-t border-cs-ink-100">
               <a
                 :href="`/ingredient_collections/${collection.id}/edit`"
                 class="block w-full bg-cs-dark-red hover:bg-cs-dark-red/90 text-white px-4 py-2 rounded-lg transition text-sm font-medium text-center"

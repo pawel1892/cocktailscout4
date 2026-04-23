@@ -13,7 +13,7 @@
         <i class="fa-solid fa-wifi text-green-500 text-xs" title="Online"></i>
       </button>
     </div>
-    <p v-else class="text-gray-500 italic">Derzeit sind keine User aktiv</p>
+    <p v-else class="text-cs-ink-500 italic">Derzeit sind keine User aktiv</p>
   </div>
 </template>
 

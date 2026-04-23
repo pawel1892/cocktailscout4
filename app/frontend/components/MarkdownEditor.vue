@@ -7,24 +7,24 @@
     :class="{ 'ring-2 ring-cs-gold ring-opacity-50': isDragging }"
   >
     <!-- Toolbar -->
-    <div class="flex flex-wrap gap-1 mb-0 p-2 bg-gray-50 border border-gray-300 rounded-t-md">
+    <div class="flex flex-wrap gap-1 mb-0 p-2 bg-cs-ink-50 border border-cs-ink-300 rounded-t-md">
       <!-- Text formatting -->
       <button type="button" @click="insertMarkdown('bold')" class="toolbar-btn" title="Fett (Strg+B)"><i class="fas fa-bold"></i></button>
       <button type="button" @click="insertMarkdown('italic')" class="toolbar-btn" title="Kursiv (Strg+I)"><i class="fas fa-italic"></i></button>
       <button type="button" @click="insertMarkdown('underline')" class="toolbar-btn" title="Unterstrichen"><u>U</u></button>
-      <div class="border-l border-gray-300 mx-1"></div>
+      <div class="border-l border-cs-ink-300 mx-1"></div>
 
       <!-- Headings -->
       <button type="button" @click="insertMarkdown('h2')" class="toolbar-btn" title="Überschrift 2"><i class="fas fa-heading text-xs"></i>2</button>
       <button type="button" @click="insertMarkdown('h3')" class="toolbar-btn" title="Überschrift 3"><i class="fas fa-heading text-xs"></i>3</button>
-      <div class="border-l border-gray-300 mx-1"></div>
+      <div class="border-l border-cs-ink-300 mx-1"></div>
 
       <!-- Lists, quote, link -->
       <button type="button" @click="insertMarkdown('unordered-list')" class="toolbar-btn" title="Unsortierte Liste"><i class="fas fa-list-ul"></i></button>
       <button type="button" @click="insertMarkdown('ordered-list')" class="toolbar-btn" title="Sortierte Liste"><i class="fas fa-list-ol"></i></button>
       <button type="button" @click="insertMarkdown('quote')" class="toolbar-btn" title="Zitat"><i class="fas fa-quote-right"></i></button>
       <button type="button" @click="insertMarkdown('link')" class="toolbar-btn" title="Link"><i class="fas fa-link"></i></button>
-      <div class="border-l border-gray-300 mx-1"></div>
+      <div class="border-l border-cs-ink-300 mx-1"></div>
 
       <!-- Image upload (only when uploadUrl provided) -->
       <template v-if="uploadUrl">
@@ -42,19 +42,19 @@
 
           <div
             v-if="showImagePopover"
-            class="absolute left-0 top-full mt-1 w-72 bg-white border border-gray-200 shadow-lg rounded z-20"
+            class="absolute left-0 top-full mt-1 w-72 bg-white border border-cs-ink-200 shadow-lg rounded z-20"
           >
             <!-- Tabs -->
-            <div class="flex border-b border-gray-200">
+            <div class="flex border-b border-cs-ink-200">
               <button
                 type="button"
                 @click="imageTab = 'upload'"
-                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'upload' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-gray-500 hover:text-gray-700']"
+                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'upload' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-cs-ink-500 hover:text-cs-ink-700']"
               >Hochladen</button>
               <button
                 type="button"
                 @click="imageTab = 'url'"
-                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'url' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-gray-500 hover:text-gray-700']"
+                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'url' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-cs-ink-500 hover:text-cs-ink-700']"
               >URL</button>
             </div>
 
@@ -63,10 +63,10 @@
               <button type="button" @click="triggerFileInput" class="btn btn-outline btn-sm w-full">
                 <i class="fas fa-upload mr-1"></i> Datei auswählen
               </button>
-              <p v-if="pendingFile" class="text-xs text-gray-600 mt-2 truncate">
+              <p v-if="pendingFile" class="text-xs text-cs-ink-600 mt-2 truncate">
                 <i class="fas fa-file-image mr-1"></i>{{ pendingFile.name }}
               </p>
-              <p v-else class="text-xs text-gray-400 mt-2">oder per Drag &amp; Drop / Einfügen (Strg+V)</p>
+              <p v-else class="text-xs text-cs-ink-400 mt-2">oder per Drag &amp; Drop / Einfügen (Strg+V)</p>
             </div>
 
             <!-- URL tab -->
@@ -81,7 +81,7 @@
             </div>
 
             <!-- Alt text + Insert button (shared) -->
-            <div class="px-3 pb-3 border-t border-gray-100 pt-2">
+            <div class="px-3 pb-3 border-t border-cs-ink-100 pt-2">
               <input
                 v-model="imageAltInput"
                 type="text"
@@ -100,8 +100,8 @@
             </div>
 
             <!-- Size selector -->
-            <div class="px-3 pb-3 border-t border-gray-100 pt-2">
-              <p class="text-xs text-gray-500 mb-1">Größe:</p>
+            <div class="px-3 pb-3 border-t border-cs-ink-100 pt-2">
+              <p class="text-xs text-cs-ink-500 mb-1">Größe:</p>
               <div class="flex gap-1">
                 <button
                   v-for="size in imageSizes"
@@ -115,7 +115,7 @@
           </div>
         </div>
         <input ref="fileInputRef" type="file" accept="image/*" class="hidden" @change="onFileSelected" />
-        <div class="border-l border-gray-300 mx-1"></div>
+        <div class="border-l border-cs-ink-300 mx-1"></div>
       </template>
 
       <!-- Internal links (forum/wiki) -->
@@ -132,7 +132,7 @@
           </button>
           <div
             v-if="showRecipeSearch"
-            class="absolute left-0 top-full mt-1 w-72 bg-white border border-gray-200 shadow-lg rounded z-20"
+            class="absolute left-0 top-full mt-1 w-72 bg-white border border-cs-ink-200 shadow-lg rounded z-20"
           >
             <div class="p-2">
               <input
@@ -144,25 +144,25 @@
                 @keydown.escape="showRecipeSearch = false"
               />
             </div>
-            <div v-if="recipeResults.length" class="border-t border-gray-100 max-h-48 overflow-y-auto">
+            <div v-if="recipeResults.length" class="border-t border-cs-ink-100 max-h-48 overflow-y-auto">
               <button
                 v-for="recipe in recipeResults"
                 :key="recipe.slug"
                 type="button"
                 @click="selectRecipe(recipe)"
-                class="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"
+                class="w-full text-left px-3 py-2 text-sm hover:bg-cs-ink-50 flex items-center gap-2"
               >
                 <img v-if="recipe.thumbnail_url" :src="recipe.thumbnail_url" class="w-8 h-8 object-cover rounded" />
                 <span>{{ recipe.title }}</span>
               </button>
             </div>
-            <div v-else-if="recipeQuery.length >= 2" class="px-3 py-2 text-sm text-gray-400">Keine Rezepte gefunden</div>
+            <div v-else-if="recipeQuery.length >= 2" class="px-3 py-2 text-sm text-cs-ink-400">Keine Rezepte gefunden</div>
           </div>
         </div>
 
         <button type="button" @click="insertThreadLink" class="toolbar-btn" title="Forum-Thema verlinken"><i class="fas fa-comments"></i></button>
         <button type="button" @click="insertPostLink" class="toolbar-btn" title="Forum-Beitrag verlinken"><i class="fas fa-comment"></i></button>
-        <div class="border-l border-gray-300 mx-1"></div>
+        <div class="border-l border-cs-ink-300 mx-1"></div>
       </template>
 
       <!-- Smiley picker (only when smileys provided) -->
@@ -178,7 +178,7 @@
           </button>
           <div
             v-if="showSmileys"
-            class="absolute right-0 top-full mt-1 w-64 p-2 bg-white border border-gray-200 shadow-lg rounded z-20 grid grid-cols-5 gap-1"
+            class="absolute right-0 top-full mt-1 w-64 p-2 bg-white border border-cs-ink-200 shadow-lg rounded z-20 grid grid-cols-5 gap-1"
           >
             <img
               v-for="smiley in smileys"
@@ -195,7 +195,7 @@
     </div>
 
     <!-- Tab Switcher -->
-    <div class="flex border-x border-gray-300 bg-white">
+    <div class="flex border-x border-cs-ink-300 bg-white">
       <button
         type="button"
         @click="activeTab = 'edit'"
@@ -203,7 +203,7 @@
           'px-4 py-2 font-medium text-sm',
           activeTab === 'edit'
             ? 'text-cs-gold border-b-2 border-cs-gold'
-            : 'text-gray-500 hover:text-gray-700'
+            : 'text-cs-ink-500 hover:text-cs-ink-700'
         ]"
       >
         Bearbeiten
@@ -215,7 +215,7 @@
           'px-4 py-2 font-medium text-sm',
           activeTab === 'preview'
             ? 'text-cs-gold border-b-2 border-cs-gold'
-            : 'text-gray-500 hover:text-gray-700'
+            : 'text-cs-ink-500 hover:text-cs-ink-700'
         ]"
       >
         Vorschau
@@ -231,7 +231,7 @@
         :name="textareaName"
         :placeholder="placeholder"
         :required="required"
-        class="w-full px-4 py-3 border border-gray-300 rounded-b-md focus:ring-2 focus:ring-cs-dark-red focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
+        class="w-full px-4 py-3 border border-cs-ink-300 rounded-b-md focus:ring-2 focus:ring-cs-dark-red focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
         @input="onInput"
         @paste="onPaste"
         @keydown="onKeydown"
@@ -239,9 +239,9 @@
     </div>
 
     <!-- Preview Tab -->
-    <div v-show="activeTab === 'preview'" class="border-x border-b border-gray-300 rounded-b-md p-4 min-h-[300px] bg-white">
+    <div v-show="activeTab === 'preview'" class="border-x border-b border-cs-ink-300 rounded-b-md p-4 min-h-[300px] bg-white">
       <div v-if="markdownText" class="prose prose-cs prose-sm max-w-none" v-html="renderedHtml"></div>
-      <div v-else class="text-gray-400 italic">Keine Vorschau verfügbar</div>
+      <div v-else class="text-cs-ink-400 italic">Keine Vorschau verfügbar</div>
     </div>
 
     <!-- Upload error -->
@@ -251,7 +251,7 @@
     <p v-if="markdownText.length > 0" class="form-hint mt-1">{{ markdownText.length }} Zeichen</p>
 
     <!-- Help section -->
-    <div class="mt-2 p-3 bg-gray-50 border border-gray-200 rounded text-xs text-gray-600">
+    <div class="mt-2 p-3 bg-cs-ink-50 border border-cs-ink-200 rounded text-xs text-cs-ink-600">
       <button
         type="button"
         @click="showHelp = !showHelp"
@@ -263,12 +263,12 @@
       <div v-if="showHelp" class="mt-3">
         <table class="w-full border-collapse">
           <thead>
-            <tr class="text-left text-gray-400 border-b border-gray-200">
+            <tr class="text-left text-cs-ink-400 border-b border-cs-ink-200">
               <th class="pb-1 pr-4 font-medium w-1/2">Eingabe</th>
               <th class="pb-1 font-medium w-1/2">Ergebnis</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100">
+          <tbody class="divide-y divide-cs-ink-100">
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">**fetter Text**</code></td>
               <td class="py-1.5"><strong>fetter Text</strong></td>
@@ -307,52 +307,52 @@
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">&gt; Zitat-Text</code></td>
-              <td class="py-1.5 border-l-2 border-cs-gold pl-2 italic text-gray-600">Zitat-Text</td>
+              <td class="py-1.5 border-l-2 border-cs-gold pl-2 italic text-cs-ink-600">Zitat-Text</td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">[quote=Name]Text[/quote]</code></td>
-              <td class="py-1.5"><span class="text-cs-dark-red font-semibold">Name</span> <span class="italic text-gray-600">schrieb: Text</span></td>
+              <td class="py-1.5"><span class="text-cs-dark-red font-semibold">Name</span> <span class="italic text-cs-ink-600">schrieb: Text</span></td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">`inline code`</code></td>
-              <td class="py-1.5"><code class="bg-gray-100 px-1 rounded">inline code</code></td>
+              <td class="py-1.5"><code class="bg-cs-ink-100 px-1 rounded">inline code</code></td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">---</code></td>
-              <td class="py-1.5"><hr class="border-0 border-t border-gray-300 mx-2"></td>
+              <td class="py-1.5"><hr class="border-0 border-t border-cs-ink-300 mx-2"></td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4 align-top"><code class="help-code">| Spalte 1 | Spalte 2 |<br>|---|---|<br>| Wert 1 | Wert 2 |<br>| Wert 3 | Wert 4 |</code></td>
               <td class="py-1.5 align-top">
                 <table class="border-collapse text-xs">
-                  <thead><tr><th class="border border-gray-300 bg-gray-50 px-2 py-0.5 font-semibold">Spalte 1</th><th class="border border-gray-300 bg-gray-50 px-2 py-0.5 font-semibold">Spalte 2</th></tr></thead>
-                  <tbody><tr><td class="border border-gray-300 px-2 py-0.5">Wert 1</td><td class="border border-gray-300 px-2 py-0.5">Wert 2</td></tr><tr><td class="border border-gray-300 px-2 py-0.5">Wert 3</td><td class="border border-gray-300 px-2 py-0.5">Wert 4</td></tr></tbody>
+                  <thead><tr><th class="border border-cs-ink-300 bg-cs-ink-50 px-2 py-0.5 font-semibold">Spalte 1</th><th class="border border-cs-ink-300 bg-cs-ink-50 px-2 py-0.5 font-semibold">Spalte 2</th></tr></thead>
+                  <tbody><tr><td class="border border-cs-ink-300 px-2 py-0.5">Wert 1</td><td class="border border-cs-ink-300 px-2 py-0.5">Wert 2</td></tr><tr><td class="border border-cs-ink-300 px-2 py-0.5">Wert 3</td><td class="border border-cs-ink-300 px-2 py-0.5">Wert 4</td></tr></tbody>
                 </table>
-                <p class="text-gray-500 mt-1">Leerzeile davor nötig</p>
+                <p class="text-cs-ink-500 mt-1">Leerzeile davor nötig</p>
               </td>
             </tr>
             <template v-if="uploadUrl">
               <tr>
                 <td class="py-1.5 pr-4"><code class="help-code">![Alt](url "medium")</code></td>
-                <td class="py-1.5 text-gray-500">Bild (Größe: voll / medium / klein)</td>
+                <td class="py-1.5 text-cs-ink-500">Bild (Größe: voll / medium / klein)</td>
               </tr>
               <tr>
-                <td class="py-1.5 pr-4 text-gray-500 italic">Strg+V oder Drag &amp; Drop</td>
-                <td class="py-1.5 text-gray-500">Bild direkt einfügen</td>
+                <td class="py-1.5 pr-4 text-cs-ink-500 italic">Strg+V oder Drag &amp; Drop</td>
+                <td class="py-1.5 text-cs-ink-500">Bild direkt einfügen</td>
               </tr>
             </template>
             <template v-if="showInternalLinks">
               <tr>
                 <td class="py-1.5 pr-4"><code class="help-code">[[recipe:rezept-slug]]</code></td>
-                <td class="py-1.5 text-gray-500">Rezept verlinken</td>
+                <td class="py-1.5 text-cs-ink-500">Rezept verlinken</td>
               </tr>
               <tr>
                 <td class="py-1.5 pr-4"><code class="help-code">[[thread:thema-slug]]</code></td>
-                <td class="py-1.5 text-gray-500">Forum-Thema verlinken</td>
+                <td class="py-1.5 text-cs-ink-500">Forum-Thema verlinken</td>
               </tr>
               <tr>
                 <td class="py-1.5 pr-4"><code class="help-code">[[post:abc123xy]]</code></td>
-                <td class="py-1.5 text-gray-500">Forum-Beitrag verlinken</td>
+                <td class="py-1.5 text-cs-ink-500">Forum-Beitrag verlinken</td>
               </tr>
             </template>
           </tbody>
@@ -704,20 +704,20 @@ function onKeydown(event) {
 @reference "../entrypoints/application.css";
 
 .help-code {
-  @apply bg-gray-100 px-1 py-0.5 rounded font-mono whitespace-pre;
+  @apply bg-cs-ink-100 px-1 py-0.5 rounded font-mono whitespace-pre;
 }
 
 .toolbar-btn {
-  @apply px-2 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-cs-gold;
+  @apply px-2 py-1 text-sm bg-white border border-cs-ink-300 rounded hover:bg-cs-ink-100 focus:outline-none focus:ring-2 focus:ring-cs-gold;
 }
 
 .md-quote {
-  @apply bg-gray-50 border-l-4 border-cs-gold my-4 rounded-r;
+  @apply bg-cs-ink-50 border-l-4 border-cs-gold my-4 rounded-r;
 }
 .md-quote figcaption {
   @apply font-bold text-sm text-cs-dark-red px-4 pt-3 block;
 }
 .md-quote blockquote {
-  @apply italic text-gray-700 px-4 pb-3 m-0 border-0;
+  @apply italic text-cs-ink-700 px-4 pb-3 m-0 border-0;
 }
 </style>

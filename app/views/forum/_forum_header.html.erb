@@ -27,7 +27,7 @@
       <% if forum_topic %>
         <li>
           <div class="flex items-center">
-            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+            <i class="fas fa-chevron-right text-cs-ink-400 mx-2 text-xs"></i>
             <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link ml-1 text-sm font-medium hover:underline md:ml-2 #{'font-bold' if active == :thread}" %>
           </div>
         </li>
@@ -35,8 +35,8 @@
       <% if forum_thread %>
         <li>
           <div class="flex items-center">
-            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
-            <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 truncate max-w-[200px]"><%= forum_thread.title %></span>
+            <i class="fas fa-chevron-right text-cs-ink-400 mx-2 text-xs"></i>
+            <span class="ml-1 text-sm font-medium text-cs-ink-500 md:ml-2 truncate max-w-[200px]"><%= forum_thread.title %></span>
           </div>
         </li>
       <% end %>

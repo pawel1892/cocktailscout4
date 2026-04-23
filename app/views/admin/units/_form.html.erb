@@ -28,9 +28,9 @@
     <%= f.text_field :name,
       required: true,
       readonly: @unit.persisted?,
-      class: "input-field #{@unit.persisted? ? 'bg-gray-100 cursor-not-allowed' : ''}",
+      class: "input-field #{@unit.persisted? ? 'bg-cs-ink-100 cursor-not-allowed' : ''}",
       placeholder: "z.B. cl, ml, tl, spritzer..." %>
-    <p class="mt-1 text-sm text-gray-500">
+    <p class="mt-1 text-sm text-cs-ink-500">
       Eindeutiger Systemname. Wird für interne Referenzen verwendet. <%= @unit.persisted? ? "(Kann nicht geändert werden)" : "" %>
     </p>
   </div>
@@ -42,7 +42,7 @@
       required: true,
       class: "input-field",
       placeholder: "z.B. cl, TL, Spritzer, Stück" %>
-    <p class="mt-1 text-sm text-gray-500">
+    <p class="mt-1 text-sm text-cs-ink-500">
       Wie die Einheit dem Benutzer angezeigt wird (Singularform).
     </p>
   </div>
@@ -54,7 +54,7 @@
       required: true,
       class: "input-field",
       placeholder: "z.B. cl, TL, Spritzer, Stück, Scheiben" %>
-    <p class="mt-1 text-sm text-gray-500">
+    <p class="mt-1 text-sm text-cs-ink-500">
       Pluralform für die Anzeige. Für viele Einheiten gleich wie Singular.
     </p>
   </div>
@@ -70,7 +70,7 @@
       ], @unit.category),
       { include_blank: "Bitte wählen..." },
       { required: true, class: "input-field", data: { unit_category_target: "category" } } %>
-    <p class="mt-1 text-sm text-gray-500">
+    <p class="mt-1 text-sm text-cs-ink-500">
       <strong>Volumen:</strong> für flüssige Maße (cl, ml, l). <strong>Zählbar:</strong> für Stückzahlen (Stück, Scheibe, Blatt). <strong>Speziell:</strong> für Barmaße (Spritzer, Dash, Barlöffel).
     </p>
   </div>
@@ -85,14 +85,14 @@
         class: "input-field pr-12",
         placeholder: "z.B. 10.0 für cl, 5.0 für TL" %>
       <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-        <span class="text-gray-500 sm:text-sm">ml</span>
+        <span class="text-cs-ink-500 sm:text-sm">ml</span>
       </div>
     </div>
-    <p class="mt-1 text-sm text-gray-500">
+    <p class="mt-1 text-sm text-cs-ink-500">
       Umrechnungsfaktor zu Millilitern. <strong>Erforderlich für Volumen- und Spezialeinheiten.</strong> Leer lassen für zählbare Einheiten.
     </p>
     <% if @unit.category.in?(%w[volume special]) && @unit.ml_ratio.blank? %>
-      <p class="mt-1 text-sm text-yellow-600 font-medium">
+      <p class="mt-1 text-sm text-cs-warning-700 font-medium">
         ⚠️ ml-Verhältnis ist erforderlich für <%= @unit.category == "volume" ? "Volumen" : "Spezial" %>-Einheiten.
       </p>
     <% end %>
@@ -101,13 +101,13 @@
   <!-- Divisible -->
   <div class="flex items-start">
     <div class="flex items-center h-5">
-      <%= f.check_box :divisible, class: "h-4 w-4 text-cs-gold focus:ring-cs-gold border-gray-300 rounded" %>
+      <%= f.check_box :divisible, class: "h-4 w-4 text-cs-gold focus:ring-cs-gold border-cs-ink-300 rounded" %>
     </div>
     <div class="ml-3">
-      <%= f.label :divisible, class: "text-sm font-medium text-gray-700" do %>
+      <%= f.label :divisible, class: "text-sm font-medium text-cs-ink-700" do %>
         Teilbar
       <% end %>
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-cs-ink-500">
         Aktivieren, wenn die Einheit Bruchwerte unterstützt (z.B. 0,5 cl). Deaktivieren für Einheiten wie Spritzer, Stück, Scheibe.
       </p>
     </div>

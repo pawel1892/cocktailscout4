@@ -9,12 +9,16 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'application' %>
     <%= vite_stylesheet_tag 'application' %>
   </head>
 
-  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <body class="bg-cs-ink-100 font-sans leading-normal tracking-normal">
     <div id="app" class="flex flex-col min-h-screen">
       <!-- Admin Header -->
       <nav class="bg-cs-dark-red text-white p-4 shadow-md">
@@ -31,7 +35,7 @@
               <%= link_to admin_reports_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'reports'}" do %>
                 Meldungen
                 <% if Report.pending.count > 0 %>
-                  <span class="ml-1 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  <span class="ml-1 bg-cs-error-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     <%= Report.pending.count %>
                   </span>
                 <% end %>
@@ -42,7 +46,7 @@
               <%= link_to admin_recipe_suggestions_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipe_suggestions'}" do %>
                 Rezeptvorschläge
                 <% if RecipeSuggestion.pending_review.count > 0 %>
-                  <span class="ml-1 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  <span class="ml-1 bg-cs-warning-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     <%= RecipeSuggestion.pending_review.count %>
                   </span>
                 <% end %>
@@ -52,7 +56,7 @@
                 Rezeptbilder
                 <% pending = RecipeImage.pending.count %>
                 <% if pending > 0 %>
-                  <span class="ml-1 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"><%= pending %></span>
+                  <span class="ml-1 bg-cs-warning-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"><%= pending %></span>
                 <% end %>
               <% end %>
 

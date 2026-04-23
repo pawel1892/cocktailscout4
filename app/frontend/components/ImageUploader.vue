@@ -22,7 +22,7 @@
       <div
         class="relative border-2 border-dashed rounded-lg transition-colors cursor-pointer"
         :class="[
-          isDragging ? 'border-cs-gold bg-amber-50' : 'border-gray-300 hover:border-cs-gold hover:bg-gray-50',
+          isDragging ? 'border-cs-gold bg-amber-50' : 'border-cs-ink-300 hover:border-cs-gold hover:bg-cs-ink-50',
           previewUrl ? 'p-2' : 'p-8'
         ]"
         @dragover.prevent="isDragging = true"
@@ -41,17 +41,17 @@
         <!-- Preview -->
         <div v-if="previewUrl" class="flex flex-col items-center gap-3">
           <img :src="previewUrl" :style="{ transform: `rotate(${rotationAngle}deg)` }" alt="Vorschau" class="max-h-64 rounded-lg object-contain" />
-          <span class="text-xs text-gray-500">{{ selectedFile?.name }}</span>
+          <span class="text-xs text-cs-ink-500">{{ selectedFile?.name }}</span>
         </div>
 
         <!-- Placeholder -->
         <div v-else class="flex flex-col items-center gap-3 text-center">
-          <i class="fas fa-cloud-upload-alt text-4xl text-gray-300"></i>
+          <i class="fas fa-cloud-upload-alt text-4xl text-cs-ink-300"></i>
           <div>
-            <p class="text-gray-600 font-medium">Bild hierher ziehen</p>
-            <p class="text-gray-400 text-sm mt-1">oder klicken zum Auswählen</p>
+            <p class="text-cs-ink-600 font-medium">Bild hierher ziehen</p>
+            <p class="text-cs-ink-400 text-sm mt-1">oder klicken zum Auswählen</p>
           </div>
-          <p class="text-xs text-gray-400">JPEG, PNG, WebP oder GIF · max. {{ maxSizeMb }} MB</p>
+          <p class="text-xs text-cs-ink-400">JPEG, PNG, WebP oder GIF · max. {{ maxSizeMb }} MB</p>
         </div>
       </div>
 

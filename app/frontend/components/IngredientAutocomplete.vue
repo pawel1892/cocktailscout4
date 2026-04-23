@@ -11,29 +11,29 @@
       autocomplete="off"
     />
 
-    <div v-if="searching" class="absolute right-3 top-3 text-gray-400">
+    <div v-if="searching" class="absolute right-3 top-3 text-cs-ink-400">
       <i class="fas fa-spinner fa-spin"></i>
     </div>
 
     <div
       v-if="showDropdown && results.length > 0"
-      class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-md max-h-60 overflow-y-auto"
+      class="absolute z-10 w-full mt-1 bg-white border border-cs-ink-200 rounded-lg shadow-md max-h-60 overflow-y-auto"
     >
       <button
         v-for="ingredient in results"
         :key="ingredient.id"
         type="button"
         @mousedown.prevent="selectIngredient(ingredient)"
-        class="w-full px-4 py-2 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors"
+        class="w-full px-4 py-2 text-left hover:bg-cs-ink-50 focus:bg-cs-ink-50 focus:outline-none transition-colors"
       >
-        <div class="font-medium text-gray-900">{{ ingredient.name }}</div>
-        <div class="text-sm text-gray-500">{{ ingredient.recipes_count }} Rezepte</div>
+        <div class="font-medium text-cs-ink-900">{{ ingredient.name }}</div>
+        <div class="text-sm text-cs-ink-500">{{ ingredient.recipes_count }} Rezepte</div>
       </button>
     </div>
 
     <div
       v-if="showDropdown && searchQuery.length > 0 && results.length === 0 && !searching"
-      class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2 text-gray-500 text-sm"
+      class="absolute z-10 w-full mt-1 bg-white border border-cs-ink-200 rounded-lg shadow-md px-4 py-2 text-cs-ink-500 text-sm"
     >
       Keine Zutat gefunden. Gib einen neuen Namen ein.
     </div>

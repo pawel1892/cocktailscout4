@@ -53,13 +53,13 @@
       <!-- Right: All Stats -->
       <div class="text-left sm:text-right text-sm space-y-2 w-full sm:w-auto">
         <!-- Author -->
-        <div class="flex items-center sm:justify-end gap-1 text-gray-600">
+        <div class="flex items-center sm:justify-end gap-1 text-cs-ink-600">
           <span>von</span>
           <%= user_badge(@recipe.user) %>
         </div>
 
         <!-- Views -->
-        <div class="text-xs text-gray-400 flex items-center sm:justify-end gap-3">
+        <div class="text-xs text-cs-ink-400 flex items-center sm:justify-end gap-3">
           <span><i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %></span>
           <span><i class="far fa-heart"></i> <%= number_with_delimiter(@recipe.favorites_count) %></span>
         </div>
@@ -85,8 +85,8 @@
         <% end %>
       <% else %>
         <div class="card h-full flex flex-col items-center justify-center py-10 px-4 text-center">
-          <i class="fas fa-camera text-4xl text-gray-300 mb-3"></i>
-          <p class="text-gray-500 text-sm mb-4">Noch keine Fotos vorhanden</p>
+          <i class="fas fa-camera text-4xl text-cs-ink-300 mb-3"></i>
+          <p class="text-cs-ink-500 text-sm mb-4">Noch keine Fotos vorhanden</p>
           <%= link_to bilder_recipe_path(@recipe), class: "btn btn-outline btn-sm" do %>
             <i class="fas fa-camera mr-1"></i> Bild hochladen
           <% end %>

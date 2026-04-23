@@ -51,7 +51,7 @@ const textareaClasses = computed(() => {
     return `${baseClasses} border-cs-error focus:border-cs-error focus:ring-cs-error`
   }
 
-  return `${baseClasses} border-gray-300 focus:ring-cs-dark-red focus:border-transparent`
+  return `${baseClasses} border-cs-ink-300 focus:ring-cs-dark-red focus:border-transparent`
 })
 
 const counterColorClass = computed(() => {
@@ -63,6 +63,6 @@ const counterColorClass = computed(() => {
   } else if (count > props.maxLength * 0.85) {
     return 'text-yellow-600'
   }
-  return 'text-gray-500'
+  return 'text-cs-ink-500'
 })
 </script>

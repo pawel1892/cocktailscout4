@@ -2,8 +2,8 @@
   <BaseModal :model-value="show" @close="$emit('close')" max-width="max-w-2xl">
     <template #header>
       <div>
-        <h3 class="text-xl font-bold text-gray-900">Zutaten verwalten</h3>
-        <p v-if="collection" class="text-sm text-gray-500 mt-1">{{ collection.name }}</p>
+        <h3 class="text-xl font-bold text-cs-ink-900">Zutaten verwalten</h3>
+        <p v-if="collection" class="text-sm text-cs-ink-500 mt-1">{{ collection.name }}</p>
       </div>
     </template>
 
@@ -11,7 +11,7 @@
       <div class="space-y-4">
         <!-- Search -->
         <div>
-          <label for="ingredient-search" class="block text-sm font-medium text-gray-700 mb-2">
+          <label for="ingredient-search" class="block text-sm font-medium text-cs-ink-700 mb-2">
             Zutaten hinzufügen
           </label>
           <div class="relative">
@@ -20,11 +20,11 @@
               v-model="searchQuery"
               @input="searchIngredients"
               type="text"
-              class="w-full px-3 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent"
+              class="w-full px-3 py-2 pl-10 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent"
               placeholder="Suche nach Zutaten..."
             />
             <svg
-              class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cs-ink-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -36,13 +36,13 @@
           <!-- Search Results -->
           <div
             v-if="searchResults.length > 0"
-            class="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+            class="mt-2 bg-white border border-cs-ink-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
           >
             <button
               v-for="ingredient in searchResults"
               :key="ingredient.id"
               @click="addIngredient(ingredient)"
-              class="w-full text-left px-4 py-2 hover:bg-gray-50 transition flex items-center justify-between"
+              class="w-full text-left px-4 py-2 hover:bg-cs-ink-50 transition flex items-center justify-between"
             >
               <span>{{ ingredient.name }}</span>
               <svg
@@ -56,19 +56,19 @@
             </button>
           </div>
 
-          <p v-if="searching" class="mt-2 text-sm text-gray-500">Suche...</p>
-          <p v-else-if="searchQuery && searchResults.length === 0" class="mt-2 text-sm text-gray-500">
+          <p v-if="searching" class="mt-2 text-sm text-cs-ink-500">Suche...</p>
+          <p v-else-if="searchQuery && searchResults.length === 0" class="mt-2 text-sm text-cs-ink-500">
             Keine Zutaten gefunden
           </p>
         </div>
 
         <!-- Current Ingredients -->
         <div>
-          <h4 class="text-sm font-medium text-gray-700 mb-2">
+          <h4 class="text-sm font-medium text-cs-ink-700 mb-2">
             Aktuelle Zutaten ({{ currentIngredients.length }})
           </h4>
 
-          <div v-if="currentIngredients.length === 0" class="text-sm text-gray-500 italic py-4 text-center">
+          <div v-if="currentIngredients.length === 0" class="text-sm text-cs-ink-500 italic py-4 text-center">
             Noch keine Zutaten hinzugefügt
           </div>
 
@@ -76,9 +76,9 @@
             <div
               v-for="ingredient in currentIngredients"
               :key="ingredient.id"
-              class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
+              class="flex items-center justify-between p-3 bg-cs-ink-50 rounded-lg hover:bg-cs-ink-100 transition"
             >
-              <span class="text-gray-900">{{ ingredient.name }}</span>
+              <span class="text-cs-ink-900">{{ ingredient.name }}</span>
               <button
                 @click="removeIngredient(ingredient)"
                 class="text-red-600 hover:text-red-700 p-1"
@@ -109,7 +109,7 @@
         <button
           @click="$emit('close')"
           type="button"
-          class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+          class="px-4 py-2 text-cs-ink-700 bg-cs-ink-100 rounded-lg hover:bg-cs-ink-200 transition"
         >
           Fertig
         </button>

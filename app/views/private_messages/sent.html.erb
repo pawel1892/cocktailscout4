@@ -8,9 +8,9 @@
   </div>
 
   <%# Tab Navigation %>
-  <nav class="flex gap-2 border-b border-gray-200">
+  <nav class="flex gap-2 border-b border-cs-ink-200">
     <%= link_to private_messages_path,
-      class: "px-4 py-2 font-medium text-gray-500 hover:text-cs-dark-red hover:border-gray-300 border-b-2 border-transparent" do %>
+      class: "px-4 py-2 font-medium text-cs-ink-500 hover:text-cs-dark-red hover:border-cs-ink-300 border-b-2 border-transparent" do %>
       Konversationen
     <% end %>
     <%= link_to sent_private_messages_path,
@@ -28,7 +28,7 @@
         <div class="card">
           <div class="card-body p-4">
             <div class="flex items-start justify-between mb-2">
-              <div class="text-sm text-gray-600">
+              <div class="text-sm text-cs-ink-600">
                 Mit: <%= user_badge(other_user) %>
                 <% if has_unread %>
                   <span class="ml-1 inline-block w-2 h-2 bg-cs-dark-red rounded-full align-middle"></span>
@@ -36,12 +36,12 @@
               </div>
             </div>
 
-            <div class="text-sm mb-2 <%= has_unread ? 'font-semibold' : 'text-gray-700' %>">
+            <div class="text-sm mb-2 <%= has_unread ? 'font-semibold' : 'text-cs-ink-700' %>">
               <%= link_to truncate(message.body, length: 80), private_message_path(message),
                 class: "hover:underline" %>
             </div>
 
-            <div class="text-xs text-gray-400">
+            <div class="text-xs text-cs-ink-400">
               <%= time_ago_in_words(message.created_at) %>
             </div>
 
@@ -66,7 +66,7 @@
             <th class="table-th w-32 text-center">Aktionen</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200">
+        <tbody class="divide-y divide-cs-ink-200">
           <% @messages.each do |message| %>
             <% other_user = message.sender_id == Current.user.id ? message.receiver : message.sender %>
             <% has_unread = @unread_partner_ids.include?(other_user.id) %>
@@ -81,12 +81,12 @@
                   <span class="ml-2 inline-block w-2 h-2 bg-cs-dark-red rounded-full align-middle"></span>
                 <% end %>
               </td>
-              <td class="table-td text-gray-500 text-sm">
+              <td class="table-td text-cs-ink-500 text-sm">
                 <%= message.created_at.strftime("%d.%m.%Y") %>
               </td>
               <td class="table-td text-center">
                 <%= link_to private_message_path(message),
-                  class: "text-gray-400 hover:text-cs-dark-red" do %>
+                  class: "text-cs-ink-400 hover:text-cs-dark-red" do %>
                   <i class="fas fa-eye"></i>
                 <% end %>
               </td>
@@ -96,7 +96,7 @@
       </table>
     </div>
   <% else %>
-    <div class="text-center py-12 text-gray-500">
+    <div class="text-center py-12 text-cs-ink-500">
       <i class="fas fa-paper-plane text-4xl mb-4"></i>
       <p>Keine Konversationen</p>
     </div>

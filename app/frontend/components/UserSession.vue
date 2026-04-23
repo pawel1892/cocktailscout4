@@ -25,14 +25,14 @@
             <div class="py-1">
               <button
                 @click="openProfile"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                class="w-full text-left px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
               >
                 <i class="fa-solid fa-user"></i>
                 Mein Profil
               </button>
               <a
                 href="/nachrichten"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
               >
                 <i class="fa-solid fa-envelope"></i>
                 Meine Nachrichten
@@ -45,21 +45,21 @@
               </a>
               <a
                 href="/rezeptvorschlaege"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
               >
                 <i class="fa-solid fa-lightbulb"></i>
                 Meine Rezeptvorschläge
               </a>
               <a
                 href="/email_aendern"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
               >
                 <i class="fa-solid fa-at"></i>
                 E-Mail ändern
               </a>
               <a
                 href="/passwort_aendern"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
               >
                 <i class="fa-solid fa-key"></i>
                 Passwort ändern
@@ -67,7 +67,7 @@
               <a
                 v-if="user.is_moderator"
                 href="/admin/reports"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 border-t border-gray-100 mt-1 pt-2"
+                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2 border-t border-cs-ink-100 mt-1 pt-2"
               >
                 <i class="fa-solid fa-shield-halved"></i>
                 Admin Bereich
@@ -81,7 +81,7 @@
               <a
                 v-if="user.can_moderate_recipe"
                 href="/admin/recipe_suggestions"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
               >
                 <i class="fa-solid fa-lightbulb"></i>
                 Rezeptvorschläge
@@ -107,8 +107,8 @@
 
     <!-- Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" @click.self="closeModal">
-      <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md py-10 px-6 text-gray-900">
-        <button @click="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+      <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md py-10 px-6 text-cs-ink-900">
+        <button @click="closeModal" class="absolute top-4 right-4 text-cs-ink-500 hover:text-cs-ink-700">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>

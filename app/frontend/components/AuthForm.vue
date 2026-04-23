@@ -96,10 +96,10 @@
 
         <div v-if="isLoginMode" class="mt-4 text-center space-y-1">
           <div>
-            <a href="/passwords/new" class="text-gray-500 hover:text-cs-dark-red text-xs">Passwort vergessen?</a>
+            <a href="/passwords/new" class="text-cs-ink-500 hover:text-cs-dark-red text-xs">Passwort vergessen?</a>
           </div>
           <div>
-            <a href="/confirmations/new" class="text-gray-500 hover:text-cs-dark-red text-xs">Bestätigungs-E-Mail nicht erhalten?</a>
+            <a href="/confirmations/new" class="text-cs-ink-500 hover:text-cs-dark-red text-xs">Bestätigungs-E-Mail nicht erhalten?</a>
           </div>
         </div>
         

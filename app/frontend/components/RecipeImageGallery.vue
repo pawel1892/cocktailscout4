@@ -3,7 +3,7 @@
     <!-- Thumbnail - clickable, smaller on sm, full size on md+ -->
     <div
       v-if="images.length > 0"
-      class="w-48 md:w-full aspect-square bg-white rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity group relative mx-auto md:mx-0 border-2 border-gray-200 shadow-sm"
+      class="w-48 md:w-full aspect-square bg-white rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity group relative mx-auto md:mx-0 border-2 border-cs-ink-200 shadow-sm"
       @click="openModal(0)"
     >
       <img

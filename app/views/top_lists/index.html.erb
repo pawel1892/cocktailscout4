@@ -13,8 +13,8 @@
           <table class="w-full">
             <tbody>
               <% list[:recipes].each_with_index do |recipe, index| %>
-                <tr class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors">
-                  <td class="px-4 py-3 text-gray-500 font-medium w-12 text-center">
+                <tr class="border-b border-cs-ink-200 last:border-b-0 hover:bg-cs-ink-50 transition-colors">
+                  <td class="px-4 py-3 text-cs-ink-500 font-medium w-12 text-center">
                     <%= index + 1 %>
                   </td>
                   <td class="px-4 py-3">
@@ -30,7 +30,7 @@
             </tbody>
           </table>
         <% else %>
-          <div class="p-8 text-center text-gray-500">
+          <div class="p-8 text-center text-cs-ink-500">
             Keine Rezepte gefunden
           </div>
         <% end %>
