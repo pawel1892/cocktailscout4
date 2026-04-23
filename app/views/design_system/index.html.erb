@@ -4,48 +4,48 @@
 <style>
 /* Design-system page chrome — not part of the shared system */
 *,*::before,*::after{box-sizing:border-box}
-.ds-body{font-family:'Inter',system-ui,sans-serif;background:var(--color-cs-ink-50);color:var(--color-cs-ink-900);-webkit-font-smoothing:antialiased;line-height:1.5}
-.sg-topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid var(--color-cs-ink-200);background:var(--color-cs-ink-50);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
-.sg-topbar h1{margin:0;font-family:var(--font-display),serif;font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--color-cs-red-900);display:flex;align-items:center;gap:10px}
-.sg-topbar h1 .glyph{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--color-cs-gold-300),var(--color-cs-gold-600));box-shadow:inset 0 -2px 4px rgba(0,0,0,.2)}
-.sg-topbar .meta{font-size:13px;color:var(--color-cs-ink-500);font-family:'JetBrains Mono',monospace}
+.ds-body{font-family:'Inter',system-ui,sans-serif;background:var(--cs-ink-50);color:var(--cs-ink-900);-webkit-font-smoothing:antialiased;line-height:1.5}
+.sg-topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid var(--cs-ink-200);background:var(--cs-ink-50);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+.sg-topbar h1{margin:0;font-family:var(--cs-serif);font-weight:600;font-size:24px;letter-spacing:-.005em;color:var(--cs-red-900);display:flex;align-items:center;gap:10px}
+.sg-topbar h1 .glyph{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--cs-gold-300),var(--cs-gold-600));box-shadow:inset 0 -2px 4px rgba(0,0,0,.2)}
+.sg-topbar .meta{font-size:13px;color:var(--cs-ink-500);font-family:'JetBrains Mono',monospace}
 .sg-wrap{max-width:1180px;margin:0 auto;padding:48px 32px 96px}
-.sg-nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 40px;padding:6px;background:var(--color-cs-ink-100);border-radius:10px;border:1px solid var(--color-cs-ink-200)}
-.sg-nav a{padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--color-cs-ink-700);text-decoration:none;transition:all .15s}
-.sg-nav a:hover{background:var(--color-cs-ink-50);color:var(--color-cs-red-900)}
+.sg-nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 40px;padding:6px;background:var(--cs-ink-100);border-radius:10px;border:1px solid var(--cs-ink-200)}
+.sg-nav a{padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--cs-ink-700);text-decoration:none;transition:all .15s}
+.sg-nav a:hover{background:var(--cs-ink-50);color:var(--cs-red-900)}
 .sg-section{margin:0 0 72px;scroll-margin-top:88px}
-.sg-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 24px;padding:0 0 12px;border-bottom:1px solid var(--color-cs-ink-200)}
-.sg-section-head h2{margin:0;font-family:var(--font-display),serif;font-weight:700;font-size:30px;letter-spacing:-.015em;color:var(--color-cs-red-900)}
-.sg-section-head .kbd{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.12em}
-.sg-lede{color:var(--color-cs-ink-600);font-size:14px;max-width:720px;margin:0 0 28px}
-.sg-subhead{margin:32px 0 14px;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-cs-ink-500)}
+.sg-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 24px;padding:0 0 12px;border-bottom:1px solid var(--cs-ink-200)}
+.sg-section-head h2{margin:0;font-family:var(--cs-serif);font-weight:600;font-size:36px;letter-spacing:-.01em;color:var(--cs-red-900)}
+.sg-section-head .kbd{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.12em}
+.sg-lede{color:var(--cs-ink-600);font-size:14px;max-width:720px;margin:0 0 28px}
+.sg-subhead{margin:32px 0 14px;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--cs-ink-500)}
 /* Color scales */
-.scale-row{display:grid;grid-template-columns:120px repeat(11,1fr);gap:0;border-radius:10px;overflow:hidden;box-shadow:0 2px 4px rgba(24,21,19,.06);margin-bottom:10px;border:1px solid var(--color-cs-ink-200)}
-.scale-label{background:#fff;padding:14px;font-size:12px;font-weight:600;color:var(--color-cs-ink-800);display:flex;align-items:center;border-right:1px solid var(--color-cs-ink-200);flex-direction:column;justify-content:center}
-.scale-label small{display:block;font-weight:400;color:var(--color-cs-ink-500);font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:2px}
+.scale-row{display:grid;grid-template-columns:120px repeat(11,1fr);gap:0;border-radius:10px;overflow:hidden;box-shadow:var(--cs-shadow-sm);margin-bottom:10px;border:1px solid var(--cs-ink-200)}
+.scale-label{background:#fff;padding:14px;font-size:12px;font-weight:600;color:var(--cs-ink-800);display:flex;align-items:center;border-right:1px solid var(--cs-ink-200);flex-direction:column;justify-content:center}
+.scale-label small{display:block;font-weight:400;color:var(--cs-ink-500);font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:2px}
 .swatch{padding:14px 10px;min-height:78px;display:flex;flex-direction:column;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:transform .15s}
-.swatch:hover{transform:translateY(-2px);z-index:2;box-shadow:0 6px 14px -4px rgba(24,21,19,.12)}
+.swatch:hover{transform:translateY(-2px);z-index:2;box-shadow:var(--cs-shadow-md)}
 .swatch .step{font-weight:600;font-size:11px}
 .swatch .hex{opacity:.85}
 .swatch[data-dark="0"]{color:#1a1310}
 .swatch[data-dark="1"]{color:#fff}
 /* Semantic grid */
 .semantic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
-.sem-card{border-radius:10px;overflow:hidden;border:1px solid var(--color-cs-ink-200);background:#fff;box-shadow:0 1px 2px rgba(24,21,19,.06)}
+.sem-card{border-radius:10px;overflow:hidden;border:1px solid var(--cs-ink-200);background:#fff;box-shadow:var(--cs-shadow-xs)}
 .sem-card .bar{display:grid;grid-template-columns:1fr 1fr 1fr;height:58px}
 .sem-card .bar div{display:flex;align-items:flex-end;justify-content:flex-start;padding:6px 8px;font-family:'JetBrains Mono',monospace;font-size:9px;color:#fff}
 .sem-card .meta{padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
-.sem-card .meta strong{color:var(--color-cs-ink-900)}
-.sem-card .meta code{font-family:'JetBrains Mono',monospace;color:var(--color-cs-ink-500);font-size:11px}
+.sem-card .meta strong{color:var(--cs-ink-900)}
+.sem-card .meta code{font-family:'JetBrains Mono',monospace;color:var(--cs-ink-500);font-size:11px}
 /* Type specimens */
-.type-row{display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--color-cs-ink-200)}
-.type-row .lab{font:500 11px 'JetBrains Mono';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.08em}
-.type-row .sam{color:var(--color-cs-ink-900)}
-.type-row .spec{font:400 11px 'JetBrains Mono';color:var(--color-cs-ink-500);text-align:right}
+.type-row{display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--cs-ink-200)}
+.type-row .lab{font:500 11px 'JetBrains Mono';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.08em}
+.type-row .sam{color:var(--cs-ink-900)}
+.type-row .spec{font:400 11px 'JetBrains Mono';color:var(--cs-ink-500);text-align:right}
 /* Hero preview */
-.hero-preview{border-radius:12px;overflow:hidden;background:linear-gradient(90deg,rgba(54,13,12,.88) 0%,rgba(54,13,12,.78) 55%,rgba(54,13,12,.55) 100%),repeating-linear-gradient(135deg,var(--color-cs-red-950) 0 18px,var(--color-cs-red-900) 18px 36px);color:#fff;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;box-shadow:0 18px 36px -12px rgba(24,21,19,.22);border:1px solid var(--color-cs-red-950);margin-bottom:72px}
-.hero-preview .photo-ph{aspect-ratio:4/3;border-radius:10px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 12px,transparent 12px 24px),linear-gradient(135deg,var(--color-cs-red-800),var(--color-cs-red-950));display:flex;align-items:center;justify-content:center;color:var(--color-cs-gold-300);font:500 12px 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--color-cs-red-700)}
-.hero-preview h2{font-family:var(--font-display),serif;font-weight:700;font-size:40px;line-height:1.05;letter-spacing:-.02em;color:var(--color-cs-gold-400);margin:0 0 14px}
+.hero-preview{border-radius:12px;overflow:hidden;background:linear-gradient(90deg,rgba(54,13,12,.88) 0%,rgba(54,13,12,.78) 55%,rgba(54,13,12,.55) 100%),repeating-linear-gradient(135deg,var(--cs-red-950) 0 18px,var(--cs-red-900) 18px 36px);color:#fff;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;box-shadow:var(--cs-shadow-lg);border:1px solid var(--cs-red-950);margin-bottom:72px}
+.hero-preview .photo-ph{aspect-ratio:4/3;border-radius:10px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 12px,transparent 12px 24px),linear-gradient(135deg,var(--cs-red-800),var(--cs-red-950));display:flex;align-items:center;justify-content:center;color:var(--cs-gold-300);font:500 12px 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--cs-red-700)}
+.hero-preview h2{font-family:var(--cs-serif);font-weight:600;font-size:52px;line-height:1;letter-spacing:-.015em;color:var(--cs-gold-400);margin:0 0 14px}
 .hero-preview p{color:rgba(255,255,255,.82);margin:0 0 22px;font-size:15px;line-height:1.55;max-width:380px}
 .hero-preview .cta{display:flex;gap:10px;flex-wrap:wrap}
 /* Grid helpers */
@@ -58,39 +58,39 @@
 /* Tag row helper */
 .tag-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 /* Cocktail card composite */
-.cocktail-card{background:#fff;border:1px solid var(--color-cs-ink-200);border-radius:12px;display:grid;grid-template-columns:108px 1fr auto;gap:16px;padding:14px;align-items:center;box-shadow:0 2px 4px rgba(24,21,19,.06)}
-.cocktail-card .thumb{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(45deg,var(--color-cs-ink-100) 0 8px,var(--color-cs-ink-50) 8px 16px);display:flex;align-items:center;justify-content:center;color:var(--color-cs-ink-400);font-size:22px}
-.cocktail-card h4{margin:0 0 4px;font:700 16px 'Inter';color:var(--color-cs-info-500)}
-.cocktail-card .author{font-size:12px;color:var(--color-cs-ink-500);margin-bottom:8px}
+.cocktail-card{background:#fff;border:1px solid var(--cs-ink-200);border-radius:12px;display:grid;grid-template-columns:108px 1fr auto;gap:16px;padding:14px;align-items:center;box-shadow:var(--cs-shadow-sm)}
+.cocktail-card .thumb{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(45deg,var(--cs-ink-100) 0 8px,var(--cs-ink-50) 8px 16px);display:flex;align-items:center;justify-content:center;color:var(--cs-ink-400);font-size:22px}
+.cocktail-card h4{margin:0 0 4px;font:700 16px 'Inter';color:var(--cs-info-500)}
+.cocktail-card .author{font-size:12px;color:var(--cs-ink-500);margin-bottom:8px}
 .cocktail-card .tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
-.cocktail-card .stats{font-size:11px;color:var(--color-cs-ink-500);font-family:'JetBrains Mono',monospace}
-.rating-chip{min-width:56px;text-align:center;font-weight:700;font-size:20px;padding:10px 8px;border-radius:8px;color:#fff;font-family:var(--font-display),serif}
-.rating-chip.high{background:var(--color-cs-success-500)}
-.rating-chip.mid{background:var(--color-cs-gold-600)}
-.rating-chip.low{background:var(--color-cs-error-500)}
+.cocktail-card .stats{font-size:11px;color:var(--cs-ink-500);font-family:'JetBrains Mono',monospace}
+.rating-chip{min-width:56px;text-align:center;font-weight:700;font-size:22px;padding:10px 8px;border-radius:8px;color:#fff;font-family:'Inter',system-ui,sans-serif;font-feature-settings:"tnum" 1}
+.rating-chip.high{background:var(--cs-success-500)}
+.rating-chip.mid{background:var(--cs-gold-600)}
+.rating-chip.low{background:var(--cs-error-500)}
 .rating-chip small{display:block;font:500 10px 'JetBrains Mono',monospace;opacity:.8;margin-top:2px}
 /* Avatar */
-.ds-avatar{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--color-cs-gold-300),var(--color-cs-gold-700));display:inline-flex;align-items:center;justify-content:center;color:var(--color-cs-red-950);font:700 14px 'Inter';border:2px solid #fff;box-shadow:0 1px 2px rgba(24,21,19,.06)}
+.ds-avatar{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--cs-gold-300),var(--cs-gold-700));display:inline-flex;align-items:center;justify-content:center;color:var(--cs-red-950);font:700 14px 'Inter';border:2px solid #fff;box-shadow:var(--cs-shadow-xs)}
 /* Code block */
-.ds-code{background:var(--color-cs-ink-900);color:var(--color-cs-gold-200);padding:14px 16px;border-radius:8px;font:400 12px/1.6 'JetBrains Mono',monospace;overflow-x:auto;white-space:pre;border:1px solid var(--color-cs-ink-950)}
+.code{background:var(--cs-ink-900);color:var(--cs-gold-200);padding:14px 16px;border-radius:8px;font:400 12px/1.6 'JetBrains Mono',monospace;overflow-x:auto;white-space:pre;border:1px solid var(--cs-ink-950)}
 /* Tweaks panel */
-#tweaks{position:fixed;right:18px;bottom:18px;width:280px;z-index:50;background:#fff;border:1px solid var(--color-cs-ink-200);border-radius:12px;box-shadow:0 18px 36px -12px rgba(24,21,19,.22);overflow:hidden;display:none}
+#tweaks{position:fixed;right:18px;bottom:18px;width:300px;z-index:50;background:#fff;border:1px solid var(--cs-ink-200);border-radius:12px;box-shadow:var(--cs-shadow-lg);overflow:hidden;display:none}
 #tweaks.on{display:block}
-#tweaks header{padding:10px 14px;background:var(--color-cs-red-900);color:var(--color-cs-gold-300);font:700 12px 'Inter';letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
-#tweaks header small{font:500 10px 'JetBrains Mono';color:var(--color-cs-gold-500);text-transform:none;letter-spacing:0}
+#tweaks header{padding:10px 14px;background:var(--cs-red-900);color:var(--cs-gold-300);font:700 12px 'Inter';letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+#tweaks header small{font:500 10px 'JetBrains Mono';color:var(--cs-gold-500);text-transform:none;letter-spacing:0}
 #tweaks .body{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
-#tweaks label{font:600 11px 'Inter';color:var(--color-cs-ink-700);display:flex;justify-content:space-between;align-items:center}
-#tweaks input[type="color"]{width:46px;height:26px;border:1px solid var(--color-cs-ink-200);padding:0;border-radius:4px;background:transparent;cursor:pointer}
+#tweaks label{font:600 11px 'Inter';color:var(--cs-ink-700);display:flex;justify-content:space-between;align-items:center}
+#tweaks input[type="color"]{width:46px;height:26px;border:1px solid var(--cs-ink-200);padding:0;border-radius:4px;background:transparent;cursor:pointer}
 #tweaks input[type="range"]{width:110px}
-#tweaks .val{font:500 10px 'JetBrains Mono';color:var(--color-cs-ink-500)}
-#tweaks .hint{font:400 11px 'Inter';color:var(--color-cs-ink-500);line-height:1.4;padding-top:4px;border-top:1px dashed var(--color-cs-ink-200);margin-top:2px}
+#tweaks .val{font:500 10px 'JetBrains Mono';color:var(--cs-ink-500)}
+#tweaks .hint{font:400 11px 'Inter';color:var(--cs-ink-500);line-height:1.4;padding-top:4px;border-top:1px dashed var(--cs-ink-200);margin-top:2px}
 </style>
 <% end %>
 
 <div class="ds-body">
 
 <div class="sg-topbar">
-  <h1><span class="glyph"></span> CocktailScout — Design System <span style="color:var(--color-cs-gold-600);font-weight:500">v2</span></h1>
+  <h1><span class="glyph"></span> CocktailScout — Design System <span style="color:var(--cs-gold-600);font-weight:500">v2</span></h1>
   <span class="meta">/design-tokens.css · 2026.04</span>
 </div>
 
@@ -157,33 +157,33 @@
     <div class="semantic-grid">
       <div class="sem-card">
         <div class="bar">
-          <div style="background:var(--color-cs-success-100);color:var(--color-cs-success-900)">100</div>
-          <div style="background:var(--color-cs-success-500)">500</div>
-          <div style="background:var(--color-cs-success-900)">900</div>
+          <div style="background:var(--cs-success-100);color:var(--cs-success-900)">100</div>
+          <div style="background:var(--cs-success-500)">500</div>
+          <div style="background:var(--cs-success-900)">900</div>
         </div>
         <div class="meta"><strong>Success</strong><code>cs-success</code></div>
       </div>
       <div class="sem-card">
         <div class="bar">
-          <div style="background:var(--color-cs-warning-100);color:var(--color-cs-warning-900)">100</div>
-          <div style="background:var(--color-cs-warning-500)">500</div>
-          <div style="background:var(--color-cs-warning-900)">900</div>
+          <div style="background:var(--cs-warning-100);color:var(--cs-warning-900)">100</div>
+          <div style="background:var(--cs-warning-500)">500</div>
+          <div style="background:var(--cs-warning-900)">900</div>
         </div>
         <div class="meta"><strong>Warning</strong><code>cs-warning</code></div>
       </div>
       <div class="sem-card">
         <div class="bar">
-          <div style="background:var(--color-cs-error-100);color:var(--color-cs-error-900)">100</div>
-          <div style="background:var(--color-cs-error-500)">500</div>
-          <div style="background:var(--color-cs-error-900)">900</div>
+          <div style="background:var(--cs-error-100);color:var(--cs-error-900)">100</div>
+          <div style="background:var(--cs-error-500)">500</div>
+          <div style="background:var(--cs-error-900)">900</div>
         </div>
         <div class="meta"><strong>Error</strong><code>cs-error</code></div>
       </div>
       <div class="sem-card">
         <div class="bar">
-          <div style="background:var(--color-cs-info-100);color:var(--color-cs-info-900)">100</div>
-          <div style="background:var(--color-cs-info-500)">500</div>
-          <div style="background:var(--color-cs-info-900)">900</div>
+          <div style="background:var(--cs-info-100);color:var(--cs-info-900)">100</div>
+          <div style="background:var(--cs-info-500)">500</div>
+          <div style="background:var(--cs-info-900)">900</div>
         </div>
         <div class="meta"><strong>Info / Link</strong><code>cs-info</code></div>
       </div>
@@ -194,48 +194,49 @@
   <section id="type" class="sg-section">
     <div class="sg-section-head"><h2>Typography</h2><span class="kbd">02</span></div>
     <p class="sg-lede">
-      <strong>Fraunces</strong> (display serif) for headings and ratings — evokes classic bar menus.
-      <strong>Inter</strong> for UI and body copy. <strong>JetBrains&nbsp;Mono</strong> for token values, stats and counts.
+      <strong>Cormorant Garamond</strong> (display serif) for headings — evokes classic bar menus and matches
+      the existing site's display lettering. <strong>Inter</strong> for UI, body copy and numeric ratings.
+      <strong>JetBrains&nbsp;Mono</strong> for token values, stats and counts.
     </p>
     <div>
       <div class="type-row">
         <span class="lab">Display</span>
-        <span class="sam" style="font:900 44px/1 var(--font-display);letter-spacing:-.02em;color:var(--color-cs-red-900)">Cocktail Rezepte</span>
-        <span class="spec">Fraunces 900 · 44/46</span>
+        <span class="sam" style="font:600 54px/1 var(--cs-serif);letter-spacing:-.015em;color:var(--cs-red-900)">Cocktail Rezepte</span>
+        <span class="spec">Serif 600 · 54/54</span>
       </div>
       <div class="type-row">
         <span class="lab">H1 / Hero</span>
-        <span class="sam" style="font:700 34px var(--font-display);letter-spacing:-.015em;color:var(--color-cs-red-900)">Long Island Iced Tea</span>
-        <span class="spec">Fraunces 700 · 34/40</span>
+        <span class="sam" style="font:600 38px var(--cs-serif);letter-spacing:-.01em;color:var(--cs-red-900)">Cocktail Rezepte &amp; deine persönliche Bar</span>
+        <span class="spec">Serif 600 · 38/44</span>
       </div>
       <div class="type-row">
         <span class="lab">H2</span>
-        <span class="sam" style="font:700 24px var(--font-display);color:var(--color-cs-red-900)">Heute frisch gemixt</span>
-        <span class="spec">Fraunces 700 · 24/32</span>
+        <span class="sam" style="font:600 28px var(--cs-serif);color:var(--cs-red-900)">Heute frisch gemixt</span>
+        <span class="spec">Serif 600 · 28/32</span>
       </div>
       <div class="type-row">
         <span class="lab">H3 / Card</span>
-        <span class="sam" style="font:600 18px 'Inter';color:var(--color-cs-ink-900)">Espresso Martini</span>
+        <span class="sam" style="font:600 18px 'Inter';color:var(--cs-ink-900)">Long Island Iced Tea</span>
         <span class="spec">Inter 600 · 18/24</span>
       </div>
       <div class="type-row">
         <span class="lab">Body</span>
-        <span class="sam" style="font:400 15px 'Inter';color:var(--color-cs-ink-800)">1.500+ Cocktail Rezepte — und mit Meine Bar siehst du sofort, was du mixen kannst.</span>
+        <span class="sam" style="font:400 15px 'Inter';color:var(--cs-ink-800)">1.500+ Cocktail Rezepte — und mit Meine Bar siehst du sofort, was du mixen kannst.</span>
         <span class="spec">Inter 400 · 15/24</span>
       </div>
       <div class="type-row">
         <span class="lab">Small</span>
-        <span class="sam" style="font:400 13px 'Inter';color:var(--color-cs-ink-600)">vor 19 Minuten · von Ripuli</span>
+        <span class="sam" style="font:400 13px 'Inter';color:var(--cs-ink-600)">vor 19 Minuten · von Ripuli</span>
         <span class="spec">Inter 400 · 13/18</span>
       </div>
       <div class="type-row">
         <span class="lab">Mono / Stat</span>
-        <span class="sam" style="font:500 13px 'JetBrains Mono';color:var(--color-cs-ink-700)">1.124.100 views · 14.3% ABV</span>
+        <span class="sam" style="font:500 13px 'JetBrains Mono';color:var(--cs-ink-700)">1.124.100 views · 14.3% ABV</span>
         <span class="spec">JBMono 500 · 13/18</span>
       </div>
       <div class="type-row">
         <span class="lab">Eyebrow</span>
-        <span class="sam" style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.12em">KATEGORIE · KLASSIKER</span>
+        <span class="sam" style="font:600 11px 'Inter';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.12em">KATEGORIE · KLASSIKER</span>
         <span class="spec">Inter 600 · 11/14 · 0.12em</span>
       </div>
     </div>
@@ -249,30 +250,33 @@
       The default state uses the muted <code>-600</code> step so hover can darken to <code>-700</code>. Underline appears on hover via border-bottom rather than text-decoration, so it stays sharp at any weight.
     </p>
 
+    <div class="sg-subhead">Link scale</div>
+    <div id="scale-link-links" style="margin-bottom:26px"></div>
+
     <div class="sg-subhead">Variants</div>
-    <div style="background:#fff;border:1px solid var(--color-cs-ink-200);border-radius:10px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;font-size:15px;line-height:1.7">
+    <div style="background:#fff;border:1px solid var(--cs-ink-200);border-radius:10px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;font-size:15px;line-height:1.7">
       <div>
-        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Default — <code>.link</code></div>
+        <div style="font:600 11px 'Inter';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Default — <code>.link</code></div>
         <p>Unser <a href="#" class="link">Mojito-Rezept</a> ist heute dreimal so beliebt wie gestern. Alle Klassiker findest du <a href="#" class="link">in der Rezeptübersicht</a>.</p>
       </div>
       <div>
-        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Underline — <code>.link.link-underline</code></div>
+        <div style="font:600 11px 'Inter';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Underline — <code>.link.link-underline</code></div>
         <p>Teil unserer <a href="#" class="link link-underline">Allgemeinen Geschäftsbedingungen</a> und <a href="#" class="link link-underline">Datenschutzerklärung</a> — auffälliger für Fließtext.</p>
       </div>
       <div>
-        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Muted — <code>.link.link-muted</code></div>
+        <div style="font:600 11px 'Inter';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Muted — <code>.link.link-muted</code></div>
         <p>Breadcrumbs &amp; Footer: <a href="#" class="link link-muted">Startseite</a> › <a href="#" class="link link-muted">Rezepte</a> › <strong>Long Island Iced Tea</strong>.</p>
       </div>
       <div>
-        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Arrow — <code>.link-arrow</code></div>
+        <div style="font:600 11px 'Inter';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Arrow — <code>.link-arrow</code></div>
         <p><a href="#" class="link-arrow">Alle Rezepte ansehen <span class="arr">→</span></a><br /><a href="#" class="link-arrow">Zur Community <span class="arr">→</span></a></p>
       </div>
       <div>
-        <div style="font:600 11px 'Inter';color:var(--color-cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Danger — <code>.link.link-danger</code></div>
+        <div style="font:600 11px 'Inter';color:var(--cs-ink-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Danger — <code>.link.link-danger</code></div>
         <p>Achtung: <a href="#" class="link link-danger">Konto löschen</a> oder <a href="#" class="link link-danger">Beitrag melden</a> — rot für destruktive Aktionen.</p>
       </div>
-      <div style="background:var(--color-cs-red-900);margin:-22px -26px -22px 0;padding:18px 22px;border-radius:0 10px 10px 0;color:var(--color-cs-gold-100)">
-        <div style="font:600 11px 'Inter';color:var(--color-cs-gold-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">On dark — <code>.link-on-dark</code></div>
+      <div style="background:var(--cs-red-900);margin:-22px -26px -22px 0;padding:18px 22px;border-radius:0 10px 10px 0;color:var(--cs-gold-100)">
+        <div style="font:600 11px 'Inter';color:var(--cs-gold-500);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">On dark — <code>.link-on-dark</code></div>
         <p>Im Footer oder auf dem Hero: <a href="#" class="link link-on-dark">Impressum</a>, <a href="#" class="link link-on-dark">Datenschutz</a>, <a href="#" class="link link-on-dark">Kontakt</a>.</p>
       </div>
     </div>
@@ -326,7 +330,7 @@
     </div>
 
     <div class="sg-subhead">On dark surfaces</div>
-    <div style="background:var(--color-cs-red-900);padding:20px;border-radius:10px">
+    <div style="background:var(--cs-red-900);padding:20px;border-radius:10px">
       <div class="btn-row" style="margin:0">
         <button class="btn btn-gold">Rezepte entdecken</button>
         <button class="btn btn-outline-gold">Meine Bar</button>
@@ -356,14 +360,14 @@
       <div class="card card-ghost">
         <div class="card-header" style="background:transparent">Empty State</div>
         <div class="card-body">
-          <span style="color:var(--color-cs-ink-500)">Noch keine Zutaten in deiner Bar — <a href="#" style="color:var(--color-cs-info-500)">jetzt hinzufügen</a>.</span>
+          <span style="color:var(--cs-ink-500)">Noch keine Zutaten in deiner Bar — <a href="#" style="color:var(--cs-info-500)">jetzt hinzufügen</a>.</span>
         </div>
       </div>
 
       <div class="card card-gold">
         <div class="card-header">Gold Feature</div>
         <div class="card-body">Für Pro-Tipps, Editor's Picks oder Klassiker-Empfehlungen.</div>
-        <div class="card-footer" style="background:var(--color-cs-gold-50);color:var(--color-cs-gold-800);border-top-color:var(--color-cs-gold-200)">Kuratiert von CocktailScout</div>
+        <div class="card-footer" style="background:var(--cs-gold-50);color:var(--cs-gold-800);border-top-color:var(--cs-gold-200)">Kuratiert von CocktailScout</div>
       </div>
 
       <div class="card card-dark">
@@ -371,8 +375,8 @@
         <div class="card-body">
           Invert for stat tiles, promo callouts, or in-line bar sections.
           <div style="display:flex;gap:18px;margin-top:14px">
-            <div><div style="font:700 28px var(--font-display);color:var(--color-cs-gold-400)">1.581</div><div style="font:500 11px 'JetBrains Mono';color:var(--color-cs-gold-600);text-transform:uppercase;letter-spacing:.1em">Rezepte</div></div>
-            <div><div style="font:700 28px var(--font-display);color:var(--color-cs-gold-400)">14.7k</div><div style="font:500 11px 'JetBrains Mono';color:var(--color-cs-gold-600);text-transform:uppercase;letter-spacing:.1em">Mitglieder</div></div>
+            <div><div style="font:600 28px var(--cs-serif);color:var(--cs-gold-400)">1.581</div><div style="font:500 11px 'JetBrains Mono';color:var(--cs-gold-600);text-transform:uppercase;letter-spacing:.1em">Rezepte</div></div>
+            <div><div style="font:600 28px var(--cs-serif);color:var(--cs-gold-400)">14.7k</div><div style="font:500 11px 'JetBrains Mono';color:var(--cs-gold-600);text-transform:uppercase;letter-spacing:.1em">Mitglieder</div></div>
           </div>
         </div>
         <div class="card-footer">Community · aktualisiert täglich</div>
@@ -431,11 +435,11 @@
 
     <div class="grid-2">
       <div class="callout"><span style="flex-shrink:0;font-size:14px;margin-top:1px"><i class="fa-regular fa-circle-question"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px">Neutral Callout</strong>Nützlich für allgemeine Hinweise oder Randnotizen.</div></div>
-      <div class="callout callout-gold"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-gold-700)"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-gold-900)">Pro-Tipp</strong>Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
-      <div class="callout callout-red"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-red-700)"><i class="fa-solid fa-circle-exclamation"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-red-900)">Important</strong>Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
-      <div class="callout callout-info"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-info-700)"><i class="fa-solid fa-circle-info"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-info-900)">Community Notiz</strong>Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
-      <div class="callout callout-success"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-success-700)"><i class="fa-solid fa-circle-check"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-success-900)">Gespeichert</strong>Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
-      <div class="callout callout-warning"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--color-cs-warning-700)"><i class="fa-solid fa-triangle-exclamation"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--color-cs-warning-900)">Achtung</strong>Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
+      <div class="callout callout-gold"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--cs-gold-700)"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--cs-gold-900)">Pro-Tipp</strong>Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
+      <div class="callout callout-red"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--cs-red-700)"><i class="fa-solid fa-circle-exclamation"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--cs-red-900)">Important</strong>Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
+      <div class="callout callout-info"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--cs-info-700)"><i class="fa-solid fa-circle-info"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--cs-info-900)">Community Notiz</strong>Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
+      <div class="callout callout-success"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--cs-success-700)"><i class="fa-solid fa-circle-check"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--cs-success-900)">Gespeichert</strong>Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
+      <div class="callout callout-warning"><span style="flex-shrink:0;font-size:14px;margin-top:1px;color:var(--cs-warning-700)"><i class="fa-solid fa-triangle-exclamation"></i></span><div><strong style="display:block;font-weight:700;margin-bottom:2px;color:var(--cs-warning-900)">Achtung</strong>Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
     </div>
   </section>
 
@@ -503,7 +507,7 @@
             <td class="table-td" style="text-align:right;font-family:'JetBrains Mono',monospace">8.6</td>
           </tr>
           <tr class="table-tr-hover">
-            <td class="table-td" style="display:flex;align-items:center;gap:10px"><span class="ds-avatar" style="background:radial-gradient(circle at 30% 30%,var(--color-cs-red-400),var(--color-cs-red-800));color:#fff">EM</span> Erika Musterfrau</td>
+            <td class="table-td" style="display:flex;align-items:center;gap:10px"><span class="ds-avatar" style="background:radial-gradient(circle at 30% 30%,var(--cs-red-400),var(--cs-red-800));color:#fff">EM</span> Erika Musterfrau</td>
             <td class="table-td">User</td>
             <td class="table-td"><span class="meta-chip">12</span></td>
             <td class="table-td"><span class="tag tag-neutral">Inaktiv</span></td>
@@ -531,8 +535,8 @@
       <div class="cocktail-card">
         <div class="thumb"><i class="fa-solid fa-martini-glass-citrus"></i></div>
         <div>
-          <h4>Long Island Iced Tea <i class="fa-solid fa-heart" style="color:var(--color-cs-error-500);font-size:14px"></i></h4>
-          <div class="author">von <strong style="color:var(--color-cs-ink-800)">Ripuli</strong></div>
+          <h4>Long Island Iced Tea <i class="fa-solid fa-heart" style="color:var(--cs-error-500);font-size:14px"></i></h4>
+          <div class="author">von <strong style="color:var(--cs-ink-800)">Ripuli</strong></div>
           <div class="tags">
             <span class="tag tag-success">Erfrischend</span>
             <span class="tag tag-info">Longdrink</span>
@@ -548,8 +552,8 @@
       <div class="cocktail-card">
         <div class="thumb"><i class="fa-solid fa-mug-hot"></i></div>
         <div>
-          <h4>Mojito <i class="fa-regular fa-heart" style="color:var(--color-cs-ink-400);font-size:14px"></i></h4>
-          <div class="author">von <strong style="color:var(--color-cs-ink-800)">zoidberg</strong> <span class="tag-mini" style="margin-left:4px;background:var(--color-cs-gold-100);color:var(--color-cs-gold-800)">ME</span></div>
+          <h4>Mojito <i class="fa-regular fa-heart" style="color:var(--cs-ink-400);font-size:14px"></i></h4>
+          <div class="author">von <strong style="color:var(--cs-ink-800)">zoidberg</strong> <span class="tag-mini" style="margin-left:4px;background:var(--cs-gold-100);color:var(--cs-gold-800)">ME</span></div>
           <div class="tags">
             <span class="tag tag-success">Erfrischend</span>
             <span class="tag tag-primary-soft">Rum</span>
@@ -563,8 +567,8 @@
       <div class="cocktail-card">
         <div class="thumb"><i class="fa-solid fa-whiskey-glass"></i></div>
         <div>
-          <h4>Whiskey Sour <i class="fa-regular fa-heart" style="color:var(--color-cs-ink-400);font-size:14px"></i></h4>
-          <div class="author">von <strong style="color:var(--color-cs-ink-800)">Ripuli</strong></div>
+          <h4>Whiskey Sour <i class="fa-regular fa-heart" style="color:var(--cs-ink-400);font-size:14px"></i></h4>
+          <div class="author">von <strong style="color:var(--cs-ink-800)">Ripuli</strong></div>
           <div class="tags">
             <span class="tag tag-warning">Stark</span>
             <span class="tag tag-neutral">Sauer</span>
@@ -578,7 +582,7 @@
     </div>
 
     <div class="sg-subhead">Filter toolbar</div>
-    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid var(--color-cs-ink-200);display:grid;grid-template-columns:repeat(6,1fr) auto auto;gap:12px;align-items:end;margin-bottom:28px">
+    <div style="background:#fff;padding:16px;border-radius:10px;border:1px solid var(--cs-ink-200);display:grid;grid-template-columns:repeat(6,1fr) auto auto;gap:12px;align-items:end;margin-bottom:28px">
       <div><label class="label-field">Suche</label><input class="input-field" placeholder="Rezeptname..." /></div>
       <div><label class="label-field">Bewertung</label><select class="input-field"><option>Alle</option></select></div>
       <div><label class="label-field">Kategorie</label><select class="input-field"><option>Alle</option></select></div>
@@ -594,7 +598,7 @@
   <section id="tokens" class="sg-section">
     <div class="sg-section-head"><h2>CSS tokens — paste into <code>application.css</code></h2><span class="kbd">11</span></div>
     <p class="sg-lede">These tokens are already live in your <code>@theme</code> block. The dump below is for reference — copy individual values as needed.</p>
-    <div class="ds-code" id="token-dump"></div>
+    <div class="code" id="token-dump"></div>
   </section>
 
 </div><!-- /.sg-wrap -->
@@ -604,11 +608,23 @@
 <div id="tweaks" role="dialog" aria-label="Tweaks">
   <header><span>Tweaks</span><small>Design System v2</small></header>
   <div class="body">
+    <label style="flex-direction:column;align-items:stretch;gap:4px">
+      <span>Heading serif</span>
+      <select id="tw-serif" class="input-field" style="padding:6px 8px;font-size:12px">
+        <option value="'Cormorant Garamond', Georgia, serif">Cormorant Garamond — classical</option>
+        <option value="'Playfair Display', Georgia, serif">Playfair Display — editorial</option>
+        <option value="'Libre Caslon Text', Georgia, serif">Libre Caslon — warm &amp; authored</option>
+        <option value="'EB Garamond', Georgia, serif">EB Garamond — quiet classic</option>
+        <option value="Georgia, 'Times New Roman', serif">Georgia (system)</option>
+      </select>
+    </label>
     <label>Brand red <input id="tw-red" type="color" value="#360D0C" /></label>
     <label>Brand gold <input id="tw-gold" type="color" value="#CBB859" /></label>
+    <label>Link blue <input id="tw-link" type="color" value="#2A6496" /></label>
     <label>Neutral hue <span class="val" id="tw-hue-v">28°</span><input id="tw-hue" type="range" min="0" max="60" value="28" /></label>
     <label>Neutral chroma <span class="val" id="tw-chroma-v">.014</span><input id="tw-chroma" type="range" min="0" max="40" value="14" /></label>
     <label>Radius <span class="val" id="tw-radius-v">6 / 10</span><input id="tw-radius" type="range" min="2" max="18" value="6" /></label>
+    <label>Density <span class="val" id="tw-density-v">×1.00</span><input id="tw-density" type="range" min="80" max="120" value="100" /></label>
     <div class="hint">Tokens regenerate live. Flip the toolbar toggle to hide.</div>
   </div>
 </div>
@@ -679,7 +695,7 @@ function renderScale(targetId, name, scale){
   el.appendChild(row);
 }
 
-const state = { red: '#360D0C', gold: '#CBB859', link: '#2A6496', inkHue: 28, inkChroma: 0.014, radius: 6 };
+const state = { red: '#360D0C', gold: '#CBB859', link: '#2A6496', inkHue: 28, inkChroma: 0.014, radius: 6, density: 1.0 };
 
 function buildAll(){
   const redScale  = buildScale(state.red, 9);
@@ -696,44 +712,50 @@ function buildAll(){
     return {step: STEPS[i], hex, dark: lum < 0.55 ? 1 : 0};
   });
 
-  renderScale('scale-red', 'Red',  redScale);
-  renderScale('scale-gold','Gold', goldScale);
-  renderScale('scale-link','Link', linkScale);
-  renderScale('scale-ink', 'Ink',  inkScale);
+  renderScale('scale-red',       'Red',  redScale);
+  renderScale('scale-gold',      'Gold', goldScale);
+  renderScale('scale-ink',       'Ink',  inkScale);
+  renderScale('scale-link',      'Link', linkScale);
+  renderScale('scale-link-links','Link', linkScale);
 
+  // Set --cs-* (single source of truth). Tailwind's --color-cs-* wrappers resolve automatically.
   const root = document.documentElement;
-  redScale.forEach(s  => root.style.setProperty(`--color-cs-red-${s.step}`,  s.hex));
-  goldScale.forEach(s => root.style.setProperty(`--color-cs-gold-${s.step}`, s.hex));
-  linkScale.forEach(s => root.style.setProperty(`--color-cs-link-${s.step}`, s.hex));
-  inkScale.forEach(s  => root.style.setProperty(`--color-cs-ink-${s.step}`,  s.hex));
+  redScale.forEach(s  => root.style.setProperty(`--cs-red-${s.step}`,  s.hex));
+  goldScale.forEach(s => root.style.setProperty(`--cs-gold-${s.step}`, s.hex));
+  linkScale.forEach(s => root.style.setProperty(`--cs-link-${s.step}`, s.hex));
+  inkScale.forEach(s  => root.style.setProperty(`--cs-ink-${s.step}`,  s.hex));
 
-  root.style.setProperty('--ds-radius', state.radius + 'px');
+  // Radius tokens
+  root.style.setProperty('--cs-radius',    state.radius + 'px');
+  root.style.setProperty('--cs-radius-lg', (state.radius * 1.6).toFixed(0) + 'px');
+  root.style.setProperty('--cs-radius-sm', Math.max(2, state.radius * 0.6).toFixed(0) + 'px');
+
+  // Density
+  root.style.fontSize = (16 * state.density) + 'px';
 
   const dump = [
-    '/* --- paste into @theme { ... } in application.css --- */',
+    '/* --- paste into :root { ... } in application.css --- */',
     '',
     '/* Brand — Oxblood (Dark Red) */',
-    ...redScale.map(s => `--color-cs-red-${s.step}: ${s.hex};`),
+    ...redScale.map(s => `--cs-red-${s.step}: ${s.hex};`),
     '',
     '/* Brand — Brass (Gold) */',
-    ...goldScale.map(s => `--color-cs-gold-${s.step}: ${s.hex};`),
+    ...goldScale.map(s => `--cs-gold-${s.step}: ${s.hex};`),
     '',
     '/* Link — Blue */',
-    ...linkScale.map(s => `--color-cs-link-${s.step}: ${s.hex};`),
+    ...linkScale.map(s => `--cs-link-${s.step}: ${s.hex};`),
     '',
     '/* Warm Neutral — Ink */',
-    ...inkScale.map(s => `--color-cs-ink-${s.step}: ${s.hex};`),
+    ...inkScale.map(s => `--cs-ink-${s.step}: ${s.hex};`),
     '',
     '/* Semantic */',
-    '--color-cs-success-50: #E8F6EC;  --color-cs-success-100: #C7E8D1;  --color-cs-success-500: #16A34A;  --color-cs-success-700: #0D7A35;  --color-cs-success-900: #074720;',
-    '--color-cs-warning-50: #FDF6DF;  --color-cs-warning-100: #FAE8A8;  --color-cs-warning-500: #CA8A04;  --color-cs-warning-700: #8D6002;  --color-cs-warning-900: #523701;',
-    '--color-cs-error-50:   #FCECEC;  --color-cs-error-100:   #F6CACA;  --color-cs-error-500:   #DC2626;  --color-cs-error-700:   #A01818;  --color-cs-error-900:   #5C0A0A;',
-    '--color-cs-info-50:    #EAF1F8;  --color-cs-info-100:    #CBDBEC;  --color-cs-info-500:    #2A6496;  --color-cs-info-700:    #1B4468;  --color-cs-info-900:    #0F293F;',
+    '--cs-success-50: #E8F6EC;  --cs-success-100: #C7E8D1;  --cs-success-500: #16A34A;  --cs-success-700: #0D7A35;  --cs-success-900: #074720;',
+    '--cs-warning-50: #FDF6DF;  --cs-warning-100: #FAE8A8;  --cs-warning-500: #CA8A04;  --cs-warning-700: #8D6002;  --cs-warning-900: #523701;',
+    '--cs-error-50:   #FCECEC;  --cs-error-100:   #F6CACA;  --cs-error-500:   #DC2626;  --cs-error-700:   #A01818;  --cs-error-900:   #5C0A0A;',
+    '--cs-info-50:    #EAF1F8;  --cs-info-100:    #CBDBEC;  --cs-info-500:    #2A6496;  --cs-info-700:    #1B4468;  --cs-info-900:    #0F293F;',
     '',
-    '/* Aliases */',
-    '--color-cs-dark-red: var(--color-cs-red-900);',
-    '--color-cs-gold:     var(--color-cs-gold-500);',
-    '--color-cs-link:     var(--color-cs-info-500);',
+    `/* Radii */`,
+    `--cs-radius-sm: ${Math.max(2, state.radius*0.6).toFixed(0)}px;  --cs-radius: ${state.radius}px;  --cs-radius-lg: ${(state.radius*1.6).toFixed(0)}px;`,
   ].join('\n');
   document.getElementById('token-dump').textContent = dump;
 }
@@ -746,11 +768,14 @@ window.addEventListener('message', (e) => {
 window.parent.postMessage({type:'__edit_mode_available'}, '*');
 
 const $ = (id) => document.getElementById(id);
+$('tw-serif').addEventListener('change', e => { document.documentElement.style.setProperty('--cs-serif', e.target.value); });
 $('tw-red').addEventListener('input',  e => { state.red  = e.target.value; buildAll(); });
 $('tw-gold').addEventListener('input', e => { state.gold = e.target.value; buildAll(); });
+$('tw-link').addEventListener('input', e => { state.link = e.target.value; buildAll(); });
 $('tw-hue').addEventListener('input',  e => { state.inkHue = +e.target.value; $('tw-hue-v').textContent = state.inkHue + '°'; buildAll(); });
 $('tw-chroma').addEventListener('input', e => { state.inkChroma = +e.target.value / 1000; $('tw-chroma-v').textContent = state.inkChroma.toFixed(3); buildAll(); });
 $('tw-radius').addEventListener('input', e => { state.radius = +e.target.value; $('tw-radius-v').textContent = state.radius + ' / ' + (state.radius*1.6).toFixed(0); buildAll(); });
+$('tw-density').addEventListener('input', e => { state.density = +e.target.value / 100; $('tw-density-v').textContent = '×' + state.density.toFixed(2); buildAll(); });
 
 document.addEventListener('click', (e) => {
   const sw = e.target.closest('.swatch');
