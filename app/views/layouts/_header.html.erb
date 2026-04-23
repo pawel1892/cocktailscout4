@@ -1,7 +1,7 @@
 <header class="relative z-50">
   <!-- Top Bar: Dark Red -->
   <div class="bg-cs-dark-red text-white py-2 relative z-50">
-    <div class="container mx-auto px-4 flex items-center justify-between gap-2">
+    <div class="max-w-[1180px] mx-auto px-10 w-full flex items-center justify-between gap-2">
       <!-- Left: Logo -->
       <div class="flex-shrink-0">
         <a href="/">
@@ -39,7 +39,7 @@
 
   <!-- Mobile Menu (Hidden by default) -->
   <div id="mobile-menu" class="hidden md:hidden bg-cs-dark-red border-t border-white/10 absolute w-full shadow-xl z-40 origin-top animate-in slide-in-from-top-2 duration-200">
-    <div class="container mx-auto px-4 py-4 space-y-4">
+    <div class="max-w-[1180px] mx-auto px-10 w-full py-4 space-y-4">
       
       <!-- Mobile Search -->
       <%= form_tag recipes_path, method: :get, class: "relative" do %>
@@ -80,7 +80,7 @@
   <!-- Dynamic Sub-Navigation (shown when current section has dropdown, desktop only) -->
   <% if show_subnav? %>
     <div class="hidden md:block bg-black border-t border-b border-white/10">
-      <div class="container mx-auto px-4">
+      <div class="max-w-[1180px] mx-auto px-10 w-full">
         <nav class="flex items-center space-x-6 text-white text-sm font-medium overflow-x-auto">
           <% subnav_items.each do |item| %>
             <%= link_to item[:label], item[:path], class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{subnav_item_active?(item) ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
