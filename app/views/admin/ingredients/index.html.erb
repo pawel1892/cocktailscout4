@@ -62,23 +62,23 @@
         <span class="text-sm text-cs-ink-600">Aktive Filter:</span>
 
         <% if params[:usage].present? %>
-          <span class="inline-flex items-center px-2 py-1 bg-cs-info-100 text-cs-info-900 rounded text-sm">
+          <span class="inline-flex items-center px-2 py-1 bg-cs-link-100 text-cs-link-900 rounded text-sm">
             Verwendung: <%= {"used" => "In Rezepten verwendet", "unused" => "Nicht verwendet"}[params[:usage]] %>
-            <%= link_to "×", admin_ingredients_path(usage: nil, alcohol: params[:alcohol], q: params[:q]), class: "ml-1 font-bold hover:text-cs-info-900" %>
+            <%= link_to "×", admin_ingredients_path(usage: nil, alcohol: params[:alcohol], q: params[:q]), class: "ml-1 font-bold hover:text-cs-link-900" %>
           </span>
         <% end %>
 
         <% if params[:alcohol].present? %>
-          <span class="inline-flex items-center px-2 py-1 bg-cs-info-100 text-cs-info-900 rounded text-sm">
+          <span class="inline-flex items-center px-2 py-1 bg-cs-link-100 text-cs-link-900 rounded text-sm">
             Alkohol: <%= {"alcoholic" => "Alkoholisch", "non_alcoholic" => "Nicht alkoholisch"}[params[:alcohol]] %>
-            <%= link_to "×", admin_ingredients_path(usage: params[:usage], alcohol: nil, q: params[:q]), class: "ml-1 font-bold hover:text-cs-info-900" %>
+            <%= link_to "×", admin_ingredients_path(usage: params[:usage], alcohol: nil, q: params[:q]), class: "ml-1 font-bold hover:text-cs-link-900" %>
           </span>
         <% end %>
 
         <% if params[:q].present? %>
-          <span class="inline-flex items-center px-2 py-1 bg-cs-info-100 text-cs-info-900 rounded text-sm">
+          <span class="inline-flex items-center px-2 py-1 bg-cs-link-100 text-cs-link-900 rounded text-sm">
             Suche: "<%= params[:q] %>"
-            <%= link_to "×", admin_ingredients_path(usage: params[:usage], alcohol: params[:alcohol], q: nil), class: "ml-1 font-bold hover:text-cs-info-900" %>
+            <%= link_to "×", admin_ingredients_path(usage: params[:usage], alcohol: params[:alcohol], q: nil), class: "ml-1 font-bold hover:text-cs-link-900" %>
           </span>
         <% end %>
       </div>
@@ -165,7 +165,7 @@
             <td class="px-4 py-3 text-sm text-center">
               <% count = ingredient.recipes_count.to_i %>
               <% if count > 0 %>
-                <span class="px-2 py-1 text-xs font-semibold rounded <%= count > 10 ? 'bg-cs-success-100 text-cs-success-900' : 'bg-cs-info-100 text-cs-info-900' %>">
+                <span class="px-2 py-1 text-xs font-semibold rounded <%= count > 10 ? 'bg-cs-success-100 text-cs-success-900' : 'bg-cs-link-100 text-cs-link-900' %>">
                   <%= count %>
                 </span>
               <% else %>
@@ -179,7 +179,7 @@
             </td>
             <td class="px-4 py-3 text-sm">
               <div class="flex gap-2 items-center">
-                <%= link_to "Bearbeiten", edit_admin_ingredient_path(ingredient), class: "text-cs-info-500 hover:underline" %>
+                <%= link_to "Bearbeiten", edit_admin_ingredient_path(ingredient), class: "text-cs-link-500 hover:underline" %>
                 <% if ingredient.recipes_count.to_i == 0 %>
                   <%= button_to "Löschen",
                     admin_ingredient_path(ingredient),

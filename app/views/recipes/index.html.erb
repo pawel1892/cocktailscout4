@@ -14,8 +14,8 @@
 
 <!-- Active Filters -->
 <% if active_filters.any? %>
-  <div class="mb-4 p-3 bg-cs-info-50 border border-cs-info-100 rounded-lg flex flex-wrap items-center gap-2">
-    <span class="text-xs font-semibold text-cs-info-700 uppercase tracking-wider mr-1">Filter aktiv:</span>
+  <div class="mb-4 p-3 bg-cs-link-50 border border-cs-link-100 rounded-lg flex flex-wrap items-center gap-2">
+    <span class="text-xs font-semibold text-cs-link-700 uppercase tracking-wider mr-1">Filter aktiv:</span>
     <% active_filters.each do |filter| %>
       <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id, :user_id, :collection_id, :filter).except(filter[:param])),
             class: "tag tag-info gap-1.5" do %>
@@ -24,7 +24,7 @@
       <% end %>
     <% end %>
     <%= link_to "Alle zurücksetzen", recipes_path(params.permit(:sort, :direction)),
-          class: "ml-auto text-xs text-cs-info-700 hover:text-cs-info-900 underline" %>
+          class: "ml-auto text-xs text-cs-link-700 hover:text-cs-link-900 underline" %>
   </div>
 <% end %>
 
@@ -139,7 +139,7 @@
                 <!-- Title + Favorite -->
                 <div class="flex items-center gap-2 mb-1">
                   <%= link_to recipe.title, recipe_path(recipe),
-                        class: "font-bold text-lg leading-tight text-cs-info-500 hover:text-cs-red-900 transition-colors truncate" %>
+                        class: "font-bold text-lg leading-tight text-cs-link-500 hover:text-cs-red-900 transition-colors truncate" %>
                   <favorite-toggle
                     favoritable-type="Recipe"
                     :favoritable-id="<%= recipe.id %>"

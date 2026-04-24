@@ -20,8 +20,8 @@
 
   <!-- Actions for Pending Suggestions -->
   <% if @suggestion.status_pending? %>
-    <div class="bg-cs-info-50 border border-cs-info-100 rounded-lg p-6 mb-6">
-      <h3 class="font-semibold text-cs-info-900 mb-4 flex items-center gap-2">
+    <div class="bg-cs-link-50 border border-cs-link-100 rounded-lg p-6 mb-6">
+      <h3 class="font-semibold text-cs-link-900 mb-4 flex items-center gap-2">
         <i class="fa-solid fa-gavel"></i>
         Vorschlag prüfen
       </h3>
@@ -147,7 +147,7 @@
                 <span class="text-cs-warning-700"><i class="fa-solid fa-star-half-stroke"></i> Optional</span>
               <% end %>
               <% unless rsi.is_scalable %>
-                <span class="text-cs-info-500"><i class="fa-solid fa-lock"></i> Nicht skalierbar</span>
+                <span class="text-cs-link-500"><i class="fa-solid fa-lock"></i> Nicht skalierbar</span>
               <% end %>
             </div>
           </div>
