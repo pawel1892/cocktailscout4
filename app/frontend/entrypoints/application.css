@@ -5,6 +5,15 @@
 
 @source "../../views/**/*.erb";
 
+/* Safelist for design-system color swatches (dynamically generated class names) */
+@source inline("bg-cs-red-50 bg-cs-red-100 bg-cs-red-200 bg-cs-red-300 bg-cs-red-400 bg-cs-red-500 bg-cs-red-600 bg-cs-red-700 bg-cs-red-800 bg-cs-red-900 bg-cs-red-950");
+@source inline("bg-cs-gold-50 bg-cs-gold-100 bg-cs-gold-200 bg-cs-gold-300 bg-cs-gold-400 bg-cs-gold-500 bg-cs-gold-600 bg-cs-gold-700 bg-cs-gold-800 bg-cs-gold-900 bg-cs-gold-950");
+@source inline("bg-cs-ink-50 bg-cs-ink-100 bg-cs-ink-200 bg-cs-ink-300 bg-cs-ink-400 bg-cs-ink-500 bg-cs-ink-600 bg-cs-ink-700 bg-cs-ink-800 bg-cs-ink-900 bg-cs-ink-950");
+@source inline("bg-cs-blue-50 bg-cs-blue-100 bg-cs-blue-200 bg-cs-blue-300 bg-cs-blue-400 bg-cs-blue-500 bg-cs-blue-600 bg-cs-blue-700 bg-cs-blue-800 bg-cs-blue-900 bg-cs-blue-950");
+@source inline("bg-cs-success-50 bg-cs-success-400 bg-cs-success-500 bg-cs-success-700");
+@source inline("bg-cs-warning-50 bg-cs-warning-400 bg-cs-warning-500 bg-cs-warning-700");
+@source inline("bg-cs-error-50 bg-cs-error-400 bg-cs-error-500 bg-cs-error-700");
+
 :root {
   --cs-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   --cs-radius-sm: 4px;
