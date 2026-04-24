@@ -29,7 +29,7 @@
         <div class="card">
           <div class="card-body p-4">
             <div class="flex items-start gap-3">
-               <div class="<%= is_unread ? 'unread-indicator text-cs-dark-red' : 'text-cs-ink-300' %> mt-1">
+               <div class="<%= is_unread ? 'unread-indicator text-cs-red-900' : 'text-cs-ink-300' %> mt-1">
                  <% if forum_thread.sticky %>
                    <i class="fas fa-thumbtack text-lg" title="Sticky"></i>
                  <% elsif forum_thread.locked %>
@@ -81,7 +81,7 @@
             <tr class="table-tr-hover">
               <td class="table-td">
                 <div class="flex items-center gap-4">
-                  <div class="<%= is_unread ? 'unread-indicator text-cs-dark-red' : 'text-cs-ink-300' %> w-8 flex justify-center">
+                  <div class="<%= is_unread ? 'unread-indicator text-cs-red-900' : 'text-cs-ink-300' %> w-8 flex justify-center">
                     <% if forum_thread.sticky %>
                       <i class="fas fa-thumbtack text-lg" title="Sticky"></i>
                     <% elsif forum_thread.locked %>

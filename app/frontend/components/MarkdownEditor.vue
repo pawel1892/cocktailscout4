@@ -4,7 +4,7 @@
     @dragover.prevent="isDragging = true"
     @dragleave="isDragging = false"
     @drop.prevent="onDrop"
-    :class="{ 'ring-2 ring-cs-gold ring-opacity-50': isDragging }"
+    :class="{ 'ring-2 ring-cs-gold-400 ring-opacity-50': isDragging }"
   >
     <!-- Toolbar -->
     <div class="flex flex-wrap gap-1 mb-0 p-2 bg-cs-ink-50 border border-cs-ink-300 rounded-t-md">
@@ -49,12 +49,12 @@
               <button
                 type="button"
                 @click="imageTab = 'upload'"
-                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'upload' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-cs-ink-500 hover:text-cs-ink-700']"
+                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'upload' ? 'text-cs-gold-400 border-b-2 border-cs-gold-400' : 'text-cs-ink-500 hover:text-cs-ink-700']"
               >Hochladen</button>
               <button
                 type="button"
                 @click="imageTab = 'url'"
-                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'url' ? 'text-cs-gold border-b-2 border-cs-gold' : 'text-cs-ink-500 hover:text-cs-ink-700']"
+                :class="['flex-1 px-3 py-2 text-sm font-medium', imageTab === 'url' ? 'text-cs-gold-400 border-b-2 border-cs-gold-400' : 'text-cs-ink-500 hover:text-cs-ink-700']"
               >URL</button>
             </div>
 
@@ -108,7 +108,7 @@
                   :key="size.value"
                   type="button"
                   @click="imageSize = size.value"
-                  :class="['toolbar-btn text-xs flex-1', imageSize === size.value ? '!bg-cs-dark-red !border-cs-dark-red text-white' : '']"
+                  :class="['toolbar-btn text-xs flex-1', imageSize === size.value ? '!bg-cs-red-900 !border-cs-red-900 text-white' : '']"
                 >{{ size.label }}</button>
               </div>
             </div>
@@ -202,7 +202,7 @@
         :class="[
           'px-4 py-2 font-medium text-sm',
           activeTab === 'edit'
-            ? 'text-cs-gold border-b-2 border-cs-gold'
+            ? 'text-cs-gold-400 border-b-2 border-cs-gold-400'
             : 'text-cs-ink-500 hover:text-cs-ink-700'
         ]"
       >
@@ -214,7 +214,7 @@
         :class="[
           'px-4 py-2 font-medium text-sm',
           activeTab === 'preview'
-            ? 'text-cs-gold border-b-2 border-cs-gold'
+            ? 'text-cs-gold-400 border-b-2 border-cs-gold-400'
             : 'text-cs-ink-500 hover:text-cs-ink-700'
         ]"
       >
@@ -231,7 +231,7 @@
         :name="textareaName"
         :placeholder="placeholder"
         :required="required"
-        class="w-full px-4 py-3 border border-cs-ink-300 rounded-b-md focus:ring-2 focus:ring-cs-dark-red focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
+        class="w-full px-4 py-3 border border-cs-ink-300 rounded-b-md focus:ring-2 focus:ring-cs-red-900 focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
         @input="onInput"
         @paste="onPaste"
         @keydown="onKeydown"
@@ -245,7 +245,7 @@
     </div>
 
     <!-- Upload error -->
-    <p v-if="uploadError" class="text-cs-error text-sm mt-1">{{ uploadError }}</p>
+    <p v-if="uploadError" class="text-cs-error-500 text-sm mt-1">{{ uploadError }}</p>
 
     <!-- Character counter -->
     <p v-if="markdownText.length > 0" class="form-hint mt-1">{{ markdownText.length }} Zeichen</p>
@@ -255,7 +255,7 @@
       <button
         type="button"
         @click="showHelp = !showHelp"
-        class="flex items-center gap-1 text-cs-dark-red hover:underline"
+        class="flex items-center gap-1 text-cs-red-900 hover:underline"
       >
         <i class="fas fa-info-circle"></i>
         <span>{{ showHelp ? 'Formatierungs-Hilfe ausblenden' : 'Formatierungs-Hilfe einblenden' }}</span>
@@ -295,7 +295,7 @@
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">[Link-Text](https://...)</code></td>
-              <td class="py-1.5"><a class="text-cs-blue underline">Link-Text</a></td>
+              <td class="py-1.5"><a class="text-cs-blue-500 underline">Link-Text</a></td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">- Punkt 1<br>- Punkt 2</code></td>
@@ -307,11 +307,11 @@
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">&gt; Zitat-Text</code></td>
-              <td class="py-1.5 border-l-2 border-cs-gold pl-2 italic text-cs-ink-600">Zitat-Text</td>
+              <td class="py-1.5 border-l-2 border-cs-gold-400 pl-2 italic text-cs-ink-600">Zitat-Text</td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">[quote=Name]Text[/quote]</code></td>
-              <td class="py-1.5"><span class="text-cs-dark-red font-semibold">Name</span> <span class="italic text-cs-ink-600">schrieb: Text</span></td>
+              <td class="py-1.5"><span class="text-cs-red-900 font-semibold">Name</span> <span class="italic text-cs-ink-600">schrieb: Text</span></td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">`inline code`</code></td>
@@ -708,14 +708,14 @@ function onKeydown(event) {
 }
 
 .toolbar-btn {
-  @apply px-2 py-1 text-sm bg-white border border-cs-ink-300 rounded hover:bg-cs-ink-100 focus:outline-none focus:ring-2 focus:ring-cs-gold;
+  @apply px-2 py-1 text-sm bg-white border border-cs-ink-300 rounded hover:bg-cs-ink-100 focus:outline-none focus:ring-2 focus:ring-cs-gold-400;
 }
 
 .md-quote {
-  @apply bg-cs-ink-50 border-l-4 border-cs-gold my-4 rounded-r;
+  @apply bg-cs-ink-50 border-l-4 border-cs-gold-400 my-4 rounded-r;
 }
 .md-quote figcaption {
-  @apply font-bold text-sm text-cs-dark-red px-4 pt-3 block;
+  @apply font-bold text-sm text-cs-red-900 px-4 pt-3 block;
 }
 .md-quote blockquote {
   @apply italic text-cs-ink-700 px-4 pb-3 m-0 border-0;

@@ -41,7 +41,7 @@
           <button
             v-if="data.total > 0"
             @click="toggleAll"
-            class="ml-auto text-sm text-cs-dark-red hover:underline"
+            class="ml-auto text-sm text-cs-red-900 hover:underline"
           >
             {{ allExpanded ? 'Alle zuklappen' : 'Alle ausklappen' }}
           </button>

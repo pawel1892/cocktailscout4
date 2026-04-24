@@ -4,14 +4,14 @@
 
 <!-- Tabs -->
 <div class="flex border-b border-cs-ink-200 mb-6">
-  <%= link_to admin_reports_path(filter: 'pending'), class: "py-2 px-4 font-medium transition #{params[:filter] != 'all' ? 'text-cs-dark-red border-b-2 border-cs-dark-red' : 'text-cs-ink-500 hover:text-cs-ink-700'}" do %>
+  <%= link_to admin_reports_path(filter: 'pending'), class: "py-2 px-4 font-medium transition #{params[:filter] != 'all' ? 'text-cs-red-900 border-b-2 border-cs-red-900' : 'text-cs-ink-500 hover:text-cs-ink-700'}" do %>
     Offen
     <% if Report.pending.count > 0 %>
       <span class="ml-2 bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"><%= Report.pending.count %></span>
     <% end %>
   <% end %>
   
-  <%= link_to "Erledigt", admin_reports_path(filter: 'all'), class: "py-2 px-4 font-medium transition #{params[:filter] == 'all' ? 'text-cs-dark-red border-b-2 border-cs-dark-red' : 'text-cs-ink-500 hover:text-cs-ink-700'}" %>
+  <%= link_to "Erledigt", admin_reports_path(filter: 'all'), class: "py-2 px-4 font-medium transition #{params[:filter] == 'all' ? 'text-cs-red-900 border-b-2 border-cs-red-900' : 'text-cs-ink-500 hover:text-cs-ink-700'}" %>
 </div>
 
 <!-- List -->
@@ -63,7 +63,7 @@
                       end
                     %>
                     <% if link_target != "#" %>
-                      <a href="<%= link_target %>" target="_blank" class="text-cs-dark-red hover:underline flex items-center gap-1 break-all">
+                      <a href="<%= link_target %>" target="_blank" class="text-cs-red-900 hover:underline flex items-center gap-1 break-all">
                         Inhalt ansehen: <%= link_target %>
                       </a>
                     <% end %>
@@ -91,7 +91,7 @@
 
             <% if report.pending? %>
               <%= form_with url: admin_report_path(report), method: :patch, class: "w-full space-y-2" do |f| %>
-                <%= f.text_area :resolution_notes, rows: 2, placeholder: "Notiz (optional)...", class: "w-full text-sm border-cs-ink-300 rounded focus:ring-cs-dark-red focus:border-cs-dark-red" %>
+                <%= f.text_area :resolution_notes, rows: 2, placeholder: "Notiz (optional)...", class: "w-full text-sm border-cs-ink-300 rounded focus:ring-cs-red-900 focus:border-cs-red-900" %>
                 
                 <div class="flex gap-2 justify-end">
                   <button type="submit" name="status" value="dismissed" class="px-3 py-1 text-sm border border-cs-ink-300 rounded hover:bg-cs-ink-50 text-cs-ink-700 transition">

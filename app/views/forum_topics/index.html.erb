@@ -11,7 +11,7 @@
             <h3 class="text-lg font-bold">
               <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link hover:underline" %>
               <% if is_unread %>
-                <span class="unread-indicator ml-2 inline-block w-2 h-2 bg-cs-dark-red rounded-full" title="Ungelesen"></span>
+                <span class="unread-indicator ml-2 inline-block w-2 h-2 bg-cs-red-900 rounded-full" title="Ungelesen"></span>
               <% end %>
             </h3>
             <span class="tag tag-neutral"><%= forum_topic.thread_count %> Themen</span>
@@ -59,7 +59,7 @@
             <td class="table-td">
               <div class="flex items-center">
                 <% if is_unread %>
-                  <div class="unread-indicator mr-3 text-cs-dark-red" title="Neue Beiträge">
+                  <div class="unread-indicator mr-3 text-cs-red-900" title="Neue Beiträge">
                     <i class="fas fa-comments text-xl"></i>
                   </div>
                 <% else %>

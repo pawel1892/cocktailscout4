@@ -44,9 +44,9 @@ onMounted(() => {
 
 const TYPE_CONFIG = {
   forum_post:        { icon: 'fa-comments',     iconColor: 'text-blue-500' },
-  rating:            { icon: 'fa-star',          iconColor: 'text-cs-gold' },
+  rating:            { icon: 'fa-star',          iconColor: 'text-cs-gold-400' },
   recipe_image:      { icon: 'fa-camera',        iconColor: 'text-purple-500' },
-  recipe:            { icon: 'fa-martini-glass', iconColor: 'text-cs-dark-red' },
+  recipe:            { icon: 'fa-martini-glass', iconColor: 'text-cs-red-900' },
   user_registration: { icon: 'fa-user-plus',     iconColor: 'text-green-500' },
   recipe_comment:    { icon: 'fa-message',       iconColor: 'text-orange-400' },
 }

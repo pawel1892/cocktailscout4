@@ -1,6 +1,6 @@
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-md mx-auto bg-white rounded shadow-md border border-cs-ink-200 p-6">
-    <h1 class="text-2xl font-bold mb-6 text-cs-dark-red">Passwort ändern</h1>
+    <h1 class="text-2xl font-bold mb-6 text-cs-red-900">Passwort ändern</h1>
 
     <%= tag.div(flash[:alert], class: "mb-4 text-red-600 bg-red-50 p-3 rounded") if flash[:alert] %>
     <%= tag.div(flash[:notice], class: "mb-4 text-cs-success-500 bg-cs-success-50 p-3 rounded") if flash[:notice] %>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="flex items-center justify-between pt-4">
-        <%= link_to "Abbrechen", root_path, class: "text-cs-ink-500 hover:text-cs-dark-red" %>
+        <%= link_to "Abbrechen", root_path, class: "text-cs-ink-500 hover:text-cs-red-900" %>
         <%= form.submit "Passwort ändern", class: "btn btn-primary" %>
       </div>
     <% end %>

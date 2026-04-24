@@ -7,7 +7,7 @@
   <div class="border-b border-cs-ink-200">
     <nav class="flex -mb-px">
       <%= link_to admin_images_path(tab: "forum"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{(@tab == 'forum' || @tab.nil?) ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{(@tab == 'forum' || @tab.nil?) ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-comments"></i>
         Forum-Bilder
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">
@@ -22,7 +22,7 @@
       <% end %>
 
       <%= link_to admin_images_path(tab: "avatar"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{@tab == 'avatar' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{@tab == 'avatar' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-user-circle"></i>
         Avatare
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">

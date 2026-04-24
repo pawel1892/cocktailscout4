@@ -53,7 +53,7 @@
           <button
             type="button"
             @click="showHelpModal = true"
-            class="flex items-center gap-1 text-sm text-cs-ink-400 hover:text-cs-gold transition-colors"
+            class="flex items-center gap-1 text-sm text-cs-ink-400 hover:text-cs-gold-400 transition-colors"
           >
             <i class="fas fa-circle-question"></i>
             <span>Anleitung</span>
@@ -74,7 +74,7 @@
       <base-modal v-model="showHelpModal" max-width="max-w-2xl">
         <template #header>
           <h3 class="text-xl font-bold text-cs-ink-900">
-            <i class="fas fa-circle-question mr-2 text-cs-gold"></i>
+            <i class="fas fa-circle-question mr-2 text-cs-gold-400"></i>
             Zutaten erfassen – So geht's
           </h3>
         </template>
@@ -201,7 +201,7 @@
       <div v-for="(ingredient, index) in ingredients" :key="index" class="card p-4 mb-4">
         <!-- Preview Mode -->
         <div v-if="ingredient.isPreview" class="flex items-start gap-2">
-          <span class="text-cs-gold mt-1">•</span>
+          <span class="text-cs-gold-400 mt-1">•</span>
           <span class="flex-1">
             <strong v-if="ingredient.amount">{{ formatIngredientAmount(ingredient) }}</strong>
             {{ ingredient.displayName || ingredient.selectedIngredient?.name || 'Zutat auswählen' }}
@@ -216,7 +216,7 @@
             <button
               type="button"
               @click="ingredient.isPreview = false"
-              class="text-cs-ink-500 hover:text-cs-dark-red transition-colors"
+              class="text-cs-ink-500 hover:text-cs-red-900 transition-colors"
               title="Bearbeiten"
             >
               <i class="fas fa-pencil"></i>
@@ -225,7 +225,7 @@
               type="button"
               @click="removeIngredient(index)"
               :disabled="ingredients.length <= 2"
-              class="text-cs-ink-400 hover:text-cs-error transition-colors"
+              class="text-cs-ink-400 hover:text-cs-error-500 transition-colors"
               :class="{ 'opacity-30 cursor-not-allowed': ingredients.length <= 2 }"
               title="Entfernen"
             >
@@ -247,7 +247,7 @@
             <button
               type="button"
               @click="ingredient.isPreview = true"
-              class="text-cs-ink-500 hover:text-cs-dark-red transition-colors text-sm"
+              class="text-cs-ink-500 hover:text-cs-red-900 transition-colors text-sm"
               title="Vorschau"
             >
               <i class="fas fa-eye mr-1"></i>Vorschau
@@ -311,7 +311,7 @@
                 type="button"
                 @click="removeIngredient(index)"
                 :disabled="ingredients.length <= 2"
-                class="text-cs-ink-400 hover:text-cs-error transition-colors"
+                class="text-cs-ink-400 hover:text-cs-error-500 transition-colors"
                 :class="{ 'opacity-30 cursor-not-allowed': ingredients.length <= 2 }"
                 title="Entfernen"
               >
@@ -359,7 +359,7 @@
                   <input
                     type="checkbox"
                     v-model="ingredient.isOptional"
-                    class="h-4 w-4 text-cs-gold focus:ring-cs-gold border-cs-ink-300 rounded"
+                    class="h-4 w-4 text-cs-gold-400 focus:ring-cs-gold-400 border-cs-ink-300 rounded"
                   />
                   <span class="text-sm">Optional</span>
                 </label>
@@ -368,7 +368,7 @@
                   <input
                     type="checkbox"
                     v-model="ingredient.isScalable"
-                    class="h-4 w-4 text-cs-gold focus:ring-cs-gold border-cs-ink-300 rounded"
+                    class="h-4 w-4 text-cs-gold-400 focus:ring-cs-gold-400 border-cs-ink-300 rounded"
                   />
                   <span class="text-sm">Skalierbar</span>
                 </label>
@@ -397,7 +397,7 @@
         <input
           type="checkbox"
           v-model="isPublic"
-          class="h-5 w-5 text-cs-gold focus:ring-cs-gold border-cs-ink-300 rounded"
+          class="h-5 w-5 text-cs-gold-400 focus:ring-cs-gold-400 border-cs-ink-300 rounded"
         />
         <span class="text-sm font-medium text-cs-ink-700">
           <i class="fas fa-eye mr-1"></i>Rezept veröffentlichen

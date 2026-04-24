@@ -10,7 +10,7 @@
             {{ user.username }}
             <span
               v-if="totalNotifications > 0"
-              class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
+              class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
             >
               {{ totalNotifications }}
             </span>
@@ -38,7 +38,7 @@
                 Meine Nachrichten
                 <span
                   v-if="unreadCount > 0"
-                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
+                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
                 >
                   {{ unreadCount }}
                 </span>
@@ -73,7 +73,7 @@
                 Admin Bereich
                 <span
                   v-if="reportCount > 0"
-                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
+                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
                 >
                   {{ reportCount }}
                 </span>
@@ -87,7 +87,7 @@
                 Rezeptvorschläge
                 <span
                   v-if="suggestionCount > 0"
-                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-dark-red rounded-full"
+                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
                 >
                   {{ suggestionCount }}
                 </span>
@@ -96,13 +96,13 @@
           </div>
         </div>
       </span>
-      <button @click="logout" class="hover:underline bg-transparent border-0 p-0 text-cs-gold cursor-pointer">
+      <button @click="logout" class="hover:underline bg-transparent border-0 p-0 text-cs-gold-400 cursor-pointer">
         Logout
       </button>
     </template>
     <template v-else>
-      <button @click="openLogin" class="hover:underline bg-transparent border-0 p-0 text-cs-gold cursor-pointer">Login</button>
-      <button @click="openRegister" class="hover:underline bg-transparent border-0 p-0 text-cs-gold cursor-pointer">Registrieren</button>
+      <button @click="openLogin" class="hover:underline bg-transparent border-0 p-0 text-cs-gold-400 cursor-pointer">Login</button>
+      <button @click="openRegister" class="hover:underline bg-transparent border-0 p-0 text-cs-gold-400 cursor-pointer">Registrieren</button>
     </template>
 
     <!-- Modal -->

@@ -48,7 +48,7 @@
         <div class="card-body p-4 sm:p-6">
           <div class="flex items-center justify-between mb-3">
             <h2 class="text-lg font-semibold text-cs-ink-800">Alle Bewertungen nach Punktzahl</h2>
-            <button @click="toggleAll" class="text-sm text-cs-dark-red hover:underline">
+            <button @click="toggleAll" class="text-sm text-cs-red-900 hover:underline">
               {{ allExpanded ? 'Alle zuklappen' : 'Alle ausklappen' }}
             </button>
           </div>

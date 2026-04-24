@@ -30,7 +30,7 @@
                  <i class="fas fa-comment text-lg"></i>
                </div>
                <div class="flex-1 min-w-0">
-                  <div class="text-xs text-cs-gold font-bold uppercase mb-1">
+                  <div class="text-xs text-cs-gold-400 font-bold uppercase mb-1">
                     <%= forum_thread.forum_topic.name %>
                   </div>
                   <h3 class="text-base font-bold leading-tight mb-1">
@@ -74,7 +74,7 @@
             
             <tr class="table-tr-hover">
               <td class="table-td">
-                <%= link_to forum_thread.forum_topic.name, forum_topic_path(forum_thread.forum_topic), class: "text-xs font-bold text-cs-ink-500 uppercase hover:text-cs-gold transition-colors" %>
+                <%= link_to forum_thread.forum_topic.name, forum_topic_path(forum_thread.forum_topic), class: "text-xs font-bold text-cs-ink-500 uppercase hover:text-cs-gold-400 transition-colors" %>
               </td>
               <td class="table-td">
                 <div class="flex flex-col gap-1">
@@ -89,7 +89,7 @@
                   <% if hit_post %>
                     <div class="text-sm text-cs-ink-600 bg-cs-warning-50 p-2 rounded border border-cs-warning-100 mt-1 max-w-xl">
                       <span class="text-xs font-bold text-cs-ink-500 uppercase block mb-0.5">Treffer in Beitrag #<%= hit_post.id %>:</span>
-                      <i class="fas fa-quote-left text-cs-gold/50 mr-1 text-xs"></i>
+                      <i class="fas fa-quote-left text-cs-gold-400/50 mr-1 text-xs"></i>
                       <%= truncate(strip_tags(hit_post.body), length: 150) %>
                     </div>
                   <% end %>

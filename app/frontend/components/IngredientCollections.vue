@@ -24,7 +24,7 @@
         <p class="text-cs-ink-600 mb-6">Erstelle deine erste Zutatenliste und verwalte deine Bar.</p>
         <button
           @click="showCreateModal = true"
-          class="bg-cs-dark-red text-white px-6 py-2 rounded-lg hover:bg-cs-dark-red/90 transition"
+          class="bg-cs-red-900 text-white px-6 py-2 rounded-lg hover:bg-cs-red-900/90 transition"
         >
           Erste Liste erstellen
         </button>
@@ -37,7 +37,7 @@
       <div class="flex justify-end">
         <button
           @click="showCreateModal = true"
-          class="bg-cs-dark-red text-white px-4 py-2 rounded-lg hover:bg-cs-dark-red/90 transition flex items-center gap-2"
+          class="bg-cs-red-900 text-white px-4 py-2 rounded-lg hover:bg-cs-red-900/90 transition flex items-center gap-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -61,7 +61,7 @@
                   <h3 class="text-xl font-semibold text-cs-ink-900">{{ collection.name }}</h3>
                   <span
                     v-if="collection.is_default"
-                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cs-gold text-white"
+                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cs-gold-400 text-white"
                   >
                     Standard
                   </span>
@@ -72,7 +72,7 @@
                 <a
                   v-if="collection.doable_recipes_count > 0"
                   :href="`/rezepte?collection_id=${collection.id}`"
-                  class="text-sm text-cs-dark-red hover:text-cs-dark-red/80 font-medium flex items-center gap-1"
+                  class="text-sm text-cs-red-900 hover:text-cs-red-900/80 font-medium flex items-center gap-1"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
@@ -125,7 +125,7 @@
             <div class="pt-4 border-t border-cs-ink-100">
               <a
                 :href="`/ingredient_collections/${collection.id}/edit`"
-                class="block w-full bg-cs-dark-red hover:bg-cs-dark-red/90 text-white px-4 py-2 rounded-lg transition text-sm font-medium text-center"
+                class="block w-full bg-cs-red-900 hover:bg-cs-red-900/90 text-white px-4 py-2 rounded-lg transition text-sm font-medium text-center"
               >
                 Zutaten verwalten
               </a>

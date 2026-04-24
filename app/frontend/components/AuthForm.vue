@@ -8,7 +8,7 @@
     </div>
 
     <div v-else>
-      <h2 class="text-xl font-bold mb-6 text-center text-cs-dark-red">{{ isLoginMode ? 'Anmelden' : 'Registrieren' }}</h2>
+      <h2 class="text-xl font-bold mb-6 text-center text-cs-red-900">{{ isLoginMode ? 'Anmelden' : 'Registrieren' }}</h2>
       
       <form @submit.prevent="handleSubmit">
         <div v-if="!isLoginMode" class="form-group">
@@ -96,15 +96,15 @@
 
         <div v-if="isLoginMode" class="mt-4 text-center space-y-1">
           <div>
-            <a href="/passwords/new" class="text-cs-ink-500 hover:text-cs-dark-red text-xs">Passwort vergessen?</a>
+            <a href="/passwords/new" class="text-cs-ink-500 hover:text-cs-red-900 text-xs">Passwort vergessen?</a>
           </div>
           <div>
-            <a href="/confirmations/new" class="text-cs-ink-500 hover:text-cs-dark-red text-xs">Bestätigungs-E-Mail nicht erhalten?</a>
+            <a href="/confirmations/new" class="text-cs-ink-500 hover:text-cs-red-900 text-xs">Bestätigungs-E-Mail nicht erhalten?</a>
           </div>
         </div>
         
         <div class="mt-4 text-center">
-            <a href="#" @click.prevent="toggleMode" class="text-cs-dark-red hover:underline text-sm">
+            <a href="#" @click.prevent="toggleMode" class="text-cs-red-900 hover:underline text-sm">
                 {{ isLoginMode ? "Noch kein Konto? Registrieren" : "Bereits registriert? Anmelden" }}
             </a>
         </div>

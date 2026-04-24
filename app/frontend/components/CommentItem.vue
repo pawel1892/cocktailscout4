@@ -74,7 +74,7 @@
               <button
                 v-if="comment.can_edit && !editing"
                 @click="startEdit"
-                class="text-cs-ink-400 hover:text-cs-gold transition-colors"
+                class="text-cs-ink-400 hover:text-cs-gold-400 transition-colors"
                 title="Bearbeiten"
               >
                 <i class="fas fa-pencil-alt text-xs"></i>
@@ -82,7 +82,7 @@
               <button
                 v-if="comment.can_delete"
                 @click="confirmDelete"
-                class="text-cs-ink-400 hover:text-cs-error transition-colors"
+                class="text-cs-ink-400 hover:text-cs-error-500 transition-colors"
                 title="Löschen"
               >
                 <i class="fas fa-trash text-xs"></i>
@@ -120,7 +120,7 @@
             <button
               v-if="isAuthenticated"
               @click="showReplyForm = !showReplyForm"
-              class="hover:text-cs-dark-red transition-colors font-medium"
+              class="hover:text-cs-red-900 transition-colors font-medium"
             >
               <i class="fas fa-reply mr-1"></i>{{ showReplyForm ? 'Abbrechen' : 'Antworten' }}
             </button>

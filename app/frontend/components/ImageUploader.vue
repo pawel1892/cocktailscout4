@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-      <i class="fas fa-camera text-cs-gold"></i>
+      <i class="fas fa-camera text-cs-gold-400"></i>
       Foto hochladen
     </h2>
 
@@ -22,7 +22,7 @@
       <div
         class="relative border-2 border-dashed rounded-lg transition-colors cursor-pointer"
         :class="[
-          isDragging ? 'border-cs-gold bg-amber-50' : 'border-cs-ink-300 hover:border-cs-gold hover:bg-cs-ink-50',
+          isDragging ? 'border-cs-gold-400 bg-amber-50' : 'border-cs-ink-300 hover:border-cs-gold-400 hover:bg-cs-ink-50',
           previewUrl ? 'p-2' : 'p-8'
         ]"
         @dragover.prevent="isDragging = true"

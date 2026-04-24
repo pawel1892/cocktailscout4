@@ -4,7 +4,7 @@
       <!-- Header with scaling controls -->
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
         <h2 class="text-2xl font-bold flex items-center gap-2">
-          <i class="fas fa-list text-cs-gold"></i>
+          <i class="fas fa-list text-cs-gold-400"></i>
           Zutaten
         </h2>
         <!-- Scaling controls (only shown if recipe is scalable) -->
@@ -24,7 +24,7 @@
 
       <!-- Loading indicator -->
       <div v-if="loading" class="flex justify-center py-4">
-        <i class="fas fa-spinner fa-spin text-cs-gold text-2xl"></i>
+        <i class="fas fa-spinner fa-spin text-cs-gold-400 text-2xl"></i>
       </div>
 
       <!-- Ingredients list -->
@@ -32,7 +32,7 @@
         <li v-for="ingredient in ingredients"
             :key="ingredient.id"
             class="flex items-start gap-2">
-          <span class="text-cs-gold mt-1">•</span>
+          <span class="text-cs-gold-400 mt-1">•</span>
           <span v-if="ingredient.needs_review">
             <!-- Uncertain ingredient: show original description -->
             {{ ingredient.old_description }}
@@ -161,7 +161,7 @@ async function fetchScaledIngredients(factor) {
 
 function buttonClasses(value) {
   const baseClasses = 'px-3 py-1 rounded text-sm transition-colors disabled:opacity-50'
-  const activeClasses = 'bg-cs-dark-red text-white font-semibold'
+  const activeClasses = 'bg-cs-red-900 text-white font-semibold'
   const inactiveClasses = 'bg-cs-ink-100 text-cs-ink-700 hover:bg-cs-ink-200'
 
   return scaleFactor.value === value

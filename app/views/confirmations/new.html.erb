@@ -1,5 +1,5 @@
 <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md border border-cs-ink-200">
-  <h1 class="text-2xl font-bold mb-6 text-center text-cs-dark-red">Bestätigung erneut senden</h1>
+  <h1 class="text-2xl font-bold mb-6 text-center text-cs-red-900">Bestätigung erneut senden</h1>
 
   <%= tag.div(flash[:alert], class: "mb-4 text-red-600 bg-red-50 p-3 rounded") if flash[:alert] %>
 
@@ -15,6 +15,6 @@
   <% end %>
 
   <div class="mt-4 text-center text-sm">
-    Bereits bestätigt? <%= link_to "Login", new_session_path, class: "text-cs-dark-red hover:underline" %>
+    Bereits bestätigt? <%= link_to "Login", new_session_path, class: "text-cs-red-900 hover:underline" %>
   </div>
 </div>

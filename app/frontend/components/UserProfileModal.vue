@@ -132,7 +132,7 @@ const getGenderText = (gender) => {
           <a
             v-if="!isOwnProfile && !loading && profile && currentUser"
             :href="`/nachrichten/new?receiver_id=${profile.id}`"
-            class="px-3 py-1.5 text-sm text-white bg-cs-dark-red rounded-lg hover:bg-opacity-90 transition"
+            class="px-3 py-1.5 text-sm text-white bg-cs-red-900 rounded-lg hover:bg-opacity-90 transition"
           >
             <i class="fa-solid fa-envelope mr-2"></i>
             Nachricht senden

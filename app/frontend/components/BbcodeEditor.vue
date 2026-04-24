@@ -37,7 +37,7 @@
       v-model="content"
       :id="textareaId"
       :name="textareaName"
-      class="w-full px-4 py-3 border border-cs-ink-300 rounded-b-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
+      class="w-full px-4 py-3 border border-cs-ink-300 rounded-b-lg focus:ring-2 focus:ring-cs-red-900 focus:border-transparent resize-y min-h-[300px] font-mono text-sm"
       placeholder="Schreibe deinen Beitrag..."
       @input="$emit('update:modelValue', content)"
     ></textarea>
@@ -47,7 +47,7 @@
       <button
         type="button"
         @click="showHelp = !showHelp"
-        class="flex items-center gap-1 text-cs-dark-red hover:underline mb-1"
+        class="flex items-center gap-1 text-cs-red-900 hover:underline mb-1"
       >
         <i class="fas fa-info-circle"></i>
         <span>{{ showHelp ? 'Formatierungs-Hilfe ausblenden' : 'Formatierungs-Hilfe einblenden' }}</span>

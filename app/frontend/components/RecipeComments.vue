@@ -3,7 +3,7 @@
     <div class="card-body p-4 sm:p-6">
       <!-- Header -->
       <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-        <i class="fas fa-comments text-cs-gold"></i>
+        <i class="fas fa-comments text-cs-gold-400"></i>
         Kommentare
         <span class="text-base font-normal text-cs-ink-500">({{ totalCommentCount }})</span>
       </h2>
@@ -41,7 +41,7 @@
         </div>
         <div v-else class="bg-cs-ink-50 rounded-lg p-4 border border-cs-ink-200 text-center">
           <p class="text-cs-ink-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
-          <a href="/session/new" class="text-cs-dark-red hover:underline font-medium">Jetzt anmelden</a>
+          <a href="/session/new" class="text-cs-red-900 hover:underline font-medium">Jetzt anmelden</a>
         </div>
       </div>
 
@@ -86,7 +86,7 @@
         <!-- Active filter summary -->
         <p v-if="isFiltering" class="text-xs text-cs-ink-500">
           {{ filteredComments.length }} von {{ comments.length }} Kommentar{{ comments.length !== 1 ? 'en' : '' }}
-          <button @click="clearFilters" class="ml-1 text-cs-dark-red hover:underline">zurücksetzen</button>
+          <button @click="clearFilters" class="ml-1 text-cs-red-900 hover:underline">zurücksetzen</button>
         </p>
       </div>
 

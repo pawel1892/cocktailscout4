@@ -21,7 +21,7 @@
 
         <div class="card-body p-2 sm:p-3">
           <h3 class="font-bold text-sm sm:text-base mb-1 truncate">
-            <a :href="image.recipeUrl" class="hover:text-cs-gold transition-colors">{{ image.recipeTitle }}</a>
+            <a :href="image.recipeUrl" class="hover:text-cs-gold-400 transition-colors">{{ image.recipeTitle }}</a>
           </h3>
           <p class="text-xs text-cs-ink-600 flex items-center gap-1 truncate">
             von <UserBadge :user="image.user" layout="text" />

@@ -10,7 +10,7 @@
         <button 
           v-if="canRate && !showInput" 
           @click="showInput = true" 
-          class="text-cs-dark-red hover:underline font-medium"
+          class="text-cs-red-900 hover:underline font-medium"
         >
           Jetzt bewerten
         </button>

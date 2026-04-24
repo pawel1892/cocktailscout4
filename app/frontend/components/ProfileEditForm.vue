@@ -169,7 +169,7 @@ const onAvatarDeleted = (avatarUrls) => {
         type="button"
         @click="saveProfile"
         :disabled="loading"
-        class="px-4 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        class="px-4 py-2 bg-cs-red-900 text-white rounded-lg hover:bg-cs-red-900/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <i v-if="loading" class="fa-solid fa-spinner fa-spin mr-2"></i>
         <i v-else class="fa-solid fa-save mr-2"></i>

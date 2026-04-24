@@ -10,7 +10,7 @@
   <div class="border-b border-cs-ink-200">
     <nav class="flex -mb-px">
       <%= link_to admin_recipe_suggestions_path,
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status].blank? ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status].blank? ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         Alle
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">
           <%= RecipeSuggestion.count %>
@@ -18,7 +18,7 @@
       <% end %>
 
       <%= link_to admin_recipe_suggestions_path(status: "pending"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'pending' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'pending' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-clock"></i>
         Wartend
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-yellow-200 text-cs-warning-900 rounded-full">
@@ -27,7 +27,7 @@
       <% end %>
 
       <%= link_to admin_recipe_suggestions_path(status: "approved"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'approved' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'approved' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-check-circle"></i>
         Genehmigt
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-green-200 text-cs-success-900 rounded-full">
@@ -36,7 +36,7 @@
       <% end %>
 
       <%= link_to admin_recipe_suggestions_path(status: "rejected"),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'rejected' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'rejected' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-times-circle"></i>
         Abgelehnt
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-red-200 text-red-800 rounded-full">
@@ -74,7 +74,7 @@
         <% @suggestions.each do |suggestion| %>
           <tr class="hover:bg-cs-ink-50">
             <td class="px-6 py-4">
-              <%= link_to suggestion.title, admin_recipe_suggestion_path(suggestion), class: "text-sm font-medium text-cs-dark-red link" %>
+              <%= link_to suggestion.title, admin_recipe_suggestion_path(suggestion), class: "text-sm font-medium text-cs-red-900 link" %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-cs-ink-900"><%= suggestion.user.username %></div>
@@ -86,7 +86,7 @@
               <div class="text-sm text-cs-ink-900"><%= l(suggestion.created_at, format: :short) %></div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <%= link_to "Details", admin_recipe_suggestion_path(suggestion), class: "text-cs-dark-red hover:text-cs-dark-red/80" %>
+              <%= link_to "Details", admin_recipe_suggestion_path(suggestion), class: "text-cs-red-900 hover:text-cs-red-900/80" %>
             </td>
           </tr>
         <% end %>

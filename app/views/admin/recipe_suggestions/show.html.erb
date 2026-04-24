@@ -133,9 +133,9 @@
           <div class="flex-1">
             <div class="font-medium">
               <% if rsi.amount && rsi.unit %>
-                <span class="text-cs-dark-red"><%= rsi.amount %> <%= rsi.unit.display_name_for(rsi.amount) %></span>
+                <span class="text-cs-red-900"><%= rsi.amount %> <%= rsi.unit.display_name_for(rsi.amount) %></span>
               <% elsif rsi.amount %>
-                <span class="text-cs-dark-red"><%= rsi.amount %>x</span>
+                <span class="text-cs-red-900"><%= rsi.amount %>x</span>
               <% end %>
               <%= rsi.display_name.presence || rsi.ingredient.name %>
             </div>

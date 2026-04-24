@@ -2,7 +2,7 @@
   <div>
     <!-- Back Link -->
     <div class="mb-6">
-      <a href="/meine-bar" class="text-cs-dark-red hover:text-cs-dark-red/80 font-medium flex items-center gap-2">
+      <a href="/meine-bar" class="text-cs-red-900 hover:text-cs-red-900/80 font-medium flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
         </svg>
@@ -19,7 +19,7 @@
         <a
           v-if="doableRecipesCount > 0"
           :href="`/rezepte?collection_id=${collectionId}`"
-          class="text-cs-dark-red hover:text-cs-dark-red/80 font-medium flex items-center gap-1"
+          class="text-cs-red-900 hover:text-cs-red-900/80 font-medium flex items-center gap-1"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
@@ -46,7 +46,7 @@
 
     <!-- Current Ingredients -->
     <div class="mb-12">
-      <h2 class="text-xl font-semibold mb-4 text-cs-dark-red">
+      <h2 class="text-xl font-semibold mb-4 text-cs-red-900">
         In deiner Liste ({{ currentIngredients.length }})
       </h2>
       <div v-if="filteredCurrentIngredients.length > 0" class="flex flex-wrap gap-2">
@@ -56,7 +56,7 @@
           @click.prevent.stop="removeIngredient(ingredient)"
           type="button"
           :disabled="pendingIds.has(ingredient.id)"
-          class="px-3 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/80 transition text-sm font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          class="px-3 py-2 bg-cs-red-900 text-white rounded-lg hover:bg-cs-red-900/80 transition text-sm font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {{ ingredient.name }} <span class="opacity-75">({{ ingredient.recipes_count }})</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">

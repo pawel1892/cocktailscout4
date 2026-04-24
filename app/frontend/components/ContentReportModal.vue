@@ -3,7 +3,7 @@
     <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-200">
       
       <!-- Header -->
-      <div class="bg-cs-dark-red text-white px-6 py-4 flex justify-between items-center">
+      <div class="bg-cs-red-900 text-white px-6 py-4 flex justify-between items-center">
         <h3 class="font-bold text-lg">Inhalt melden</h3>
         <button @click="close" class="text-white/80 hover:text-white">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
@@ -34,19 +34,19 @@
             <label class="block text-sm font-medium text-cs-ink-700">Grund</label>
             <div class="space-y-2">
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" v-model="form.reason" value="spam" class="text-cs-dark-red focus:ring-cs-dark-red">
+                <input type="radio" v-model="form.reason" value="spam" class="text-cs-red-900 focus:ring-cs-red-900">
                 <span>Spam / Werbung</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" v-model="form.reason" value="inappropriate" class="text-cs-dark-red focus:ring-cs-dark-red">
+                <input type="radio" v-model="form.reason" value="inappropriate" class="text-cs-red-900 focus:ring-cs-red-900">
                 <span>Unangemessener Inhalt (NSFW, Gewalt)</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" v-model="form.reason" value="harassment" class="text-cs-dark-red focus:ring-cs-dark-red">
+                <input type="radio" v-model="form.reason" value="harassment" class="text-cs-red-900 focus:ring-cs-red-900">
                 <span>Belästigung / Beleidigung</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" v-model="form.reason" value="other" class="text-cs-dark-red focus:ring-cs-dark-red">
+                <input type="radio" v-model="form.reason" value="other" class="text-cs-red-900 focus:ring-cs-red-900">
                 <span>Sonstiges</span>
               </label>
             </div>
@@ -61,7 +61,7 @@
             <textarea
               v-model="form.description"
               rows="3"
-              class="w-full rounded border-cs-ink-300 focus:border-cs-dark-red focus:ring focus:ring-cs-dark-red/20 text-sm"
+              class="w-full rounded border-cs-ink-300 focus:border-cs-red-900 focus:ring focus:ring-cs-red-900/20 text-sm"
               placeholder="Zusätzliche Informationen..."
               :required="form.reason === 'other'"
             ></textarea>

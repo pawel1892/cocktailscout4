@@ -44,7 +44,7 @@
           :user-rating="<%= (Current.user && @recipe.ratings.find_by(user: Current.user)&.score) || 'null' %>"
         ></rating-control>
         <% if @recipe.has_ratings? %>
-          <%= link_to bewertungen_recipe_path(@recipe), class: "text-sm text-cs-dark-red hover:underline mt-1 inline-block" do %>
+          <%= link_to bewertungen_recipe_path(@recipe), class: "text-sm text-cs-red-900 hover:underline mt-1 inline-block" do %>
             <i class="fas fa-chart-bar mr-1"></i> Alle Bewertungen ansehen
           <% end %>
         <% end %>
@@ -148,7 +148,7 @@
   <div class="card mb-6">
     <div class="card-body p-4 sm:p-6">
       <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-        <i class="fas fa-cocktail text-cs-gold"></i>
+        <i class="fas fa-cocktail text-cs-gold-400"></i>
         Zubereitung
       </h2>
       <div class="prose prose-cs max-w-none">

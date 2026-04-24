@@ -59,7 +59,7 @@
               <a
                 v-if="recipeUrl"
                 :href="recipeUrl"
-                class="text-white font-semibold text-lg hover:text-cs-gold transition-colors block"
+                class="text-white font-semibold text-lg hover:text-cs-gold-400 transition-colors block"
               >
                 {{ recipeTitle }}
               </a>

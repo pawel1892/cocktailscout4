@@ -3,7 +3,7 @@
     <template #header>
       <div>
         <h3 class="text-xl font-bold">
-          <a :href="recipeUrl" class="link hover:text-cs-gold transition-colors">
+          <a :href="recipeUrl" class="link hover:text-cs-gold-400 transition-colors">
             {{ recipeTitle }}
           </a>
         </h3>

@@ -98,14 +98,6 @@
   --color-cs-error-900: #A01818; /* Alias for 700 */
   --color-cs-error-100: #FCECEC; /* Alias for 50 */
 
-  /* Single-step aliases used in existing components */
-  --color-cs-dark-red: #330A0A;
-  --color-cs-gold:     #B6A555;
-  --color-cs-blue:     #6A8EAC;
-  --color-cs-success:  #16A34A;
-  --color-cs-warning:  #CA8A04;
-  --color-cs-error:    #DC2626;
-
   /* Typography */
   --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--cs-serif);

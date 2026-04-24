@@ -15,7 +15,7 @@
             v-model="form.name"
             type="text"
             required
-            class="w-full px-3 py-2 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent"
+            class="w-full px-3 py-2 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-red-900 focus:border-transparent"
             placeholder="z.B. Meine Hausbar, Party 2024"
           />
         </div>
@@ -28,7 +28,7 @@
             id="notes"
             v-model="form.notes"
             rows="3"
-            class="w-full px-3 py-2 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent"
+            class="w-full px-3 py-2 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-red-900 focus:border-transparent"
             placeholder="Optionale Notizen, z.B. Einkaufsliste..."
           ></textarea>
         </div>
@@ -38,7 +38,7 @@
             id="is_default"
             v-model="form.is_default"
             type="checkbox"
-            class="h-4 w-4 text-cs-dark-red focus:ring-cs-dark-red border-cs-ink-300 rounded"
+            class="h-4 w-4 text-cs-red-900 focus:ring-cs-red-900 border-cs-ink-300 rounded"
           />
           <label for="is_default" class="ml-2 block text-sm text-cs-ink-700">
             Als Standard-Liste festlegen
@@ -65,7 +65,7 @@
         <button
           @click="submit"
           :disabled="loading"
-          class="px-4 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-4 py-2 bg-cs-red-900 text-white rounded-lg hover:bg-cs-red-900/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {{ loading ? 'Erstelle...' : 'Erstellen' }}
         </button>
