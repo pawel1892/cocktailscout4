@@ -337,26 +337,20 @@
 }
 
 @utility link {
-  @apply text-cs-blue-600 cursor-pointer transition-colors;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  &:hover { @apply text-cs-blue-700; border-bottom-color: currentColor; }
+  @apply text-cs-blue-600 no-underline border-b border-b-transparent cursor-pointer transition-colors;
+  &:hover { @apply text-cs-blue-700 border-b-current; }
   &:active { @apply text-cs-blue-800; }
-  &:focus-visible { @apply outline-cs-gold-500 outline-2 rounded-[2px]; outline-offset: 2px; }
+  &:focus-visible { @apply outline-2 outline-cs-gold-500 outline-offset-2 rounded-[2px]; }
 }
 
 @utility link-underline {
-  @apply decoration-cs-blue-300;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  border-bottom: 0;
-  &:hover { text-decoration-color: currentColor; text-decoration-thickness: 2px; }
+  @apply underline decoration-cs-blue-300 underline-offset-[3px] decoration-1 border-b-0;
+  &:hover { @apply decoration-current decoration-2; }
 }
 
 @utility link-muted {
   @apply text-cs-ink-700;
-  &:hover { @apply text-cs-blue-700; border-bottom-color: currentColor; }
+  &:hover { @apply text-cs-blue-700 border-b-current; }
 }
 
 @utility link-arrow {
@@ -368,12 +362,12 @@
 
 @utility link-danger {
   @apply text-cs-error-700;
-  &:hover { @apply text-cs-error-700; border-bottom-color: currentColor; }
+  &:hover { @apply text-cs-error-700 border-b-current; }
 }
 
 @utility link-on-dark {
   @apply text-cs-gold-400;
-  &:hover { @apply text-cs-gold-300 border-cs-gold-500; }
+  &:hover { @apply text-cs-gold-300 border-b-cs-gold-500; }
 }
 
 @utility table-container {
