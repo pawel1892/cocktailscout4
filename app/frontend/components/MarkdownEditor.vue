@@ -295,7 +295,7 @@
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">[Link-Text](https://...)</code></td>
-              <td class="py-1.5"><a class="text-cs-link underline">Link-Text</a></td>
+              <td class="py-1.5"><a class="text-cs-blue underline">Link-Text</a></td>
             </tr>
             <tr>
               <td class="py-1.5 pr-4"><code class="help-code">- Punkt 1<br>- Punkt 2</code></td>

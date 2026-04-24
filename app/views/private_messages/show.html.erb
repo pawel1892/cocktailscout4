@@ -37,7 +37,7 @@
       <% is_mine = msg.sender_id == Current.user.id %>
       <div style="<%= is_mine ? 'margin-left: 15%' : 'margin-right: 15%' %>">
         <div class="card">
-          <div class="card-header flex items-center justify-between py-2 px-4 border-b text-xs <%= is_mine ? 'bg-cs-ink-50 border-cs-ink-200 text-cs-ink-600' : 'bg-cs-link-50 border-cs-link-100 text-cs-link-900' %>">
+          <div class="card-header flex items-center justify-between py-2 px-4 border-b text-xs <%= is_mine ? 'bg-cs-ink-50 border-cs-ink-200 text-cs-ink-600' : 'bg-cs-blue-50 border-cs-blue-100 text-cs-blue-900' %>">
             <div class="flex items-center gap-2">
               <%= user_badge(msg.sender) %>
               <span><%= msg.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
@@ -55,7 +55,7 @@
               <% end %>
             </div>
           </div>
-          <div class="card-body p-4 <%= is_mine ? '' : 'bg-cs-link-50/40' %>">
+          <div class="card-body p-4 <%= is_mine ? '' : 'bg-cs-blue-50/40' %>">
             <div class="prose prose-sm max-w-none whitespace-pre-wrap">
               <%= simple_format(msg.body) %>
             </div>

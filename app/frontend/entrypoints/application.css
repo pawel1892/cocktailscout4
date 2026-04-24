@@ -44,17 +44,17 @@
   --color-cs-gold-900: #221A00;
   --color-cs-gold-950: #080600;
 
-  --color-cs-link-50:  #F5F8FA;
-  --color-cs-link-100: #EBF0F5;
-  --color-cs-link-200: #D7E1EB;
-  --color-cs-link-300: #B3C6D6;
-  --color-cs-link-400: #8EAAC1;
-  --color-cs-link-500: #6A8EAC;
-  --color-cs-link-600: #4D708E;
-  --color-cs-link-700: #1F486C;
-  --color-cs-link-800: #183854;
-  --color-cs-link-900: #10283C;
-  --color-cs-link-950: #08141E;
+  --color-cs-blue-50:  #F5F8FA;
+  --color-cs-blue-100: #EBF0F5;
+  --color-cs-blue-200: #D7E1EB;
+  --color-cs-blue-300: #B3C6D6;
+  --color-cs-blue-400: #8EAAC1;
+  --color-cs-blue-500: #6A8EAC;
+  --color-cs-blue-600: #4D708E;
+  --color-cs-blue-700: #1F486C;
+  --color-cs-blue-800: #183854;
+  --color-cs-blue-900: #10283C;
+  --color-cs-blue-950: #08141E;
 
   --color-cs-ink-50:  #FCF9F9;
   --color-cs-ink-100: #F2EFEF;
@@ -92,7 +92,7 @@
   /* Single-step aliases used in existing components */
   --color-cs-dark-red: #330A0A;
   --color-cs-gold:     #B6A555;
-  --color-cs-link:     #6A8EAC;
+  --color-cs-blue:     #6A8EAC;
   --color-cs-success:  #16A34A;
   --color-cs-warning:  #CA8A04;
   --color-cs-error:    #DC2626;
@@ -164,7 +164,7 @@
 }
 
 @utility btn-link {
-  @apply bg-transparent text-cs-link-600 border-transparent hover:text-cs-link-700 hover:bg-cs-link-50 active:text-cs-link-800 active:bg-cs-link-100;
+  @apply bg-transparent text-cs-blue-600 border-transparent hover:text-cs-blue-700 hover:bg-cs-blue-50 active:text-cs-blue-800 active:bg-cs-blue-100;
   padding-left: 6px;
   padding-right: 6px;
   &:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -271,7 +271,7 @@
 }
 
 @utility callout-info {
-  @apply callout bg-cs-link-50 border-cs-link-500 text-cs-link-700;
+  @apply callout bg-cs-blue-50 border-cs-blue-500 text-cs-blue-700;
 }
 
 @utility quote {
@@ -304,7 +304,7 @@
 }
 
 @utility tag-light-blue {
-  @apply tag bg-cs-link-100 text-cs-link-700 border-cs-link-100;
+  @apply tag bg-cs-blue-100 text-cs-blue-700 border-cs-blue-100;
 }
 
 @utility tag-gold {
@@ -316,7 +316,7 @@
 }
 
 @utility tag-info {
-  @apply tag bg-cs-link-50 text-cs-link-700 border-cs-link-50;
+  @apply tag bg-cs-blue-50 text-cs-blue-700 border-cs-blue-50;
 }
 
 @utility tag-success {
@@ -336,16 +336,16 @@
 }
 
 @utility link {
-  @apply text-cs-link-600 cursor-pointer transition-colors;
+  @apply text-cs-blue-600 cursor-pointer transition-colors;
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  &:hover { @apply text-cs-link-700; border-bottom-color: currentColor; }
-  &:active { @apply text-cs-link-800; }
+  &:hover { @apply text-cs-blue-700; border-bottom-color: currentColor; }
+  &:active { @apply text-cs-blue-800; }
   &:focus-visible { @apply outline-cs-gold-500 outline-2 rounded-[2px]; outline-offset: 2px; }
 }
 
 @utility link-underline {
-  @apply decoration-cs-link-300;
+  @apply decoration-cs-blue-300;
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
@@ -355,12 +355,12 @@
 
 @utility link-muted {
   @apply text-cs-ink-700;
-  &:hover { @apply text-cs-link-700; border-bottom-color: currentColor; }
+  &:hover { @apply text-cs-blue-700; border-bottom-color: currentColor; }
 }
 
 @utility link-arrow {
-  @apply inline-flex items-center gap-[6px] font-semibold text-cs-link-600 cursor-pointer no-underline border-0;
-  &:hover { @apply text-cs-link-700; }
+  @apply inline-flex items-center gap-[6px] font-semibold text-cs-blue-600 cursor-pointer no-underline border-0;
+  &:hover { @apply text-cs-blue-700; }
   & .arr { @apply transition-transform; }
   &:hover .arr { @apply translate-x-[3px]; }
 }
@@ -405,7 +405,7 @@
   grid-template-columns: 108px 1fr auto;
 }
 .cocktail-card h4 {
-  @apply m-0 font-sans font-bold text-[16px] text-cs-link-500;
+  @apply m-0 font-sans font-bold text-[16px] text-cs-blue-500;
 }
 .cocktail-card .author { @apply text-[12px] text-cs-ink-500 mb-2; }
 .cocktail-card .tags   { @apply flex gap-1 flex-wrap mb-[6px]; }
@@ -557,7 +557,7 @@ nav.pagy a[role="separator"] {
 .prose-cs ul { @apply list-disc list-inside mb-4; }
 .prose-cs ol { @apply list-decimal list-inside mb-4; }
 .prose-cs li { @apply mb-1; }
-.prose-cs a { @apply text-cs-link-600 underline underline-offset-[3px] hover:text-cs-link-700; }
+.prose-cs a { @apply text-cs-blue-600 underline underline-offset-[3px] hover:text-cs-blue-700; }
 .prose-cs code { @apply bg-cs-ink-100 px-1 py-0.5 rounded text-sm font-mono; }
 .prose-cs pre { @apply !bg-cs-ink-50 border border-cs-ink-200 p-4 rounded mb-4 overflow-x-auto; }
 .prose-cs pre code { @apply bg-transparent p-0 rounded-none; }

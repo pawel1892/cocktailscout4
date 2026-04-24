@@ -63,23 +63,23 @@
         <span class="text-sm text-cs-ink-600">Aktive Filter:</span>
 
         <% if params[:status].present? %>
-          <span class="inline-flex items-center px-2 py-1 bg-cs-link-100 text-cs-link-900 rounded text-sm">
+          <span class="inline-flex items-center px-2 py-1 bg-cs-blue-100 text-cs-blue-900 rounded text-sm">
             Status: <%= {"draft" => "Entwürfe", "published" => "Veröffentlicht", "deleted" => "Gelöscht"}[params[:status]] %>
-            <%= link_to "×", admin_recipes_path(status: nil, q: params[:q], needs_attention: params[:needs_attention]), class: "ml-1 font-bold hover:text-cs-link-900" %>
+            <%= link_to "×", admin_recipes_path(status: nil, q: params[:q], needs_attention: params[:needs_attention]), class: "ml-1 font-bold hover:text-cs-blue-900" %>
           </span>
         <% end %>
 
         <% if params[:q].present? %>
-          <span class="inline-flex items-center px-2 py-1 bg-cs-link-100 text-cs-link-900 rounded text-sm">
+          <span class="inline-flex items-center px-2 py-1 bg-cs-blue-100 text-cs-blue-900 rounded text-sm">
             Suche: "<%= params[:q] %>"
-            <%= link_to "×", admin_recipes_path(status: params[:status], q: nil, needs_attention: params[:needs_attention]), class: "ml-1 font-bold hover:text-cs-link-900" %>
+            <%= link_to "×", admin_recipes_path(status: params[:status], q: nil, needs_attention: params[:needs_attention]), class: "ml-1 font-bold hover:text-cs-blue-900" %>
           </span>
         <% end %>
 
         <% if params[:needs_attention].present? %>
-          <span class="inline-flex items-center px-2 py-1 bg-cs-link-100 text-cs-link-900 rounded text-sm">
+          <span class="inline-flex items-center px-2 py-1 bg-cs-blue-100 text-cs-blue-900 rounded text-sm">
             Überprüfungsbedarf
-            <%= link_to "×", admin_recipes_path(status: params[:status], q: params[:q], needs_attention: nil), class: "ml-1 font-bold hover:text-cs-link-900" %>
+            <%= link_to "×", admin_recipes_path(status: params[:status], q: params[:q], needs_attention: nil), class: "ml-1 font-bold hover:text-cs-blue-900" %>
           </span>
         <% end %>
       </div>
@@ -154,7 +154,7 @@
               <%= recipe.id %>
             </td>
             <td class="px-4 py-3">
-              <%= link_to recipe.title, recipe_path(recipe.slug), class: "text-cs-link-500 hover:underline", target: "_blank" %>
+              <%= link_to recipe.title, recipe_path(recipe.slug), class: "text-cs-blue-500 hover:underline", target: "_blank" %>
               <% unless recipe.has_scalable_ingredients? %>
                 <span class="ml-2 text-cs-warning-700" title="Zutaten benötigen Überprüfung">⚠️</span>
               <% end %>
@@ -179,8 +179,8 @@
             </td>
             <td class="px-4 py-3 text-sm">
               <div class="flex gap-2 items-center">
-                <%= link_to "Bearbeiten", edit_admin_recipe_path(recipe.id), class: "text-cs-link-500 hover:underline" %>
-                <%= link_to "Ansehen", recipe_path(recipe.slug), target: "_blank", class: "text-cs-link-500 hover:underline" %>
+                <%= link_to "Bearbeiten", edit_admin_recipe_path(recipe.id), class: "text-cs-blue-500 hover:underline" %>
+                <%= link_to "Ansehen", recipe_path(recipe.slug), target: "_blank", class: "text-cs-blue-500 hover:underline" %>
                 <% unless recipe.is_deleted %>
                   <%= button_to "Löschen",
                     admin_recipe_path(recipe.id),

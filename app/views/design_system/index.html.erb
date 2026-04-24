@@ -14,7 +14,7 @@
       label: "Ink",
       hexes: { 50 => "#FCF9F9", 100 => "#F2EFEF", 200 => "#E4DCDB", 300 => "#CBC2C0", 400 => "#ACA2A0", 500 => "#887D7C", 600 => "#675E5C", 700 => "#4B4342", 800 => "#322C2B", 900 => "#1E1919", 950 => "#070505" }
     },
-    link: {
+    blue: {
       label: "Blue",
       hexes: { 50 => "#F5F8FA", 100 => "#EBF0F5", 200 => "#D7E1EB", 300 => "#B3C6D6", 400 => "#8EAAC1", 500 => "#6A8EAC", 600 => "#4D708E", 700 => "#1F486C", 800 => "#183854", 900 => "#10283C", 950 => "#08141E" }
     }
@@ -94,7 +94,7 @@
       </p>
 
       <% scales.each do |key, data| %>
-        <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8"><%= data[:label] %> — <%= key == :red ? "OXBLOOD (DARK RED)" : (key == :gold ? "BRASS (GOLD)" : (key == :ink ? "WARM NEUTRAL" : "LINKS & INFO")) %></div>
+        <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8"><%= data[:label] %> — <%= key == :red ? "OXBLOOD (DARK RED)" : (key == :gold ? "BRASS (GOLD)" : (key == :ink ? "WARM NEUTRAL" : "BLUE (INFO & LINKS)")) %></div>
         <div class="scale-label"><%= data[:label] %><small>cs-<%= key %></small></div>
         <div class="scale-row">
           <% data[:hexes].each do |step, hex| %>
@@ -186,7 +186,7 @@
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">03</span>
       </div>
       <p class="text-cs-ink-600 text-sm max-w-[720px] mb-8">
-        Dedicated blue scale (<code>cs-link</code>). Underlines appear on hover via <code>border-bottom</code> for sharpness.
+        Dedicated blue scale (<code>cs-blue</code>). Underlines appear on hover via <code>border-bottom</code> for sharpness.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 p-6 bg-white border border-cs-ink-200 rounded-xl shadow-sm text-inherit">
         <div>
@@ -288,7 +288,7 @@
         <div class="card card-ghost">
           <div class="card-header bg-transparent border-dashed">Empty State (Ghost)</div>
           <div class="card-body">
-            <span class="text-cs-ink-400 italic">Noch keine Zutaten in deiner Bar — <a href="#" class="text-cs-link-600 underline">jetzt hinzufügen</a>.</span>
+            <span class="text-cs-ink-400 italic">Noch keine Zutaten in deiner Bar — <a href="#" class="text-cs-blue-600 underline">jetzt hinzufügen</a>.</span>
           </div>
         </div>
         <div class="card card-gold">
@@ -365,7 +365,7 @@
         <div class="callout"><i class="fa-regular fa-circle-question mt-1 flex-shrink-0"></i><div><strong>Neutral Callout</strong> Nützlich für allgemeine Hinweise oder Randnotizen.</div></div>
         <div class="callout callout-gold"><i class="fa-solid fa-wand-magic-sparkles mt-1 text-cs-gold-700 flex-shrink-0"></i><div><strong class="text-cs-gold-700 font-bold">Pro-Tipp</strong> Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
         <div class="callout callout-red"><i class="fa-solid fa-circle-exclamation mt-1 text-cs-red-700 flex-shrink-0"></i><div><strong class="text-cs-red-700 font-bold">Important</strong> Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
-        <div class="callout callout-info"><i class="fa-solid fa-circle-info mt-1 text-cs-link-700 flex-shrink-0"></i><div><strong class="text-cs-link-700 font-bold">Community Notiz</strong> Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
+        <div class="callout callout-info"><i class="fa-solid fa-circle-info mt-1 text-cs-blue-700 flex-shrink-0"></i><div><strong class="text-cs-blue-700 font-bold">Community Notiz</strong> Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
         <div class="callout callout-success"><i class="fa-solid fa-circle-check mt-1 text-cs-success-700 flex-shrink-0"></i><div><strong class="text-cs-success-700 font-bold">Gespeichert</strong> Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
         <div class="callout callout-warning"><i class="fa-solid fa-triangle-exclamation mt-1 text-cs-warning-700 flex-shrink-0"></i><div><strong class="text-cs-warning-700 font-bold">Achtung</strong> Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
       </div>
@@ -470,7 +470,7 @@
         <div class="cocktail-card text-inherit">
           <div class="thumb"><i class="fa-solid fa-martini-glass-citrus scale-110"></i></div>
           <div>
-            <h4 class="text-cs-link-600 font-bold m-0 text-[17px] tracking-tight">Long Island Iced Tea <i class="fa-solid fa-heart text-cs-error-500 ml-1 scale-75"></i></h4>
+            <h4 class="text-cs-blue-600 font-bold m-0 text-[17px] tracking-tight">Long Island Iced Tea <i class="fa-solid fa-heart text-cs-error-500 ml-1 scale-75"></i></h4>
             <div class="text-[11px] text-cs-ink-500 mt-1 mb-2.5">von <strong class="text-cs-ink-800 font-bold">Ripuli</strong></div>
             <div class="flex flex-wrap gap-1.5">
               <span class="tag tag-success text-[10px]">Erfrischend</span>
@@ -487,7 +487,7 @@
         <div class="cocktail-card text-inherit">
           <div class="thumb"><i class="fa-solid fa-mug-hot scale-110"></i></div>
           <div>
-            <h4 class="text-cs-link-600 font-bold m-0 text-[17px] tracking-tight">Mojito <i class="fa-regular fa-heart text-cs-ink-400 ml-1 scale-75"></i></h4>
+            <h4 class="text-cs-blue-600 font-bold m-0 text-[17px] tracking-tight">Mojito <i class="fa-regular fa-heart text-cs-ink-400 ml-1 scale-75"></i></h4>
             <div class="text-[11px] text-cs-ink-500 mt-1 mb-2.5">von <strong class="text-cs-ink-800 font-bold">zoidberg</strong> <span class="tag tag-gold-soft py-0 text-[9px] font-bold">ME</span></div>
             <div class="flex flex-wrap gap-1.5">
               <span class="tag tag-success text-[10px]">Erfrischend</span>
@@ -502,7 +502,7 @@
         <div class="cocktail-card text-inherit">
           <div class="thumb"><i class="fa-solid fa-whiskey-glass scale-110"></i></div>
           <div>
-            <h4 class="text-cs-link-600 font-bold m-0 text-[17px] tracking-tight">Whiskey Sour <i class="fa-regular fa-heart text-cs-ink-400 ml-1 scale-75"></i></h4>
+            <h4 class="text-cs-blue-600 font-bold m-0 text-[17px] tracking-tight">Whiskey Sour <i class="fa-regular fa-heart text-cs-ink-400 ml-1 scale-75"></i></h4>
             <div class="text-[11px] text-cs-ink-500 mt-1 mb-2.5">von <strong class="text-cs-ink-800 font-bold">Ripuli</strong></div>
             <div class="flex flex-wrap gap-1.5">
               <span class="tag tag-warning text-[10px]">Stark</span>
