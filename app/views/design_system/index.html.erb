@@ -27,7 +27,7 @@
   }
 %>
 
-<div class="bg-cs-ink-50 text-cs-ink-900 min-h-screen font-sans antialiased text-inherit">
+<div class="bg-cs-ink-50 text-cs-ink-900 min-h-screen font-sans antialiased text-inherit overflow-x-clip">
 
   <!-- SIDEBAR BACKDROP -->
   <div id="ds-backdrop" class="ds-backdrop" onclick="dsCloseSidebar()"></div>
@@ -136,7 +136,7 @@
         <strong>JetBrains Mono</strong> for token values, stats and counts.
       </p>
       <div class="divide-y divide-cs-ink-200">
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Display</span>
           <span class="text-cs-red-900 font-display font-semibold text-[54px] leading-none tracking-tight">Cocktail Rezepte</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -144,7 +144,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-red-900 flex-shrink-0"></span>cs-red-900</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">H1 / Hero</span>
           <span class="text-cs-red-900 font-display font-semibold text-[38px] leading-tight tracking-tight">Cocktail Rezepte & deine persönliche Bar</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -152,7 +152,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-red-900 flex-shrink-0"></span>cs-red-900</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">H2</span>
           <span class="text-cs-red-900 font-display font-semibold text-[28px] leading-tight">Heute frisch gemixt</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -160,7 +160,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-red-900 flex-shrink-0"></span>cs-red-900</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">H3 / Card</span>
           <span class="text-cs-ink-900 font-sans font-bold text-[18px]">Long Island Iced Tea</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -168,7 +168,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-900 flex-shrink-0"></span>cs-ink-900</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Body</span>
           <span class="text-cs-ink-800 font-sans font-normal text-[15px] leading-relaxed">1.500+ Cocktail Rezepte — und mit Meine Bar siehst du sofort, was du mixen kannst.</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -176,7 +176,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-800 flex-shrink-0"></span>cs-ink-800</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Small</span>
           <span class="text-cs-ink-600 font-sans font-normal text-[13px]">vor 19 Minuten · von Ripuli</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -184,7 +184,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-600 flex-shrink-0"></span>cs-ink-600</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Mono / Stat</span>
           <span class="text-cs-ink-700 font-mono font-medium text-[13px]">1.124.100 views · 14.3% ABV</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">
@@ -192,7 +192,7 @@
             <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-700 flex-shrink-0"></span>cs-ink-700</span>
           </div>
         </div>
-        <div class="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr_auto] gap-4 py-5 items-baseline">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
           <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Eyebrow</span>
           <span class="text-cs-ink-500 font-sans font-bold uppercase text-[11px] tracking-widest">KATEGORIE · KLASSIKER</span>
           <div class="hidden md:flex flex-col items-end gap-1.5">

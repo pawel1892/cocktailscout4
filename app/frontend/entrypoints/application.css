@@ -384,7 +384,7 @@
 /* Cocktail card (recipe list row) */
 .cocktail-card {
   @apply bg-white border border-cs-ink-200 rounded-[12px] grid gap-4 p-[14px] items-center shadow-sm;
-  grid-template-columns: 108px 1fr auto;
+  grid-template-columns: 108px minmax(0,1fr) auto;
 }
 .cocktail-card h4 {
   @apply m-0 font-sans font-bold text-[16px] text-cs-blue-500;
