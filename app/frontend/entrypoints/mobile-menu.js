@@ -1,23 +1,92 @@
-// Mobile menu functionality
-window.toggleMobileMenu = function(e) {
-  e.stopPropagation();
-  const menu = document.getElementById('mobile-menu');
-  if (menu) {
-    menu.classList.toggle('hidden');
-  }
-};
+const menu = () => document.getElementById('mobile-menu')
+const backdrop = () => document.getElementById('mobile-menu-backdrop')
+const button = () => document.getElementById('mobile-menu-btn')
+const siteHeader = () => document.getElementById('site-header')
 
-// Close menu when clicking outside
-if (!window.mobileMenuClickOutsideAttached) {
-  document.addEventListener('click', (e) => {
-    const menu = document.getElementById('mobile-menu');
-    const btn = document.getElementById('mobile-menu-btn');
+const setExpanded = (expanded) => {
+  const btn = button()
+  if (btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+}
 
-    if (menu && !menu.classList.contains('hidden')) {
-      if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
-        menu.classList.add('hidden');
-      }
+window.openMobileMenu = function() {
+  const panel = menu()
+  const scrim = backdrop()
+  if (!panel || !scrim) return
+
+  scrim.classList.remove('hidden')
+  panel.setAttribute('aria-hidden', 'false')
+  document.documentElement.classList.add('overflow-hidden')
+  setExpanded(true)
+
+  requestAnimationFrame(() => {
+    scrim.classList.remove('opacity-0')
+    panel.classList.remove('translate-x-full')
+  })
+}
+
+window.closeMobileMenu = function() {
+  const panel = menu()
+  const scrim = backdrop()
+  if (!panel || !scrim) return
+
+  scrim.classList.add('opacity-0')
+  panel.classList.add('translate-x-full')
+  panel.setAttribute('aria-hidden', 'true')
+  document.documentElement.classList.remove('overflow-hidden')
+  setExpanded(false)
+
+  window.setTimeout(() => {
+    if (panel.classList.contains('translate-x-full')) {
+      scrim.classList.add('hidden')
     }
-  });
-  window.mobileMenuClickOutsideAttached = true;
+  }, 200)
+}
+
+window.toggleMobileMenu = function(event) {
+  event?.stopPropagation()
+  const panel = menu()
+  if (!panel) return
+
+  if (panel.classList.contains('translate-x-full')) {
+    window.openMobileMenu()
+  } else {
+    window.closeMobileMenu()
+  }
+}
+
+if (!window.mobileMenuListenersAttached) {
+  const updateHeaderState = () => {
+    const header = siteHeader()
+    if (!header) return
+    if (window.scrollY > 24) {
+      header.setAttribute('data-scrolled', 'true')
+    } else {
+      header.removeAttribute('data-scrolled')
+    }
+  }
+
+  updateHeaderState()
+  window.addEventListener('scroll', updateHeaderState, { passive: true })
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') window.closeMobileMenu()
+  })
+
+  document.addEventListener('click', (event) => {
+    const panel = menu()
+    const btn = button()
+    if (!panel || panel.classList.contains('translate-x-full')) return
+    if (!panel.contains(event.target) && (!btn || !btn.contains(event.target))) {
+      window.closeMobileMenu()
+    }
+  })
+
+  document.addEventListener('click', (event) => {
+    const target = event.target
+    if (target instanceof Element && target.closest('#mobile-menu a')) {
+      window.closeMobileMenu()
+    }
+  })
+
+  window.mobileMenuListenersAttached = true
 }

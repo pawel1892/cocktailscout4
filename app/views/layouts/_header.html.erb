@@ -1,95 +1,71 @@
-<header class="relative z-50">
-  <!-- Top Bar: Dark Red -->
-  <div class="bg-cs-red-900 text-white py-2 relative z-50">
-    <div class="max-w-[1180px] mx-auto px-10 w-full flex items-center justify-between gap-2">
-      <!-- Left: Logo -->
-      <div class="flex-shrink-0">
-        <a href="/">
-          <img src="/logo.svg" class="h-10 sm:h-12 w-auto" alt="CocktailScout">
-        </a>
+<header id="site-header" class="site-header sticky top-0 z-50 bg-cs-ink-50/95 text-cs-ink-900 backdrop-blur-md border-b border-cs-ink-200 shadow-[0_10px_30px_-28px_rgba(24,21,19,.65)]">
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="site-header-inner grid grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(180px,1fr)_auto_minmax(180px,1fr)] items-center gap-3 py-5">
+      <div class="flex items-center">
+        <%= link_to root_path, class: "inline-flex items-center no-underline", aria: { label: "CocktailScout Startseite" } do %>
+          <img src="/logo_red.svg" class="site-logo h-12 sm:h-14 lg:h-16 w-auto" alt="CocktailScout">
+        <% end %>
       </div>
 
-      <!-- Middle: Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-6 text-base sm:text-lg font-medium">
+      <nav class="hidden lg:flex items-stretch justify-center overflow-hidden rounded-md border border-cs-red-200 bg-cs-red-50 shadow-[inset_0_1px_0_rgba(255,255,255,.65),0_8px_18px_-16px_rgba(24,21,19,.45)]" aria-label="Hauptnavigation">
         <% main_navigation_items.each do |item| %>
-          <%= link_to item[:label], item[:path], class: "hover:text-cs-gold-400 transition py-2" %>
+          <% active = main_nav_item_active?(item) %>
+          <%= link_to item[:label], item[:path], class: "relative flex min-w-28 items-center justify-center border-r border-cs-red-100 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.16em] no-underline transition last:border-r-0 #{active ? 'bg-cs-gold-300 text-cs-red-950 shadow-[inset_0_-3px_0_#938016]' : 'text-cs-red-900 hover:bg-white hover:text-cs-red-700'}", aria: (active ? { current: "page" } : {}) %>
         <% end %>
       </nav>
 
-      <!-- Right: Desktop Search -->
-      <div class="hidden md:block">
-        <%= form_tag recipes_path, method: :get, class: "relative" do %>
-          <input type="text" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen..." class="bg-white/10 border border-white/20 rounded-full px-4 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-cs-gold-400 placeholder-white/50 w-40 lg:w-auto">
-          <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-cs-gold-400 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-          </button>
-        <% end %>
+      <div class="hidden lg:flex items-center justify-end gap-3 min-w-0">
+        <user-session></user-session>
       </div>
 
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" onclick="toggleMobileMenu(event)" class="md:hidden text-white hover:text-cs-gold-400 focus:outline-none p-2" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
+      <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu(event)" class="col-start-3 justify-self-end lg:hidden inline-flex size-10 items-center justify-center rounded-md border border-cs-red-200 bg-cs-red-50 text-cs-red-900 shadow-xs transition hover:bg-white hover:text-cs-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" aria-label="Navigation öffnen" aria-controls="mobile-menu" aria-expanded="false">
+        <i class="fa-solid fa-bars text-lg leading-none"></i>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Menu (Hidden by default) -->
-  <div id="mobile-menu" class="hidden md:hidden bg-cs-red-900 border-t border-white/10 absolute w-full shadow-xl z-40 origin-top animate-in slide-in-from-top-2 duration-200">
-    <div class="max-w-[1180px] mx-auto px-10 w-full py-4 space-y-4">
-      
-      <!-- Mobile Search -->
-      <%= form_tag recipes_path, method: :get, class: "relative" do %>
-        <input type="text" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen..." class="w-full bg-white/10 border border-white/20 rounded-full px-4 py-2 text-base text-white focus:outline-none focus:ring-1 focus:ring-cs-gold-400 placeholder-white/50">
-        <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-cs-gold-400 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-          </svg>
-        </button>
+  <%= render "layouts/secondary_nav" %>
+
+  <div id="mobile-menu-backdrop" class="fixed inset-0 z-[80] hidden bg-black/40 opacity-0 transition-opacity duration-200 lg:hidden" onclick="closeMobileMenu()"></div>
+
+  <aside id="mobile-menu" class="fixed right-0 top-0 z-[90] flex h-dvh w-[min(22rem,calc(100vw-2rem))] translate-x-full flex-col border-l border-cs-red-950 bg-cs-ink-50 shadow-2xl transition-transform duration-200 lg:hidden" aria-label="Mobile Navigation" aria-hidden="true">
+    <div class="flex items-center justify-between border-b border-cs-red-950 bg-cs-red-900 px-5 py-4">
+      <%= link_to root_path, class: "inline-flex items-center no-underline", aria: { label: "CocktailScout Startseite" } do %>
+        <img src="/logo.svg" class="h-8 w-auto" alt="CocktailScout">
       <% end %>
 
-      <!-- Mobile Links -->
-      <nav class="flex flex-col space-y-2 text-white text-lg font-medium">
+      <button type="button" onclick="closeMobileMenu()" class="inline-flex size-9 items-center justify-center rounded-md text-cs-gold-200 transition hover:bg-white/10 hover:text-cs-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" aria-label="Navigation schließen">
+        <i class="fa-solid fa-xmark text-lg leading-none"></i>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-5 py-5">
+      <nav class="flex flex-col gap-2" aria-label="Hauptnavigation mobil">
         <% main_navigation_items.each do |item| %>
-          <% if item[:dropdown] %>
-            <!-- Accordion -->
-            <details class="group">
-              <summary class="flex items-center justify-between cursor-pointer py-2 hover:text-cs-gold-400 select-none list-none [&::-webkit-details-marker]:hidden">
-                <%= item[:label] %>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-open:rotate-180">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
+          <% active = main_nav_item_active?(item) %>
+          <% if item[:dropdown].present? %>
+            <details class="group overflow-hidden rounded-md border border-cs-ink-200 bg-white shadow-xs" <%= "open" if active %>>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-3 border-l-4 px-3 py-3 text-[12px] font-bold uppercase tracking-[0.13em] transition [&::-webkit-details-marker]:hidden <%= active ? 'border-cs-gold-500 bg-cs-red-900 text-cs-gold-100' : 'border-cs-ink-200 text-cs-ink-800 hover:border-cs-gold-500 hover:text-cs-red-900' %>">
+                <span><%= item[:label] %></span>
+                <i class="fa-solid fa-chevron-down text-[11px] opacity-70 transition-transform group-open:rotate-180"></i>
               </summary>
-              <div class="pl-4 border-l-2 border-white/10 mt-1 space-y-1">
+              <div class="border-t border-cs-ink-100 px-2 py-2">
+                <%= link_to item[:label], item[:path], class: "block rounded px-3 py-2 text-sm font-semibold no-underline transition #{active ? 'text-cs-red-900 bg-cs-red-50' : 'text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900'}" %>
                 <% item[:dropdown].each do |subitem| %>
-                  <%= link_to subitem[:label], subitem[:path], class: "block py-2 hover:text-cs-gold-400 text-base" %>
+                  <% sub_active = subnav_item_active?(subitem) %>
+                  <%= link_to subitem[:label], subitem[:path], class: "block rounded px-3 py-2 text-sm no-underline transition #{sub_active ? 'font-semibold text-cs-red-900 bg-cs-red-50' : 'text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) %>
                 <% end %>
               </div>
             </details>
           <% else %>
-            <%= link_to item[:label], item[:path], class: "block py-2 hover:text-cs-gold-400" %>
+            <%= link_to item[:label], item[:path], class: "rounded-md border border-cs-ink-200 border-l-4 px-3 py-3 text-[12px] font-bold uppercase tracking-[0.13em] no-underline shadow-xs transition #{active ? 'border-l-cs-gold-500 bg-cs-red-900 text-cs-gold-100' : 'border-l-cs-ink-200 bg-white text-cs-ink-800 hover:border-l-cs-gold-500 hover:text-cs-red-900'}", aria: (active ? { current: "page" } : {}) %>
           <% end %>
         <% end %>
       </nav>
     </div>
-  </div>
 
-  <!-- Dynamic Sub-Navigation (shown when current section has dropdown, desktop only) -->
-  <% if show_subnav? %>
-    <div class="hidden md:block bg-black border-t border-b border-white/10">
-      <div class="max-w-[1180px] mx-auto px-10 w-full">
-        <nav class="flex items-center space-x-6 text-white text-sm font-medium overflow-x-auto">
-          <% subnav_items.each do |item| %>
-            <%= link_to item[:label], item[:path], class: "py-2 px-1 hover:text-cs-gold-400 transition whitespace-nowrap #{subnav_item_active?(item) ? 'text-cs-gold-400 border-b-2 border-cs-gold-400' : ''}" %>
-          <% end %>
-        </nav>
-      </div>
+    <div class="border-t border-cs-ink-200 px-5 py-4">
+      <user-session></user-session>
     </div>
-  <% end %>
-
-  <!-- Secondary Bar: Black -->
-  <%= render "layouts/secondary_nav" %>
+  </aside>
 </header>

@@ -38,6 +38,10 @@ module NavigationHelper
     end
   end
 
+  def main_nav_item_active?(item)
+    current_nav_item == item
+  end
+
   def show_subnav?
     current_nav_item&.dig(:dropdown).present?
   end

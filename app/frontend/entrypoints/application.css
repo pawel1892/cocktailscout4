@@ -466,6 +466,30 @@
   @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cs-ink-100 text-cs-ink-700 font-mono text-xs font-medium;
 }
 
+/* Site navigation chrome */
+.site-header,
+.site-header-inner,
+.site-logo {
+  transition:
+    padding 180ms ease,
+    height 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.site-header[data-scrolled="true"] {
+  @apply bg-cs-ink-50/90 shadow-[0_10px_24px_-22px_rgba(24,21,19,.72)];
+}
+
+.site-header[data-scrolled="true"] .site-header-inner {
+  @apply py-2.5;
+}
+
+.site-header[data-scrolled="true"] .site-logo {
+  @apply h-9 sm:h-10;
+}
+
 /* Cocktail card (recipe list row) */
 .cocktail-card {
   @apply bg-white border border-cs-ink-200 rounded-[12px] grid gap-4 p-[14px] items-center shadow-sm;

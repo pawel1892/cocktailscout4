@@ -1,121 +1,155 @@
 <template>
-  <div class="flex space-x-4">
+  <div class="flex flex-wrap items-center justify-start gap-2">
     <template v-if="isAuthenticated">
-      <span class="text-white">Willkommen,
-        <div class="relative inline-block">
-          <button
-            @click="toggleUserMenu"
-            class="hover:underline bg-transparent border-0 p-0 text-white cursor-pointer relative"
+      <div class="relative inline-block">
+        <button
+          @click.stop="toggleUserMenu"
+          class="relative inline-flex h-11 items-center justify-center gap-2 rounded-full border border-cs-red-100 bg-white py-1 pl-1 pr-3 text-[13px] font-semibold text-cs-red-900 shadow-xs transition hover:border-cs-gold-500 hover:bg-cs-gold-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500"
+          type="button"
+          aria-haspopup="menu"
+          :aria-expanded="showUserMenu ? 'true' : 'false'"
+        >
+          <AvatarDisplay :user="user" :avatarUrl="user?.avatar_url_small" size="md" />
+          <span class="hidden max-w-28 truncate lg:inline">{{ user?.username || 'Profil' }}</span>
+          <span
+            v-if="totalNotifications > 0"
+            class="hidden h-5 min-w-5 items-center justify-center rounded-full bg-cs-red-900 px-1.5 text-[11px] font-bold text-white lg:inline-flex"
           >
-            {{ user.username }}
-            <span
-              v-if="totalNotifications > 0"
-              class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
-            >
-              {{ totalNotifications }}
-            </span>
-          </button>
+            {{ totalNotifications }}
+          </span>
+          <i class="fa-solid fa-chevron-down text-[10px] text-cs-ink-400"></i>
+        </button>
 
-          <!-- Dropdown Menu -->
-          <div
-            v-if="showUserMenu"
-            class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl ring-1 ring-black ring-opacity-5 z-50"
-            @click="closeUserMenu"
-          >
-            <div class="py-1">
-              <button
-                @click="openProfile"
-                class="w-full text-left px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-user"></i>
-                Mein Profil
-              </button>
-              <a
-                href="/nachrichten"
-                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-envelope"></i>
-                Meine Nachrichten
-                <span
-                  v-if="unreadCount > 0"
-                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
-                >
-                  {{ unreadCount }}
-                </span>
-              </a>
-              <a
-                href="/rezeptvorschlaege"
-                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-lightbulb"></i>
-                Meine Rezeptvorschläge
-              </a>
-              <a
-                href="/email_aendern"
-                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-at"></i>
-                E-Mail ändern
-              </a>
-              <a
-                href="/passwort_aendern"
-                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-key"></i>
-                Passwort ändern
-              </a>
-              <a
-                v-if="user.is_moderator"
-                href="/admin/reports"
-                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2 border-t border-cs-ink-100 mt-1 pt-2"
-              >
-                <i class="fa-solid fa-shield-halved"></i>
-                Admin Bereich
-                <span
-                  v-if="reportCount > 0"
-                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
-                >
-                  {{ reportCount }}
-                </span>
-              </a>
-              <a
-                v-if="user.can_moderate_recipe"
-                href="/admin/recipe_suggestions"
-                class="block px-4 py-2 text-sm text-cs-ink-700 hover:bg-cs-ink-100 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-lightbulb"></i>
-                Rezeptvorschläge
-                <span
-                  v-if="suggestionCount > 0"
-                  class="ml-auto inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-cs-red-900 rounded-full"
-                >
-                  {{ suggestionCount }}
-                </span>
-              </a>
-            </div>
+        <div
+          v-if="showUserMenu"
+          class="absolute right-0 z-[100] mt-2 w-60 overflow-hidden rounded-lg border border-cs-ink-200 bg-white text-cs-ink-900 shadow-lg"
+          role="menu"
+          @click="closeUserMenu"
+        >
+          <div class="border-b border-cs-ink-100 px-4 py-3">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-cs-ink-400">Angemeldet als</div>
+            <div class="mt-0.5 truncate text-sm font-semibold text-cs-ink-900">{{ user?.username }}</div>
           </div>
+
+          <div class="py-1">
+            <button
+              @click="openProfile"
+              class="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-cs-ink-700 transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              type="button"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-user w-4 text-cs-ink-400"></i>
+              Mein Profil
+            </button>
+            <a
+              href="/nachrichten"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-cs-ink-700 no-underline transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-envelope w-4 text-cs-ink-400"></i>
+              Meine Nachrichten
+              <span
+                v-if="unreadCount > 0"
+                class="ml-auto inline-flex items-center justify-center rounded-full bg-cs-red-900 px-2 py-0.5 text-xs font-bold text-white"
+              >
+                {{ unreadCount }}
+              </span>
+            </a>
+            <a
+              href="/rezeptvorschlaege"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-cs-ink-700 no-underline transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-lightbulb w-4 text-cs-ink-400"></i>
+              Meine Rezeptvorschläge
+            </a>
+            <a
+              href="/email_aendern"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-cs-ink-700 no-underline transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-at w-4 text-cs-ink-400"></i>
+              E-Mail ändern
+            </a>
+            <a
+              href="/passwort_aendern"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-cs-ink-700 no-underline transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-key w-4 text-cs-ink-400"></i>
+              Passwort ändern
+            </a>
+            <a
+              v-if="user?.is_moderator"
+              href="/admin/reports"
+              class="mt-1 flex items-center gap-2 border-t border-cs-ink-100 px-4 py-2.5 text-sm text-cs-ink-700 no-underline transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-shield-halved w-4 text-cs-ink-400"></i>
+              Admin Bereich
+              <span
+                v-if="reportCount > 0"
+                class="ml-auto inline-flex items-center justify-center rounded-full bg-cs-red-900 px-2 py-0.5 text-xs font-bold text-white"
+              >
+                {{ reportCount }}
+              </span>
+            </a>
+            <a
+              v-if="user?.can_moderate_recipe"
+              href="/admin/recipe_suggestions"
+              class="flex items-center gap-2 px-4 py-2.5 text-sm text-cs-ink-700 no-underline transition hover:bg-cs-ink-100 hover:text-cs-red-900"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-lightbulb w-4 text-cs-ink-400"></i>
+              Rezeptvorschläge
+              <span
+                v-if="suggestionCount > 0"
+                class="ml-auto inline-flex items-center justify-center rounded-full bg-cs-red-900 px-2 py-0.5 text-xs font-bold text-white"
+              >
+                {{ suggestionCount }}
+              </span>
+            </a>
+          </div>
+
+          <button
+            @click="logout"
+            class="flex w-full items-center gap-2 border-t border-cs-ink-100 px-4 py-2.5 text-left text-sm font-semibold text-cs-red-900 transition hover:bg-cs-red-50"
+            type="button"
+            role="menuitem"
+          >
+            <i class="fa-solid fa-right-from-bracket w-4"></i>
+            Logout
+          </button>
         </div>
-      </span>
-      <button @click="logout" class="hover:underline bg-transparent border-0 p-0 text-cs-gold-400 cursor-pointer">
-        Logout
-      </button>
+      </div>
     </template>
     <template v-else>
-      <button @click="openLogin" class="hover:underline bg-transparent border-0 p-0 text-cs-gold-400 cursor-pointer">Login</button>
-      <button @click="openRegister" class="hover:underline bg-transparent border-0 p-0 text-cs-gold-400 cursor-pointer">Registrieren</button>
+      <button
+        @click="openLogin"
+        class="h-9 border-0 bg-transparent px-1.5 text-[12px] font-bold uppercase tracking-[0.13em] text-cs-red-900 transition hover:text-cs-red-700 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500"
+        type="button"
+      >
+        Login
+      </button>
+      <button
+        @click="openRegister"
+        class="h-9 rounded-md border border-cs-red-950 bg-cs-red-900 px-3 text-[12px] font-bold uppercase tracking-[0.13em] text-cs-gold-200 shadow-[inset_0_1px_0_rgba(255,255,255,.08),0_4px_10px_-8px_rgba(24,21,19,.7)] transition hover:bg-cs-red-800 hover:text-cs-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500"
+        type="button"
+      >
+        Registrieren
+      </button>
     </template>
 
-    <!-- Modal -->
-    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" @click.self="closeModal">
-      <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md py-10 px-6 text-cs-ink-900">
-        <button @click="closeModal" class="absolute top-4 right-4 text-cs-ink-500 hover:text-cs-ink-700">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <auth-form @success="closeModal" :initial-mode="initialMode" />
+    <Teleport to="body">
+      <div v-if="showModal" class="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto p-4 bg-black/50 backdrop-blur-sm" @click.self="closeModal">
+        <div class="relative my-auto bg-white rounded-lg shadow-xl w-full max-w-md py-10 px-6 text-cs-ink-900">
+          <button @click="closeModal" class="absolute top-4 right-4 text-cs-ink-500 hover:text-cs-ink-700" type="button" aria-label="Schließen">
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+          <auth-form @success="closeModal" :initial-mode="initialMode" />
+        </div>
       </div>
-    </div>
+    </Teleport>
   </div>
 </template>
 
@@ -123,6 +157,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import { useAuth } from '../composables/useAuth'
 import AuthForm from './AuthForm.vue'
+import AvatarDisplay from './AvatarDisplay.vue'
 
 const { user, isAuthenticated, logout } = useAuth()
 const showModal = ref(false)
