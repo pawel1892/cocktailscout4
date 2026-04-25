@@ -41,7 +41,7 @@
       </button>
     </div>
     <nav class="flex flex-col gap-0.5 p-3 overflow-y-auto">
-      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables", "Composite"].each_with_index do |nav, i| %>
+      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables"].each_with_index do |nav, i| %>
         <a href="#<%= nav.downcase %>" onclick="dsCloseSidebar()" class="flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[13px] font-medium text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900 no-underline transition-all">
           <span class="font-mono text-cs-ink-400 text-[10px] w-5 flex-shrink-0">0<%= i+1 %></span>
           <%= nav %>
@@ -58,7 +58,7 @@
 
     <!-- Desktop nav (lg+) -->
     <nav class="hidden xl:flex flex-wrap gap-1 bg-cs-ink-100 border border-cs-ink-200 p-1.5 rounded-xl">
-      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables", "Composite"].each_with_index do |nav, i| %>
+      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables"].each_with_index do |nav, i| %>
         <a href="#<%= nav.downcase %>" class="px-3 py-1.5 rounded-md text-[12px] font-medium text-cs-ink-700 hover:bg-cs-ink-50 hover:text-cs-red-900 no-underline transition-all">
           0<%= i+1 %> · <%= nav %>
         </a>
@@ -727,75 +727,6 @@
       </div>
     </section>
 
-    <!-- ================= 10 COMPOSITE ================= -->
-    <section id="composite" class="scroll-mt-24">
-      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
-        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">In Use Examples</h2>
-        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">10</span>
-      </div>
-      
-      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-4 mt-8">RECIPE LIST ROWS</div>
-      <div class="flex flex-col gap-3 mb-12 max-w-[720px]">
-        <div class="cocktail-card text-inherit">
-          <div class="thumb"><i class="fa-solid fa-martini-glass-citrus scale-110"></i></div>
-          <div>
-            <h4 class="text-cs-blue-600 font-bold m-0 text-[17px] tracking-tight">Long Island Iced Tea <i class="fa-solid fa-heart text-cs-error-500 ml-1 scale-75"></i></h4>
-            <div class="text-[11px] text-cs-ink-500 mt-1 mb-2.5">von <strong class="text-cs-ink-800 font-bold">Ripuli</strong></div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="tag tag-success text-[10px]">Erfrischend</span>
-              <span class="tag tag-info text-[10px]">Longdrink</span>
-              <span class="tag tag-primary-soft text-[10px]">Wodka</span>
-              <span class="tag tag-primary-soft text-[10px]">Gin</span>
-              <span class="tag tag-gold-soft text-[10px]">IBA</span>
-            </div>
-            <div class="font-mono text-[10px] text-cs-ink-400 mt-2.5 uppercase tracking-wide font-bold">18.0% ABV • 1.1M Aufrufe • ♥ 97</div>
-          </div>
-          <div class="rating-chip mid">7.2<small class="block text-[9px] mt-px opacity-70">(169)</small></div>
-        </div>
-
-        <div class="cocktail-card text-inherit">
-          <div class="thumb"><i class="fa-solid fa-mug-hot scale-110"></i></div>
-          <div>
-            <h4 class="text-cs-blue-600 font-bold m-0 text-[17px] tracking-tight">Mojito <i class="fa-regular fa-heart text-cs-ink-400 ml-1 scale-75"></i></h4>
-            <div class="text-[11px] text-cs-ink-500 mt-1 mb-2.5">von <strong class="text-cs-ink-800 font-bold">zoidberg</strong> <span class="tag tag-gold-soft py-0 text-[9px] font-bold">ME</span></div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="tag tag-success text-[10px]">Erfrischend</span>
-              <span class="tag tag-primary-soft text-[10px]">Rum</span>
-              <span class="tag tag-primary-soft text-[10px]">Klassiker</span>
-            </div>
-            <div class="font-mono text-[10px] text-cs-ink-400 mt-2.5 uppercase tracking-wide font-bold">14.3% ABV • 1.0M Aufrufe • ♥ 153</div>
-          </div>
-          <div class="rating-chip high">8.6<small class="block text-[9px] mt-px opacity-70">(249)</small></div>
-        </div>
-
-        <div class="cocktail-card text-inherit">
-          <div class="thumb"><i class="fa-solid fa-whiskey-glass scale-110"></i></div>
-          <div>
-            <h4 class="text-cs-blue-600 font-bold m-0 text-[17px] tracking-tight">Whiskey Sour <i class="fa-regular fa-heart text-cs-ink-400 ml-1 scale-75"></i></h4>
-            <div class="text-[11px] text-cs-ink-500 mt-1 mb-2.5">von <strong class="text-cs-ink-800 font-bold">Ripuli</strong></div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="tag tag-warning text-[10px]">Stark</span>
-              <span class="tag tag-neutral text-[10px]">Sauer</span>
-              <span class="tag tag-gold-soft text-[10px]">Aperitif</span>
-            </div>
-            <div class="font-mono text-[10px] text-cs-ink-400 mt-2.5 uppercase tracking-wide font-bold">18.0% ABV • 586k Aufrufe • ♥ 46</div>
-          </div>
-          <div class="rating-chip high">7.8<small class="block text-[9px] mt-px opacity-70">(48)</small></div>
-        </div>
-      </div>
-
-      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-4">FILTER TOOLBAR (RECIPE INDEX)</div>
-      <div class="overflow-x-auto rounded-xl shadow-md border border-cs-ink-200"><div class="p-5 bg-white grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto_auto] gap-3.5 items-end text-inherit min-w-[560px]">
-        <div><label class="label-field text-[10px] mb-1 font-bold">SUCHE</label><input class="input-field py-1.5 text-[13px]" placeholder="Rezeptname..." /></div>
-        <div><label class="label-field text-[10px] mb-1 font-bold">BEWERTUNG</label><select class="input-field py-1.5 text-[13px]"><option>Alle</option></select></div>
-        <div><label class="label-field text-[10px] mb-1 font-bold">KATEGORIE</label><select class="input-field py-1.5 text-[13px]"><option>Alle</option></select></div>
-        <div><label class="label-field text-[10px] mb-1 font-bold">ZUTAT</label><input class="input-field py-1.5 text-[13px]" placeholder="Zutat..." /></div>
-        <div><label class="label-field text-[10px] mb-1 font-bold">BENUTZER</label><input class="input-field py-1.5 text-[13px]" placeholder="Name..." /></div>
-        <div><label class="label-field text-[10px] mb-1 font-bold">LISTE</label><select class="input-field py-1.5 text-[13px]"><option>Alle</option></select></div>
-        <button class="btn btn-outline btn-sm h-[34px] px-3.5"><i class="fa-regular fa-heart scale-90"></i></button>
-        <button class="btn btn-primary btn-sm h-[34px] px-5 font-bold">Filtern</button>
-      </div></div>
-    </section>
 
   </div><!-- /.max-w -->
 </div><!-- /.ds-body -->
