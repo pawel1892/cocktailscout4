@@ -41,9 +41,9 @@
       </button>
     </div>
     <nav class="flex flex-col gap-0.5 p-3 overflow-y-auto">
-      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables"].each_with_index do |nav, i| %>
+      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables", "Spacing"].each_with_index do |nav, i| %>
         <a href="#<%= nav.downcase %>" onclick="dsCloseSidebar()" class="flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[13px] font-medium text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900 no-underline transition-all">
-          <span class="font-mono text-cs-ink-400 text-[10px] w-5 flex-shrink-0">0<%= i+1 %></span>
+          <span class="font-mono text-cs-ink-400 text-[10px] w-5 flex-shrink-0"><%= format('%02d', i+1) %></span>
           <%= nav %>
         </a>
       <% end %>
@@ -58,9 +58,9 @@
 
     <!-- Desktop nav (lg+) -->
     <nav class="hidden xl:flex flex-wrap gap-1 bg-cs-ink-100 border border-cs-ink-200 p-1.5 rounded-xl">
-      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables"].each_with_index do |nav, i| %>
+      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables", "Spacing"].each_with_index do |nav, i| %>
         <a href="#<%= nav.downcase %>" class="px-3 py-1.5 rounded-md text-[12px] font-medium text-cs-ink-700 hover:bg-cs-ink-50 hover:text-cs-red-900 no-underline transition-all">
-          0<%= i+1 %> · <%= nav %>
+          <%= format('%02d', i+1) %> · <%= nav %>
         </a>
       <% end %>
     </nav>
@@ -709,7 +709,7 @@
               </td>
               <td class="table-td text-right font-mono text-cs-ink-900">78,90 €</td>
               <td class="table-td text-right font-mono text-cs-ink-600">43,0 %</td>
-              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-primary-soft">Rauchig</span><span class="tag-primary-soft">Torf</span><span class="tag-neutral">Salzig</span></div></td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-neutral">Rauchig</span><span class="tag-neutral">Torf</span><span class="tag-light-blue">Salzig</span></div></td>
               <td class="table-td font-mono text-xs text-cs-ink-500">29.09.2020</td>
             </tr>
             <tr class="table-tr-hover">
@@ -727,6 +727,123 @@
       </div>
     </section>
 
+
+    <!-- =========================================================
+         10 · SPACING
+    ========================================================= -->
+    <section id="spacing" class="mb-20 scroll-mt-24">
+      <div class="flex items-start justify-between border-b border-cs-ink-200 pb-3 mb-8">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Spacing</h2>
+        <span class="font-mono text-cs-ink-400 text-sm pt-3">10</span>
+      </div>
+
+      <p class="text-cs-ink-600 text-[15px] leading-relaxed mb-10 max-w-2xl">Base unit is <code class="font-mono text-xs bg-cs-ink-100 border border-cs-ink-200 px-1.5 py-0.5 rounded text-cs-ink-800">4px</code>. All spacing, padding, margin, and gap values are multiples of this base. Bars below are rendered at 4× scale for visibility.</p>
+
+      <!-- Scale -->
+      <div class="mb-12">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">SCALE</p>
+        <div class="space-y-2.5">
+          <% [
+            { token: "0.5", px: 2 },
+            { token: "1",   px: 4 },
+            { token: "1.5", px: 6 },
+            { token: "2",   px: 8 },
+            { token: "2.5", px: 10 },
+            { token: "3",   px: 12 },
+            { token: "4",   px: 16 },
+            { token: "5",   px: 20 },
+            { token: "6",   px: 24 },
+            { token: "8",   px: 32 },
+            { token: "10",  px: 40 },
+            { token: "12",  px: 48 },
+            { token: "16",  px: 64 },
+            { token: "20",  px: 80 },
+            { token: "24",  px: 96 },
+          ].each do |s| %>
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-xs text-cs-ink-500 w-10 flex-shrink-0 text-right"><%= s[:token] %></span>
+              <div class="h-5 bg-cs-red-900 rounded-sm flex-shrink-0" style="width: <%= s[:px] * 4 %>px;"></div>
+              <span class="font-mono text-[11px] text-cs-ink-400"><%= s[:px] %>px</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Common usage -->
+      <div class="mb-12">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">COMMON USAGE</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0">
+          <% [
+            { pattern: "px-3 py-2",    label: "Button padding" },
+            { pattern: "px-4 py-3",    label: "Input / field padding" },
+            { pattern: "p-4",          label: "Card inner padding" },
+            { pattern: "p-6",          label: "Card section padding" },
+            { pattern: "gap-1",        label: "Tag & badge groups" },
+            { pattern: "gap-2",        label: "Button groups, form rows" },
+            { pattern: "gap-4",        label: "Card grids" },
+            { pattern: "gap-6",        label: "Page sections" },
+            { pattern: "mb-4",         label: "Form field spacing" },
+            { pattern: "mb-8 / mb-12", label: "Section separators" },
+          ].each do |u| %>
+            <div class="flex items-center gap-3 py-2.5 border-b border-cs-ink-100">
+              <code class="font-mono text-xs bg-cs-ink-100 border border-cs-ink-200 px-2 py-1 rounded text-cs-red-900 flex-shrink-0 whitespace-nowrap"><%= u[:pattern] %></code>
+              <span class="text-sm text-cs-ink-600"><%= u[:label] %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="mb-12">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">GRID — COLUMN LAYOUTS</p>
+        <div class="space-y-6">
+          <% [
+            { cols: 1, label: "grid-cols-1", desc: "Detail pages, articles, forms" },
+            { cols: 2, label: "grid-cols-2", desc: "Split panels, settings, ingredient tables" },
+            { cols: 3, label: "grid-cols-3", desc: "Recipe card grids, feature rows" },
+            { cols: 4, label: "grid-cols-4", desc: "Dense thumbnail grids, icon sets" },
+          ].each do |g| %>
+            <div>
+              <div class="flex items-baseline gap-3 mb-2">
+                <code class="font-mono text-xs text-cs-red-900"><%= g[:label] %></code>
+                <span class="text-xs text-cs-ink-400"><%= g[:desc] %></span>
+              </div>
+              <div class="grid gap-2" style="grid-template-columns: repeat(<%= g[:cols] %>, minmax(0, 1fr));">
+                <% g[:cols].times do |ci| %>
+                  <div class="h-10 bg-cs-red-50 border border-cs-red-100 rounded flex items-center justify-center font-mono text-[10px] text-cs-red-400">col <%= ci + 1 %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Container widths -->
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">CONTAINER — MAX WIDTHS</p>
+        <div class="space-y-3">
+          <% [
+            { cls: "max-w-sm",  px: 384,  desc: "Modals, narrow forms" },
+            { cls: "max-w-md",  px: 448,  desc: "Auth pages, compact panels" },
+            { cls: "max-w-xl",  px: 576,  desc: "Article body text" },
+            { cls: "max-w-2xl", px: 672,  desc: "Cards, form content" },
+            { cls: "max-w-4xl", px: 896,  desc: "Content + sidebar" },
+            { cls: "max-w-7xl", px: 1280, desc: "Full-width page wrapper" },
+          ].each do |c| %>
+            <div class="flex items-center gap-4">
+              <code class="font-mono text-[11px] text-cs-ink-600 w-28 flex-shrink-0">.<%= c[:cls] %></code>
+              <div class="flex-1 bg-cs-ink-100 rounded-sm h-8 relative">
+                <div class="h-full bg-cs-gold-100 border border-cs-gold-200 rounded-sm flex items-center justify-end pr-3" style="width: <%= (c[:px].to_f / 1280 * 100).round(1) %>%;">
+                  <span class="font-mono text-[10px] text-cs-gold-700 whitespace-nowrap"><%= c[:px] %>px</span>
+                </div>
+              </div>
+              <span class="text-xs text-cs-ink-400 w-44 flex-shrink-0 hidden sm:inline"><%= c[:desc] %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </section>
 
   </div><!-- /.max-w -->
 </div><!-- /.ds-body -->
