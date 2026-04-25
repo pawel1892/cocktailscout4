@@ -207,7 +207,7 @@
 
 /* Cards & Boxes */
 @utility card {
-  @apply bg-white rounded-lg shadow-sm border border-cs-ink-200 overflow-hidden;
+  @apply bg-white rounded-lg shadow-sm border border-cs-ink-200 overflow-hidden flex flex-col;
 }
 
 @utility card-header {
@@ -215,51 +215,91 @@
 }
 
 @utility card-body {
-  @apply p-[18px] text-cs-ink-800 text-sm;
+  @apply p-[18px] text-cs-ink-800 text-sm flex-1 leading-relaxed;
 }
 
 @utility card-footer {
-  @apply px-[18px] py-[10px] border-t border-cs-ink-200 bg-cs-ink-50 text-xs text-cs-ink-500;
+  @apply px-[18px] py-[10px] border-t border-cs-ink-200 bg-cs-ink-50 text-xs text-cs-ink-500 flex items-center gap-2;
+}
+
+@utility card-label {
+  @apply font-mono text-[10px] font-normal text-cs-ink-400;
 }
 
 @utility card-elevated {
-  @apply shadow-md border-transparent;
+  @apply border-transparent transition-shadow duration-200 can-hover:hover:shadow-md;
 }
 
 @utility card-ghost {
   @apply bg-transparent shadow-none border-dashed;
+  & .card-header {
+    @apply bg-transparent border-dashed;
+  }
+  & .card-body {
+    @apply flex flex-col items-center justify-center text-center py-8 gap-3;
+  }
 }
 
 @utility card-gold {
-  @apply border-cs-gold-200 bg-linear-to-b from-cs-gold-50 to-white to-60%;
+  @apply border-cs-gold-300 bg-linear-to-b from-cs-gold-100 to-white to-60%;
+  & .card-header {
+    @apply font-display font-semibold text-[17px] tracking-tight text-cs-gold-800 bg-cs-gold-50/60 border-cs-gold-200;
+  }
+  & .card-body {
+    @apply text-cs-ink-700;
+  }
+  & .card-footer {
+    @apply border-cs-gold-200 bg-cs-gold-50 text-cs-gold-700;
+  }
+  & .card-label {
+    @apply text-cs-gold-600;
+  }
 }
 
 @utility card-dark {
   @apply bg-cs-red-900 text-cs-gold-100 border-cs-red-950 shadow-md;
+  & .card-header {
+    @apply border-cs-red-950 bg-cs-red-950 font-display font-semibold text-[17px] tracking-tight text-cs-gold-200;
+  }
+  & .card-body {
+    @apply text-cs-gold-100;
+  }
+  & .card-footer {
+    @apply bg-black/20 border-white/5 text-cs-gold-200/50;
+  }
+  & .card-label {
+    @apply text-cs-gold-700;
+  }
 }
 
 @utility callout {
   @apply p-4 rounded-r-md border-l-4 bg-cs-ink-50 border-cs-ink-400 text-cs-ink-800 flex gap-3 items-start text-[13.5px];
+  & > i { @apply flex-shrink-0 mt-1; }
 }
 
 @utility callout-gold {
-  @apply callout bg-cs-gold-50 border-cs-gold-500 text-cs-gold-700;
+  @apply p-4 rounded-r-md border-l-4 flex gap-3 items-start text-[13.5px] bg-cs-gold-50 border-cs-gold-500 text-cs-gold-700;
+  & > i { @apply flex-shrink-0 mt-1; }
 }
 
 @utility callout-red {
-  @apply callout bg-cs-red-50 border-cs-red-700 text-cs-red-900;
+  @apply p-4 rounded-r-md border-l-4 flex gap-3 items-start text-[13.5px] bg-cs-red-50 border-cs-red-700 text-cs-red-900;
+  & > i { @apply flex-shrink-0 mt-1; }
 }
 
 @utility callout-success {
-  @apply callout bg-cs-success-50 border-cs-success-500 text-cs-success-700;
+  @apply p-4 rounded-r-md border-l-4 flex gap-3 items-start text-[13.5px] bg-cs-success-50 border-cs-success-500 text-cs-success-700;
+  & > i { @apply flex-shrink-0 mt-1; }
 }
 
 @utility callout-warning {
-  @apply callout bg-cs-warning-50 border-cs-warning-500 text-cs-warning-700;
+  @apply p-4 rounded-r-md border-l-4 flex gap-3 items-start text-[13.5px] bg-cs-warning-50 border-cs-warning-500 text-cs-warning-700;
+  & > i { @apply flex-shrink-0 mt-1; }
 }
 
 @utility callout-info {
-  @apply callout bg-cs-blue-50 border-cs-blue-500 text-cs-blue-700;
+  @apply p-4 rounded-r-md border-l-4 flex gap-3 items-start text-[13.5px] bg-cs-blue-50 border-cs-blue-500 text-cs-blue-700;
+  & > i { @apply flex-shrink-0 mt-1; }
 }
 
 @utility quote {
@@ -292,11 +332,11 @@
 }
 
 @utility tag-light-blue {
-  @apply tag bg-cs-blue-100 text-cs-blue-700 border-cs-blue-100;
+  @apply tag bg-cs-blue-100 text-cs-blue-700 border-cs-blue-200;
 }
 
 @utility tag-gold {
-  @apply tag bg-cs-gold-500 text-cs-red-950 border-cs-gold-600;
+  @apply tag bg-cs-gold-400 text-cs-ink-950 border-cs-gold-500;
 }
 
 @utility tag-gold-soft {
@@ -304,23 +344,23 @@
 }
 
 @utility tag-info {
-  @apply tag bg-cs-blue-50 text-cs-blue-700 border-cs-blue-50;
+  @apply tag bg-cs-blue-50 text-cs-blue-700 border-cs-blue-200;
 }
 
 @utility tag-success {
-  @apply tag bg-cs-success-50 text-cs-success-700 border-cs-success-50;
+  @apply tag bg-cs-success-50 text-cs-success-700 border-cs-success-100;
 }
 
 @utility tag-warning {
-  @apply tag bg-cs-warning-50 text-cs-warning-700 border-cs-warning-50;
+  @apply tag bg-cs-warning-50 text-cs-warning-700 border-cs-warning-100;
 }
 
 @utility tag-error {
-  @apply tag bg-cs-error-50 text-cs-error-700 border-cs-error-50;
+  @apply tag bg-cs-error-50 text-cs-error-700 border-cs-error-100;
 }
 
 @utility tag-mini {
-  @apply inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wider font-semibold bg-cs-ink-100 text-cs-ink-600;
+  @apply inline-flex items-center border border-cs-ink-200 px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wider font-semibold bg-cs-ink-100 text-cs-ink-600;
 }
 
 @utility link {

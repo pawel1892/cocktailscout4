@@ -89,9 +89,31 @@
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">01</span>
       </div>
       <p class="text-cs-ink-600 text-sm max-w-[720px] mb-8">
-        Three tonal scales anchor everything. Brand anchors stay put: <code>red-900 = #330A0A</code>, <code>gold-400 = #B6A555</code>.
-        The neutral is <em>warm</em> (slight red/amber undertone) so it reads as paper-and-ink under gold light.
+        Two colors define the brand: <strong class="text-cs-ink-800">Oxblood</strong> and <strong class="text-cs-ink-800">Brass</strong>.
+        Everything else — warm neutral, blue, semantic greens and reds — is functional.
+        The neutral carries a slight red/amber undertone so it reads as paper-and-ink under gold light.
       </p>
+
+      <div class="flex gap-4 mb-12 max-w-sm">
+        <div class="flex-1 rounded-lg overflow-hidden border border-cs-ink-200 shadow-sm">
+          <div class="h-16 bg-cs-red-900 flex items-end p-2.5">
+            <span class="font-mono text-[9px] uppercase tracking-widest text-cs-red-400 font-bold">Primary</span>
+          </div>
+          <div class="px-3 py-2.5 bg-white">
+            <div class="font-bold text-[13px] text-cs-ink-900">Oxblood</div>
+            <div class="font-mono text-[10px] text-cs-ink-400 mt-0.5">cs-red-900 · #330A0A</div>
+          </div>
+        </div>
+        <div class="flex-1 rounded-lg overflow-hidden border border-cs-ink-200 shadow-sm">
+          <div class="h-16 bg-cs-gold-400 flex items-end p-2.5">
+            <span class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-700 font-bold">Accent</span>
+          </div>
+          <div class="px-3 py-2.5 bg-white">
+            <div class="font-bold text-[13px] text-cs-ink-900">Brass</div>
+            <div class="font-mono text-[10px] text-cs-ink-400 mt-0.5">cs-gold-400 · #B6A555</div>
+          </div>
+        </div>
+      </div>
 
       <% scales.each do |key, data| %>
         <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8"><%= data[:label] %> — <%= key == :red ? "OXBLOOD (DARK RED)" : (key == :gold ? "BRASS (GOLD)" : (key == :ink ? "WARM NEUTRAL" : "BLUE (INFO & LINKS)")) %></div>
@@ -333,7 +355,7 @@
           </div>
           <div class="flex flex-col items-start gap-2">
             <div class="font-mono text-cs-gold-400 text-[11px]">.btn-outline-gold</div>
-            <button class="btn btn-outline-gold text-cs-ink-50 border-cs-ink-50/30 hover:border-cs-gold-300">Meine Bar</button>
+            <button class="btn btn-outline-gold">Meine Bar</button>
           </div>
           <div class="flex flex-col items-start gap-2">
             <div class="font-mono text-cs-gold-400 text-[11px]">.btn-ghost-dark</div>
@@ -350,47 +372,114 @@
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">05</span>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Standard -->
         <div class="card">
-          <div class="card-header">Standard Card</div>
-          <div class="card-body">The default card container. White background, thin stroke, soft shadow.</div>
-          <div class="card-footer text-cs-ink-500">Zuletzt aktualisiert · vor 3 Min.</div>
-        </div>
-        <div class="card card-elevated">
-          <div class="card-header">Elevated Style <span class="tag tag-mini ml-1.5">Hover</span></div>
-          <div class="card-body">Rises off the page — shadow-md depth without border.</div>
-          <div class="card-footer">shadow-md · no border</div>
-        </div>
-        <div class="card card-ghost">
-          <div class="card-header bg-transparent border-dashed">Empty State (Ghost)</div>
+          <div class="card-header">
+            Standard Card
+            <span class="card-label">.card</span>
+          </div>
           <div class="card-body">
-            <span class="text-cs-ink-400 italic">Noch keine Zutaten in deiner Bar — <a href="#" class="text-cs-blue-600 underline">jetzt hinzufügen</a>.</span>
+            The default container — white background, thin ink stroke, soft shadow. Works for recipe summaries, settings panels, or any structured content block.
+          </div>
+          <div class="card-footer">
+            <i class="fa-regular fa-clock"></i>
+            Zuletzt aktualisiert · vor 3 Min.
           </div>
         </div>
-        <div class="card card-gold">
-          <div class="card-header">Gold Feature</div>
-          <div class="card-body">Premium highlight for tips, editor's picks, or recommendations.</div>
-          <div class="card-footer border-cs-gold-200 bg-cs-gold-50 text-cs-gold-800">Kuratiert von CocktailScout</div>
+
+        <!-- Elevated -->
+        <div class="card card-elevated">
+          <div class="card-header">
+            <span>Elevated <span class="tag tag-mini ml-1.5">Hover</span></span>
+            <span class="card-label">.card-elevated</span>
+          </div>
+          <div class="card-body">
+            Borderless — lifts to <code>shadow-md</code> on hover. Use for clickable recipe tiles or any card that links somewhere.
+          </div>
+          <div class="card-footer">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            Hover to see the shadow rise
+          </div>
         </div>
+
+        <!-- Ghost / empty state -->
+        <div class="card card-ghost">
+          <div class="card-header">
+            Empty State
+            <span class="card-label">.card-ghost</span>
+          </div>
+          <div class="card-body">
+            <div class="w-10 h-10 rounded-full border-2 border-dashed border-cs-ink-300 flex items-center justify-center">
+              <i class="fa-solid fa-plus text-cs-ink-400"></i>
+            </div>
+            <p class="text-cs-ink-400 text-sm italic m-0">Noch keine Zutaten in deiner Bar.</p>
+            <a href="#" class="btn btn-outline btn-sm">Jetzt hinzufügen</a>
+          </div>
+        </div>
+
+        <!-- Gold / editorial -->
+        <div class="card card-gold">
+          <div class="card-header">
+            Gold Feature
+            <span class="card-label">.card-gold</span>
+          </div>
+          <div class="card-body">
+            Premium highlight for editorial picks, seasonal tips, or curated recommendations. The warm brass gradient signals quality and curation.
+          </div>
+          <div class="card-footer">
+            <i class="fa-solid fa-star text-cs-gold-500"></i>
+            Kuratiert von CocktailScout
+          </div>
+        </div>
+
+        <!-- Dark / stat tile -->
         <div class="card card-dark">
-          <div class="card-header border-cs-red-950 bg-cs-red-950 text-cs-gold-100 font-bold">Dark Feature</div>
-          <div class="card-body text-cs-gold-100">
-            Inverted look for stat tiles or promo callouts.
-            <div class="flex gap-6 mt-5">
-              <div><div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">1.5k</div><div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Rezepte</div></div>
-              <div><div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">14k+</div><div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Mitglieder</div></div>
+          <div class="card-header">
+            Dark Feature
+            <span class="card-label">.card-dark</span>
+          </div>
+          <div class="card-body">
+            <p class="text-cs-gold-200/60 text-sm mb-5">Inverted look for stat tiles or promo callouts. Oxblood ground, brass accents.</p>
+            <div class="flex gap-6">
+              <div>
+                <div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">1.5k</div>
+                <div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Rezepte</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">14k+</div>
+                <div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Mitglieder</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">98%</div>
+                <div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Zufrieden</div>
+              </div>
             </div>
           </div>
-          <div class="card-footer bg-black/20 border-white/5 text-cs-gold-200/50">Community · täglich frisch</div>
+          <div class="card-footer">
+            <i class="fa-solid fa-circle text-[5px] text-cs-gold-600"></i>
+            Community · täglich frisch
+          </div>
         </div>
+
+        <!-- Interactive -->
         <div class="card">
-          <div class="card-header flex justify-between">Interactive Card
-            <div class="flex gap-2">
+          <div class="card-header">
+            Interactive Card
+            <div class="flex gap-1">
               <button class="btn btn-ghost btn-sm p-1 h-6 w-6"><i class="fa-solid fa-pen scale-75"></i></button>
               <button class="btn btn-ghost btn-sm p-1 h-6 w-6"><i class="fa-solid fa-ellipsis scale-75"></i></button>
             </div>
           </div>
-          <div class="card-body text-sm text-cs-ink-600 leading-relaxed">Card headers accept right-aligned action clusters for edit or overflow menus.</div>
+          <div class="card-body">
+            Headers accept right-aligned action clusters — edit, share, or overflow menus. The ghost button style keeps them unobtrusive.
+          </div>
+          <div class="card-footer">
+            Long Island Iced Tea
+            <span class="tag tag-mini ml-auto">Klassiker</span>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -400,28 +489,30 @@
         <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Tags & Labels</h2>
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">06</span>
       </div>
-      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">FILLED VARIANTS</div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">DARK — Brand</div>
       <div class="flex flex-wrap gap-2.5 mb-10 text-inherit">
-        <span class="tag tag-neutral">Neutral</span>
-        <span class="tag tag-primary">Primary</span>
-        <span class="tag tag-gold">Gold</span>
-        <span class="tag tag-info">Info</span>
-        <span class="tag tag-success">Active</span>
-        <span class="tag tag-warning">Review</span>
-        <span class="tag tag-error">Archiv</span>
+        <span class="tag-primary">Primary</span>
+        <span class="tag-gold">Gold</span>
       </div>
 
-      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">SOFT (RECIPE CATEGORIES)</div>
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">SOFT — Status</div>
       <div class="flex flex-wrap gap-2.5 mb-10 text-inherit">
-        <span class="tag tag-primary-soft">Klassiker</span>
-        <span class="tag tag-gold-soft">Aperitif</span>
-        <span class="tag tag-info">Longdrink</span>
-        <span class="tag tag-success">Erfrischend</span>
-        <span class="tag tag-warning">Stark</span>
-        <span class="tag tag-neutral">Sauer</span>
+        <span class="tag-neutral">Neutral</span>
+        <span class="tag-info">Info</span>
+        <span class="tag-success">Aktiv</span>
+        <span class="tag-warning">Review</span>
+        <span class="tag-error">Archiv</span>
       </div>
 
-      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">MINI / META</div>
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">SOFT — Category</div>
+      <div class="flex flex-wrap gap-2.5 mb-10 text-inherit">
+        <span class="tag-primary-soft">Klassiker</span>
+        <span class="tag-gold-soft">Aperitif</span>
+        <span class="tag-light-blue">Longdrink</span>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">MINI — Meta</div>
       <div class="flex flex-wrap gap-2.5 text-inherit">
         <span class="tag-mini">IBA</span>
         <span class="tag-mini">14.3% ABV</span>
@@ -437,12 +528,12 @@
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">07</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-inherit">
-        <div class="callout"><i class="fa-regular fa-circle-question mt-1 flex-shrink-0"></i><div><strong>Neutral Callout</strong> Nützlich für allgemeine Hinweise oder Randnotizen.</div></div>
-        <div class="callout callout-gold"><i class="fa-solid fa-wand-magic-sparkles mt-1 text-cs-gold-700 flex-shrink-0"></i><div><strong class="text-cs-gold-700 font-bold">Pro-Tipp</strong> Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
-        <div class="callout callout-red"><i class="fa-solid fa-circle-exclamation mt-1 text-cs-red-700 flex-shrink-0"></i><div><strong class="text-cs-red-700 font-bold">Important</strong> Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
-        <div class="callout callout-info"><i class="fa-solid fa-circle-info mt-1 text-cs-blue-700 flex-shrink-0"></i><div><strong class="text-cs-blue-700 font-bold">Community Notiz</strong> Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
-        <div class="callout callout-success"><i class="fa-solid fa-circle-check mt-1 text-cs-success-700 flex-shrink-0"></i><div><strong class="text-cs-success-700 font-bold">Gespeichert</strong> Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
-        <div class="callout callout-warning"><i class="fa-solid fa-triangle-exclamation mt-1 text-cs-warning-700 flex-shrink-0"></i><div><strong class="text-cs-warning-700 font-bold">Achtung</strong> Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
+        <div class="callout"><i class="fa-regular fa-circle-question"></i><div><strong>Neutral Callout</strong> Nützlich für allgemeine Hinweise oder Randnotizen.</div></div>
+        <div class="callout-gold"><i class="fa-solid fa-wand-magic-sparkles"></i><div><strong>Pro-Tipp</strong> Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
+        <div class="callout-red"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Important</strong> Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
+        <div class="callout-info"><i class="fa-solid fa-circle-info"></i><div><strong>Community Notiz</strong> Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
+        <div class="callout-success"><i class="fa-solid fa-circle-check"></i><div><strong>Gespeichert</strong> Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
+        <div class="callout-warning"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Achtung</strong> Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
       </div>
     </section>
 
