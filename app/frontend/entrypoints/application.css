@@ -471,15 +471,15 @@
 .site-header-inner,
 .site-logo {
   transition:
-    padding 180ms ease,
-    height 180ms ease,
-    background-color 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
+    padding 300ms ease,
+    height 300ms ease,
+    background-color 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease;
 }
 
 .site-header[data-scrolled="true"] {
-  @apply bg-cs-ink-50/90 shadow-[0_10px_24px_-22px_rgba(24,21,19,.72)];
+  @apply bg-[#1a0505] shadow-[0_10px_24px_-22px_rgba(0,0,0,.6)];
 }
 
 .site-header[data-scrolled="true"] .site-header-inner {

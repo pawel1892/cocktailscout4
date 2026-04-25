@@ -58,14 +58,30 @@ window.toggleMobileMenu = function(event) {
 }
 
 if (!window.mobileMenuListenersAttached) {
+  let rafPending = false
+  let scrollLocked = false
   const updateHeaderState = () => {
-    const header = siteHeader()
-    if (!header) return
-    if (window.scrollY > 24) {
-      header.setAttribute('data-scrolled', 'true')
-    } else {
-      header.removeAttribute('data-scrolled')
-    }
+    if (rafPending || scrollLocked) return
+    rafPending = true
+    requestAnimationFrame(() => {
+      const header = siteHeader()
+      if (header) {
+        const scrolled = header.hasAttribute('data-scrolled')
+        let changed = false
+        if (!scrolled && window.scrollY > 32) {
+          header.setAttribute('data-scrolled', 'true')
+          changed = true
+        } else if (scrolled && window.scrollY < 16) {
+          header.removeAttribute('data-scrolled')
+          changed = true
+        }
+        if (changed) {
+          scrollLocked = true
+          setTimeout(() => { scrollLocked = false }, 400)
+        }
+      }
+      rafPending = false
+    })
   }
 
   updateHeaderState()

@@ -55,12 +55,12 @@
         <div class="flex w-full gap-2">
           <button
             @click="openLogin"
-            class="flex-1 h-10 rounded-md border border-cs-ink-200 bg-white text-[12px] font-bold uppercase tracking-[0.13em] text-cs-red-900 transition hover:border-cs-gold-500 hover:text-cs-red-700"
+            class="flex-1 h-10 rounded-md border border-cs-ink-200 bg-white text-[13px] font-semibold tracking-[0.01em] text-cs-red-900 transition hover:border-cs-gold-500 hover:text-cs-red-700"
             type="button"
           >Login</button>
           <button
             @click="openRegister"
-            class="flex-1 h-10 rounded-md border border-cs-red-950 bg-cs-red-900 text-[12px] font-bold uppercase tracking-[0.13em] text-cs-gold-200 transition hover:bg-cs-red-800 hover:text-cs-gold-300"
+            class="flex-1 h-10 rounded-md border border-cs-red-950 bg-cs-red-900 text-[13px] font-semibold tracking-[0.01em] text-cs-gold-200 transition hover:bg-cs-red-800 hover:text-cs-gold-300"
             type="button"
           >Registrieren</button>
         </div>
@@ -73,31 +73,31 @@
         <div class="relative inline-block">
           <button
             @click.stop="toggleUserMenu"
-            class="relative inline-flex h-11 items-center justify-center gap-2 rounded-full border border-cs-red-100 bg-white py-1 pl-1 pr-3 text-[13px] font-semibold text-cs-red-900 shadow-xs transition hover:border-cs-gold-500 hover:bg-cs-gold-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500"
+            class="inline-flex items-center gap-2 px-1.5 text-[13px] font-semibold tracking-[0.01em] text-cs-gold-100/80 transition hover:text-cs-gold-100 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500"
             type="button"
             aria-haspopup="menu"
             :aria-expanded="showUserMenu ? 'true' : 'false'"
           >
-            <AvatarDisplay :user="user" :avatarUrl="user?.avatar_url_small" size="md" />
-            <span class="hidden max-w-28 truncate lg:inline">{{ user?.username || 'Profil' }}</span>
-            <span
-              v-if="totalNotifications > 0"
-              class="hidden h-5 min-w-5 items-center justify-center rounded-full bg-cs-red-900 px-1.5 text-[11px] font-bold text-white lg:inline-flex"
-            >{{ totalNotifications }}</span>
-            <i class="fa-solid fa-chevron-down text-[10px] text-cs-ink-400"></i>
+            <div class="flex flex-col items-start">
+              <span class="text-[10px] font-normal tracking-[0.02em] text-cs-gold-100/40">Willkommen</span>
+              <span class="max-w-48 truncate leading-tight">{{ user?.username || 'Profil' }}</span>
+            </div>
+            <span v-if="totalNotifications > 0" class="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-cs-gold-400 px-1 text-[10px] font-bold text-cs-red-950">{{ totalNotifications }}</span>
+            <i class="fa-solid fa-chevron-down text-[10px] text-cs-gold-100/40"></i>
           </button>
 
           <div
             v-if="showUserMenu"
-            class="absolute right-0 z-[100] mt-2 w-60 overflow-hidden rounded-lg border border-cs-ink-200 bg-white text-cs-ink-900 shadow-lg"
+            class="absolute right-0 z-[100] mt-2 w-64 overflow-hidden rounded-lg border border-cs-ink-200 bg-white text-cs-ink-900 shadow-lg"
             role="menu"
             @click="closeUserMenu"
           >
-            <div class="border-b border-cs-ink-100 px-4 py-3">
-              <div class="text-[11px] font-bold uppercase tracking-wider text-cs-ink-400">Angemeldet als</div>
-              <div class="mt-0.5 truncate text-sm font-semibold text-cs-ink-900">{{ user?.username }}</div>
+            <div class="flex items-center gap-3 border-b border-cs-ink-100 px-4 py-3">
+              <AvatarDisplay :user="user" :avatarUrl="user?.avatar_url_small" size="md" />
+              <div class="min-w-0">
+                <div class="truncate text-sm font-semibold text-cs-ink-900">{{ user?.username }}</div>
+              </div>
             </div>
-
             <div class="py-1">
               <button @click="openProfile" class="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-cs-ink-700 transition hover:bg-cs-ink-100 hover:text-cs-red-900" type="button" role="menuitem">
                 <i class="fa-solid fa-user w-4 text-cs-ink-400"></i>
@@ -140,10 +140,10 @@
         </div>
       </template>
       <template v-else>
-        <button @click="openLogin" class="h-9 border-0 bg-transparent px-1.5 text-[12px] font-bold uppercase tracking-[0.13em] text-cs-red-900 transition hover:text-cs-red-700 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" type="button">
+        <button @click="openLogin" class="h-9 border-0 bg-transparent px-1.5 text-[13px] font-semibold tracking-[0.01em] text-cs-gold-100/80 transition hover:text-cs-gold-100 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" type="button">
           Login
         </button>
-        <button @click="openRegister" class="h-9 rounded-md border border-cs-red-950 bg-cs-red-900 px-3 text-[12px] font-bold uppercase tracking-[0.13em] text-cs-gold-200 shadow-[inset_0_1px_0_rgba(255,255,255,.08),0_4px_10px_-8px_rgba(24,21,19,.7)] transition hover:bg-cs-red-800 hover:text-cs-gold-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" type="button">
+        <button @click="openRegister" class="h-9 rounded-md border border-cs-gold-500 bg-cs-gold-400 px-3 text-[13px] font-semibold tracking-[0.01em] text-cs-red-950 shadow-[0_2px_8px_-4px_rgba(0,0,0,.5)] transition hover:bg-cs-gold-300 hover:border-cs-gold-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" type="button">
           Registrieren
         </button>
       </template>

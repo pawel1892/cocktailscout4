@@ -1,16 +1,16 @@
 <% if show_subnav? %>
-  <div id="secondary-nav" class="hidden lg:block bg-cs-red-50 border-t border-cs-red-100">
+  <div id="secondary-nav" class="hidden lg:block bg-cs-red-50 border-t border-cs-red-200">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between gap-4">
-      <nav class="flex items-center gap-5 overflow-x-auto py-2.5" aria-label="<%= current_nav_item[:label] %> Navigation">
+      <nav class="flex items-center gap-5 overflow-x-auto py-1.5" aria-label="<%= current_nav_item[:label] %> Navigation">
         <% subnav_items.each do |item| %>
           <% active = subnav_item_active?(item) %>
-          <%= link_to item[:label], item[:path], class: "relative shrink-0 py-1 text-[11px] font-bold uppercase tracking-[0.14em] no-underline transition after:absolute after:left-0 after:right-0 after:-bottom-2.5 after:h-0.5 after:transition #{active ? 'text-cs-red-900 after:bg-cs-gold-500' : 'text-cs-ink-600 after:bg-transparent hover:text-cs-red-900 hover:after:bg-cs-gold-300'}", aria: (active ? { current: "page" } : {}) %>
+          <%= link_to item[:label], item[:path], class: "relative shrink-0 py-1 text-[13px] font-medium tracking-[0.01em] no-underline transition after:absolute after:left-0 after:right-0 after:-bottom-2.5 after:h-0.5 after:transition #{active ? 'text-cs-red-900 font-semibold after:bg-cs-gold-500' : 'text-cs-ink-600 after:bg-transparent hover:text-cs-red-900 hover:after:bg-cs-gold-300'}", aria: (active ? { current: "page" } : {}) %>
         <% end %>
       </nav>
       <% if current_nav_item[:search] %>
-        <%= form_tag recipes_path, method: :get, class: "flex-shrink-0 relative flex items-center py-2" do %>
+        <%= form_tag recipes_path, method: :get, class: "flex-shrink-0 relative flex items-center py-1.5" do %>
           <input type="search" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen…"
-                 class="w-48 rounded-md border border-cs-red-200 bg-white/70 py-1 pl-3 pr-8 text-[11px] text-cs-ink-800 placeholder-cs-ink-400 transition focus:border-cs-gold-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-cs-gold-400">
+                 class="w-48 rounded-md border border-cs-ink-400 bg-white py-1 pl-3 pr-8 text-[13px] text-cs-ink-800 placeholder-cs-ink-400 shadow-xs transition focus:border-cs-gold-500 focus:outline-none focus:ring-1 focus:ring-cs-gold-400">
           <button type="submit" class="absolute right-2.5 text-cs-ink-400 transition-colors hover:text-cs-red-700" aria-label="Suchen">
             <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
           </button>
