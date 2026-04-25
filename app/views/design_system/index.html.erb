@@ -650,38 +650,77 @@
         <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Tables</h2>
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">09</span>
       </div>
-      <div class="table-container shadow-md border-cs-ink-300/40">
+      <div class="table-container">
         <table class="table-standard">
           <thead>
             <tr>
-              <th class="table-th text-cs-ink-500">Benutzer</th>
-              <th class="table-th text-cs-ink-500">Rolle</th>
-              <th class="table-th text-cs-ink-500">Rezepte</th>
-              <th class="table-th text-cs-ink-500">Status</th>
-              <th class="table-th text-cs-ink-500 text-right">Bewertung</th>
+              <th class="table-th">Spirituose</th>
+              <th class="table-th text-right">Preis</th>
+              <th class="table-th text-right">Alk.</th>
+              <th class="table-th">Geschmack</th>
+              <th class="table-th">Im Sortiment seit</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-body">
             <tr class="table-tr-hover">
-              <td class="table-td flex items-center gap-3.5"><span class="ds-avatar bg-cs-gold-400 text-cs-red-950 font-bold border-white/50">MM</span> Max Mustermann</td>
-              <td class="table-td">Administrator</td>
-              <td class="table-td"><span class="meta-chip">42</span></td>
-              <td class="table-td"><span class="tag tag-success text-[10px]">Aktiv</span></td>
-              <td class="table-td text-right font-mono font-bold text-sm text-cs-success-700">8.6</td>
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Hendrick's Gin</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Gin · Schottland</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">34,90 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">41,4 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-info">Blumig</span><span class="tag-light-blue">Gurke</span><span class="tag-neutral">Zitrus</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">12.03.2021</td>
             </tr>
             <tr class="table-tr-hover">
-              <td class="table-td flex items-center gap-3.5"><span class="ds-avatar bg-cs-red-500 text-white font-bold border-white/50">EM</span> Erika Musterfrau</td>
-              <td class="table-td">Premium User</td>
-              <td class="table-td"><span class="meta-chip">12</span></td>
-              <td class="table-td"><span class="tag tag-neutral text-[10px]">Inaktiv</span></td>
-              <td class="table-td text-right font-mono font-bold text-sm text-cs-gold-600">7.2</td>
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Monkey 47</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Gin · Schwarzwald</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">42,50 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">47,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-neutral">Kräuter</span><span class="tag-primary-soft">Waldbeere</span><span class="tag-neutral">Würzig</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">05.11.2021</td>
             </tr>
             <tr class="table-tr-hover">
-              <td class="table-td flex items-center gap-3.5"><span class="ds-avatar bg-cs-ink-900 text-white font-bold border-white/50">RI</span> Ripuli</td>
-              <td class="table-td">Moderator</td>
-              <td class="table-td"><span class="meta-chip">127</span></td>
-              <td class="table-td"><span class="tag tag-gold text-[10px]">Top Host</span></td>
-              <td class="table-td text-right font-mono font-bold text-sm text-cs-success-700">9.1</td>
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Diplomático Reserva Exclusiva</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Rum · Venezuela</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">39,80 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">40,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-gold-soft">Karamell</span><span class="tag-gold-soft">Vanille</span><span class="tag-gold-soft">Süß</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">18.06.2022</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Don Julio Blanco</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Tequila · Mexiko</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">52,00 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">38,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-neutral">Agave</span><span class="tag-light-blue">Frisch</span><span class="tag-neutral">Zitrus</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">02.01.2023</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Lagavulin 16</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Whisky · Islay</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">78,90 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">43,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-primary-soft">Rauchig</span><span class="tag-primary-soft">Torf</span><span class="tag-neutral">Salzig</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">29.09.2020</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Cointreau</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Likör · Frankreich</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">24,90 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">40,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-gold-soft">Orange</span><span class="tag-gold-soft">Süß</span><span class="tag-light-blue">Frisch</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">08.02.2020</td>
             </tr>
           </tbody>
         </table>
