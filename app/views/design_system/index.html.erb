@@ -543,19 +543,17 @@
         <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Forms</h2>
         <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">08</span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-inherit">
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">TEXT INPUTS — <code class="normal-case font-mono font-normal">.input-field</code></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 mb-10">
         <div>
           <div class="form-group">
-            <label class="label-field text-[13px]">Rezeptname</label>
+            <label class="label-field">Rezeptname</label>
             <input class="input-field" placeholder="z.B. Espresso Martini" />
             <p class="form-hint">Nur Buchstaben, Zahlen und Leerzeichen erlaubt.</p>
           </div>
           <div class="form-group">
-            <label class="label-field text-[13px]">Email Adresse</label>
-            <input class="input-field" type="email" placeholder="name@example.com" />
-          </div>
-          <div class="form-group">
-            <label class="label-field text-[13px]">Kategorie</label>
+            <label class="label-field">Kategorie</label>
             <select class="input-field">
               <option>Klassiker</option><option>Longdrink</option><option>Sauer</option>
             </select>
@@ -563,18 +561,84 @@
         </div>
         <div>
           <div class="form-group">
-            <label class="label-field text-[13px]">Benutzername</label>
-            <input class="input-field" value="zoidberg" />
-            <p class="form-hint">Darf nur Buchstaben und Zahlen enthalten.</p>
+            <label class="label-field">Beschreibung</label>
+            <textarea class="input-field" rows="5" placeholder="Tasting Notes, Geschichte, Tipps..."></textarea>
+            <p class="form-hint">Gilt für <code>input</code>, <code>select</code> und <code>textarea</code> gleichermaßen.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">CHECKBOXES — <code class="normal-case font-mono font-normal">.check-field</code> · <code class="normal-case font-mono font-normal">.check-label</code></div>
+      <div class="flex flex-col gap-2.5 mb-10">
+        <label class="check-label"><input type="checkbox" class="check-field" /> Nicht ausgewählt</label>
+        <label class="check-label"><input type="checkbox" class="check-field" checked /> Ausgewählt</label>
+        <label class="check-label"><input type="checkbox" class="check-field" disabled /> Deaktiviert</label>
+        <label class="check-label"><input type="checkbox" class="check-field" disabled checked /> Deaktiviert &amp; ausgewählt</label>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">RADIO BUTTONS — <code class="normal-case font-mono font-normal">.radio-field</code> · <code class="normal-case font-mono font-normal">.check-label</code></div>
+      <div class="flex flex-col gap-2.5 mb-10">
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" /> Option A</label>
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" checked /> Option B (ausgewählt)</label>
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" /> Option C</label>
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" disabled /> Option D (deaktiviert)</label>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">ERROR STATES — <code class="normal-case font-mono font-normal">.input-error</code> · <code class="normal-case font-mono font-normal">.label-error</code> · <code class="normal-case font-mono font-normal">.check-field-error</code></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 mb-10">
+        <div>
           <div class="form-group">
-            <label class="label-field label-error text-[13px]">Passwort</label>
+            <label class="label-field label-error">Passwort</label>
             <input class="input-field input-error" type="password" value="secret" />
             <p class="form-error-message"><i class="fa-solid fa-circle-exclamation mr-1"></i>Das Passwort ist zu kurz (mind. 8 Zeichen).</p>
           </div>
           <div class="form-group">
-            <label class="label-field text-[13px]">Beschreibung</label>
-            <textarea class="input-field" rows="3" placeholder="Tasting Notes, Geschichte, Tipps..."></textarea>
+            <label class="label-field label-error">Beschreibung</label>
+            <textarea class="input-field input-error" rows="3" placeholder="Pflichtfeld..."></textarea>
+            <p class="form-error-message"><i class="fa-solid fa-circle-exclamation mr-1"></i>Dieses Feld ist erforderlich.</p>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <p class="label-field label-error">Zustimmung erforderlich</p>
+            <div class="flex flex-col gap-2.5 mt-1">
+              <label class="check-label text-cs-error-700"><input type="checkbox" class="check-field check-field-error" /> Ich stimme den AGB zu</label>
+              <label class="check-label text-cs-error-700"><input type="checkbox" class="check-field check-field-error" checked /> Ich bin volljährig</label>
+            </div>
+            <p class="form-error-message mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i>Bitte alle Felder bestätigen.</p>
+          </div>
+          <div class="form-group">
+            <p class="label-field label-error">Kategorie (Pflichtfeld)</p>
+            <div class="flex flex-col gap-2.5 mt-1">
+              <label class="check-label text-cs-error-700"><input type="radio" class="radio-field check-field-error" name="ds-radio-err" /> Klassiker</label>
+              <label class="check-label text-cs-error-700"><input type="radio" class="radio-field check-field-error" name="ds-radio-err" /> Longdrink</label>
+            </div>
+            <p class="form-error-message mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i>Bitte eine Option wählen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">DISABLED — <code class="normal-case font-mono font-normal">disabled</code> attribute</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
+        <div>
+          <div class="form-group">
+            <label class="label-field">Benutzername (gesperrt)</label>
+            <input class="input-field" value="zoidberg" disabled />
+            <p class="form-hint">Deaktivierte Inputs via nativen <code>disabled</code>-Attr.</p>
+          </div>
+          <div class="form-group">
+            <label class="label-field">Kategorie (gesperrt)</label>
+            <select class="input-field" disabled><option>Klassiker</option></select>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <p class="label-field">Einstellungen (gesperrt)</p>
+            <div class="flex flex-col gap-2.5 mt-1">
+              <label class="check-label"><input type="checkbox" class="check-field" disabled /> Option deaktiviert</label>
+              <label class="check-label"><input type="checkbox" class="check-field" disabled checked /> Aktiv, aber gesperrt</label>
+              <label class="check-label"><input type="radio" class="radio-field" name="ds-radio-dis" disabled /> Radio deaktiviert</label>
+            </div>
           </div>
         </div>
       </div>
