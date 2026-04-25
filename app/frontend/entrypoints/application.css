@@ -15,7 +15,7 @@
 @source inline("bg-cs-error-50 bg-cs-error-400 bg-cs-error-500 bg-cs-error-700");
 
 :root {
-  --cs-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --cs-serif: 'Cormorant Garamond', Georgia, serif;
   --cs-radius-sm: 4px;
   --cs-radius:    6px;
   --cs-radius-lg: 10px;
@@ -81,22 +81,16 @@
   --color-cs-success-400: #46B26E;
   --color-cs-success-500: #16A34A;
   --color-cs-success-700: #0D7A35;
-  --color-cs-success-900: #0D7A35; /* Alias for 700 to prevent broken UI */
-  --color-cs-success-100: #E8F6EC; /* Alias for 50 */
 
   --color-cs-warning-50:  #FDF6DF;
   --color-cs-warning-400: #E6AC0E;
   --color-cs-warning-500: #CA8A04;
   --color-cs-warning-700: #8D6002;
-  --color-cs-warning-900: #8D6002; /* Alias for 700 */
-  --color-cs-warning-100: #FDF6DF; /* Alias for 50 */
 
   --color-cs-error-50:  #FCECEC;
   --color-cs-error-400: #E14A4A;
   --color-cs-error-500: #DC2626;
   --color-cs-error-700: #A01818;
-  --color-cs-error-900: #A01818; /* Alias for 700 */
-  --color-cs-error-100: #FCECEC; /* Alias for 50 */
 
   /* Typography */
   --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -170,10 +164,19 @@
   @apply py-[13px] px-[22px] text-[15px] rounded-lg;
 }
 
+@utility btn-loading {
+  @apply pointer-events-none select-none;
+}
+
+.btn-loading::before {
+  content: "";
+  @apply size-3.5 rounded-full border-2 border-current border-r-transparent animate-spin;
+}
+
 /* Disabled state */
-.btn[disabled],
-.btn[disabled]:hover,
-.btn[disabled]:active {
+.btn[disabled]:not(.btn-loading),
+.btn[disabled]:not(.btn-loading):hover,
+.btn[disabled]:not(.btn-loading):active {
   @apply opacity-45 cursor-not-allowed transform-none bg-cs-ink-200 text-cs-ink-500 border-cs-ink-300 shadow-none;
 }
 
@@ -386,15 +389,15 @@
 }
 
 @utility tag-success {
-  @apply tag bg-cs-success-50 text-cs-success-700 border-cs-success-100;
+  @apply tag bg-cs-success-50 text-cs-success-700 border-cs-success-50;
 }
 
 @utility tag-warning {
-  @apply tag bg-cs-warning-50 text-cs-warning-700 border-cs-warning-100;
+  @apply tag bg-cs-warning-50 text-cs-warning-700 border-cs-warning-50;
 }
 
 @utility tag-error {
-  @apply tag bg-cs-error-50 text-cs-error-700 border-cs-error-100;
+  @apply tag bg-cs-error-50 text-cs-error-700 border-cs-error-50;
 }
 
 @utility tag-mini {

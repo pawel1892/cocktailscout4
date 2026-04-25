@@ -172,7 +172,7 @@
                   Volumen
                 </span>
               <% when "count" %>
-                <span class="px-2 py-1 text-xs font-semibold rounded bg-cs-success-100 text-cs-success-900">
+                <span class="px-2 py-1 text-xs font-semibold rounded bg-cs-success-50 text-cs-success-700">
                   Zählbar
                 </span>
               <% when "special" %>
@@ -198,7 +198,7 @@
             <td class="px-4 py-3 text-sm text-center">
               <% count = unit.usage_count.to_i %>
               <% if count > 0 %>
-                <span class="px-2 py-1 text-xs font-semibold rounded <%= count > 100 ? 'bg-cs-success-100 text-cs-success-900' : 'bg-cs-blue-100 text-cs-blue-900' %>">
+                <span class="px-2 py-1 text-xs font-semibold rounded <%= count > 100 ? 'bg-cs-success-50 text-cs-success-700' : 'bg-cs-blue-100 text-cs-blue-900' %>">
                   <%= count %>
                 </span>
               <% else %>

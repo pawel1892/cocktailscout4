@@ -25,6 +25,25 @@
     warning: { label: "Warning", hexes: { 50 => "#FDF6DF", 400 => "#E6AC0E", 500 => "#CA8A04", 700 => "#8D6002" } },
     error:   { label: "Error",   hexes: { 50 => "#FCECEC", 400 => "#E14A4A", 500 => "#DC2626", 700 => "#A01818" } }
   }
+
+  channel_to_linear = ->(channel) do
+    value = channel / 255.0
+    value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+  end
+
+  luminance = ->(hex) do
+    red, green, blue = hex.delete("#").scan(/../).map { |pair| channel_to_linear.call(pair.to_i(16)) }
+    (0.2126 * red) + (0.7152 * green) + (0.0722 * blue)
+  end
+
+  contrast = ->(first, second) do
+    light, dark = [luminance.call(first), luminance.call(second)].max, [luminance.call(first), luminance.call(second)].min
+    (light + 0.05) / (dark + 0.05)
+  end
+
+  swatch_text_class = ->(hex) do
+    contrast.call("#1E1919", hex) >= contrast.call("#FFFFFF", hex) ? "text-cs-ink-900" : "text-white"
+  end
 %>
 
 <div class="bg-cs-ink-50 text-cs-ink-900 min-h-screen font-sans antialiased text-inherit overflow-x-clip">
@@ -120,7 +139,7 @@
         <div class="scale-label"><%= data[:label] %><small>cs-<%= key %></small></div>
         <div class="scale-row">
           <% data[:hexes].each do |step, hex| %>
-            <div class="swatch bg-cs-<%= key %>-<%= step %> <%= step >= 400 ? 'text-white' : 'text-cs-ink-900' %>">
+            <div class="swatch bg-cs-<%= key %>-<%= step %> <%= swatch_text_class.call(hex) %>">
               <span class="step"><%= step %></span>
               <span class="hex"><%= hex %></span>
             </div>
@@ -135,7 +154,7 @@
             <div class="scale-label"><%= data[:label] %><small>cs-<%= key %></small></div>
             <div class="scale-row-4">
               <% data[:hexes].each do |step, hex| %>
-                <div class="swatch bg-cs-<%= key %>-<%= step %> <%= step >= 400 ? 'text-white' : 'text-cs-ink-900' %>">
+                <div class="swatch bg-cs-<%= key %>-<%= step %> <%= swatch_text_class.call(hex) %>">
                   <span class="step"><%= step %></span>
                   <span class="hex"><%= hex %></span>
                 </div>
@@ -332,6 +351,22 @@
         <div class="flex flex-col items-start gap-2">
           <div class="font-mono text-cs-ink-700 text-[11px]">.btn-lg</div>
           <button class="btn btn-primary btn-lg">Large Action</button>
+        </div>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">Loading</div>
+      <div class="flex flex-wrap gap-x-6 gap-y-4 items-end mb-10">
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-loading primary</div>
+          <button class="btn btn-primary btn-loading" disabled aria-busy="true">Speichert...</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-loading gold</div>
+          <button class="btn btn-gold btn-loading" disabled aria-busy="true">Lädt Rezepte...</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-loading outline</div>
+          <button class="btn btn-outline btn-loading" disabled aria-busy="true">Prüft...</button>
         </div>
       </div>
 

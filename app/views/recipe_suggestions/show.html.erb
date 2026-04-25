@@ -59,12 +59,12 @@
 
     <!-- Published recipe link for approved suggestions -->
     <% if @suggestion.status_approved? && @suggestion.published_recipe %>
-      <div class="bg-cs-success-50 border border-cs-success-100 rounded-lg p-4 mt-4">
-        <p class="font-semibold text-cs-success-900 mb-1 flex items-center gap-2">
+      <div class="bg-cs-success-50 border border-cs-success-50 rounded-lg p-4 mt-4">
+        <p class="font-semibold text-cs-success-700 mb-1 flex items-center gap-2">
           <i class="fa-solid fa-check-circle"></i>
           Veröffentlicht als:
         </p>
-        <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "text-cs-success-900 link text-lg" do %>
+        <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "text-cs-success-700 link text-lg" do %>
           <%= @suggestion.published_recipe.title %>
           <i class="fa-solid fa-arrow-right ml-1"></i>
         <% end %>

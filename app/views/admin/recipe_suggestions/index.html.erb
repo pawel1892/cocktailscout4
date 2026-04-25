@@ -21,7 +21,7 @@
         class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'pending' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-clock"></i>
         Wartend
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-yellow-200 text-cs-warning-900 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-yellow-200 text-cs-warning-700 rounded-full">
           <%= RecipeSuggestion.status_pending.count %>
         </span>
       <% end %>
@@ -30,7 +30,7 @@
         class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:status] == 'approved' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-check-circle"></i>
         Genehmigt
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-green-200 text-cs-success-900 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-green-200 text-cs-success-700 rounded-full">
           <%= RecipeSuggestion.status_approved.count %>
         </span>
       <% end %>

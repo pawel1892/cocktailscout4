@@ -7,25 +7,25 @@
 
 <!-- Filter Bar -->
 <% if params[:user_id].present? || params[:q].present? %>
-  <div class="mb-4 p-4 bg-cs-success-50 border border-cs-success-100 rounded-lg flex flex-wrap items-center gap-3">
-    <span class="font-medium text-cs-success-900">Aktive Filter:</span>
+  <div class="mb-4 p-4 bg-cs-success-50 border border-cs-success-50 rounded-lg flex flex-wrap items-center gap-3">
+    <span class="font-medium text-cs-success-700">Aktive Filter:</span>
     <% if params[:q].present? %>
-      <span class="bg-white text-cs-success-900 border border-cs-success-100 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
+      <span class="bg-white text-cs-success-700 border border-cs-success-50 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
         Suche: <%= params[:q] %>
-        <%= link_to recipe_images_path(params.permit(:user_id)), class: "text-cs-success-500 hover:text-cs-success-900" do %>
+        <%= link_to recipe_images_path(params.permit(:user_id)), class: "text-cs-success-500 hover:text-cs-success-700" do %>
           <i class="fas fa-times"></i>
         <% end %>
       </span>
     <% end %>
     <% if @filter_user %>
-      <span class="bg-white text-cs-success-900 border border-cs-success-100 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
+      <span class="bg-white text-cs-success-700 border border-cs-success-50 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
         Benutzer: <%= @filter_user.username %>
-        <%= link_to recipe_images_path(params.permit(:q)), class: "text-cs-success-500 hover:text-cs-success-900" do %>
+        <%= link_to recipe_images_path(params.permit(:q)), class: "text-cs-success-500 hover:text-cs-success-700" do %>
           <i class="fas fa-times"></i>
         <% end %>
       </span>
     <% end %>
-    <%= link_to "Alle Filter zurücksetzen", recipe_images_path, class: "text-sm text-green-700 hover:text-cs-success-900 underline ml-auto" %>
+    <%= link_to "Alle Filter zurücksetzen", recipe_images_path, class: "text-sm text-green-700 hover:text-cs-success-700 underline ml-auto" %>
   </div>
 <% end %>
 
