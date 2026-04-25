@@ -21,7 +21,7 @@ RSpec.describe "Navigation and Breadcrumbs", type: :request do
       # Since we are checking raw HTML, we might look for the specific structure or just text proximity if possible,
       # but checking for the presence of the strings is a good start.
       # The breadcrumb for "Rezepte" is just a span, not a link.
-      expect(response.body).to include('<span class="text-cs-gold font-medium" aria-current="page">Rezepte</span>')
+      expect(response.body).to include('<span class="font-semibold text-cs-ink-700" aria-current="page">Rezepte</span>')
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe "Navigation and Breadcrumbs", type: :request do
 
       # Check specific breadcrumb link for Rezepte
       expect(response.body).to include('href="/rezepte"')
-      expect(response.body).to include('<span class="text-cs-gold font-medium" aria-current="page">Cocktailgalerie</span>')
+      expect(response.body).to include('<span class="font-semibold text-cs-ink-700" aria-current="page">Cocktailgalerie</span>')
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe "Navigation and Breadcrumbs", type: :request do
 
       # Check structure
       expect(response.body).to include('href="/rezepte"')
-      expect(response.body).to include('<span class="text-cs-gold font-medium" aria-current="page">Mojito Test</span>')
+      expect(response.body).to include('<span class="font-semibold text-cs-ink-700" aria-current="page">Mojito Test</span>')
     end
   end
 end

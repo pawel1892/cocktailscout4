@@ -5,6 +5,7 @@ module NavigationHelper
         label: "Rezepte",
         path: recipes_path,
         controllers: [ "recipes", "recipe_images", "recipe_categories", "top_lists" ],
+        search: true,
         dropdown: [
           { label: "Alle Rezepte", path: recipes_path, controllers: [ "recipes" ] },
           { label: "Cocktailgalerie", path: recipe_images_path, controllers: [ "recipe_images" ] },

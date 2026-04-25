@@ -1,6 +1,7 @@
 const menu = () => document.getElementById('mobile-menu')
 const backdrop = () => document.getElementById('mobile-menu-backdrop')
 const button = () => document.getElementById('mobile-menu-btn')
+const menuContent = () => document.getElementById('mobile-menu-content')
 const siteHeader = () => document.getElementById('site-header')
 
 const setExpanded = (expanded) => {
@@ -34,6 +35,8 @@ window.closeMobileMenu = function() {
   panel.setAttribute('aria-hidden', 'true')
   document.documentElement.classList.remove('overflow-hidden')
   setExpanded(false)
+
+  menuContent()?.classList.remove('opacity-50', 'pointer-events-none')
 
   window.setTimeout(() => {
     if (panel.classList.contains('translate-x-full')) {
@@ -86,6 +89,13 @@ if (!window.mobileMenuListenersAttached) {
     if (target instanceof Element && target.closest('#mobile-menu a')) {
       window.closeMobileMenu()
     }
+  })
+
+  window.addEventListener('drawer-user-menu', (e) => {
+    const content = menuContent()
+    if (!content) return
+    content.classList.toggle('opacity-50', e.detail.open)
+    content.classList.toggle('pointer-events-none', e.detail.open)
   })
 
   window.mobileMenuListenersAttached = true
