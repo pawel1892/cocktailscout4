@@ -39,6 +39,7 @@
   --color-cs-red-700: #5D3A37;
   --color-cs-red-800: #47211F;
   --color-cs-red-900: #330A0A;
+  --color-cs-red-925: #220707;
   --color-cs-red-950: #0F0202;
 
   --color-cs-gold-50:  #FDFBEE;
@@ -479,7 +480,7 @@
 }
 
 .site-header[data-scrolled="true"] {
-  @apply bg-[#1a0505] shadow-[0_10px_24px_-22px_rgba(0,0,0,.6)];
+  @apply bg-cs-red-950 shadow-[0_10px_24px_-22px_rgba(0,0,0,.6)];
 }
 
 .site-header[data-scrolled="true"] .site-header-inner {
@@ -488,6 +489,18 @@
 
 .site-header[data-scrolled="true"] .site-logo {
   @apply h-9 sm:h-10;
+}
+
+/* Megamenu item cards */
+.nav-megamenu-card {
+  @apply rounded-md border border-cs-ink-200 bg-white p-4 no-underline transition hover:border-cs-gold-300 hover:bg-cs-red-50;
+}
+
+.nav-megamenu-card-featured {
+  @apply border-cs-gold-400 bg-linear-to-br from-cs-red-50 via-white to-cs-gold-50
+         shadow-[0_14px_26px_-20px_rgba(51,10,10,.58)]
+         hover:border-cs-gold-500
+         hover:shadow-[0_18px_30px_-20px_rgba(51,10,10,.68)];
 }
 
 /* Cocktail card (recipe list row) */

@@ -4,7 +4,7 @@
 %>
 
 <site-nav></site-nav>
-<header id="site-header" class="site-header sticky top-0 z-50 bg-[#220707] text-cs-ink-50 backdrop-blur-md border-b border-cs-red-950 shadow-[0_10px_30px_-28px_rgba(0,0,0,.45)]">
+<header id="site-header" class="site-header sticky top-0 z-50 bg-cs-red-925 text-cs-ink-50 backdrop-blur-md border-b border-cs-red-950 shadow-[0_10px_30px_-28px_rgba(0,0,0,.45)]">
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
     <div class="site-header-inner grid grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(180px,1fr)_auto_minmax(180px,1fr)] items-center gap-3 py-5">
       <div class="flex items-center">
@@ -28,72 +28,31 @@
                 <div class="pointer-events-none absolute inset-x-5 top-0 h-px bg-linear-to-r from-transparent via-cs-gold-400/70 to-transparent"></div>
 
                 <div class="relative grid grid-cols-[minmax(0,1fr)_22rem] gap-10">
-                  <% if item[:label] == "Rezepte" %>
-                    <div class="grid grid-cols-2 gap-3">
-                      <% item[:dropdown].each do |subitem| %>
-                        <% sub_active = subnav_item_active?(subitem) %>
-                        <% emphasized = ["Alle Rezepte", "Cocktailgalerie"].include?(subitem[:label]) %>
-                        <% icon_class = case subitem[:label]
-                          when "Alle Rezepte" then "fa-solid fa-martini-glass-citrus"
-                          when "Cocktailgalerie" then "fa-solid fa-images"
-                        end %>
-                        <%= link_to subitem[:path], class: "rounded-md border p-4 no-underline shadow-[0_1px_0_rgba(255,255,255,.9)] transition #{emphasized ? 'border-cs-gold-400 bg-white bg-linear-to-br from-cs-red-50 via-white to-cs-gold-50 shadow-[0_1px_0_rgba(255,255,255,.9),0_14px_26px_-20px_rgba(51,10,10,.58)] hover:border-cs-gold-500 hover:shadow-[0_1px_0_rgba(255,255,255,.9),0_18px_30px_-20px_rgba(51,10,10,.68)]' : 'border-cs-ink-200 bg-white hover:border-cs-gold-300 hover:bg-cs-red-50'} #{sub_active ? 'text-cs-red-900 ring-1 ring-cs-gold-400/50' : 'text-cs-ink-800 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) do %>
-                          <span class="flex items-start gap-3">
-                            <% if emphasized %>
-                              <span class="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-cs-red-900 text-cs-gold-300 shadow-[inset_0_1px_0_rgba(255,255,255,.12)]">
-                                <i class="<%= icon_class %> text-[13px]"></i>
-                              </span>
-                            <% end %>
-                            <span class="min-w-0">
-                              <span class="block text-[14px] font-semibold"><%= subitem[:label] %></span>
-                              <span class="mt-1.5 block text-[12px] leading-snug text-cs-ink-600"><%= subitem[:description] %></span>
+                  <div class="grid grid-cols-2 gap-3">
+                    <% item[:dropdown].each do |subitem| %>
+                      <% sub_active = subnav_item_active?(subitem) %>
+                      <%= link_to subitem[:path], class: "nav-megamenu-card #{subitem[:emphasized] ? 'nav-megamenu-card-featured' : ''} #{sub_active ? 'text-cs-red-900 ring-1 ring-cs-gold-400/50' : 'text-cs-ink-800 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) do %>
+                        <span class="flex items-start gap-3">
+                          <% if subitem[:icon] %>
+                            <span class="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-cs-red-900 text-cs-gold-300 shadow-[inset_0_1px_0_rgba(255,255,255,.12)]">
+                              <i class="<%= subitem[:icon] %> text-[13px]"></i>
                             </span>
+                          <% end %>
+                          <span class="min-w-0">
+                            <span class="block text-[14px] font-semibold"><%= subitem[:label] %></span>
+                            <span class="mt-1.5 block text-[12px] leading-snug text-cs-ink-600"><%= subitem[:description] %></span>
                           </span>
-                        <% end %>
+                        </span>
                       <% end %>
-                    </div>
-
-                    <%= form_tag recipes_path, method: :get, class: "h-full border-l border-cs-ink-200 pl-8 flex flex-col justify-center" do %>
-                      <label for="desktop-recipe-search" class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-cs-gold-700">Rezepte suchen</label>
-                      <div class="relative mt-2.5">
-                        <input id="desktop-recipe-search" type="search" name="q" value="<%= params[:q] %>" placeholder="Margarita, Rum..."
-                               class="w-full rounded-md border border-cs-ink-300 bg-white py-3 pl-3.5 pr-10 text-[14px] text-cs-ink-900 placeholder:text-cs-ink-400 shadow-xs transition focus:border-cs-gold-500 focus:outline-none focus:ring-2 focus:ring-cs-gold-500/20">
-                        <button type="submit" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-cs-ink-500 transition-colors hover:text-cs-red-900" aria-label="Rezepte suchen">
-                          <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
-                        </button>
-                      </div>
                     <% end %>
-                  <% elsif item[:label] == "Community" %>
-                    <div class="grid grid-cols-2 gap-3">
-                      <% item[:dropdown].each do |subitem| %>
-                        <% sub_active = subnav_item_active?(subitem) %>
-                        <% emphasized = subitem[:label] == "Forum" %>
-                        <% icon_class = case subitem[:label]
-                          when "Aktivitätsstream" then "fa-solid fa-wave-square"
-                          when "Forum" then "fa-solid fa-comments"
-                        end %>
-                        <%= link_to subitem[:path], class: "rounded-md border p-4 no-underline shadow-[0_1px_0_rgba(255,255,255,.9)] transition #{emphasized ? 'border-cs-gold-400 bg-white bg-linear-to-br from-cs-red-50 via-white to-cs-gold-50 shadow-[0_1px_0_rgba(255,255,255,.9),0_14px_26px_-20px_rgba(51,10,10,.58)] hover:border-cs-gold-500 hover:shadow-[0_1px_0_rgba(255,255,255,.9),0_18px_30px_-20px_rgba(51,10,10,.68)]' : 'border-cs-ink-200 bg-white hover:border-cs-gold-300 hover:bg-cs-red-50'} #{sub_active ? 'text-cs-red-900 ring-1 ring-cs-gold-400/50' : 'text-cs-ink-800 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) do %>
-                          <span class="flex items-start gap-3">
-                            <% if emphasized %>
-                              <span class="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-cs-red-900 text-cs-gold-300 shadow-[inset_0_1px_0_rgba(255,255,255,.12)]">
-                                <i class="<%= icon_class %> text-[13px]"></i>
-                              </span>
-                            <% end %>
-                            <span class="min-w-0">
-                              <span class="block text-[14px] font-semibold"><%= subitem[:label] %></span>
-                              <span class="mt-1.5 block text-[12px] leading-snug text-cs-ink-600"><%= subitem[:description] %></span>
-                            </span>
-                          </span>
-                        <% end %>
-                      <% end %>
-                    </div>
+                  </div>
 
-                    <%= form_tag forum_search_path, method: :get, class: "h-full border-l border-cs-ink-200 pl-8 flex flex-col justify-center" do %>
-                      <label for="desktop-forum-search" class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-cs-gold-700">Forumsuche</label>
+                  <% if (search = item[:search]) %>
+                    <%= form_tag search[:action], method: :get, class: "h-full border-l border-cs-ink-200 pl-8 flex flex-col justify-center" do %>
+                      <label for="<%= search[:input_id] %>" class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-cs-gold-700"><%= search[:label] %></label>
                       <div class="relative mt-2.5">
-                        <input id="desktop-forum-search" type="search" name="q" value="<%= params[:q] %>" placeholder="Thema oder Beitrag suchen..."
-                               class="w-full rounded-md border border-cs-ink-300 bg-white py-3 pl-3.5 pr-10 text-[14px] text-cs-ink-900 placeholder:text-cs-ink-400 shadow-xs transition focus:border-cs-gold-500 focus:outline-none focus:ring-2 focus:ring-cs-gold-500/20">
-                        <button type="submit" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-cs-ink-500 transition-colors hover:text-cs-red-900" aria-label="Forumsuche starten">
+                        <input id="<%= search[:input_id] %>" type="search" name="q" value="<%= params[:q] %>" placeholder="<%= search[:placeholder] %>" class="input-field pr-10">
+                        <button type="submit" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-cs-ink-500 transition-colors hover:text-cs-red-900" aria-label="<%= search[:label] %>">
                           <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
                         </button>
                       </div>
@@ -152,7 +111,7 @@
               <div class="border-t border-cs-ink-100 px-2 py-2">
                 <% item[:dropdown].each do |subitem| %>
                   <% sub_active = subnav_item_active?(subitem) %>
-                  <%= link_to subitem[:label], subitem[:path], class: "block rounded px-3 py-2 text-sm no-underline transition #{sub_active ? 'font-semibold text-cs-red-900 bg-cs-red-50' : 'text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) %>
+                  <%= link_to subitem[:label], subitem[:path], class: "block rounded px-3 py-2 text-[13px] no-underline transition #{sub_active ? 'font-semibold text-cs-red-900 bg-cs-red-50' : 'text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) %>
                 <% end %>
               </div>
             </details>
@@ -165,10 +124,9 @@
       <div class="mt-4 border-t border-cs-ink-200 pt-4">
         <%= form_tag recipes_path, method: :get do %>
           <div class="relative">
-            <input type="search" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen…"
-                   class="w-full rounded-md border border-cs-ink-200 bg-white py-2 pl-3 pr-9 text-sm text-cs-ink-800 placeholder-cs-ink-400 transition focus:border-cs-gold-500 focus:outline-none focus:ring-1 focus:ring-cs-gold-400">
+            <input type="search" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen…" class="input-field pr-9">
             <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-cs-ink-400 transition-colors hover:text-cs-red-700" aria-label="Rezepte suchen">
-              <i class="fa-solid fa-magnifying-glass text-sm"></i>
+              <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
             </button>
           </div>
         <% end %>
