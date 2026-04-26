@@ -7,10 +7,10 @@ module NavigationHelper
         controllers: [ "recipes", "recipe_images", "recipe_categories", "top_lists" ],
         search: true,
         dropdown: [
-          { label: "Alle Rezepte", path: recipes_path, controllers: [ "recipes" ] },
-          { label: "Cocktailgalerie", path: recipe_images_path, controllers: [ "recipe_images" ] },
-          { label: "Toplisten", path: top_lists_path, controllers: [ "top_lists" ] },
-          { label: "Rezept-Kategorien", path: recipe_categories_path, controllers: [ "recipe_categories" ] }
+          { label: "Alle Rezepte", path: recipes_path, controllers: [ "recipes" ], description: "Tausende Cocktails – suchen, filtern und direkt loslegen." },
+          { label: "Cocktailgalerie", path: recipe_images_path, controllers: [ "recipe_images" ], description: "Lass dich von Fotos verführen und entdecke neue Favoriten." },
+          { label: "Toplisten", path: top_lists_path, controllers: [ "top_lists" ], description: "Was die Community liebt: die Klassiker und die Überraschungen." },
+          { label: "Rezept-Kategorien", path: recipe_categories_path, controllers: [ "recipe_categories" ], description: "Von Sour bis Tiki – nach Stil, Zutat oder Anlass stöbern." }
         ]
       },
       {
@@ -18,9 +18,9 @@ module NavigationHelper
         path: community_path,
         controllers: [ "community", "users", "forum_topics", "forum_threads", "forum_posts", "forum_search" ],
         dropdown: [
-          { label: "Übersicht", path: community_path, controllers: [ "community" ] },
-          { label: "Forum", path: forum_topics_path, controllers: [ "forum_topics", "forum_threads", "forum_posts", "forum_search" ] },
-          { label: "Benutzer", path: users_path, controllers: [ "users" ] }
+          { label: "Aktivitätsstream", path: community_path, controllers: [ "community" ], description: "Live aus der Community: Bewertungen, Kommentare, Neuigkeiten." },
+          { label: "Forum", path: forum_topics_path, controllers: [ "forum_topics", "forum_threads", "forum_posts", "forum_search" ], description: "Fragen, Tipps und Debatten – dein digitaler Stammtisch." },
+          { label: "Benutzer", path: users_path, controllers: [ "users" ], description: "Wer shaked was? Entdecke aktive Mitglieder und Profile." }
         ]
       },
       {
