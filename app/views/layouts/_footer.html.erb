@@ -1,6 +1,6 @@
 <footer class="mt-12 border-t border-cs-red-800/70 bg-cs-red-925 text-cs-red-200/70">
   <div class="mx-auto max-w-[1180px] px-4 py-7 sm:px-6 lg:px-8">
-    <div class="grid gap-7 sm:grid-cols-2 md:grid-cols-[1.15fr_.8fr_.8fr_.8fr_auto] md:items-start">
+    <div class="grid gap-7 sm:grid-cols-[1fr_auto_auto] md:items-start">
       <div>
         <%= link_to root_path, class: "inline-flex text-cs-red-100/65 transition-colors hover:text-cs-red-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cs-red-200 rounded-[2px]", aria: { label: "CocktailScout Startseite" } do %>
           <%= render "layouts/logo_wordmark", css_class: "h-5 w-auto fill-current" %>
@@ -11,36 +11,31 @@
         <p class="font-sans text-[11px] font-bold uppercase tracking-widest text-cs-red-100/80">Entdecken</p>
         <ul class="mt-3 flex flex-col gap-1.5 text-[13px]">
           <li><%= link_to "Rezepte", recipes_path, class: "footer-link" %></li>
-          <li><%= link_to "Kategorien", recipe_categories_path, class: "footer-link" %></li>
-          <li><%= link_to "Toplisten", top_lists_path, class: "footer-link" %></li>
           <li><%= link_to "Galerie", recipe_images_path, class: "footer-link" %></li>
+          <li><%= link_to "Toplisten", top_lists_path, class: "footer-link" %></li>
+          <li><%= link_to "Kategorien", recipe_categories_path, class: "footer-link" %></li>
         </ul>
       </nav>
 
       <nav aria-label="Community">
         <p class="font-sans text-[11px] font-bold uppercase tracking-widest text-cs-red-100/80">Community</p>
         <ul class="mt-3 flex flex-col gap-1.5 text-[13px]">
-          <li><%= link_to "Community", community_path, class: "footer-link" %></li>
+          <li><%= link_to "Aktivitätsstream", community_path, class: "footer-link" %></li>
           <li><%= link_to "Forum", forum_topics_path, class: "footer-link" %></li>
-          <li><%= link_to "Meine Bar", my_bar_path, class: "footer-link" %></li>
         </ul>
       </nav>
+    </div>
 
-      <div>
-        <p class="font-sans text-[11px] font-bold uppercase tracking-widest text-cs-red-100/80">Kontakt</p>
-        <div class="mt-3 flex flex-col gap-1.5 text-[13px]">
-          <%= link_to "Impressum", impressum_path, class: "footer-link" %>
-          <%= link_to "Datenschutz", datenschutz_path, class: "footer-link" %>
-          <%= link_to "https://github.com/pawel1892/cocktailscout4", class: "footer-link inline-flex items-center gap-2", target: "_blank", rel: "noopener" do %>
-            <i class="fa-brands fa-github text-[13px]"></i>
-            <span>GitHub</span>
-          <% end %>
-        </div>
+    <div class="mt-7 flex flex-col gap-4 border-t border-cs-red-800/50 pt-5 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-4 text-[12px]">
+        <%= link_to "Impressum", impressum_path, class: "footer-link" %>
+        <%= link_to "Datenschutz", datenschutz_path, class: "footer-link" %>
       </div>
 
-      <div class="hidden justify-self-end md:block">
-        <img src="/logo_icon.svg" class="h-24 w-auto opacity-25 grayscale sepia lg:h-28" alt="">
-      </div>
+      <%= link_to "https://github.com/pawel1892/cocktailscout4", class: "footer-link inline-flex items-center gap-2 text-[12px]", target: "_blank", rel: "noopener" do %>
+        <i class="fa-brands fa-github text-[14px]"></i>
+        <span>Entwickler? Mach mit – wir sind Open Source</span>
+      <% end %>
     </div>
   </div>
 </footer>
