@@ -470,7 +470,8 @@
 /* Site navigation chrome */
 .site-header,
 .site-header-inner,
-.site-logo {
+.site-logo,
+.site-wordmark {
   transition:
     padding 300ms ease,
     height 300ms ease,
@@ -488,7 +489,11 @@
 }
 
 .site-header[data-scrolled="true"] .site-logo {
-  @apply h-9 sm:h-10;
+  @apply h-7 xl:h-8;
+}
+
+.site-header[data-scrolled="true"] .site-wordmark {
+  @apply h-3;
 }
 
 /* Megamenu item cards */

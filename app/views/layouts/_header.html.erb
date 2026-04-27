@@ -6,14 +6,18 @@
 <site-nav></site-nav>
 <header id="site-header" class="site-header sticky top-0 z-50 bg-cs-red-925 text-cs-ink-50 backdrop-blur-md border-b border-cs-red-950 shadow-[0_10px_30px_-28px_rgba(0,0,0,.45)]">
   <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-    <div class="site-header-inner grid grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(180px,1fr)_auto_minmax(180px,1fr)] items-center gap-3 py-5">
+    <div class="site-header-inner grid grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(120px,1fr)_auto_minmax(180px,1fr)] items-center gap-3 py-3.5 lg:py-3">
       <div class="flex items-center">
-        <%= link_to root_path, class: "inline-flex items-center no-underline", aria: { label: "CocktailScout Startseite" } do %>
-          <img src="/logo.svg" class="site-logo h-12 sm:h-14 lg:h-16 w-auto" alt="CocktailScout">
+        <%= link_to root_path, class: "inline-flex items-center gap-2 text-cs-gold-300 no-underline transition hover:text-cs-gold-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cs-gold-300 rounded-[2px] xl:gap-2.5", aria: { label: "CocktailScout Startseite" } do %>
+          <img src="/logo.svg" class="site-logo h-10 w-auto xl:hidden" alt="">
+          <span class="hidden items-center gap-2.5 xl:inline-flex">
+            <img src="/logo_icon.svg" class="site-logo h-9 w-auto" alt="">
+            <%= render "layouts/logo_wordmark", css_class: "site-wordmark h-3.5 w-auto fill-current" %>
+          </span>
         <% end %>
       </div>
 
-      <nav class="hidden lg:flex items-center justify-center gap-8" aria-label="Hauptnavigation">
+      <nav class="hidden lg:flex items-center justify-center gap-5 xl:gap-7" aria-label="Hauptnavigation">
         <% primary_navigation_items.each do |item| %>
           <% active = main_nav_item_active?(item) %>
           <% if item[:dropdown].present? %>
@@ -89,8 +93,9 @@
 
   <aside id="mobile-menu" class="fixed right-0 top-0 z-[90] flex h-dvh w-[min(22rem,calc(100vw-2rem))] translate-x-full flex-col border-l border-cs-red-950 bg-cs-ink-50 shadow-2xl transition-transform duration-200 lg:hidden" aria-label="Mobile Navigation" aria-hidden="true">
     <div class="flex items-center justify-between border-b border-cs-ink-200 bg-white px-5 py-4">
-      <%= link_to root_path, class: "inline-flex items-center no-underline", aria: { label: "CocktailScout Startseite" } do %>
-        <img src="/logo_red.svg" class="h-8 w-auto" alt="CocktailScout">
+      <%= link_to root_path, class: "inline-flex items-center gap-2 text-cs-red-900 no-underline transition hover:text-cs-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500 rounded-[2px]", aria: { label: "CocktailScout Startseite" } do %>
+        <img src="/logo_icon_red.svg" class="h-7 w-auto sm:h-8" alt="">
+        <%= render "layouts/logo_wordmark", css_class: "h-3 w-auto fill-current sm:h-3.5" %>
       <% end %>
 
       <button type="button" onclick="closeMobileMenu()" class="inline-flex size-9 items-center justify-center rounded-md text-cs-ink-500 transition hover:bg-cs-ink-100 hover:text-cs-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" aria-label="Navigation schließen">
