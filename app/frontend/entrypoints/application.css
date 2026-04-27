@@ -496,6 +496,13 @@
   @apply h-3;
 }
 
+/* Footer links */
+.footer-link {
+  @apply text-cs-red-200/70 no-underline border-b border-transparent rounded-[2px] transition-colors
+         hover:border-cs-red-200/50 hover:text-cs-red-100
+         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-red-200;
+}
+
 /* Megamenu item cards */
 .nav-megamenu-card {
   @apply rounded-md border border-cs-ink-200 bg-white p-4 no-underline transition hover:border-cs-gold-300 hover:bg-cs-red-50;
