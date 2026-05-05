@@ -9,6 +9,10 @@ class HomeController < ApplicationController
       description: "Willkommen bei CocktailScout.de - Deine Plattform für die besten Cocktail-Rezepte. Entdecke, erstelle und teile einzigartige Drinks."
     )
     @featured_image = RecipeImage.featured.joins(:recipe).merge(Recipe.visible).includes(:recipe).first
+    @hero_images = RecipeImage.high_quality_pool
+                              .joins(:recipe).merge(Recipe.visible)
+                              .includes(:recipe, image_attachment: :blob)
+                              .order("RAND()").limit(3).to_a
     @top_recipes = Recipe.visible
                          .where("ratings_count >= ?", Rateable::MIN_RATINGS_FOR_DISPLAY)
                          .order(average_rating: :desc, ratings_count: :desc)

@@ -4,59 +4,34 @@
 <% content_for :full_bleed_page, true %>
 
 <!-- ═══════════════════════════════════════
-     HERO C — full-bleed bg, contained content
+     HERO — full-bleed dark, editorial split
      ═══════════════════════════════════════ -->
-<section class="relative overflow-hidden">
-  <!-- Full-width split backgrounds -->
-  <div class="absolute inset-0 bg-cs-red-950 pointer-events-none"></div>
-  <div class="absolute inset-y-0 right-0 bg-cs-ink-50 border-l border-cs-ink-200 pointer-events-none hidden lg:block"
-       style="left: min(58.333vw, calc((100vw - 1180px) / 2 + 688px))"></div>
+<section class="relative overflow-hidden bg-cs-red-950">
+  <div class="absolute top-0 right-0 w-[720px] h-[720px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3"
+       style="background: radial-gradient(circle at 38% 38%, rgba(203,184,89,.10), transparent 65%)"></div>
+  <div class="absolute bottom-0 left-0 w-[480px] h-[480px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3"
+       style="background: radial-gradient(circle at 35% 35%, rgba(142,61,55,.35), transparent 70%)"></div>
 
-  <!-- Contained content grid — matches max-w-[1180px] sections below -->
-  <div class="max-w-[1180px] mx-auto w-full lg:grid relative z-10"
-       style="grid-template-columns: 1.4fr 1fr">
-
-    <!-- Left: dark oxblood text — drives section height -->
-    <div class="text-white flex flex-col justify-between px-10 py-14 lg:px-16 lg:py-16 relative overflow-hidden">
-      <div class="absolute -right-36 -top-36 w-[440px] h-[440px] rounded-full pointer-events-none"
-           style="background: radial-gradient(circle at 35% 35%, rgba(203,184,89,.18), transparent 70%)"></div>
-      <div class="relative z-10">
-        <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-400 mb-8">
-          <span class="w-7 h-px bg-cs-gold-500 shrink-0"></span>
-          Cocktail Rezepte · seit 2003
-        </div>
-        <h1 class="font-display font-medium text-[clamp(3.5rem,7vw,6.5rem)] leading-[.9] tracking-[-0.025em] text-cs-gold-300 m-0 mb-6">
-          Mixed<em class="block italic text-white font-normal">by design.</em>
-        </h1>
-        <p class="text-[16px] text-cs-ink-200 leading-relaxed max-w-[460px] m-0">
-          Über 1.500 handgepflegte Rezepte, echte Community-Ratings, und eine Bar, die sich merkt, was bei dir zuhause steht.
-        </p>
-      </div>
-      <div class="relative z-10 flex gap-2.5 mt-9 flex-wrap">
-        <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-gold" %>
-        <%= link_to "Meine Bar →", my_bar_path, class: "btn btn-outline-gold" %>
-      </div>
+  <div class="max-w-[1180px] mx-auto px-10 py-16 lg:py-24 relative z-10">
+    <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-400 mb-10">
+      <span class="w-7 h-px bg-cs-gold-500 shrink-0"></span>
+      Cocktail Rezepte · seit 2003
     </div>
 
-    <!-- Right: featured recipe — hidden on mobile, stretches to left panel height on desktop -->
-    <% if @featured_image && @featured_image.image.attached? %>
-      <div class="hidden lg:flex flex-col gap-4 px-12 py-10">
-        <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-ink-500">
-          <span class="w-7 h-px bg-cs-ink-400 shrink-0"></span>
-          Rezept Highlight
+    <div class="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16 lg:items-end">
+      <h1 class="font-display font-medium text-[clamp(3.5rem,7.5vw,7.5rem)] leading-[.88] tracking-[-0.03em] text-cs-gold-300 m-0 mb-8 lg:mb-0">
+        Mixed<em class="block italic text-white font-normal">by design.</em>
+      </h1>
+      <div class="flex flex-col justify-end">
+        <p class="text-[16px] text-cs-ink-200 leading-relaxed m-0 mb-8">
+          Über 1.500 handgepflegte Rezepte, echte Community-Ratings, und eine Bar, die sich merkt, was bei dir zuhause steht.
+        </p>
+        <div class="flex gap-2.5 flex-wrap">
+          <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-gold" %>
+          <%= link_to "Meine Bar →", my_bar_path, class: "btn btn-outline-gold" %>
         </div>
-        <div class="flex-1 relative rounded-lg overflow-hidden min-h-[160px]">
-          <%= image_tag @featured_image.image.variant(:large),
-                class: "absolute inset-0 w-full h-full object-cover block",
-                alt: @featured_image.recipe.title %>
-        </div>
-        <h3 class="font-display font-semibold text-[clamp(1.5rem,2.5vw,2rem)] text-cs-red-900 leading-[1.05] tracking-[-0.01em] m-0">
-          <%= @featured_image.recipe.title %>
-        </h3>
-        <%= link_to "Zum Rezept →", recipe_path(@featured_image.recipe.slug), class: "btn btn-primary btn-sm self-start" %>
       </div>
-    <% end %>
-
+    </div>
   </div>
 </section>
 
@@ -64,46 +39,35 @@
      TOP REZEPTE — Card B list
      ═══════════════════════════════════════ -->
 <% if @top_recipes.any? %>
-<section class="py-[72px]">
+<section class="py-[56px]">
   <div class="max-w-[1180px] mx-auto px-10">
-    <div class="flex items-baseline justify-between gap-4 mb-2">
+    <div class="flex items-baseline justify-between gap-4 mb-6">
       <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Top Rezepte</h2>
-      <%= link_to "Alle Rezepte →", recipes_path(sort: "rating"), class: "text-[13px] text-cs-red-700 font-medium no-underline hover:underline shrink-0" %>
+      <%= link_to "Alle Rezepte →", recipes_path(sort: "average_rating"), class: "text-[13px] text-cs-red-700 font-medium no-underline hover:underline shrink-0" %>
     </div>
-    <p class="text-cs-ink-600 text-sm mb-7 mt-0">Die beliebtesten Cocktails der Community.</p>
-    <div class="flex flex-col gap-3">
-      <% @top_recipes.each do |recipe| %>
-        <div class="card-b">
-          <div class="thumb">
-            <%= recipe_thumbnail(recipe, size_class: "w-full h-full") %>
-            <% r = recipe.average_rating.to_f %>
-            <span class="rating-badge <%= r >= 8.0 ? 'high' : r >= 6.5 ? 'mid' : 'low' %>">
-              <%= number_with_precision(r, precision: 1, separator: ",") %><small><%= recipe.ratings_count %></small>
-            </span>
-          </div>
-          <div class="body">
-            <div class="title-row">
-              <%= link_to recipe.title, recipe_path(recipe.slug), class: "name" %>
-              <% if recipe.alcohol_content.present? && recipe.alcohol_content > 0 %>
-                <span class="abv"><%= number_with_precision(recipe.alcohol_content, precision: 1) %>% ABV</span>
-              <% end %>
-            </div>
-            <% if recipe.description.present? %>
-              <p class="desc"><%= recipe.description %></p>
-            <% end %>
-            <div class="foot">
-              <div class="tags">
-                <% recipe.tags.first(3).each do |tag| %>
-                  <span class="t"><%= tag.name %></span>
-                <% end %>
+    <div class="flex flex-col">
+      <% @top_recipes.each_with_index do |recipe, i| %>
+        <% img = recipe.approved_recipe_images.find { |ri| ri.image.attached? } %>
+        <%= link_to recipe_path(recipe.slug), class: "group flex items-center gap-5 py-5 #{ i < @top_recipes.size - 1 ? 'border-b border-cs-ink-100' : '' } hover:bg-cs-ink-50 -mx-4 px-4 rounded-lg transition-colors duration-150" do %>
+          <span class="font-mono text-[13px] text-cs-ink-300 w-4 shrink-0 text-right"><%= i + 1 %></span>
+          <div class="w-14 h-14 rounded-lg overflow-hidden bg-cs-ink-100 shrink-0">
+            <% if img %>
+              <%= image_tag img.image.variant(:thumb), class: "w-full h-full object-cover", alt: "" %>
+            <% else %>
+              <div class="w-full h-full flex items-center justify-center text-cs-ink-400">
+                <i class="fas fa-cocktail text-lg"></i>
               </div>
-              <span class="dot">·</span>
-              <span><%= number_with_delimiter(recipe.visits_count) %> Aufrufe</span>
-              <span class="dot">·</span>
-              <span>von <%= recipe.user.username %></span>
+            <% end %>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-display font-semibold text-[20px] text-cs-red-900 leading-[1.2] tracking-[-0.01em] truncate group-hover:text-cs-red-700 transition-colors"><%= recipe.title %></div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-cs-gold-500 text-[12px] leading-none">★</span>
+              <span class="font-semibold text-[14px] text-cs-gold-600 leading-none"><%= number_with_precision(recipe.average_rating.to_f, precision: 1, separator: ",") %></span>
+              <span class="text-cs-ink-400 text-[12px] leading-none"><%= recipe.ratings_count %> Bewertungen</span>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -114,7 +78,7 @@
      COMMUNITY
      ═══════════════════════════════════════ -->
 <script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
-<section class="bg-white border-t border-b border-cs-ink-200">
+<section class="bg-cs-ink-50 border-t border-b border-cs-ink-100">
   <div class="max-w-[1180px] mx-auto px-10 py-[72px]">
     <div class="flex items-baseline justify-between gap-4 mb-2">
       <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Community</h2>
@@ -129,7 +93,7 @@
      NEUIGKEITEN — 3-column news cards
      ═══════════════════════════════════════ -->
 <% if @news_threads.any? %>
-<section class="py-[72px]">
+<section class="py-[56px]">
   <div class="max-w-[1180px] mx-auto px-10">
     <div class="flex items-baseline justify-between gap-4 mb-2">
       <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Neuigkeiten</h2>
@@ -149,7 +113,7 @@
 <% end %>
 
 <!-- ═══════════════════════════════════════
-     MEINE BAR — ingredient picker + mini-stack
+     MEINE BAR — ingredient picker + recipe grid
      ═══════════════════════════════════════ -->
 <section class="bg-cs-red-950 relative overflow-hidden py-[72px]">
   <div class="absolute -right-[200px] -top-[160px] w-[560px] h-[560px] rounded-full pointer-events-none" style="background: radial-gradient(circle at 35% 35%, rgba(203,184,89,.12), transparent 70%)"></div>
@@ -158,7 +122,7 @@
   <div class="max-w-[1180px] mx-auto px-10 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-[72px] items-center">
 
-      <!-- Left: text + picker card -->
+      <!-- Left: text + ingredient tags + CTA -->
       <div>
         <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-400 mb-5">
           <span class="w-7 h-px bg-cs-gold-500 shrink-0"></span>
@@ -167,65 +131,69 @@
         <h2 class="font-display font-medium text-[clamp(2.5rem,5vw,4rem)] leading-[.98] tracking-[-0.02em] text-cs-gold-300 m-0 mb-5">
           Was kannst du<br><em class="italic text-white font-normal">heute mixen?</em>
         </h2>
-        <p class="text-[15px] text-cs-ink-200 leading-relaxed max-w-[440px] mb-7">
+        <p class="text-[15px] text-cs-ink-200 leading-relaxed max-w-[440px] mb-8">
           Gib ein, was in deiner Bar steht. Wir zeigen dir sofort die Drinks, die du daraus machen kannst — inklusive Tipps, wenn dir nur eine Zutat fehlt.
         </p>
 
-        <!-- Picker card (visual decoration) -->
-        <div class="bg-white text-cs-ink-900 rounded-xl p-[22px] shadow-[0_20px_48px_-20px_rgba(0,0,0,.45)]">
-          <div class="font-mono text-[10.5px] uppercase tracking-[.18em] text-cs-ink-500 mb-2.5">Zutaten in deiner Bar</div>
-          <div class="flex gap-2 flex-wrap p-2.5 bg-cs-ink-50 border border-cs-ink-200 rounded-lg mb-3.5 min-h-[48px] items-center">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-full bg-cs-red-900 text-cs-gold-300 text-[13px] font-medium">Gin</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-full bg-cs-red-900 text-cs-gold-300 text-[13px] font-medium">Tonic</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-full bg-cs-red-900 text-cs-gold-300 text-[13px] font-medium">Limette</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-full bg-cs-red-900 text-cs-gold-300 text-[13px] font-medium">Zucker</span>
-          </div>
-          <div class="font-mono text-[11.5px] uppercase tracking-[.1em] text-cs-ink-500 mb-2.5">Schnell hinzufügen</div>
-          <div class="flex gap-1.5 flex-wrap mb-[18px]">
-            <span class="text-[12.5px] px-[11px] py-[5px] rounded-full border border-dashed border-cs-ink-300 text-cs-ink-700 bg-white">+ Wodka</span>
-            <span class="text-[12.5px] px-[11px] py-[5px] rounded-full border border-dashed border-cs-ink-300 text-cs-ink-700 bg-white">+ Rum</span>
-            <span class="text-[12.5px] px-[11px] py-[5px] rounded-full border border-dashed border-cs-ink-300 text-cs-ink-700 bg-white">+ Minze</span>
-            <span class="text-[12.5px] px-[11px] py-[5px] rounded-full border border-dashed border-cs-ink-300 text-cs-ink-700 bg-white">+ Campari</span>
-          </div>
-          <div class="flex items-center justify-between gap-3.5 px-4 py-3.5 bg-cs-red-50 border border-cs-red-100 rounded-lg">
-            <div>
-              <strong class="font-display font-semibold text-[26px] text-cs-red-900 tracking-[-0.01em] block leading-none">1.500+ Rezepte</strong>
-              <div class="text-[12.5px] text-cs-ink-600 mt-1.5">entdecke, was du mixen kannst</div>
-            </div>
-            <%= link_to "Meine Bar öffnen →", my_bar_path, class: "btn btn-primary shrink-0" %>
-          </div>
+        <div class="flex gap-2 flex-wrap mb-8">
+          <% ["Gin", "Tonic", "Limette", "Zucker", "Wodka", "Rum"].each do |ing| %>
+            <span class="px-3.5 py-1.5 rounded-full border border-cs-gold-500/40 text-cs-gold-300 text-[13px] font-medium"><%= ing %></span>
+          <% end %>
+          <span class="px-3.5 py-1.5 rounded-full border border-white/10 text-white/25 text-[13px]">+ mehr …</span>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <%= link_to "Meine Bar öffnen →", my_bar_path, class: "btn btn-gold" %>
+          <span class="text-[13px] text-cs-ink-400">1.500+ Rezepte</span>
         </div>
       </div>
 
-      <!-- Right: mini-stack of recipe cards -->
-      <% if @top_recipes.any? %>
-        <div class="hidden lg:block">
-          <div class="grid grid-cols-2 gap-4" style="grid-auto-rows: 190px">
-            <% (@top_recipes.to_a + [nil]).first(4).each_with_index do |recipe, i| %>
-              <% if recipe %>
-                <div class="mini-stack-card bg-white rounded-xl overflow-hidden shadow-[0_12px_24px_-12px_rgba(0,0,0,.4)] flex flex-col cursor-pointer">
-                  <div class="overflow-hidden bg-cs-ink-200" style="height: 115px">
-                    <%= recipe_thumbnail(recipe, size_class: "w-full h-full") %>
-                  </div>
-                  <div class="px-3 py-2.5 flex flex-col gap-1 flex-1">
-                    <b class="font-display font-semibold text-[17px] text-cs-red-900 leading-[1.1] tracking-[-0.01em] line-clamp-2"><%= recipe.title %></b>
-                    <small class="font-mono text-[10px] text-cs-ink-500">
-                      <%= number_with_precision(recipe.average_rating.to_f, precision: 1, separator: ",") %><% if recipe.alcohol_content.present? && recipe.alcohol_content > 0 %> · <%= number_with_precision(recipe.alcohol_content, precision: 0) %>% ABV<% end %>
-                    </small>
-                  </div>
-                </div>
-              <% else %>
-                <div class="mini-stack-card bg-cs-ink-100 rounded-xl overflow-hidden flex flex-col opacity-60">
-                  <div class="flex-1 bg-cs-ink-200 flex items-center justify-center text-cs-ink-400 font-mono text-[9px] uppercase tracking-wider" style="height: 115px">Mehr →</div>
-                  <div class="px-3 py-2.5">
-                    <b class="font-display text-[17px] text-cs-ink-400">…</b>
-                  </div>
+      <!-- Right: full-bleed recipe cards (high-quality pool, falls back to top recipes) -->
+      <% hero_cards = @hero_images.any? ? @hero_images : nil %>
+      <% if hero_cards %>
+        <div class="hidden lg:grid grid-cols-2 gap-3.5" style="grid-auto-rows: 185px">
+          <% (hero_cards + [nil]).first(4).each do |ri| %>
+            <% if ri %>
+              <%= link_to recipe_path(ri.recipe.slug), class: "group relative rounded-xl overflow-hidden block" do %>
+                <%= image_tag ri.image.variant(:medium), class: "absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500", alt: ri.recipe.title %>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 px-3.5 pb-3.5">
+                  <b class="block font-display font-semibold text-[15px] text-white leading-[1.2] tracking-[-0.01em] line-clamp-2"><%= ri.recipe.title %></b>
+                  <small class="text-[11px] text-white/55 mt-0.5 block">
+                    <%= number_with_precision(ri.recipe.average_rating.to_f, precision: 1, separator: ",") %><% if ri.recipe.alcohol_content.present? && ri.recipe.alcohol_content > 0 %> · <%= number_with_precision(ri.recipe.alcohol_content, precision: 0) %>% ABV<% end %>
+                  </small>
                 </div>
               <% end %>
+            <% else %>
+              <div class="rounded-xl border border-white/8 flex items-center justify-center">
+                <span class="text-cs-ink-600 text-sm">Mehr →</span>
+              </div>
             <% end %>
-          </div>
+          <% end %>
+        </div>
+      <% elsif @top_recipes.any? %>
+        <div class="hidden lg:grid grid-cols-2 gap-3.5" style="grid-auto-rows: 185px">
+          <% (@top_recipes.to_a + [nil]).first(4).each do |recipe| %>
+            <% if recipe %>
+              <%= link_to recipe_path(recipe.slug), class: "group relative rounded-xl overflow-hidden block" do %>
+                <%= recipe_thumbnail(recipe, size_class: "absolute inset-0 w-full h-full group-hover:scale-105 transition-transform duration-500") %>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 px-3.5 pb-3.5">
+                  <b class="block font-display font-semibold text-[15px] text-white leading-[1.2] tracking-[-0.01em] line-clamp-2"><%= recipe.title %></b>
+                  <small class="text-[11px] text-white/55 mt-0.5 block">
+                    <%= number_with_precision(recipe.average_rating.to_f, precision: 1, separator: ",") %><% if recipe.alcohol_content.present? && recipe.alcohol_content > 0 %> · <%= number_with_precision(recipe.alcohol_content, precision: 0) %>% ABV<% end %>
+                  </small>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="rounded-xl border border-white/8 flex items-center justify-center">
+                <span class="text-cs-ink-600 text-sm">Mehr →</span>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       <% end %>
+
     </div>
   </div>
 </section>
@@ -233,7 +201,7 @@
 <!-- ═══════════════════════════════════════
      ABOUT — 2-column grid + sidebar
      ═══════════════════════════════════════ -->
-<section class="py-[72px]">
+<section class="py-[56px]">
   <div class="max-w-[1180px] mx-auto px-10">
     <div class="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 items-start">
 

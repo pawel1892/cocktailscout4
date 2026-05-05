@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_05_120000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -144,6 +144,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
     t.index ["user_id"], name: "index_ingredient_collections_on_user_id"
   end
 
+  create_table "ingredient_wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "ingredient_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "wiki_article_id", null: false
+    t.index ["ingredient_id", "wiki_article_id"], name: "index_ingredient_wiki_articles_unique", unique: true
+    t.index ["ingredient_id"], name: "index_ingredient_wiki_articles_on_ingredient_id"
+    t.index ["wiki_article_id"], name: "index_ingredient_wiki_articles_on_wiki_article_id"
+  end
+
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "alcoholic_content", precision: 10
     t.datetime "created_at", null: false
@@ -207,6 +217,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
     t.datetime "featured_at"
+    t.boolean "high_quality", default: false, null: false
     t.datetime "moderated_at"
     t.bigint "moderated_by_id"
     t.text "moderation_reason"
@@ -216,6 +227,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["deleted_at"], name: "index_recipe_images_on_deleted_at"
+    t.index ["high_quality"], name: "index_recipe_images_on_high_quality"
     t.index ["moderated_by_id"], name: "index_recipe_images_on_moderated_by_id"
     t.index ["old_id"], name: "index_recipe_images_on_old_id"
     t.index ["recipe_id"], name: "index_recipe_images_on_recipe_id"
@@ -462,6 +474,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
     t.index ["visitable_type", "visitable_id"], name: "index_visits_on_visitable"
   end
 
+  create_table "wiki_article_collaborators", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.bigint "wiki_article_id", null: false
+    t.index ["user_id"], name: "index_wiki_article_collaborators_on_user_id"
+    t.index ["wiki_article_id", "user_id"], name: "index_wiki_article_collaborators_unique", unique: true
+    t.index ["wiki_article_id"], name: "index_wiki_article_collaborators_on_wiki_article_id"
+  end
+
+  create_table "wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "body", size: :long
+    t.datetime "created_at", null: false
+    t.boolean "featured", default: false, null: false
+    t.integer "featured_position"
+    t.bigint "last_editor_id"
+    t.boolean "published", default: false, null: false
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["featured"], name: "index_wiki_articles_on_featured"
+    t.index ["published"], name: "index_wiki_articles_on_published"
+    t.index ["slug"], name: "index_wiki_articles_on_slug", unique: true
+    t.index ["user_id"], name: "index_wiki_articles_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "collection_ingredients", "ingredient_collections"
@@ -476,6 +515,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
   add_foreign_key "forum_threads", "forum_topics"
   add_foreign_key "forum_threads", "users"
   add_foreign_key "ingredient_collections", "users"
+  add_foreign_key "ingredient_wiki_articles", "ingredients"
+  add_foreign_key "ingredient_wiki_articles", "wiki_articles"
   add_foreign_key "private_messages", "users", column: "receiver_id"
   add_foreign_key "private_messages", "users", column: "sender_id"
   add_foreign_key "ratings", "users"
@@ -505,4 +546,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_143125) do
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_stats", "users"
   add_foreign_key "visits", "users"
+  add_foreign_key "wiki_article_collaborators", "users"
+  add_foreign_key "wiki_article_collaborators", "wiki_articles"
 end
