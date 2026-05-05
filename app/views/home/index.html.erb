@@ -30,6 +30,16 @@
           <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-gold" %>
           <%= link_to "Meine Bar →", my_bar_path, class: "btn btn-outline-gold" %>
         </div>
+
+        <%= form_tag recipes_path, method: :get, class: "mt-5 relative max-w-[420px]" do %>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cs-gold-500/60 text-[13px] pointer-events-none"></i>
+          <input type="search" name="q"
+                 placeholder="Rezept suchen… Margarita, Gin Sour"
+                 class="w-full rounded-full bg-white/10 border border-white/15 text-white placeholder-white/30 py-3 pl-11 pr-12 text-[14px] focus:outline-none focus:border-cs-gold-500/60 focus:bg-white/[0.13] transition-all duration-200">
+          <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-cs-gold-500/20 hover:bg-cs-gold-500/40 flex items-center justify-center transition-colors duration-150" aria-label="Suchen">
+            <i class="fa-solid fa-arrow-right text-cs-gold-400 text-[12px]"></i>
+          </button>
+        <% end %>
       </div>
     </div>
   </div>
