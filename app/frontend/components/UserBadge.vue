@@ -9,7 +9,7 @@
   <button
     v-else-if="isText"
     type="button"
-    class="link font-medium hover:underline cursor-pointer user-profile-trigger"
+    class="link font-medium cursor-pointer user-profile-trigger"
     :data-user-id="resolvedUser.id"
   >{{ resolvedUser.username }}</button>
 
@@ -50,7 +50,7 @@ const avatarSize = computed(() => isVertical.value ? 'forum' : 'sm')
 
 const buttonClass = computed(() => isVertical.value
   ? 'link flex flex-col items-center gap-0.5 hover:opacity-80 cursor-pointer user-profile-trigger text-center'
-  : 'link inline-flex items-center gap-1.5 font-medium hover:underline cursor-pointer user-profile-trigger'
+  : 'link inline-flex items-center gap-1.5 font-medium cursor-pointer user-profile-trigger'
 )
 
 const deletedClass = computed(() => isVertical.value
@@ -59,8 +59,8 @@ const deletedClass = computed(() => isVertical.value
 )
 
 const usernameClass = computed(() => isVertical.value
-  ? 'text-xs text-zinc-800 font-bold leading-tight max-w-[100px] break-words'
-  : 'text-zinc-900'
+  ? 'text-xs text-cs-ink-800 font-bold leading-tight max-w-[100px] break-words'
+  : 'text-cs-ink-900'
 )
 
 const resolvedUser = computed(() => {

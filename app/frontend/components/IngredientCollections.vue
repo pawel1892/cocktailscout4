@@ -14,123 +14,96 @@
       @deleted="handleCollectionDeleted"
     />
 
-    <!-- Empty State -->
-    <div v-if="collections.length === 0" class="bg-white rounded-lg shadow-sm border border-cs-ink-200 p-12 text-center">
-      <div class="max-w-sm mx-auto">
-        <svg class="mx-auto h-16 w-16 text-cs-ink-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-        </svg>
-        <h3 class="text-lg font-semibold text-cs-ink-900 mb-2">Noch keine Liste erstellt</h3>
-        <p class="text-cs-ink-600 mb-6">Erstelle deine erste Zutatenliste und verwalte deine Bar.</p>
-        <button
-          @click="showCreateModal = true"
-          class="bg-cs-red-900 text-white px-6 py-2 rounded-lg hover:bg-cs-red-900/90 transition"
-        >
-          Erste Liste erstellen
-        </button>
+    <!-- Empty state -->
+    <div v-if="collections.length === 0" class="card card-ghost p-12 text-center">
+      <div class="text-cs-ink-300 mb-4">
+        <i class="fas fa-wine-bottle text-5xl"></i>
       </div>
+      <h3 class="font-display font-bold text-xl text-cs-ink-800 mb-2">Noch keine Liste erstellt</h3>
+      <p class="text-cs-ink-500 mb-6 max-w-sm mx-auto">Erstelle deine erste Zutatenliste und finde heraus, welche Cocktails du mixen kannst.</p>
+      <button @click="showCreateModal = true" class="btn btn-primary">
+        <i class="fas fa-plus text-xs mr-1"></i> Erste Liste erstellen
+      </button>
     </div>
 
-    <!-- Collections List -->
+    <!-- Collections -->
     <div v-else class="space-y-6">
-      <!-- Action Bar -->
+
+      <!-- Action bar -->
       <div class="flex justify-end">
-        <button
-          @click="showCreateModal = true"
-          class="bg-cs-red-900 text-white px-4 py-2 rounded-lg hover:bg-cs-red-900/90 transition flex items-center gap-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Neue Liste
+        <button @click="showCreateModal = true" class="btn btn-primary">
+          <i class="fas fa-plus text-xs mr-1"></i> Neue Liste
         </button>
       </div>
 
-      <!-- Collections Grid -->
+      <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          v-for="collection in collections"
-          :key="collection.id"
-          class="bg-white rounded-lg shadow-sm border border-cs-ink-200 overflow-hidden hover:shadow-md transition"
-        >
-          <div class="p-6">
-            <!-- Header -->
-            <div class="flex items-start justify-between mb-4">
-              <div class="flex-1">
-                <div class="flex items-center gap-2 mb-1">
-                  <h3 class="text-xl font-semibold text-cs-ink-900">{{ collection.name }}</h3>
-                  <span
-                    v-if="collection.is_default"
-                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cs-gold-400 text-white"
-                  >
-                    Standard
-                  </span>
-                </div>
-                <p class="text-sm text-cs-ink-500">
-                  {{ collection.ingredient_count }} {{ collection.ingredient_count === 1 ? 'Zutat' : 'Zutaten' }}
-                </p>
-                <a
-                  v-if="collection.doable_recipes_count > 0"
-                  :href="`/rezepte?collection_id=${collection.id}`"
-                  class="text-sm text-cs-red-900 hover:text-cs-red-900/80 font-medium flex items-center gap-1"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
-                  </svg>
-                  {{ collection.doable_recipes_count }} {{ collection.doable_recipes_count === 1 ? 'Rezept möglich' : 'Rezepte möglich' }}
-                </a>
-                <p v-else class="text-sm text-cs-ink-400 italic">
-                  Keine Rezepte möglich
-                </p>
-              </div>
-              <button
-                @click="openEditModal(collection)"
-                class="text-cs-ink-400 hover:text-cs-ink-600 transition p-1"
-                title="Bearbeiten"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                </svg>
-              </button>
-            </div>
+        <div v-for="collection in collections" :key="collection.id" class="card">
 
-            <!-- Notes Preview -->
-            <div v-if="collection.notes" class="mb-4 p-3 bg-cs-ink-50 rounded text-sm text-cs-ink-700">
+          <!-- Header -->
+          <div class="card-header">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-display font-semibold text-[18px] text-cs-ink-900 leading-snug">{{ collection.name }}</span>
+                <span v-if="collection.is_default" class="tag-gold">Standard</span>
+              </div>
+              <p class="text-xs text-cs-ink-500 font-normal mt-0.5">
+                {{ collection.ingredient_count }} {{ collection.ingredient_count === 1 ? 'Zutat' : 'Zutaten' }}
+              </p>
+            </div>
+            <button
+              @click="openEditModal(collection)"
+              class="text-cs-ink-400 hover:text-cs-ink-700 transition p-1 shrink-0 ml-2"
+              title="Bearbeiten"
+            >
+              <i class="fas fa-pen text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+
+            <!-- Doable recipes -->
+            <a
+              v-if="collection.doable_recipes_count > 0"
+              :href="`/rezepte?collection_id=${collection.id}`"
+              class="link font-medium text-sm inline-flex items-center gap-1.5 mb-3"
+            >
+              <i class="fas fa-cocktail text-xs"></i>
+              {{ collection.doable_recipes_count }} {{ collection.doable_recipes_count === 1 ? 'Rezept möglich' : 'Rezepte möglich' }}
+            </a>
+            <p v-else class="text-cs-ink-400 text-sm mb-3">Keine Rezepte möglich</p>
+
+            <!-- Notes -->
+            <div v-if="collection.notes" class="mb-3 text-sm text-cs-ink-600 bg-cs-ink-50 rounded-md px-3 py-2">
               {{ truncate(collection.notes, 100) }}
             </div>
 
-            <!-- Ingredients Preview -->
-            <div v-if="collection.ingredients && collection.ingredients.length > 0" class="mb-4">
-              <div class="flex flex-wrap gap-1.5">
-                <span
-                  v-for="ingredient in collection.ingredients.slice(0, 8)"
-                  :key="ingredient.id"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-cs-ink-100 text-cs-ink-700"
-                >
-                  {{ ingredient.name }}
-                </span>
-                <span
-                  v-if="collection.ingredients.length > 8"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-cs-ink-200 text-cs-ink-600"
-                >
-                  +{{ collection.ingredients.length - 8 }} weitere
-                </span>
-              </div>
+            <!-- Ingredients -->
+            <div v-if="collection.ingredients && collection.ingredients.length > 0" class="flex flex-wrap gap-1">
+              <span
+                v-for="ingredient in collection.ingredients.slice(0, 8)"
+                :key="ingredient.id"
+                class="tag-neutral"
+              >{{ ingredient.name }}</span>
+              <span v-if="collection.ingredients.length > 8" class="tag-neutral">
+                +{{ collection.ingredients.length - 8 }}
+              </span>
             </div>
-            <div v-else class="mb-4 text-sm text-cs-ink-500 italic">
-              Noch keine Zutaten hinzugefügt
-            </div>
+            <p v-else class="text-cs-ink-400 text-sm italic">Noch keine Zutaten hinzugefügt</p>
 
-            <!-- Actions -->
-            <div class="pt-4 border-t border-cs-ink-100">
-              <a
-                :href="`/ingredient_collections/${collection.id}/edit`"
-                class="block w-full bg-cs-red-900 hover:bg-cs-red-900/90 text-white px-4 py-2 rounded-lg transition text-sm font-medium text-center"
-              >
-                Zutaten verwalten
-              </a>
-            </div>
           </div>
+
+          <!-- Footer -->
+          <div class="card-footer">
+            <a
+              :href="`/ingredient_collections/${collection.id}/edit`"
+              class="btn btn-primary btn-sm w-full text-center"
+            >
+              Zutaten verwalten
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
@@ -175,6 +148,6 @@ const handleCollectionDeleted = () => {
 
 const truncate = (text, length) => {
   if (!text) return ''
-  return text.length > length ? text.substring(0, length) + '...' : text
+  return text.length > length ? text.substring(0, length) + '…' : text
 }
 </script>

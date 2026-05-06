@@ -4,7 +4,7 @@
     <div
       v-for="(item, idx) in items"
       :key="idx"
-      class="flex gap-3 py-2"
+      class="flex gap-3 py-3"
       :class="{ 'border-b border-cs-ink-100': idx < items.length - 1 }"
     >
       <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center mt-0.5">
@@ -43,12 +43,12 @@ onMounted(() => {
 })
 
 const TYPE_CONFIG = {
-  forum_post:        { icon: 'fa-comments',     iconColor: 'text-blue-500' },
+  forum_post:        { icon: 'fa-comments',     iconColor: 'text-cs-blue-500' },
   rating:            { icon: 'fa-star',          iconColor: 'text-cs-gold-400' },
-  recipe_image:      { icon: 'fa-camera',        iconColor: 'text-purple-500' },
+  recipe_image:      { icon: 'fa-camera',        iconColor: 'text-cs-blue-400' },
   recipe:            { icon: 'fa-martini-glass', iconColor: 'text-cs-red-900' },
-  user_registration: { icon: 'fa-user-plus',     iconColor: 'text-green-500' },
-  recipe_comment:    { icon: 'fa-message',       iconColor: 'text-orange-400' },
+  user_registration: { icon: 'fa-user-plus',     iconColor: 'text-cs-success-500' },
+  recipe_comment:    { icon: 'fa-message',       iconColor: 'text-cs-warning-400' },
 }
 
 function escapeHtml(str) {

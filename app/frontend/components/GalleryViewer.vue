@@ -1,32 +1,24 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
       <div
         v-for="image in images"
         :key="image.id"
-        class="card overflow-hidden hover:shadow-md transition-all duration-200 group"
+        class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300"
+        @click="openImage(image)"
       >
-        <div
-          class="aspect-square bg-cs-ink-200 relative cursor-pointer"
-          @click="openImage(image)"
-        >
-          <img
-            :src="image.thumbnailUrl"
-            :alt="image.recipeTitle"
-            class="object-cover w-full h-full"
-            loading="lazy"
-          />
-          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-        </div>
-
-        <div class="card-body p-2 sm:p-3">
-          <h3 class="font-bold text-sm sm:text-base mb-1 truncate">
-            <a :href="image.recipeUrl" class="hover:text-cs-gold-400 transition-colors">{{ image.recipeTitle }}</a>
-          </h3>
-          <p class="text-xs text-cs-ink-600 flex items-center gap-1 truncate">
-            von <UserBadge :user="image.user" layout="text" />
-          </p>
-          <p class="text-[10px] sm:text-xs text-cs-ink-500">{{ image.uploadDate }}</p>
+        <img
+          :src="image.thumbnailUrl"
+          :alt="image.recipeTitle"
+          class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-[1.05]"
+          loading="lazy"
+        />
+        <!-- gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent"></div>
+        <!-- text overlay -->
+        <div class="absolute bottom-0 left-0 right-0 p-2.5">
+          <p class="font-display font-semibold text-white text-[13px] leading-tight line-clamp-2 mb-0.5 drop-shadow">{{ image.recipeTitle }}</p>
+          <p class="text-[11px] text-white/65 truncate">{{ image.user?.username }}</p>
         </div>
       </div>
     </div>
@@ -50,7 +42,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import FullscreenImageModal from './FullscreenImageModal.vue'
-import UserBadge from './UserBadge.vue'
 
 const images = ref([])
 const showModal = ref(false)
