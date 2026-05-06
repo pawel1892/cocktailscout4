@@ -1,111 +1,56 @@
-<div class="flex flex-col gap-6">
-  <%# Header %>
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-    <h1 class="text-3xl font-bold text-cs-red-900">Nachrichten</h1>
-    <%= link_to new_private_message_path, class: 'btn btn-primary' do %>
-      <i class="fas fa-plus mr-2"></i> Neue Nachricht
-    <% end %>
+<!-- Page header -->
+<div class="mb-8 flex items-end justify-between gap-4">
+  <div>
+    <h1 class="font-display font-semibold text-[52px] leading-none tracking-tight text-cs-red-900">Nachrichten</h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
   </div>
-
-  <%# Tab Navigation %>
-  <nav class="flex gap-2 border-b border-cs-ink-200">
-    <%= link_to private_messages_path,
-      class: "px-4 py-2 font-medium border-b-2 border-cs-red-900 text-cs-red-900" do %>
-      Konversationen
-    <% end %>
-    <%= link_to sent_private_messages_path,
-      class: "px-4 py-2 font-medium text-cs-ink-500 hover:text-cs-red-900 hover:border-cs-ink-300 border-b-2 border-transparent" do %>
-      Gesendet
-    <% end %>
-  </nav>
-
-  <% if @messages.any? %>
-    <%# Mobile View (Cards) %>
-    <div class="lg:hidden space-y-3">
-      <% @messages.each do |message| %>
-        <% other_user = message.sender_id == Current.user.id ? message.receiver : message.sender %>
-        <% has_unread = @unread_partner_ids.include?(other_user.id) %>
-        <div class="card">
-          <div class="card-body p-4">
-            <div class="flex items-start justify-between mb-2">
-              <div class="text-sm text-cs-ink-600">
-                Mit: <%= user_badge(other_user) %>
-                <% if has_unread %>
-                  <span class="ml-1 inline-block w-2 h-2 bg-cs-red-900 rounded-full align-middle"></span>
-                <% end %>
-              </div>
-            </div>
-
-            <div class="text-sm mb-2 <%= has_unread ? 'font-semibold' : 'text-cs-ink-700' %>">
-              <%= link_to truncate(message.body, length: 80), private_message_path(message),
-                class: "hover:underline" %>
-            </div>
-
-            <div class="text-xs text-cs-ink-400">
-              <%= time_ago_in_words(message.created_at) %>
-            </div>
-
-            <div class="mt-3">
-              <%= link_to private_message_path(message), class: "btn btn-sm btn-outline" do %>
-                <i class="fas fa-eye mr-1"></i> Öffnen
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <%# Desktop View (Table) %>
-    <div class="hidden lg:block table-container">
-      <table class="table-standard">
-        <thead>
-          <tr>
-            <th class="table-th w-auto">Mit</th>
-            <th class="table-th w-auto">Letzte Nachricht</th>
-            <th class="table-th w-32">Datum</th>
-            <th class="table-th w-32 text-center">Aktionen</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-cs-ink-200">
-          <% @messages.each do |message| %>
-            <% other_user = message.sender_id == Current.user.id ? message.receiver : message.sender %>
-            <% has_unread = @unread_partner_ids.include?(other_user.id) %>
-            <tr class="table-tr-hover">
-              <td class="table-td">
-                <%= user_badge(other_user) %>
-              </td>
-              <td class="table-td">
-                <%= link_to truncate(message.body, length: 80), private_message_path(message),
-                  class: "hover:underline #{'font-semibold' if has_unread}" %>
-                <% if has_unread %>
-                  <span class="ml-2 inline-block w-2 h-2 bg-cs-red-900 rounded-full align-middle"></span>
-                <% end %>
-              </td>
-              <td class="table-td text-cs-ink-500 text-sm">
-                <%= message.created_at.strftime("%d.%m.%Y") %>
-              </td>
-              <td class="table-td text-center">
-                <%= link_to private_message_path(message),
-                  class: "text-cs-ink-400 hover:text-cs-red-900" do %>
-                  <i class="fas fa-eye"></i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <div class="text-center py-12 text-cs-ink-500">
-      <i class="fas fa-inbox text-4xl mb-4"></i>
-      <p>Keine Konversationen</p>
-    </div>
-  <% end %>
-
-  <%# Pagination %>
-  <% if @pagy.pages > 1 %>
-    <div class="flex justify-center">
-      <%== @pagy.series_nav %>
-    </div>
+  <%= link_to new_private_message_path, class: 'btn btn-primary shrink-0' do %>
+    <i class="fas fa-plus text-xs mr-1.5"></i> Neue Nachricht
   <% end %>
 </div>
+
+<!-- Tab nav -->
+<div class="flex border-b border-cs-ink-200 mb-6">
+  <%= link_to private_messages_path, class: "px-4 py-2.5 text-sm font-medium -mb-px border-b-2 border-cs-red-900 text-cs-red-900" do %>
+    <i class="fas fa-inbox mr-1.5"></i> Konversationen
+  <% end %>
+  <%= link_to sent_private_messages_path, class: "px-4 py-2.5 text-sm font-medium -mb-px border-b-2 border-transparent text-cs-ink-500 hover:text-cs-red-900 transition-colors" do %>
+    <i class="fas fa-paper-plane mr-1.5"></i> Gesendet
+  <% end %>
+</div>
+
+<% if @messages.any? %>
+  <div class="divide-y divide-cs-ink-100">
+    <% @messages.each do |message| %>
+      <% other_user = message.sender_id == Current.user.id ? message.receiver : message.sender %>
+      <% has_unread = @unread_partner_ids.include?(other_user.id) %>
+      <div class="flex items-center gap-4 py-4">
+        <%= user_badge(other_user) %>
+        <div class="flex-1 min-w-0">
+          <%= link_to private_message_path(message), class: "link text-sm #{'font-semibold text-cs-ink-900' if has_unread} truncate inline-block max-w-full" do %>
+            <% if has_unread %>
+              <span class="w-1.5 h-1.5 rounded-full bg-cs-red-700 inline-block mr-1 align-middle mb-px"></span>
+            <% end %>
+            <%= truncate(message.body, length: 80) %>
+          <% end %>
+        </div>
+        <span class="text-xs text-cs-ink-400 shrink-0"><%= message.created_at.strftime("%d.%m.%Y") %></span>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="card card-ghost p-12 text-center">
+    <i class="fas fa-inbox text-4xl text-cs-ink-300 mb-4"></i>
+    <h3 class="font-display font-bold text-xl text-cs-ink-800 mb-2">Keine Konversationen</h3>
+    <p class="text-cs-ink-500 mb-6 max-w-sm mx-auto">Schreibe jemandem, um eine Konversation zu starten.</p>
+    <%= link_to new_private_message_path, class: "btn btn-primary" do %>
+      <i class="fas fa-plus text-xs mr-1.5"></i> Neue Nachricht
+    <% end %>
+  </div>
+<% end %>
+
+<% if @pagy.pages > 1 %>
+  <div class="flex justify-center py-6 border-t border-cs-ink-200 mt-4">
+    <%== @pagy.series_nav %>
+  </div>
+<% end %>
