@@ -1,7 +1,7 @@
 <template>
-  <div :id="`comment-${comment.id}`" :class="isReply ? '' : 'callout'" class="group">
+  <div :id="`comment-${comment.id}`" :class="isReply ? '' : 'py-5'" class="group">
     <!-- Comment body -->
-    <div :class="isReply ? 'py-3' : 'p-0'">
+    <div>
       <div class="flex gap-3">
         <!-- Vote Column -->
         <div v-if="!isReply" class="flex flex-col items-center gap-1 flex-shrink-0 pt-1">

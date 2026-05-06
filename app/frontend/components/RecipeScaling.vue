@@ -1,12 +1,12 @@
 <template>
-  <div class="card">
-    <div class="card-body p-4 sm:p-6">
+  <div>
+    <div>
       <!-- Header with scaling controls -->
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-          <i class="fas fa-list text-cs-gold-400"></i>
-          Zutaten
-        </h2>
+        <div>
+          <h2 class="font-display font-semibold text-[28px] leading-tight text-cs-red-900">Zutaten</h2>
+          <div class="w-8 h-0.5 bg-cs-gold-400 mt-1"></div>
+        </div>
         <!-- Scaling controls (only shown if recipe is scalable) -->
         <div v-if="scalable" class="flex items-center gap-2 flex-wrap">
           <span class="text-sm text-cs-ink-600">Portionen:</span>
@@ -58,11 +58,9 @@
       </ul>
 
       <!-- Warning for uncertain ingredients when scaled -->
-      <div v-if="!loading && scaleFactor !== 1 && hasUncertainIngredients" class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm flex items-start gap-2">
-        <i class="fas fa-exclamation-triangle mt-0.5"></i>
-        <div>
-          <strong>Hinweis:</strong> Einige Zutaten (mit ⚠️ markiert) konnten nicht automatisch skaliert werden und sollten manuell angepasst werden.
-        </div>
+      <div v-if="!loading && scaleFactor !== 1 && hasUncertainIngredients" class="callout-warning mt-3">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div><strong>Hinweis:</strong> Einige Zutaten (mit ⚠️ markiert) konnten nicht automatisch skaliert werden und sollten manuell angepasst werden.</div>
       </div>
 
       <!-- Alcohol information (compact with icons) -->
@@ -78,8 +76,9 @@
       </div>
 
       <!-- Error message -->
-      <div v-if="error" class="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-        {{ error }}
+      <div v-if="error" class="callout-red mt-4">
+        <i class="fas fa-exclamation-circle"></i>
+        <div>{{ error }}</div>
       </div>
     </div>
   </div>

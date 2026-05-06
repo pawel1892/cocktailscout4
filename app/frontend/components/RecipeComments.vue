@@ -1,12 +1,12 @@
 <template>
-  <div class="card">
-    <div class="card-body p-4 sm:p-6">
+  <div>
+    <div>
       <!-- Header -->
-      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-        <i class="fas fa-comments text-cs-gold-400"></i>
+      <h2 class="font-display font-semibold text-[28px] leading-tight text-cs-red-900 mb-1">
         Kommentare
-        <span class="text-base font-normal text-cs-ink-500">({{ totalCommentCount }})</span>
+        <span class="font-sans text-[16px] font-normal text-cs-ink-500 ml-1">({{ totalCommentCount }})</span>
       </h2>
+      <div class="w-8 h-0.5 bg-cs-gold-400 mb-5"></div>
 
       <!-- New Comment Form -->
       <div class="mb-6">
@@ -39,9 +39,9 @@
             </div>
           </form>
         </div>
-        <div v-else class="bg-cs-ink-50 rounded-lg p-4 border border-cs-ink-200 text-center">
-          <p class="text-cs-ink-600 mb-2">Du musst angemeldet sein, um einen Kommentar zu schreiben.</p>
-          <a href="/session/new" class="text-cs-red-900 hover:underline font-medium">Jetzt anmelden</a>
+        <div v-else class="callout mb-6">
+          <i class="far fa-comment"></i>
+          <div>Du musst <a href="/session/new" class="link link-underline">angemeldet sein</a>, um einen Kommentar zu schreiben.</div>
         </div>
       </div>
 
@@ -91,7 +91,7 @@
       </div>
 
       <!-- Comment List -->
-      <div v-if="filteredComments.length > 0" class="space-y-4 mb-6">
+      <div v-if="filteredComments.length > 0" class="divide-y divide-cs-ink-200 mb-6">
         <CommentItem
           v-for="comment in filteredComments"
           :key="comment.id"
@@ -117,6 +117,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, defineProps, watch } from 'vue'

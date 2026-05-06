@@ -12,15 +12,13 @@
 <% end %>
 
 <!-- Title -->
-<div class="mb-6 flex items-start justify-between gap-4">
+<div class="mb-5 flex items-start justify-between gap-4">
   <div class="min-w-0 flex-1">
-    <h1 class="text-3xl md:text-4xl font-bold mb-2 break-words"><%= @recipe.title %></h1>
-    <!-- Tags -->
+    <h1 class="font-display font-semibold text-[38px] sm:text-[54px] leading-none tracking-tight text-cs-red-900 mb-3 break-words"><%= @recipe.title %></h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mb-3"></div>
     <%= render "recipes/tag_list", tags: @recipe.tags %>
-
   </div>
-
-  <div class="flex-shrink-0 pt-1">
+  <div class="flex-shrink-0 pt-2">
     <favorite-toggle
       favoritable-type="Recipe"
       :favoritable-id="<%= @recipe.id %>"
@@ -29,48 +27,43 @@
   </div>
 </div>
 
-<!-- Stats Bar -->
-<div class="card mb-6">
-  <div class="card-body p-4">
-    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:justify-between">
-      <!-- Left: Rating Control -->
-      <div class="flex-1 w-full sm:w-auto min-w-0">
-        <rating-control
-          rateable-type="Recipe"
-          :rateable-id="<%= @recipe.id %>"
-          :initial-average="<%= @recipe.average_rating || 0 %>"
-          :initial-count="<%= @recipe.ratings_count || 0 %>"
-          :min-ratings="<%= Rateable::MIN_RATINGS_FOR_DISPLAY %>"
-          :user-rating="<%= (Current.user && @recipe.ratings.find_by(user: Current.user)&.score) || 'null' %>"
-        ></rating-control>
-        <% if @recipe.has_ratings? %>
-          <%= link_to bewertungen_recipe_path(@recipe), class: "text-sm text-cs-red-900 hover:underline mt-1 inline-block" do %>
-            <i class="fas fa-chart-bar mr-1"></i> Alle Bewertungen ansehen
-          <% end %>
-        <% end %>
-      </div>
+<!-- Metadata strip -->
+<div class="flex flex-wrap items-start sm:items-center justify-between gap-x-6 gap-y-3 border-y border-cs-ink-100 py-4 mb-8">
+  <!-- Left: Rating -->
+  <div>
+    <rating-control
+      rateable-type="Recipe"
+      :rateable-id="<%= @recipe.id %>"
+      :initial-average="<%= @recipe.average_rating || 0 %>"
+      :initial-count="<%= @recipe.ratings_count || 0 %>"
+      :min-ratings="<%= Rateable::MIN_RATINGS_FOR_DISPLAY %>"
+      :user-rating="<%= (Current.user && @recipe.ratings.find_by(user: Current.user)&.score) || 'null' %>"
+    ></rating-control>
+    <% if @recipe.has_ratings? %>
+      <%= link_to bewertungen_recipe_path(@recipe), class: "text-xs text-cs-red-900 hover:underline mt-1 inline-flex items-center gap-1" do %>
+        <i class="fas fa-chart-bar"></i> Alle Bewertungen ansehen
+      <% end %>
+    <% end %>
+  </div>
 
-      <!-- Right: All Stats -->
-      <div class="text-left sm:text-right text-sm space-y-2 w-full sm:w-auto">
-        <!-- Author -->
-        <div class="flex items-center sm:justify-end gap-1 text-cs-ink-600">
-          <span>von</span>
-          <%= user_badge(@recipe.user) %>
-        </div>
-
-        <!-- Views -->
-        <div class="text-xs text-cs-ink-400 flex items-center sm:justify-end gap-3">
-          <span><i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %></span>
-          <span><i class="far fa-heart"></i> <%= number_with_delimiter(@recipe.favorites_count) %></span>
-        </div>
-      </div>
-    </div>
+  <!-- Right: Author + Stats -->
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+    <span class="text-sm text-cs-ink-600 flex items-center gap-1">
+      <span class="text-cs-ink-400">von</span>
+      <%= user_badge(@recipe.user) %>
+    </span>
+    <span class="font-mono text-xs text-cs-ink-400 flex items-center gap-1">
+      <i class="far fa-eye"></i> <%= number_with_delimiter(@recipe.visits_count) %>
+    </span>
+    <span class="font-mono text-xs text-cs-ink-400 flex items-center gap-1">
+      <i class="far fa-heart"></i> <%= number_with_delimiter(@recipe.favorites_count) %>
+    </span>
   </div>
 </div>
 
 <!-- Image & Ingredients Section -->
 <% show_image_col = @recipe.approved_recipe_images.any? || Current.user %>
-<div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
   <!-- Image column -->
   <% if show_image_col %>
     <div class="md:col-span-1 md:order-2">
@@ -145,15 +138,11 @@
 
 <!-- Preparation / Description -->
 <% if @recipe.description.present? %>
-  <div class="card mb-6">
-    <div class="card-body p-4 sm:p-6">
-      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-        <i class="fas fa-cocktail text-cs-gold-400"></i>
-        Zubereitung
-      </h2>
-      <div class="prose prose-cs max-w-none">
-        <%= render_markdown(@recipe.description) %>
-      </div>
+  <div class="mb-8">
+    <h2 class="font-display font-semibold text-[28px] leading-tight text-cs-red-900 mb-1">Zubereitung</h2>
+    <div class="w-8 h-0.5 bg-cs-gold-400 mb-5"></div>
+    <div class="prose prose-cs max-w-none">
+      <%= render_markdown(@recipe.description) %>
     </div>
   </div>
 <% end %>
