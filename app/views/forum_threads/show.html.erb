@@ -1,125 +1,116 @@
 <%= render "forum/forum_header", forum_topic: @forum_topic, forum_thread: @forum_thread, active: :post %>
 
-<div class="flex flex-col gap-6">
-  <%# Thread Title & Meta %>
-  <div class="card bg-cs-ink-50 border-cs-gold-400/30">
-    <div class="card-body p-4 lg:p-6">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <h1 class="text-2xl font-bold text-cs-ink-900 mb-1">
-            <% if @forum_thread.sticky %>
-              <i class="fas fa-thumbtack text-cs-gold-400 mr-2" title="Angepinnt"></i>
-            <% end %>
-            <% if @forum_thread.locked %>
-              <i class="fas fa-lock text-cs-ink-500 mr-2" title="Gesperrt"></i>
-            <% end %>
-            <%= @forum_thread.title %>
-          </h1>
-          <div class="text-sm text-cs-ink-500 flex items-center gap-3">
-            <span class="flex items-center gap-1">Gestartet von <%= user_badge(@forum_thread.user) %></span>
-            <span>•</span>
-            <span><%= l(@forum_thread.created_at, format: :short) %></span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-           <span class="tag tag-neutral"><i class="far fa-eye mr-1"></i> <%= @forum_thread.views %> Aufrufe</span>
-           <span class="tag tag-neutral"><i class="far fa-comments mr-1"></i> <%= @forum_thread.count_posts %> Beiträge</span>
-        </div>
-      </div>
-    </div>
+<!-- Thread header -->
+<div class="mb-8">
+  <h1 class="font-display font-semibold text-[38px] sm:text-[48px] leading-tight tracking-tight text-cs-red-900">
+    <% if @forum_thread.sticky %>
+      <i class="fas fa-thumbtack text-cs-gold-400 text-[28px] mr-1 align-middle" title="Angepinnt"></i>
+    <% end %>
+    <% if @forum_thread.locked %>
+      <i class="fas fa-lock text-cs-ink-400 text-[26px] mr-1 align-middle" title="Gesperrt"></i>
+    <% end %>
+    <%= @forum_thread.title %>
+  </h1>
+  <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-cs-ink-500">
+    <span class="flex items-center gap-1">Von <%= user_badge(@forum_thread.user) %></span>
+    <span><i class="far fa-clock mr-1"></i><%= l(@forum_thread.created_at, format: :short) %></span>
+    <span class="meta-chip"><i class="far fa-eye mr-1"></i> <%= @forum_thread.views %> Aufrufe</span>
+    <span class="meta-chip"><i class="far fa-comments mr-1"></i> <%= @forum_thread.count_posts %> Beiträge</span>
   </div>
+</div>
 
-  <%# Moderation Controls %>
-  <% if Current.user&.can_moderate_forum? %>
-    <div class="flex flex-wrap gap-2">
-      <% if @forum_thread.locked %>
-        <%= button_to unlock_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-secondary' do %>
-          <i class="fas fa-unlock mr-1"></i> Entsperren
-        <% end %>
-      <% else %>
-        <%= button_to lock_forum_thread_path(@forum_thread), method: :post, class: 'btn btn-sm btn-secondary' do %>
-          <i class="fas fa-lock mr-1"></i> Sperren
-        <% end %>
+<!-- Moderation controls -->
+<% if Current.user&.can_moderate_forum? %>
+  <div class="flex flex-wrap gap-2 mb-6 pb-6 border-b border-cs-ink-200">
+    <% if @forum_thread.locked %>
+      <%= button_to unlock_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-soft' do %>
+        <i class="fas fa-unlock mr-1"></i> Entsperren
       <% end %>
-
-      <% if @forum_thread.sticky %>
-        <%= button_to unpin_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-secondary' do %>
-          <i class="fas fa-thumbtack mr-1"></i> Loslösen
-        <% end %>
-      <% else %>
-        <%= button_to pin_forum_thread_path(@forum_thread), method: :post, class: 'btn btn-sm btn-secondary' do %>
-          <i class="fas fa-thumbtack mr-1"></i> Anpinnen
-        <% end %>
+    <% else %>
+      <%= button_to lock_forum_thread_path(@forum_thread), method: :post, class: 'btn btn-sm btn-soft' do %>
+        <i class="fas fa-lock mr-1"></i> Sperren
       <% end %>
+    <% end %>
 
-      <details class="group">
-        <summary class="btn btn-sm btn-secondary list-none cursor-pointer">
-          <i class="fas fa-arrows-alt mr-1"></i> Verschieben
-        </summary>
-        <%= form_with url: move_forum_thread_path(@forum_thread), method: :post, class: 'flex items-center gap-2 mt-2' do |f| %>
-          <%= f.select :forum_topic_id,
-            @movable_topics.order(:position).map { |t| [t.name, t.id] },
-            {},
-            class: 'input-field' %>
-          <%= f.submit "Verschieben", class: 'btn btn-sm btn-primary' %>
-        <% end %>
-      </details>
-    </div>
+    <% if @forum_thread.sticky %>
+      <%= button_to unpin_forum_thread_path(@forum_thread), method: :delete, class: 'btn btn-sm btn-soft' do %>
+        <i class="fas fa-thumbtack mr-1"></i> Loslösen
+      <% end %>
+    <% else %>
+      <%= button_to pin_forum_thread_path(@forum_thread), method: :post, class: 'btn btn-sm btn-soft' do %>
+        <i class="fas fa-thumbtack mr-1"></i> Anpinnen
+      <% end %>
+    <% end %>
+
+    <details class="group relative">
+      <summary class="btn btn-sm btn-soft list-none cursor-pointer">
+        <i class="fas fa-arrows-alt mr-1"></i> Verschieben
+      </summary>
+      <%= form_with url: move_forum_thread_path(@forum_thread), method: :post, class: 'flex items-center gap-2 mt-2' do |f| %>
+        <%= f.select :forum_topic_id,
+          @movable_topics.order(:position).map { |t| [t.name, t.id] },
+          {},
+          class: 'input-field' %>
+        <%= f.submit "Verschieben", class: 'btn btn-sm btn-primary' %>
+      <% end %>
+    </details>
+  </div>
+<% end %>
+
+<!-- Reply + Pagination top -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+  <% if @forum_thread.locked %>
+    <% if Current.user&.can_moderate_forum? %>
+      <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+        <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
+      <% end %>
+    <% else %>
+      <div class="text-cs-ink-500 italic flex items-center gap-2 text-sm">
+        <i class="fas fa-lock text-xs"></i> Dieser Thread ist geschlossen
+      </div>
+    <% end %>
+  <% else %>
+    <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+      <i class="fas fa-reply mr-2"></i> Antworten
+    <% end %>
   <% end %>
 
-  <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-    <% if @forum_thread.locked %>
-      <% if Current.user&.can_moderate_forum? %>
-        <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
-          <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
-        <% end %>
-      <% else %>
-        <div class="text-cs-ink-600 italic w-full sm:w-auto">
-          <i class="fas fa-lock mr-2"></i> Dieser Thread ist geschlossen
-        </div>
+  <% if @pagy.pages > 1 %>
+    <div class="w-full sm:w-auto overflow-x-auto">
+      <%== @pagy.series_nav %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Posts -->
+<div class="space-y-4">
+  <% @forum_posts.each do |forum_post| %>
+    <%= render 'forum_posts/forum_post', forum_post: forum_post %>
+  <% end %>
+</div>
+
+<!-- Bottom pagination + reply -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-cs-ink-200">
+  <% if @forum_thread.locked %>
+    <% if Current.user&.can_moderate_forum? %>
+      <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+        <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
       <% end %>
     <% else %>
-      <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
-        <i class="fas fa-reply mr-2"></i> Antworten
-      <% end %>
-    <% end %>
-
-    <% if @pagy.pages > 1 %>
-      <div class="w-full sm:w-auto overflow-x-auto py-2">
-        <%== @pagy.series_nav %>
+      <div class="text-cs-ink-500 italic flex items-center gap-2 text-sm">
+        <i class="fas fa-lock text-xs"></i> Dieser Thread ist geschlossen
       </div>
     <% end %>
-  </div>
-
-  <%# Posts List %>
-  <div class="space-y-6">
-    <% @forum_posts.each do |forum_post| %>
-      <%= render 'forum_posts/forum_post', forum_post: forum_post %>
+  <% else %>
+    <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
+      <i class="fas fa-reply mr-2"></i> Antworten
     <% end %>
-  </div>
+  <% end %>
 
-  <%# Bottom Pagination and Actions %>
-  <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-    <% if @forum_thread.locked %>
-      <% if Current.user&.can_moderate_forum? %>
-        <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
-          <i class="fas fa-reply mr-2"></i> Antworten (als Moderator)
-        <% end %>
-      <% else %>
-        <div class="text-cs-ink-600 italic w-full sm:w-auto">
-          <i class="fas fa-lock mr-2"></i> Dieser Thread ist geschlossen
-        </div>
-      <% end %>
-    <% else %>
-      <%= link_to new_forum_post_path(@forum_thread), class: 'btn btn-primary w-full sm:w-auto' do %>
-        <i class="fas fa-reply mr-2"></i> Antworten
-      <% end %>
-    <% end %>
-
-    <% if @pagy.pages > 1 %>
-      <div class="w-full sm:w-auto overflow-x-auto py-2">
-        <%== @pagy.series_nav %>
-      </div>
-    <% end %>
-  </div>
+  <% if @pagy.pages > 1 %>
+    <div class="w-full sm:w-auto overflow-x-auto">
+      <%== @pagy.series_nav %>
+    </div>
+  <% end %>
 </div>

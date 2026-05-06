@@ -2,45 +2,17 @@
 <% forum_topic = local_assigns[:forum_topic] %>
 <% forum_thread = local_assigns[:forum_thread] %>
 
-<header class="mb-6">
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-    <h1 class="text-3xl font-bold text-cs-red-900">Cocktailforum</h1>
-    
-    <%= form_tag forum_search_path, method: :get, class: "w-full md:w-auto" do %>
-      <div class="flex gap-2">
-        <%= text_field_tag :q, params[:q], placeholder: "Forensuche", class: 'input-field' %>
-        <button class="btn btn-primary" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
+<% if forum_topic %>
+  <nav class="flex items-center gap-1.5 text-sm mb-6">
+    <%= link_to "Cocktailforum", forum_topics_path, class: "link" %>
+    <% if forum_thread %>
+      <i class="fas fa-chevron-right text-[9px] text-cs-ink-300"></i>
+      <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link" %>
+      <i class="fas fa-chevron-right text-[9px] text-cs-ink-300"></i>
+      <span class="text-cs-ink-700 truncate max-w-[240px]"><%= forum_thread.title %></span>
+    <% else %>
+      <i class="fas fa-chevron-right text-[9px] text-cs-ink-300"></i>
+      <span class="text-cs-ink-700"><%= forum_topic.name %></span>
     <% end %>
-  </div>
-
-  <nav class="flex" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-3">
-      <li class="inline-flex items-center">
-        <%= link_to forum_topics_path, class: "link inline-flex items-center text-sm font-medium hover:underline #{'font-bold' if active == :topic}" do %>
-          <i class="fas fa-comments mr-2"></i>
-          Übersicht
-        <% end %>
-      </li>
-      <% if forum_topic %>
-        <li>
-          <div class="flex items-center">
-            <i class="fas fa-chevron-right text-cs-ink-400 mx-2 text-xs"></i>
-            <%= link_to forum_topic.name, forum_topic_path(forum_topic.slug), class: "link ml-1 text-sm font-medium hover:underline md:ml-2 #{'font-bold' if active == :thread}" %>
-          </div>
-        </li>
-      <% end %>
-      <% if forum_thread %>
-        <li>
-          <div class="flex items-center">
-            <i class="fas fa-chevron-right text-cs-ink-400 mx-2 text-xs"></i>
-            <span class="ml-1 text-sm font-medium text-cs-ink-500 md:ml-2 truncate max-w-[200px]"><%= forum_thread.title %></span>
-          </div>
-        </li>
-      <% end %>
-    </ol>
   </nav>
-</header>
-
+<% end %>
