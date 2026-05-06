@@ -14,6 +14,10 @@
 @source inline("bg-cs-warning-50 bg-cs-warning-400 bg-cs-warning-500 bg-cs-warning-700");
 @source inline("bg-cs-error-50 bg-cs-error-400 bg-cs-error-500 bg-cs-error-700");
 
+html, body {
+  overflow-x: hidden;
+}
+
 :root {
   --cs-serif: 'Cormorant Garamond', Georgia, serif;
   --cs-radius-sm: 4px;
@@ -623,16 +627,20 @@
 .btn-group {
   @apply inline-flex border border-cs-ink-300 rounded-lg overflow-hidden bg-white shadow-xs;
 }
-.btn-group button {
-  @apply bg-transparent border-0 border-r border-cs-ink-200 px-3.5 py-2 text-[13px] font-semibold text-cs-ink-700 cursor-pointer transition-colors;
+.btn-group button,
+.btn-group a {
+  @apply bg-transparent border-0 border-r border-cs-ink-200 px-3.5 py-2 text-[13px] font-semibold text-cs-ink-700 cursor-pointer transition-colors no-underline inline-flex items-center gap-1;
 }
-.btn-group button:last-child {
+.btn-group button:last-child,
+.btn-group a:last-child {
   @apply border-r-0;
 }
-.btn-group button[aria-pressed="true"] {
+.btn-group button[aria-pressed="true"],
+.btn-group a[aria-pressed="true"] {
   @apply bg-cs-red-900 text-white;
 }
-.btn-group button:hover:not([aria-pressed="true"]) {
+.btn-group button:hover:not([aria-pressed="true"]),
+.btn-group a:hover:not([aria-pressed="true"]) {
   @apply bg-cs-ink-100 text-cs-red-900;
 }
 
