@@ -26,7 +26,7 @@
                 {{ r.score }}
               </div>
               <div class="flex-1 min-w-0">
-                <a v-if="r.recipe_slug" :href="`/rezepte/${r.recipe_slug}`" class="link font-medium truncate block">
+                <a v-if="r.recipe_slug" :href="`/rezepte/${r.recipe_slug}`" class="link font-medium truncate inline-block max-w-full">
                   {{ r.recipe_title }}
                 </a>
                 <span v-else class="text-cs-ink-400 italic text-sm">Rezept gelöscht</span>
@@ -100,7 +100,7 @@
               class="flex items-center gap-3 px-[18px] py-3"
             >
               <div class="flex-1 min-w-0">
-                <a :href="`/rezepte/${recipe.slug}`" class="link font-medium truncate block">{{ recipe.title }}</a>
+                <a :href="`/rezepte/${recipe.slug}`" class="link font-medium truncate inline-block max-w-full">{{ recipe.title }}</a>
               </div>
               <div class="text-xs text-cs-ink-400 shrink-0 text-right">
                 <span v-if="recipe.average_rating > 0">
