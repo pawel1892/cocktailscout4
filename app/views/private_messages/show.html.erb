@@ -15,8 +15,27 @@
   </div>
 </div>
 
+<!-- Reply form -->
+<div class="card mb-8">
+  <div class="card-header">
+    <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Antworten</span>
+  </div>
+  <div class="card-body">
+    <%= form_with model: PrivateMessage.new, url: private_messages_path, local: true do |f| %>
+      <%= f.hidden_field :receiver_id, value: @other_user.id %>
+      <%= f.text_area :body,
+        rows: 4,
+        class: "input-field w-full mb-3",
+        placeholder: "Deine Antwort…" %>
+      <div class="flex justify-end">
+        <%= f.submit "Antworten", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <!-- Message thread -->
-<div class="space-y-4 mb-8">
+<div class="space-y-4">
   <% @conversation.each do |msg| %>
     <% is_mine = msg.sender_id == Current.user.id %>
     <div class="<%= is_mine ? 'ml-[20%]' : 'mr-[20%]' %>">
@@ -47,23 +66,4 @@
       </div>
     </div>
   <% end %>
-</div>
-
-<!-- Reply form -->
-<div class="card">
-  <div class="card-header">
-    <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Antworten</span>
-  </div>
-  <div class="card-body">
-    <%= form_with model: PrivateMessage.new, url: private_messages_path, local: true do |f| %>
-      <%= f.hidden_field :receiver_id, value: @other_user.id %>
-      <%= f.text_area :body,
-        rows: 4,
-        class: "input-field w-full mb-3",
-        placeholder: "Deine Antwort…" %>
-      <div class="flex justify-end">
-        <%= f.submit "Antworten", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-  </div>
 </div>

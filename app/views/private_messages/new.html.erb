@@ -23,26 +23,13 @@
     <div class="card-body">
       <%= form_with model: @message, url: private_messages_path, local: true do |f| %>
 
-        <% if @receiver %>
-          <%= f.hidden_field :receiver_id, value: @receiver.id %>
-          <div class="mb-6">
-            <label class="label-field">Empfänger</label>
-            <div class="flex items-center gap-2 px-3 py-2 bg-cs-ink-50 rounded-md border border-cs-ink-200">
-              <%= user_badge(@receiver) %>
-            </div>
+        <%= f.hidden_field :receiver_id, value: @receiver.id %>
+        <div class="mb-6">
+          <label class="label-field">Empfänger</label>
+          <div class="flex items-center gap-2 px-3 py-2 bg-cs-ink-50 rounded-md border border-cs-ink-200">
+            <%= user_badge(@receiver) %>
           </div>
-        <% else %>
-          <div class="mb-6">
-            <%= f.label :receiver_id, "Empfänger ID", class: "label-field" %>
-            <%= f.number_field :receiver_id,
-              class: "input-field #{'input-error' if @message.errors[:receiver_id].any?}",
-              placeholder: "Benutzer-ID eingeben" %>
-            <% if @message.errors[:receiver_id].any? %>
-              <div class="form-error-message"><%= @message.errors.full_messages_for(:receiver_id).join(", ") %></div>
-            <% end %>
-            <p class="form-hint">Klicke auf ein Benutzerprofil, um direkt eine Nachricht zu senden.</p>
-          </div>
-        <% end %>
+        </div>
 
         <div class="mb-6">
           <%= f.label :body, "Nachricht", class: "label-field" %>

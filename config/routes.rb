@@ -150,7 +150,6 @@ Rails.application.routes.draw do
   # Private Messages
   resources :private_messages, path: "nachrichten", only: [ :index, :show, :new, :create, :destroy ] do
     collection do
-      get :sent
       get :unread_count
     end
   end
