@@ -169,9 +169,6 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 px-3.5 pb-3.5">
                   <b class="block font-display font-semibold text-[15px] text-white leading-[1.2] tracking-[-0.01em] line-clamp-2"><%= ri.recipe.title %></b>
-                  <small class="text-[11px] text-white/55 mt-0.5 block">
-                    <%= number_with_precision(ri.recipe.average_rating.to_f, precision: 1, separator: ",") %><% if ri.recipe.alcohol_content.present? && ri.recipe.alcohol_content > 0 %> · <%= number_with_precision(ri.recipe.alcohol_content, precision: 0) %>% ABV<% end %>
-                  </small>
                 </div>
               <% end %>
             <% else %>
@@ -190,9 +187,6 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 px-3.5 pb-3.5">
                   <b class="block font-display font-semibold text-[15px] text-white leading-[1.2] tracking-[-0.01em] line-clamp-2"><%= recipe.title %></b>
-                  <small class="text-[11px] text-white/55 mt-0.5 block">
-                    <%= number_with_precision(recipe.average_rating.to_f, precision: 1, separator: ",") %><% if recipe.alcohol_content.present? && recipe.alcohol_content > 0 %> · <%= number_with_precision(recipe.alcohol_content, precision: 0) %>% ABV<% end %>
-                  </small>
                 </div>
               <% end %>
             <% else %>
