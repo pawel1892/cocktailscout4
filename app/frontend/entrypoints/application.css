@@ -15,7 +15,7 @@
 @source inline("bg-cs-error-50 bg-cs-error-400 bg-cs-error-500 bg-cs-error-700");
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 :root {

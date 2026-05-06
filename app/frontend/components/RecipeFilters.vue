@@ -2,8 +2,8 @@
   <div>
   <!-- Desktop sidebar (always visible on lg+, inside the grid column) -->
   <aside
-    class="hidden lg:flex lg:flex-col lg:sticky"
-    :style="{ top: sidebarTop }"
+    class="hidden lg:block lg:sticky"
+    :style="{ top: sidebarTop, maxHeight: `calc(100vh - ${sidebarTop})`, overflowY: 'auto' }"
   >
     <div class="card">
       <div class="card-header">
