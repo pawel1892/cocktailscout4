@@ -18,6 +18,7 @@ class RecipeImage < ApplicationRecord
   scope :soft_deleted,     -> { where.not(deleted_at: nil) }
   scope :featured,         -> { where.not(featured_at: nil).order(featured_at: :desc) }
   scope :high_quality_pool, -> { approved.not_soft_deleted.where(high_quality: true) }
+  scope :high_quality_first, -> { order(high_quality: :desc) }
 
   ALLOWED_CONTENT_TYPES = %w[image/jpeg image/png image/webp image/gif].freeze
   MAX_FILE_SIZE         = 25.megabytes

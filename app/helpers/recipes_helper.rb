@@ -2,7 +2,9 @@ module RecipesHelper
   def recipe_thumbnail(recipe, size_class: "w-20 h-20")
     attached_images = recipe.approved_recipe_images.select { |ri| ri.image.attached? }
     if attached_images.any?
-      image_tag(attached_images.sample.image.variant(:thumb), class: "#{size_class} object-cover rounded-md")
+      high_quality = attached_images.select(&:high_quality)
+      pool = high_quality.any? ? high_quality : attached_images
+      image_tag(pool.sample.image.variant(:thumb), class: "#{size_class} object-cover rounded-md")
     else
       placeholder_image(size_class)
     end

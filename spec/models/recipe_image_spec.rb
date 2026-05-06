@@ -179,6 +179,42 @@ RSpec.describe RecipeImage, type: :model do
       end
     end
 
+    describe ".high_quality_pool" do
+      it "includes approved, non-deleted, high-quality images" do
+        @approved_image.update!(high_quality: true)
+        expect(RecipeImage.high_quality_pool).to include(@approved_image)
+      end
+
+      it "excludes non-high-quality approved images" do
+        expect(RecipeImage.high_quality_pool).not_to include(@approved_image)
+      end
+
+      it "excludes high-quality pending images" do
+        @pending_image.update_columns(high_quality: true)
+        expect(RecipeImage.high_quality_pool).not_to include(@pending_image)
+      end
+
+      it "excludes high-quality soft-deleted images" do
+        @approved_image.update!(high_quality: true, deleted_at: Time.current)
+        expect(RecipeImage.high_quality_pool).not_to include(@approved_image)
+      end
+    end
+
+    describe ".high_quality_first" do
+      it "returns high-quality images before regular ones" do
+        file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg')
+        hq_image = RecipeImage.new(recipe: recipe, user: user, state: "approved",
+                                   moderated_at: Time.current, moderated_by: moderator,
+                                   high_quality: true)
+        hq_image.image.attach(file)
+        hq_image.save!
+
+        results = RecipeImage.where(id: [ @approved_image.id, hq_image.id ]).high_quality_first
+        expect(results.first).to eq(hq_image)
+        expect(results.last).to eq(@approved_image)
+      end
+    end
+
     describe ".approved" do
       it "returns only approved images" do
         expect(RecipeImage.approved).to include(@approved_image)

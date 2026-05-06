@@ -121,7 +121,7 @@
 <% if @recipe.approved_recipe_images.any? %>
   <% content_for :head do %>
     <script>
-      window.recipeImages = <%= raw @recipe.approved_recipe_images.shuffle.map { |image|
+      window.recipeImages = <%= raw @recipe.approved_recipe_images.sort_by { |img| img.high_quality ? 0 : 1 }.map { |image|
         {
           id: image.id,
           mediumUrl: url_for(recipe_image_url(image, style: :medium)),
