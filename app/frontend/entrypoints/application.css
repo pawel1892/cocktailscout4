@@ -1,3 +1,14 @@
+/* Self-hosted fonts (privacy: no Google Fonts calls) */
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/400-italic.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/cormorant-garamond/600-italic.css';
+@import '@fontsource/cormorant-garamond/700.css';
+
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import "../stylesheets/tag_cloud.css";
