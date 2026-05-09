@@ -148,7 +148,7 @@
   <% end %>
 
   <!-- High Quality Flag -->
-  <% if @recipe_image.approved? && !@recipe_image.soft_deleted? && Current.user.can_mark_high_quality? %>
+  <% if @recipe_image.approved? && !@recipe_image.soft_deleted? && Current.user.can_moderate_image? %>
     <div class="card p-6 mb-6">
       <h2 class="text-lg font-semibold text-cs-ink-900 mb-1">Hochwertig</h2>
       <p class="text-sm text-cs-ink-500 mb-4">Bilder mit dieser Markierung werden als Bilderpool auf der Startseite verwendet. Nur Admins und Supermods können dies setzen.</p>

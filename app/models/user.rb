@@ -121,10 +121,6 @@ class User < ApplicationRecord
     admin? || recipe_moderator? || super_moderator?
   end
 
-  def can_mark_high_quality?
-    admin? || super_moderator?
-  end
-
   def can_moderate_image?
     admin? || image_moderator? || super_moderator?
   end

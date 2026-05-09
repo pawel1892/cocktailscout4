@@ -1,6 +1,6 @@
 module Admin
   class HighQualityRecipeImagesController < BaseController
-    before_action :require_high_quality_permission!
+    before_action :require_image_moderator!
 
     def create
       recipe_image = RecipeImage.find(params[:recipe_image_id])
@@ -16,8 +16,8 @@ module Admin
 
     private
 
-    def require_high_quality_permission!
-      unless Current.user&.can_mark_high_quality?
+    def require_image_moderator!
+      unless Current.user&.can_moderate_image?
         redirect_to root_path, alert: "Zugriff verweigert."
       end
     end
