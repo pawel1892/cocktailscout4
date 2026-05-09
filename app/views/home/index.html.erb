@@ -9,34 +9,32 @@
 <section class="relative overflow-hidden bg-cs-red-950">
   <div class="absolute top-0 right-0 w-[720px] h-[720px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3"
        style="background: radial-gradient(circle at 38% 38%, rgba(203,184,89,.10), transparent 65%)"></div>
-  <div class="absolute bottom-0 left-0 w-[480px] h-[480px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3"
-       style="background: radial-gradient(circle at 35% 35%, rgba(142,61,55,.35), transparent 70%)"></div>
 
   <div class="max-w-[1180px] mx-auto px-10 pt-10 pb-16 lg:pt-14 lg:pb-24 relative z-10">
-    <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-400 mb-6">
-      <span class="w-7 h-px bg-cs-gold-500 shrink-0"></span>
+    <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-300 mb-6">
+      <span class="w-7 h-px bg-cs-gold-400 shrink-0"></span>
       Cocktail Rezepte · seit 2003
     </div>
 
-    <div class="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16 lg:items-end">
+    <div class="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16 lg:items-center">
       <h1 class="font-display font-medium text-[clamp(3.5rem,7.5vw,7.5rem)] leading-[.88] tracking-[-0.03em] text-cs-gold-300 m-0 mb-8 lg:mb-0">
         Mixed<em class="block italic text-white font-normal">by design.</em>
       </h1>
       <div class="flex flex-col justify-end">
         <p class="text-[16px] text-cs-ink-200 leading-relaxed m-0 mb-8">
-          Über 1.500 handgepflegte Rezepte, echte Community-Ratings, und eine Bar, die sich merkt, was bei dir zuhause steht.
+          Über 1.500 handgepflegte Rezepte,<br>echte Community-Ratings und eine Bar,<br>die sich merkt, was bei dir zu Hause steht.
         </p>
         <div class="flex gap-2.5 flex-wrap">
           <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-gold" %>
           <%= link_to "Meine Bar →", my_bar_path, class: "btn btn-outline-gold" %>
         </div>
 
-        <%= form_tag recipes_path, method: :get, class: "mt-5 relative max-w-[420px]" do %>
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cs-gold-500/60 text-[13px] pointer-events-none"></i>
+        <%= form_tag recipes_path, method: :get, class: "mt-5 relative" do %>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cs-gold-400 text-[13px] pointer-events-none"></i>
           <input type="search" name="q"
                  placeholder="Rezept suchen… Margarita, Gin Sour"
-                 class="w-full rounded-full bg-white/10 border border-white/15 text-white placeholder-white/30 py-3 pl-11 pr-12 text-[14px] focus:outline-none focus:border-cs-gold-500/60 focus:bg-white/[0.13] transition-all duration-200">
-          <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-cs-gold-500/20 hover:bg-cs-gold-500/40 flex items-center justify-center transition-colors duration-150" aria-label="Suchen">
+                 class="w-full rounded-md bg-white/10 border border-white/15 text-white placeholder-white/30 py-3 pl-11 pr-12 text-[14px] focus:outline-none focus:border-cs-gold-500/60 focus:bg-white/[0.13] transition-all duration-200">
+          <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-md bg-cs-gold-500/20 hover:bg-cs-gold-500/40 flex items-center justify-center transition-colors duration-150" aria-label="Suchen">
             <i class="fa-solid fa-arrow-right text-cs-gold-400 text-[12px]"></i>
           </button>
         <% end %>
@@ -88,7 +86,7 @@
      COMMUNITY
      ═══════════════════════════════════════ -->
 <script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
-<section class="bg-cs-ink-50 border-t border-b border-cs-ink-100">
+<section class="bg-cs-ink-100 border-t border-b border-cs-ink-200">
   <div class="max-w-[1180px] mx-auto px-10 py-[72px]">
     <div class="flex items-baseline justify-between gap-4 mb-2">
       <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Community</h2>
@@ -134,8 +132,8 @@
 
       <!-- Left: text + ingredient tags + CTA -->
       <div>
-        <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-400 mb-5">
-          <span class="w-7 h-px bg-cs-gold-500 shrink-0"></span>
+        <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-300 mb-5">
+          <span class="w-7 h-px bg-cs-gold-400 shrink-0"></span>
           Dein persönlicher Barbegleiter
         </div>
         <h2 class="font-display font-medium text-[clamp(2.5rem,5vw,4rem)] leading-[.98] tracking-[-0.02em] text-cs-gold-300 m-0 mb-5">

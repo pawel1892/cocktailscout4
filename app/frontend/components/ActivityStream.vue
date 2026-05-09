@@ -1,25 +1,25 @@
 <template>
   <div class="space-y-3">
-    <p v-if="items.length === 0" class="text-cs-ink-400 italic text-sm py-4">Keine Aktivitäten vorhanden.</p>
+    <p v-if="items.length === 0" :class="['italic text-sm py-4', dark ? 'text-cs-ink-400' : 'text-cs-ink-400']">Keine Aktivitäten vorhanden.</p>
     <div
       v-for="(item, idx) in items"
       :key="idx"
       class="flex gap-3 py-3"
-      :class="{ 'border-b border-cs-ink-100': idx < items.length - 1 }"
+      :class="{ [dark ? 'border-b border-white/10' : 'border-b border-cs-ink-100']: idx < items.length - 1 }"
     >
       <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center mt-0.5">
         <i :class="`fa-solid ${item.icon} ${item.iconColor} text-sm`"></i>
       </div>
       <div class="flex-1 min-w-0">
-        <div class="text-sm leading-snug flex items-center flex-wrap gap-1">
-          <UserBadge :user="item.user" />
+        <div class="text-sm leading-snug flex items-center flex-wrap gap-1" :class="dark ? 'text-cs-ink-200' : ''">
+          <UserBadge :user="item.user" :dark="dark" />
           <span v-html="item.actionHtml"></span>
         </div>
-        <div v-if="!compact && item.excerpt" class="text-xs text-cs-ink-500 mt-1 line-clamp-2">{{ item.excerpt }}</div>
+        <div v-if="!compact && item.excerpt" :class="['text-xs mt-1 line-clamp-2', dark ? 'text-cs-ink-300' : 'text-cs-ink-500']">{{ item.excerpt }}</div>
         <div v-if="item.thumbUrl" class="mt-2">
           <img :src="item.thumbUrl" class="rounded object-cover w-[50px] h-[50px]" alt="">
         </div>
-        <div class="text-xs text-cs-ink-400 mt-1">{{ item.time }}</div>
+        <div :class="['text-xs mt-1', dark ? 'text-cs-ink-400' : 'text-cs-ink-400']">{{ item.time }}</div>
       </div>
     </div>
   </div>
@@ -31,6 +31,10 @@ import UserBadge from './UserBadge.vue'
 
 const props = defineProps({
   compact: {
+    type: Boolean,
+    default: false
+  },
+  dark: {
     type: Boolean,
     default: false
   }

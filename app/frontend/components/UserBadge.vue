@@ -42,6 +42,7 @@ const props = defineProps({
   online:        { type: [Boolean, String], default: false },
   // Layout: 'horizontal' (default inline) | 'vertical' (avatar above username) | 'text' (username only)
   layout:        { type: String, default: 'horizontal' },
+  dark:          { type: Boolean, default: false },
 })
 
 const isVertical = computed(() => props.layout === 'vertical')
@@ -60,7 +61,7 @@ const deletedClass = computed(() => isVertical.value
 
 const usernameClass = computed(() => isVertical.value
   ? 'text-xs text-cs-ink-800 font-bold leading-tight max-w-[100px] break-words'
-  : 'text-cs-ink-900'
+  : (props.dark ? 'text-cs-ink-100' : 'text-cs-ink-900')
 )
 
 const resolvedUser = computed(() => {
