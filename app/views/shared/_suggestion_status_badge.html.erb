@@ -1,17 +1,8 @@
 <% case suggestion.status %>
 <% when "pending" %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 rounded-full">
-    <i class="fa-solid fa-clock"></i>
-    Wartend auf Prüfung
-  </span>
+  <span class="tag-warning"><i class="fas fa-clock mr-1"></i>Wartend auf Prüfung</span>
 <% when "approved" %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full">
-    <i class="fa-solid fa-check-circle"></i>
-    Genehmigt
-  </span>
+  <span class="tag-success"><i class="fas fa-check-circle mr-1"></i>Genehmigt</span>
 <% when "rejected" %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-red-100 text-red-800 rounded-full">
-    <i class="fa-solid fa-times-circle"></i>
-    Abgelehnt
-  </span>
+  <span class="tag-error"><i class="fas fa-times-circle mr-1"></i>Abgelehnt</span>
 <% end %>

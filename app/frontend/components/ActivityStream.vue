@@ -1,25 +1,25 @@
 <template>
   <div class="space-y-3">
-    <p v-if="items.length === 0" class="text-gray-400 italic text-sm py-4">Keine Aktivitäten vorhanden.</p>
+    <p v-if="items.length === 0" :class="['italic text-sm py-4', dark ? 'text-cs-ink-400' : 'text-cs-ink-400']">Keine Aktivitäten vorhanden.</p>
     <div
       v-for="(item, idx) in items"
       :key="idx"
-      class="flex gap-3 py-2"
-      :class="{ 'border-b border-gray-100': idx < items.length - 1 }"
+      class="flex gap-3 py-3"
+      :class="{ [dark ? 'border-b border-white/10' : 'border-b border-cs-ink-100']: idx < items.length - 1 }"
     >
       <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center mt-0.5">
         <i :class="`fa-solid ${item.icon} ${item.iconColor} text-sm`"></i>
       </div>
       <div class="flex-1 min-w-0">
-        <div class="text-sm leading-snug flex items-center flex-wrap gap-1">
-          <UserBadge :user="item.user" />
+        <div class="text-sm leading-snug flex items-center flex-wrap gap-1" :class="dark ? 'text-cs-ink-200' : ''">
+          <UserBadge :user="item.user" :dark="dark" />
           <span v-html="item.actionHtml"></span>
         </div>
-        <div v-if="!compact && item.excerpt" class="text-xs text-gray-500 mt-1 line-clamp-2">{{ item.excerpt }}</div>
+        <div v-if="!compact && item.excerpt" :class="['text-xs mt-1 line-clamp-2', dark ? 'text-cs-ink-300' : 'text-cs-ink-500']">{{ item.excerpt }}</div>
         <div v-if="item.thumbUrl" class="mt-2">
           <img :src="item.thumbUrl" class="rounded object-cover w-[50px] h-[50px]" alt="">
         </div>
-        <div class="text-xs text-gray-400 mt-1">{{ item.time }}</div>
+        <div :class="['text-xs mt-1', dark ? 'text-cs-ink-400' : 'text-cs-ink-400']">{{ item.time }}</div>
       </div>
     </div>
   </div>
@@ -33,6 +33,10 @@ const props = defineProps({
   compact: {
     type: Boolean,
     default: false
+  },
+  dark: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -43,12 +47,12 @@ onMounted(() => {
 })
 
 const TYPE_CONFIG = {
-  forum_post:        { icon: 'fa-comments',     iconColor: 'text-blue-500' },
-  rating:            { icon: 'fa-star',          iconColor: 'text-cs-gold' },
-  recipe_image:      { icon: 'fa-camera',        iconColor: 'text-purple-500' },
-  recipe:            { icon: 'fa-martini-glass', iconColor: 'text-cs-dark-red' },
-  user_registration: { icon: 'fa-user-plus',     iconColor: 'text-green-500' },
-  recipe_comment:    { icon: 'fa-message',       iconColor: 'text-orange-400' },
+  forum_post:        { icon: 'fa-comments',     iconColor: 'text-cs-blue-500' },
+  rating:            { icon: 'fa-star',          iconColor: 'text-cs-gold-400' },
+  recipe_image:      { icon: 'fa-camera',        iconColor: 'text-cs-blue-400' },
+  recipe:            { icon: 'fa-martini-glass', iconColor: 'text-cs-red-900' },
+  user_registration: { icon: 'fa-user-plus',     iconColor: 'text-cs-success-500' },
+  recipe_comment:    { icon: 'fa-message',       iconColor: 'text-cs-warning-400' },
 }
 
 function escapeHtml(str) {
@@ -63,7 +67,7 @@ function escapeHtml(str) {
 
 function linkHtml(url, text) {
   if (!url || !text) return escapeHtml(text)
-  return `<a href="${escapeHtml(url)}" class="link font-medium hover:underline">${escapeHtml(text)}</a>`
+  return `<a href="${escapeHtml(url)}" class="link font-medium">${escapeHtml(text)}</a>`
 }
 
 // Builds the action text that follows the UserBadge (no user data here)
@@ -123,7 +127,7 @@ function timeAgoDE(dateStr) {
 
 const items = computed(() =>
   stream.value.map(event => {
-    const config = TYPE_CONFIG[event.type] || { icon: 'fa-circle', iconColor: 'text-gray-400' }
+    const config = TYPE_CONFIG[event.type] || { icon: 'fa-circle', iconColor: 'text-cs-ink-400' }
     return {
       icon: config.icon,
       iconColor: config.iconColor,

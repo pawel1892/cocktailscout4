@@ -17,33 +17,33 @@
         v-if="selectedUserId"
         type="button"
         @click="clearSelection"
-        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-cs-ink-400 hover:text-cs-ink-600"
       >
         <i class="fas fa-times text-xs"></i>
       </button>
-      <div v-else-if="searching" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+      <div v-else-if="searching" class="absolute right-3 top-1/2 -translate-y-1/2 text-cs-ink-400">
         <i class="fas fa-spinner fa-spin text-xs"></i>
       </div>
     </div>
 
     <div
       v-if="showDropdown && results.length > 0"
-      class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-md max-h-60 overflow-y-auto"
+      class="absolute z-10 w-full mt-1 bg-white border border-cs-ink-200 rounded-lg shadow-md max-h-60 overflow-y-auto"
     >
       <button
         v-for="user in results"
         :key="user.id"
         type="button"
         @mousedown.prevent="selectUser(user)"
-        class="w-full px-4 py-2 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors"
+        class="w-full px-4 py-2 text-left hover:bg-cs-ink-50 focus:bg-cs-ink-50 focus:outline-none transition-colors"
       >
-        <div class="font-medium text-gray-900">{{ user.username }}</div>
+        <div class="font-medium text-cs-ink-900">{{ user.username }}</div>
       </button>
     </div>
 
     <div
       v-if="showDropdown && searchQuery.length >= 2 && results.length === 0 && !searching"
-      class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-md px-4 py-2 text-gray-500 text-sm"
+      class="absolute z-10 w-full mt-1 bg-white border border-cs-ink-200 rounded-lg shadow-md px-4 py-2 text-cs-ink-500 text-sm"
     >
       Kein Benutzer gefunden.
     </div>

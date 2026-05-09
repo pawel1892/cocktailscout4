@@ -1,95 +1,145 @@
-<header class="relative z-50">
-  <!-- Top Bar: Dark Red -->
-  <div class="bg-cs-dark-red text-white py-2 relative z-50">
-    <div class="container mx-auto px-4 flex items-center justify-between gap-2">
-      <!-- Left: Logo -->
-      <div class="flex-shrink-0">
-        <a href="/">
-          <img src="/logo.svg" class="h-10 sm:h-12 w-auto" alt="CocktailScout">
-        </a>
+<%
+  primary_navigation_items = main_navigation_items.reject { |item| item[:label] == "Meine Bar" }
+  my_bar_navigation_item = main_navigation_items.find { |item| item[:label] == "Meine Bar" }
+%>
+
+<site-nav></site-nav>
+<header id="site-header" class="site-header sticky top-0 z-50 bg-cs-red-925 text-cs-ink-50 backdrop-blur-md border-b border-cs-red-950 shadow-[0_10px_30px_-28px_rgba(0,0,0,.45)]">
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="site-header-inner grid grid-cols-[auto_1fr_auto] lg:grid-cols-[minmax(120px,1fr)_auto_minmax(180px,1fr)] items-center gap-3 py-3.5 lg:py-3">
+      <div class="flex items-center">
+        <%= link_to root_path, class: "inline-flex items-center gap-2 text-cs-gold-300 no-underline transition hover:text-cs-gold-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cs-gold-300 rounded-[2px] xl:gap-2.5", aria: { label: "CocktailScout Startseite" } do %>
+          <img src="/logo.svg" class="site-logo h-10 w-auto xl:hidden" alt="">
+          <span class="hidden items-center gap-2.5 xl:inline-flex">
+            <img src="/logo_icon.svg" class="site-logo h-9 w-auto" alt="">
+            <%= render "layouts/logo_wordmark", css_class: "site-wordmark h-3.5 w-auto fill-current" %>
+          </span>
+        <% end %>
       </div>
 
-      <!-- Middle: Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-6 text-base sm:text-lg font-medium">
-        <% main_navigation_items.each do |item| %>
-          <%= link_to item[:label], item[:path], class: "hover:text-cs-gold transition py-2" %>
+      <nav class="hidden lg:flex items-center justify-center gap-5 xl:gap-7" aria-label="Hauptnavigation">
+        <% primary_navigation_items.each do |item| %>
+          <% active = main_nav_item_active?(item) %>
+          <% if item[:dropdown].present? %>
+            <% menu_id = "desktop-nav-#{item[:label].parameterize}" %>
+            <div data-desktop-nav-menu>
+              <button type="button" class="relative inline-flex items-center gap-1.5 border-0 bg-transparent py-2 font-sans text-[14px] font-medium tracking-[0.02em] no-underline transition after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-cs-ink-50/80 after:transition-transform focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cs-ink-50/70 <%= active ? 'text-white after:scale-x-100' : 'text-cs-ink-50/70 after:scale-x-0 hover:text-white hover:after:scale-x-100' %>" aria-expanded="false" aria-controls="<%= menu_id %>" <%= 'aria-current="page"'.html_safe if active %> data-desktop-nav-button>
+                <span><%= item[:label] %></span>
+                <i class="fa-solid fa-chevron-down text-[9px] opacity-55 transition" data-desktop-nav-chevron></i>
+              </button>
+
+              <div id="<%= menu_id %>" class="invisible pointer-events-none absolute left-1/2 top-full z-[70] mt-0 w-[min(72rem,calc(100vw-3rem))] -translate-x-1/2 translate-y-1 rounded-md border border-cs-gold-300/50 bg-cs-ink-50 p-5 text-cs-ink-900 opacity-0 shadow-[0_24px_58px_-26px_rgba(0,0,0,.62),0_10px_22px_-14px_rgba(0,0,0,.38),inset_0_1px_0_rgba(255,255,255,.75)] transition duration-150 ease-out" data-desktop-nav-panel>
+                <div class="pointer-events-none absolute inset-x-5 top-0 h-px bg-linear-to-r from-transparent via-cs-gold-400/70 to-transparent"></div>
+
+                <div class="relative grid grid-cols-[minmax(0,1fr)_22rem] gap-10">
+                  <div class="grid grid-cols-2 gap-3">
+                    <% item[:dropdown].each do |subitem| %>
+                      <% sub_active = subnav_item_active?(subitem) %>
+                      <%= link_to subitem[:path], class: "nav-megamenu-card #{subitem[:emphasized] ? 'nav-megamenu-card-featured' : ''} #{sub_active ? 'text-cs-red-900 ring-1 ring-cs-gold-400/50' : 'text-cs-ink-800 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) do %>
+                        <span class="flex items-start gap-3">
+                          <% if subitem[:icon] %>
+                            <span class="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-cs-red-900 text-cs-gold-300 shadow-[inset_0_1px_0_rgba(255,255,255,.12)]">
+                              <i class="<%= subitem[:icon] %> text-[13px]"></i>
+                            </span>
+                          <% end %>
+                          <span class="min-w-0">
+                            <span class="block text-[14px] font-semibold"><%= subitem[:label] %></span>
+                            <span class="mt-1.5 block text-[12px] leading-snug text-cs-ink-600"><%= subitem[:description] %></span>
+                          </span>
+                        </span>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                  <% if (search = item[:search]) %>
+                    <%= form_tag search[:action], method: :get, class: "h-full border-l border-cs-ink-200 pl-8 flex flex-col justify-center" do %>
+                      <label for="<%= search[:input_id] %>" class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-cs-gold-700"><%= search[:label] %></label>
+                      <div class="relative mt-2.5">
+                        <input id="<%= search[:input_id] %>" type="search" name="q" value="<%= params[:q] %>" placeholder="<%= search[:placeholder] %>" class="input-field pr-10">
+                        <button type="submit" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-cs-ink-500 transition-colors hover:text-cs-red-900" aria-label="<%= search[:label] %>">
+                          <i class="fa-solid fa-magnifying-glass text-[11px]"></i>
+                        </button>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <%= link_to item[:label], item[:path], class: "relative py-2 font-sans text-[14px] font-medium tracking-[0.02em] no-underline transition after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-cs-ink-50/80 after:transition-transform #{active ? 'text-white after:scale-x-100' : 'text-cs-ink-50/70 after:scale-x-0 hover:text-white hover:after:scale-x-100'}", aria: (active ? { current: "page" } : {}) %>
+          <% end %>
+        <% end %>
+
+        <% if my_bar_navigation_item %>
+          <% active = main_nav_item_active?(my_bar_navigation_item) %>
+          <span class="h-4 w-px bg-white/15" aria-hidden="true"></span>
+          <%= link_to my_bar_navigation_item[:path], class: "inline-flex items-center rounded-md border border-white/10 bg-white/[0.035] px-3 py-1.5 font-sans text-[14px] font-semibold tracking-[0.01em] text-cs-ink-50/90 no-underline shadow-[inset_0_1px_0_rgba(255,255,255,.08)] transition hover:border-white/25 hover:bg-white/[0.075] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-ink-50/70 #{active ? 'border-white/30 bg-white/[0.10] text-white' : ''}", aria: (active ? { current: "page" } : {}) do %>
+            <span><%= my_bar_navigation_item[:label] %></span>
+          <% end %>
         <% end %>
       </nav>
 
-      <!-- Right: Desktop Search -->
-      <div class="hidden md:block">
-        <%= form_tag recipes_path, method: :get, class: "relative" do %>
-          <input type="text" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen..." class="bg-white/10 border border-white/20 rounded-full px-4 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-cs-gold placeholder-white/50 w-40 lg:w-auto">
-          <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-cs-gold transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-          </button>
-        <% end %>
+      <div class="hidden lg:flex items-center justify-end gap-3 min-w-0">
+        <user-session></user-session>
       </div>
 
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" onclick="toggleMobileMenu(event)" class="md:hidden text-white hover:text-cs-gold focus:outline-none p-2" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
+      <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu(event)" class="col-start-3 justify-self-end lg:hidden inline-flex size-10 items-center justify-center rounded-md border border-white/20 bg-white/10 text-cs-gold-200 shadow-xs transition hover:bg-white/20 hover:text-cs-gold-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" aria-label="Navigation öffnen" aria-controls="mobile-menu" aria-expanded="false">
+        <i class="fa-solid fa-bars text-lg leading-none"></i>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Menu (Hidden by default) -->
-  <div id="mobile-menu" class="hidden md:hidden bg-cs-dark-red border-t border-white/10 absolute w-full shadow-xl z-40 origin-top animate-in slide-in-from-top-2 duration-200">
-    <div class="container mx-auto px-4 py-4 space-y-4">
-      
-      <!-- Mobile Search -->
-      <%= form_tag recipes_path, method: :get, class: "relative" do %>
-        <input type="text" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen..." class="w-full bg-white/10 border border-white/20 rounded-full px-4 py-2 text-base text-white focus:outline-none focus:ring-1 focus:ring-cs-gold placeholder-white/50">
-        <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-cs-gold transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-          </svg>
-        </button>
+  <div id="mobile-menu-backdrop" class="fixed inset-0 z-[80] hidden bg-black/40 opacity-0 transition-opacity duration-200 lg:hidden" onclick="closeMobileMenu()"></div>
+
+  <aside id="mobile-menu" class="fixed right-0 top-0 z-[90] flex h-dvh w-[min(22rem,calc(100vw-2rem))] translate-x-full flex-col border-l border-cs-red-950 bg-cs-ink-50 shadow-2xl transition-transform duration-200 lg:hidden" aria-label="Mobile Navigation" aria-hidden="true">
+    <div class="flex items-center justify-between border-b border-cs-ink-200 bg-white px-5 py-4">
+      <%= link_to root_path, class: "inline-flex items-center gap-2 text-cs-red-900 no-underline transition hover:text-cs-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500 rounded-[2px]", aria: { label: "CocktailScout Startseite" } do %>
+        <img src="/logo_icon_red.svg" class="h-7 w-auto sm:h-8" alt="">
+        <%= render "layouts/logo_wordmark", css_class: "h-3 w-auto fill-current sm:h-3.5" %>
       <% end %>
 
-      <!-- Mobile Links -->
-      <nav class="flex flex-col space-y-2 text-white text-lg font-medium">
+      <button type="button" onclick="closeMobileMenu()" class="inline-flex size-9 items-center justify-center rounded-md text-cs-ink-500 transition hover:bg-cs-ink-100 hover:text-cs-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cs-gold-500" aria-label="Navigation schließen">
+        <i class="fa-solid fa-xmark text-lg leading-none"></i>
+      </button>
+    </div>
+
+    <div id="mobile-menu-content" class="flex-1 overflow-y-auto px-5 py-5 transition-opacity duration-200">
+      <nav class="flex flex-col gap-2" aria-label="Hauptnavigation mobil">
         <% main_navigation_items.each do |item| %>
-          <% if item[:dropdown] %>
-            <!-- Accordion -->
-            <details class="group">
-              <summary class="flex items-center justify-between cursor-pointer py-2 hover:text-cs-gold select-none list-none [&::-webkit-details-marker]:hidden">
-                <%= item[:label] %>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-open:rotate-180">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
+          <% active = main_nav_item_active?(item) %>
+          <% if item[:dropdown].present? %>
+            <details class="group overflow-hidden rounded-md border border-cs-ink-200 bg-white shadow-xs" <%= "open" if active %>>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-3 border-l-4 px-3 py-3 text-[14px] font-semibold tracking-[0.01em] transition [&::-webkit-details-marker]:hidden <%= active ? 'border-cs-gold-500 bg-cs-red-900 text-cs-gold-100' : 'border-cs-ink-200 text-cs-ink-800 hover:border-cs-gold-500 hover:text-cs-red-900' %>">
+                <span><%= item[:label] %></span>
+                <i class="fa-solid fa-chevron-down text-[11px] opacity-70 transition-transform group-open:rotate-180"></i>
               </summary>
-              <div class="pl-4 border-l-2 border-white/10 mt-1 space-y-1">
+              <div class="border-t border-cs-ink-100 px-2 py-2">
                 <% item[:dropdown].each do |subitem| %>
-                  <%= link_to subitem[:label], subitem[:path], class: "block py-2 hover:text-cs-gold text-base" %>
+                  <% sub_active = subnav_item_active?(subitem) %>
+                  <%= link_to subitem[:label], subitem[:path], class: "block rounded px-3 py-2 text-[13px] no-underline transition #{sub_active ? 'font-semibold text-cs-red-900 bg-cs-red-50' : 'text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900'}", aria: (sub_active ? { current: "page" } : {}) %>
                 <% end %>
               </div>
             </details>
           <% else %>
-            <%= link_to item[:label], item[:path], class: "block py-2 hover:text-cs-gold" %>
+            <%= link_to item[:label], item[:path], class: "rounded-md border border-cs-ink-200 border-l-4 px-3 py-3 text-[14px] font-semibold tracking-[0.01em] no-underline shadow-xs transition #{active ? 'border-l-cs-gold-500 bg-cs-red-900 text-cs-gold-100' : 'border-l-cs-ink-200 bg-white text-cs-ink-800 hover:border-l-cs-gold-500 hover:text-cs-red-900'}", aria: (active ? { current: "page" } : {}) %>
           <% end %>
         <% end %>
       </nav>
-    </div>
-  </div>
 
-  <!-- Dynamic Sub-Navigation (shown when current section has dropdown, desktop only) -->
-  <% if show_subnav? %>
-    <div class="hidden md:block bg-black border-t border-b border-white/10">
-      <div class="container mx-auto px-4">
-        <nav class="flex items-center space-x-6 text-white text-sm font-medium overflow-x-auto">
-          <% subnav_items.each do |item| %>
-            <%= link_to item[:label], item[:path], class: "py-2 px-1 hover:text-cs-gold transition whitespace-nowrap #{subnav_item_active?(item) ? 'text-cs-gold border-b-2 border-cs-gold' : ''}" %>
-          <% end %>
-        </nav>
+      <div class="mt-4 border-t border-cs-ink-200 pt-4">
+        <%= form_tag recipes_path, method: :get do %>
+          <div class="relative">
+            <input type="search" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen…" class="input-field pr-9">
+            <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-cs-ink-400 transition-colors hover:text-cs-red-700" aria-label="Rezepte suchen">
+              <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
-  <% end %>
 
-  <!-- Secondary Bar: Black -->
-  <%= render "layouts/secondary_nav" %>
+    <div class="border-t border-cs-ink-200 px-5 py-3">
+      <user-session drawer></user-session>
+    </div>
+  </aside>
 </header>

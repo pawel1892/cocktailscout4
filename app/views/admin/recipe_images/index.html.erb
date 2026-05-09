@@ -1,12 +1,12 @@
 <div class="mb-8 flex items-center justify-between">
-  <h1 class="text-3xl font-bold text-gray-800">Bilder</h1>
-  <div class="text-sm text-gray-600">
+  <h1 class="text-3xl font-bold text-cs-ink-800">Bilder</h1>
+  <div class="text-sm text-cs-ink-600">
     Gesamt: <strong><%= @pagy.count %></strong> Bilder
   </div>
 </div>
 
 <!-- Search -->
-<div class="bg-white rounded-lg shadow border border-gray-200 p-4 mb-6">
+<div class="bg-white rounded-lg shadow border border-cs-ink-200 p-4 mb-6">
   <%= form_with url: admin_recipe_images_path, method: :get, class: "flex gap-3 items-end" do |f| %>
     <%= f.hidden_field :state, value: params[:state] if params[:state].present? %>
     <div class="flex-1">
@@ -21,37 +21,37 @@
 </div>
 
 <!-- State Tabs -->
-<div class="bg-white rounded-lg shadow border border-gray-200 mb-6">
-  <div class="border-b border-gray-200">
+<div class="bg-white rounded-lg shadow border border-cs-ink-200 mb-6">
+  <div class="border-b border-cs-ink-200">
     <nav class="flex -mb-px">
       <%= link_to admin_recipe_images_path(q: params[:q].presence),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state].blank? ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state].blank? ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         Alle
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-gray-200 text-gray-700 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">
           <%= RecipeImage.count %>
         </span>
       <% end %>
 
       <%= link_to admin_recipe_images_path(state: "pending", q: params[:q].presence),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'pending' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'pending' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-clock"></i>
         Wartend
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-yellow-200 text-yellow-800 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-yellow-200 text-cs-warning-700 rounded-full">
           <%= RecipeImage.pending.not_soft_deleted.count %>
         </span>
       <% end %>
 
       <%= link_to admin_recipe_images_path(state: "approved", q: params[:q].presence),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'approved' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'approved' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-check-circle"></i>
         Genehmigt
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-green-200 text-green-800 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-green-200 text-cs-success-700 rounded-full">
           <%= RecipeImage.approved.not_soft_deleted.count %>
         </span>
       <% end %>
 
       <%= link_to admin_recipe_images_path(state: "rejected", q: params[:q].presence),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'rejected' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'rejected' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-times-circle"></i>
         Abgelehnt
         <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-red-200 text-red-800 rounded-full">
@@ -60,10 +60,10 @@
       <% end %>
 
       <%= link_to admin_recipe_images_path(state: "deleted", q: params[:q].presence),
-        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'deleted' ? 'border-cs-dark-red text-cs-dark-red' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" do %>
+        class: "flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 #{params[:state] == 'deleted' ? 'border-cs-red-900 text-cs-red-900' : 'border-transparent text-cs-ink-500 hover:text-cs-ink-700 hover:border-cs-ink-300'}" do %>
         <i class="fa-solid fa-trash"></i>
         Gelöscht
-        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-gray-200 text-gray-700 rounded-full">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-cs-ink-200 text-cs-ink-700 rounded-full">
           <%= RecipeImage.soft_deleted.count %>
         </span>
       <% end %>
@@ -73,56 +73,56 @@
 
 <!-- Images List -->
 <% if @recipe_images.any? %>
-  <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
+  <div class="bg-white rounded-lg shadow border border-cs-ink-200 overflow-hidden">
+    <table class="min-w-full divide-y divide-cs-ink-200">
+      <thead class="bg-cs-ink-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Vorschau
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Rezept
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Hochgeladen von
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Status
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Datum
           </th>
-          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-cs-ink-500 uppercase tracking-wider">
             Aktionen
           </th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
+      <tbody class="bg-white divide-y divide-cs-ink-200">
         <% @recipe_images.each do |recipe_image| %>
-          <tr class="hover:bg-gray-50">
+          <tr class="hover:bg-cs-ink-50">
             <td class="px-6 py-4">
               <% if recipe_image.image.attached? %>
                 <%= image_tag recipe_image.image.variant(:thumb), class: "h-12 w-12 object-cover rounded", alt: "Vorschau" %>
               <% else %>
-                <div class="h-12 w-12 bg-gray-200 rounded flex items-center justify-center">
-                  <i class="fa-solid fa-image text-gray-400"></i>
+                <div class="h-12 w-12 bg-cs-ink-200 rounded flex items-center justify-center">
+                  <i class="fa-solid fa-image text-cs-ink-400"></i>
                 </div>
               <% end %>
             </td>
             <td class="px-6 py-4">
-              <div class="text-sm font-medium text-gray-900"><%= recipe_image.recipe&.title || "(Rezept gelöscht)" %></div>
+              <div class="text-sm font-medium text-cs-ink-900"><%= recipe_image.recipe&.title || "(Rezept gelöscht)" %></div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900"><%= recipe_image.user&.username || "(gelöschter Benutzer)" %></div>
+              <div class="text-sm text-cs-ink-900"><%= recipe_image.user&.username || "(gelöschter Benutzer)" %></div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <%= render "shared/recipe_image_state_badge", recipe_image: recipe_image %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900"><%= l(recipe_image.created_at, format: :short) %></div>
+              <div class="text-sm text-cs-ink-900"><%= l(recipe_image.created_at, format: :short) %></div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <%= link_to "Details", admin_recipe_image_path(recipe_image), class: "text-cs-dark-red hover:text-cs-dark-red/80" %>
+              <%= link_to "Details", admin_recipe_image_path(recipe_image), class: "text-cs-red-900 hover:text-cs-red-900/80" %>
             </td>
           </tr>
         <% end %>
@@ -138,9 +138,9 @@
   <% end %>
 <% else %>
   <!-- Empty State -->
-  <div class="bg-white rounded-lg shadow border border-gray-200 p-12 text-center">
-    <i class="fa-solid fa-images text-6xl text-gray-300 mb-4"></i>
-    <h3 class="text-xl font-semibold text-gray-700 mb-2">
+  <div class="bg-white rounded-lg shadow border border-cs-ink-200 p-12 text-center">
+    <i class="fa-solid fa-images text-6xl text-cs-ink-300 mb-4"></i>
+    <h3 class="text-xl font-semibold text-cs-ink-700 mb-2">
       <% if params[:q].present? %>
         Keine Bilder für "<%= params[:q] %>" gefunden
       <% else %>
@@ -158,7 +158,7 @@
         <% end %>
       <% end %>
     </h3>
-    <p class="text-gray-600">
+    <p class="text-cs-ink-600">
       <% if params[:state] == "pending" && params[:q].blank? %>
         Neue Bilder erscheinen hier, sobald Benutzer sie hochladen.
       <% else %>

@@ -2,7 +2,7 @@
   <button 
     @click="toggleFavorite" 
     class="flex items-center justify-center transition-all focus:outline-none"
-    :class="[isFavorited ? 'text-red-600' : 'text-gray-400 hover:text-red-400']"
+    :class="[isFavorited ? 'text-red-600' : 'text-cs-ink-400 hover:text-red-400']"
     :title="isFavorited ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'"
     :disabled="loading"
   >

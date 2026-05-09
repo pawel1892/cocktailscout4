@@ -23,25 +23,6 @@ class PrivateMessagesController < ApplicationController
     @unread_count = Current.user.unread_messages_count
   end
 
-  def sent
-    add_breadcrumb "Nachrichten", private_messages_path
-    add_breadcrumb "Gesendet"
-
-    latest_ids = PrivateMessage.for_user(Current.user)
-      .select("MAX(id) as id, LEAST(sender_id, receiver_id) as u1, GREATEST(sender_id, receiver_id) as u2")
-      .group("LEAST(sender_id, receiver_id), GREATEST(sender_id, receiver_id)")
-      .map(&:id)
-
-    @pagy, @messages = pagy(
-      PrivateMessage.where(id: latest_ids).includes(:sender, :receiver).order(created_at: :desc),
-      limit: 20
-    )
-
-    @unread_partner_ids = PrivateMessage.where(
-      receiver_id: Current.user.id, read: false, deleted_by_receiver: false
-    ).distinct.pluck(:sender_id).to_set
-  end
-
   def show
     add_breadcrumb "Nachrichten", private_messages_path
     add_breadcrumb @message.subject
@@ -68,6 +49,12 @@ class PrivateMessagesController < ApplicationController
   end
 
   def create
+    @receiver = User.find_by(id: message_params[:receiver_id])
+    unless @receiver
+      redirect_to private_messages_path, alert: "Empfänger nicht gefunden."
+      return
+    end
+
     @message = PrivateMessage.new(message_params)
     @message.sender = Current.user
     @message.subject = "Nachricht"
@@ -75,7 +62,6 @@ class PrivateMessagesController < ApplicationController
     if @message.save
       redirect_to private_message_path(@message), notice: "Nachricht wurde erfolgreich gesendet."
     else
-      @receiver = User.find_by(id: message_params[:receiver_id])
       render :new, status: :unprocessable_content
     end
   end
@@ -129,12 +115,9 @@ class PrivateMessagesController < ApplicationController
   end
 
   def set_receiver
-    if params[:receiver_id].present?
-      @receiver = User.find_by(id: params[:receiver_id])
-      unless @receiver
-        redirect_to private_messages_path,
-          alert: "Empfänger nicht gefunden."
-      end
+    @receiver = User.find_by(id: params[:receiver_id])
+    unless @receiver
+      redirect_to private_messages_path, alert: "Empfänger nicht gefunden."
     end
   end
 

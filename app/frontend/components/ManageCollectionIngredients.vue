@@ -1,54 +1,59 @@
 <template>
   <div>
-    <!-- Back Link -->
+
+    <!-- Back link -->
     <div class="mb-6">
-      <a href="/meine-bar" class="text-cs-dark-red hover:text-cs-dark-red/80 font-medium flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-        </svg>
+      <a href="/meine-bar" class="link inline-flex items-center gap-1.5 text-sm font-medium">
+        <i class="fas fa-arrow-left text-xs"></i>
         Zurück zur Übersicht
       </a>
     </div>
 
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-2">{{ collectionName }}</h1>
-      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-gray-600">
-        <p>Klicke auf Zutaten, um sie hinzuzufügen oder zu entfernen</p>
-        <span class="hidden sm:inline text-gray-400">•</span>
+      <h1 class="font-display font-semibold text-[38px] sm:text-[48px] leading-none tracking-tight text-cs-red-900">{{ collectionName }}</h1>
+      <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-cs-ink-500">
+        <span>Klicke auf Zutaten, um sie hinzuzufügen oder zu entfernen</span>
         <a
           v-if="doableRecipesCount > 0"
           :href="`/rezepte?collection_id=${collectionId}`"
-          class="text-cs-dark-red hover:text-cs-dark-red/80 font-medium flex items-center gap-1"
+          class="link inline-flex items-center gap-1.5 font-medium"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
-          </svg>
+          <i class="fas fa-cocktail text-xs"></i>
           {{ doableRecipesCount }} {{ doableRecipesCount === 1 ? 'Rezept möglich' : 'Rezepte möglich' }}
         </a>
-        <span v-else class="text-gray-400 italic">Keine Rezepte möglich</span>
+        <span v-else class="text-cs-ink-400">Keine Rezepte möglich</span>
       </div>
     </div>
 
-    <!-- Search & Sort Filter -->
-    <div class="mb-6 flex flex-col sm:flex-row gap-4">
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Zutaten filtern..."
-        class="input-field flex-1 max-w-md"
-      />
-      <select v-model="sortBy" class="input-field w-full sm:w-auto">
+    <!-- Search & sort -->
+    <div class="mb-8 flex flex-col sm:flex-row gap-3">
+      <div class="relative flex-1 max-w-md">
+        <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-cs-ink-400 text-xs pointer-events-none"></i>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Zutaten filtern…"
+          class="input-field pl-8 w-full"
+        />
+      </div>
+      <select v-model="sortBy" class="input-field w-full sm:w-auto sm:min-w-[180px]">
         <option value="alphabetical">Alphabetisch</option>
         <option value="recipe_count">Nach Rezeptanzahl</option>
       </select>
     </div>
 
-    <!-- Current Ingredients -->
-    <div class="mb-12">
-      <h2 class="text-xl font-semibold mb-4 text-cs-dark-red">
-        In deiner Liste ({{ currentIngredients.length }})
-      </h2>
+    <!-- Current ingredients -->
+    <div class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">
+          In deiner Liste
+        </span>
+        <span class="font-mono text-[11px] text-cs-ink-400">({{ currentIngredients.length }})</span>
+        <span class="flex-1 h-px bg-cs-ink-200"></span>
+      </div>
+
       <div v-if="filteredCurrentIngredients.length > 0" class="flex flex-wrap gap-2">
         <button
           v-for="ingredient in filteredCurrentIngredients"
@@ -56,24 +61,28 @@
           @click.prevent.stop="removeIngredient(ingredient)"
           type="button"
           :disabled="pendingIds.has(ingredient.id)"
-          class="px-3 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/80 transition text-sm font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cs-red-900 text-white text-[13px] font-medium hover:bg-cs-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {{ ingredient.name }} <span class="opacity-75">({{ ingredient.recipes_count }})</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-          </svg>
+          {{ ingredient.name }}
+          <span class="opacity-60 font-mono text-[11px]">({{ ingredient.recipes_count }})</span>
+          <i class="fas fa-times text-[10px] opacity-75 ml-0.5"></i>
         </button>
       </div>
-      <div v-else class="text-gray-500 italic">
+      <p v-else class="text-sm text-cs-ink-400 italic">
         {{ searchQuery ? 'Keine passenden Zutaten in deiner Liste' : 'Noch keine Zutaten hinzugefügt' }}
-      </div>
+      </p>
     </div>
 
-    <!-- Available Ingredients -->
+    <!-- Available ingredients -->
     <div>
-      <h2 class="text-xl font-semibold mb-4 text-gray-700">
-        Verfügbare Zutaten ({{ availableIngredients.length }})
-      </h2>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">
+          Verfügbar
+        </span>
+        <span class="font-mono text-[11px] text-cs-ink-400">({{ availableIngredients.length }})</span>
+        <span class="flex-1 h-px bg-cs-ink-200"></span>
+      </div>
+
       <div v-if="filteredAvailableIngredients.length > 0" class="flex flex-wrap gap-2">
         <button
           v-for="ingredient in filteredAvailableIngredients"
@@ -81,17 +90,16 @@
           @click.prevent="addIngredient(ingredient)"
           type="button"
           :disabled="pendingIds.has(ingredient.id)"
-          class="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cs-ink-100 text-cs-ink-700 text-[13px] font-medium hover:bg-cs-ink-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          {{ ingredient.name }} <span class="opacity-60">({{ ingredient.recipes_count }})</span>
+          <i class="fas fa-plus text-[10px] opacity-60"></i>
+          {{ ingredient.name }}
+          <span class="opacity-50 font-mono text-[11px]">({{ ingredient.recipes_count }})</span>
         </button>
       </div>
-      <div v-else class="text-gray-500 italic">
+      <p v-else class="text-sm text-cs-ink-400 italic">
         {{ searchQuery ? 'Keine passenden Zutaten gefunden' : 'Alle Zutaten wurden hinzugefügt' }}
-      </div>
+      </p>
     </div>
 
   </div>
@@ -122,14 +130,13 @@ const getCSRFToken = () => {
   return document.querySelector('meta[name="csrf-token"]')?.content
 }
 
-// Sort function based on sortBy value
 const sortIngredients = (ingredients) => {
   const sorted = [...ingredients]
   if (sortBy.value === 'recipe_count') {
     sorted.sort((a, b) => {
       const countDiff = (b.recipes_count || 0) - (a.recipes_count || 0)
       if (countDiff !== 0) return countDiff
-      return a.name.localeCompare(b.name) // Alphabetical as tiebreaker
+      return a.name.localeCompare(b.name)
     })
   } else {
     sorted.sort((a, b) => a.name.localeCompare(b.name))
@@ -137,13 +144,11 @@ const sortIngredients = (ingredients) => {
   return sorted
 }
 
-// Computed: Available ingredients (not in current)
 const availableIngredients = computed(() => {
   const currentIds = new Set(currentIngredients.value.map(i => i.id))
   return allIngredients.value.filter(i => !currentIds.has(i.id))
 })
 
-// Computed: Filtered current ingredients
 const filteredCurrentIngredients = computed(() => {
   let filtered = currentIngredients.value
   if (searchQuery.value) {
@@ -153,7 +158,6 @@ const filteredCurrentIngredients = computed(() => {
   return sortIngredients(filtered)
 })
 
-// Computed: Filtered available ingredients
 const filteredAvailableIngredients = computed(() => {
   let filtered = availableIngredients.value
   if (searchQuery.value) {
@@ -163,7 +167,6 @@ const filteredAvailableIngredients = computed(() => {
   return sortIngredients(filtered)
 })
 
-// Load collection data
 const loadCollection = async () => {
   try {
     const response = await fetch(`/ingredient_collections/${props.collectionId}`, {
@@ -179,7 +182,6 @@ const loadCollection = async () => {
   }
 }
 
-// Load all ingredients
 const loadAllIngredients = async () => {
   try {
     const response = await fetch('/ingredients', {
@@ -194,7 +196,6 @@ const loadAllIngredients = async () => {
   }
 }
 
-// Add ingredient (optimistic)
 const addIngredient = async (ingredient) => {
   if (pendingIds.value.has(ingredient.id)) return
   pendingIds.value = new Set([...pendingIds.value, ingredient.id])
@@ -214,11 +215,9 @@ const addIngredient = async (ingredient) => {
       doableRecipesCount.value = data.collection?.doable_recipes_count || 0
     } else {
       currentIngredients.value = currentIngredients.value.filter(i => i.id !== ingredient.id)
-      console.error('Failed to add ingredient:', data.errors)
     }
   } catch (e) {
     currentIngredients.value = currentIngredients.value.filter(i => i.id !== ingredient.id)
-    console.error('Network error adding ingredient:', e)
   } finally {
     const next = new Set(pendingIds.value)
     next.delete(ingredient.id)
@@ -226,7 +225,6 @@ const addIngredient = async (ingredient) => {
   }
 }
 
-// Remove ingredient (optimistic)
 const removeIngredient = async (ingredient) => {
   if (pendingIds.value.has(ingredient.id)) return
   pendingIds.value = new Set([...pendingIds.value, ingredient.id])
@@ -244,11 +242,9 @@ const removeIngredient = async (ingredient) => {
       doableRecipesCount.value = data.collection?.doable_recipes_count || 0
     } else {
       currentIngredients.value.push(ingredient)
-      console.error('Failed to remove ingredient:', data.error)
     }
   } catch (e) {
     currentIngredients.value.push(ingredient)
-    console.error('Network error removing ingredient:', e)
   } finally {
     const next = new Set(pendingIds.value)
     next.delete(ingredient.id)

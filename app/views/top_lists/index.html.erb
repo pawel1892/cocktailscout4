@@ -1,27 +1,32 @@
+<!-- Page header -->
 <div class="mb-8">
-  <h1 class="text-3xl font-bold">Toplisten</h1>
+  <h1 class="font-display font-semibold text-[52px] leading-none tracking-tight text-cs-red-900">Toplisten</h1>
+  <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  <p class="text-sm text-cs-ink-500">Die meistbewerteten Cocktails nach Kategorie</p>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   <% @lists.each do |list| %>
     <div class="card">
-      <div class="card-header bg-cs-dark-red text-white">
-        Top 10 <%= list[:name] %>
+      <div class="card-header">
+        <h2 class="font-display font-semibold text-[20px] text-cs-red-900 leading-tight m-0">Top 10 <%= list[:name] %></h2>
       </div>
       <div class="card-body p-0">
         <% if list[:recipes].any? %>
           <table class="w-full">
             <tbody>
               <% list[:recipes].each_with_index do |recipe, index| %>
-                <tr class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors">
-                  <td class="px-4 py-3 text-gray-500 font-medium w-12 text-center">
-                    <%= index + 1 %>
+                <tr class="border-b border-cs-ink-100 last:border-0 hover:bg-cs-ink-50 transition-colors">
+                  <td class="pl-4 py-3 w-7">
+                    <span class="font-mono text-[13px] <%= index < 3 ? 'text-cs-gold-500 font-bold' : 'text-cs-ink-300' %>">
+                      <%= index + 1 %>
+                    </span>
                   </td>
-                  <td class="px-4 py-3">
-                    <%= link_to recipe.title, recipe_path(recipe), class: "link font-medium" %>
+                  <td class="py-3 px-2">
+                    <%= link_to recipe.title, recipe_path(recipe), class: "text-[14px] font-medium text-cs-ink-800 hover:text-cs-red-900 transition-colors truncate block" %>
                   </td>
-                  <td class="px-4 py-3 text-right w-24">
-                    <span class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 rounded text-sm font-bold">
+                  <td class="pr-4 py-3 text-right w-14">
+                    <span class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-0.5 rounded text-[12px] font-bold font-mono text-white">
                       <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
                     </span>
                   </td>
@@ -30,7 +35,7 @@
             </tbody>
           </table>
         <% else %>
-          <div class="p-8 text-center text-gray-500">
+          <div class="p-8 text-center text-cs-ink-500 text-sm">
             Keine Rezepte gefunden
           </div>
         <% end %>

@@ -1,281 +1,898 @@
-<div class="space-y-12">
-  <section>
-    <h1 class="text-3xl font-bold mb-6">Kitchen Sink - Design System</h1>
-    <p class="text-gray-600">Standard-Komponenten für CocktailScout</p>
-  </section>
+<% content_for :full_bleed_page, true %>
 
-  <!-- Links -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Links</h2>
-    <div class="flex flex-wrap gap-8 items-start">
-      <a href="#" class="link">Standard Link</a>
-      <a href="#" class="link-underline">Link with Underline</a>
+<%
+  scales = {
+    red: {
+      label: "Red",
+      hexes: { 50 => "#FEF9F8", 100 => "#F4EFEE", 200 => "#E9DAD8", 300 => "#D0C0BE", 400 => "#BC8F8A", 500 => "#A16F6A", 600 => "#82534E", 700 => "#5D3A37", 800 => "#47211F", 900 => "#330A0A", 950 => "#0F0202" }
+    },
+    gold: {
+      label: "Gold",
+      hexes: { 50 => "#FDFBEE", 100 => "#F4F1E1", 200 => "#EBDFA6", 300 => "#D3C581", 400 => "#B6A555", 500 => "#938016", 600 => "#706000", 700 => "#524500", 800 => "#382D00", 900 => "#221A00", 950 => "#080600" }
+    },
+    ink: {
+      label: "Ink",
+      hexes: { 50 => "#FCF9F9", 100 => "#F2EFEF", 200 => "#E4DCDB", 300 => "#CBC2C0", 400 => "#ACA2A0", 500 => "#887D7C", 600 => "#675E5C", 700 => "#4B4342", 800 => "#322C2B", 900 => "#1E1919", 950 => "#070505" }
+    },
+    blue: {
+      label: "Blue",
+      hexes: { 50 => "#F5F8FA", 100 => "#EBF0F5", 200 => "#D7E1EB", 300 => "#B3C6D6", 400 => "#8EAAC1", 500 => "#6A8EAC", 600 => "#4D708E", 700 => "#1F486C", 800 => "#183854", 900 => "#10283C", 950 => "#08141E" }
+    }
+  }
+
+  semantic = {
+    success: { label: "Success", hexes: { 50 => "#E8F6EC", 400 => "#46B26E", 500 => "#16A34A", 700 => "#0D7A35" } },
+    warning: { label: "Warning", hexes: { 50 => "#FDF6DF", 400 => "#E6AC0E", 500 => "#CA8A04", 700 => "#8D6002" } },
+    error:   { label: "Error",   hexes: { 50 => "#FCECEC", 400 => "#E14A4A", 500 => "#DC2626", 700 => "#A01818" } }
+  }
+
+  channel_to_linear = ->(channel) do
+    value = channel / 255.0
+    value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+  end
+
+  luminance = ->(hex) do
+    red, green, blue = hex.delete("#").scan(/../).map { |pair| channel_to_linear.call(pair.to_i(16)) }
+    (0.2126 * red) + (0.7152 * green) + (0.0722 * blue)
+  end
+
+  contrast = ->(first, second) do
+    light, dark = [luminance.call(first), luminance.call(second)].max, [luminance.call(first), luminance.call(second)].min
+    (light + 0.05) / (dark + 0.05)
+  end
+
+  swatch_text_class = ->(hex) do
+    contrast.call("#1E1919", hex) >= contrast.call("#FFFFFF", hex) ? "text-cs-ink-900" : "text-white"
+  end
+%>
+
+<div class="bg-cs-ink-50 text-cs-ink-900 min-h-screen font-sans antialiased text-inherit overflow-x-clip">
+
+  <!-- SIDEBAR BACKDROP -->
+  <div id="ds-backdrop" class="ds-backdrop" onclick="dsCloseSidebar()"></div>
+
+  <!-- SIDEBAR PANEL -->
+  <div id="ds-sidebar" class="ds-sidebar">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-cs-ink-200 flex-shrink-0">
+      <span class="font-mono text-cs-ink-500 text-[10px] uppercase tracking-widest font-bold">Navigation</span>
+      <button onclick="dsCloseSidebar()" class="p-1.5 rounded-md text-cs-ink-500 hover:bg-cs-ink-100 hover:text-cs-ink-900 transition-all" aria-label="Close">
+        <i class="fa-solid fa-xmark text-base leading-none"></i>
+      </button>
     </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;a href="#" class="link"&gt;Standard Link&lt;/a&gt;
-&lt;a href="#" class="link-underline"&gt;Link with Underline&lt;/a&gt;</code></pre>
-    </div>
-  </section>
+    <nav class="flex flex-col gap-0.5 p-3 overflow-y-auto">
+      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables", "Spacing"].each_with_index do |nav, i| %>
+        <a href="#<%= nav.downcase %>" onclick="dsCloseSidebar()" class="flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[13px] font-medium text-cs-ink-700 hover:bg-cs-ink-100 hover:text-cs-red-900 no-underline transition-all">
+          <span class="font-mono text-cs-ink-400 text-[10px] w-5 flex-shrink-0"><%= format('%02d', i+1) %></span>
+          <%= nav %>
+        </a>
+      <% end %>
+    </nav>
+  </div>
 
-  <!-- Buttons -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Buttons</h2>
-    <div class="flex flex-wrap gap-4 items-center">
-      <button class="btn btn-primary">Primary Button</button>
-      <button class="btn btn-gold">Gold Button</button>
-      <button class="btn btn-outline">Outline Button</button>
-      <button class="btn btn-primary btn-sm">Small Button</button>
-    </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;button class="btn btn-primary"&gt;Primary Button&lt;/button&gt;
-&lt;button class="btn btn-gold"&gt;Gold Button&lt;/button&gt;
-&lt;button class="btn btn-outline"&gt;Outline Button&lt;/button&gt;
-&lt;button class="btn btn-primary btn-sm"&gt;Small Button&lt;/button&gt;</code></pre>
-    </div>
-  </section>
+  <!-- TOPBAR -->
+  <header class="flex items-center justify-between sticky top-0 z-50 bg-cs-ink-50/80 backdrop-blur-md border-b border-cs-ink-200 px-4 sm:px-8 py-3">
+    <a href="#" class="flex-shrink-0">
+      <img src="/logo_red.svg" class="h-9 w-auto" alt="CocktailScout">
+    </a>
 
-  <!-- Form Fields -->
-  <section class="space-y-6 max-w-2xl">
-    <h2 class="text-xl font-semibold border-b pb-2">Formulare</h2>
-    
-    <div>
-      <label class="label-field">Standard Label</label>
-      <input type="text" class="input-field" placeholder="Eingabefeld...">
-    </div>
+    <!-- Desktop nav (lg+) -->
+    <nav class="hidden xl:flex flex-wrap gap-1 bg-cs-ink-100 border border-cs-ink-200 p-1.5 rounded-xl">
+      <% ["Colors", "Type", "Links", "Buttons", "Cards", "Tags", "Callouts", "Forms", "Tables", "Spacing"].each_with_index do |nav, i| %>
+        <a href="#<%= nav.downcase %>" class="px-3 py-1.5 rounded-md text-[12px] font-medium text-cs-ink-700 hover:bg-cs-ink-50 hover:text-cs-red-900 no-underline transition-all">
+          <%= format('%02d', i+1) %> · <%= nav %>
+        </a>
+      <% end %>
+    </nav>
 
-    <div>
-      <label class="label-field">Email Adresse</label>
-      <input type="email" class="input-field" placeholder="name@example.com">
-      <p class="mt-1 text-sm text-gray-500">Ein kleiner Hilfetext.</p>
-    </div>
+    <!-- Burger (hidden on lg+) -->
+    <button onclick="dsOpenSidebar()" class="xl:hidden p-2 rounded-md text-cs-ink-600 hover:bg-cs-ink-100 hover:text-cs-ink-900 transition-all" aria-label="Open navigation">
+      <i class="fa-solid fa-bars text-lg leading-none"></i>
+    </button>
+  </header>
 
-    <div>
-      <label class="label-field">Select Box</label>
-      <select class="input-field">
-        <option>Option 1</option>
-        <option>Option 2</option>
-      </select>
-    </div>
+  <div class="max-w-[1180px] mx-auto px-4 sm:px-6 md:px-8 py-12 pb-24">
 
-    <div class="mt-4">
-       <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Text Input --&gt;
-&lt;div&gt;
-  &lt;label class="label-field"&gt;Standard Label&lt;/label&gt;
-  &lt;input type="text" class="input-field" placeholder="..."&gt;
-&lt;/div&gt;
+    <h1 class="font-display font-semibold text-[42px] leading-tight tracking-tight text-cs-red-900 mb-4">CocktailScout Design System <span class="text-cs-gold-600 font-medium text-2xl align-baseline">v2</span></h1>
 
-&lt;!-- With Helper Text --&gt;
-&lt;div&gt;
-  &lt;label class="label-field"&gt;Email Adresse&lt;/label&gt;
-  &lt;input type="email" class="input-field" placeholder="..."&gt;
-  &lt;p class="mt-1 text-sm text-gray-500"&gt;Ein kleiner Hilfetext.&lt;/p&gt;
-&lt;/div&gt;
+    <p class="text-cs-ink-600 text-sm max-w-[720px] mb-10 leading-relaxed">
+      A fuller tonal system for CocktailScout — brand oxblood and brass each expanded into an 11-step scale,
+      a warm neutral to replace flat gray, and semantic colors with light/base/dark triads.
+      Components below are re-composed on top of these tokens so buttons, cards, tags, callouts and forms
+      have real hover / pressed / muted states instead of relying on <code>opacity-80</code>.
+    </p>
 
-&lt;!-- Select --&gt;
-&lt;select class="input-field"&gt;
-  &lt;option&gt;Option 1&lt;/option&gt;
-&lt;/select&gt;</code></pre>
-    </div>
-  </section>
+    <!-- ================= 01 COLORS ================= -->
+    <section id="colors" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Color</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">01</span>
+      </div>
+      <p class="text-cs-ink-600 text-sm max-w-[720px] mb-8">
+        Two colors define the brand: <strong class="text-cs-ink-800">Oxblood</strong> and <strong class="text-cs-ink-800">Brass</strong>.
+        Everything else — warm neutral, blue, semantic greens and reds — is functional.
+        The neutral carries a slight red/amber undertone so it reads as paper-and-ink under gold light.
+      </p>
 
-  <!-- Form Validation -->
-  <section class="space-y-6 max-w-2xl">
-    <h2 class="text-xl font-semibold border-b pb-2">Formular Validierung</h2>
-    
-    <!-- Standard Group -->
-    <div class="form-group">
-      <label class="label-field">Benutzername</label>
-      <input type="text" class="input-field" placeholder="Gültige Eingabe">
-      <p class="form-hint">Darf nur Buchstaben und Zahlen enthalten.</p>
-    </div>
-
-    <!-- Error State -->
-    <div class="form-group">
-      <label class="label-field label-error">Passwort</label>
-      <input type="password" class="input-field input-error" value="123">
-      <p class="form-error-message">Das Passwort ist zu kurz (mind. 8 Zeichen).</p>
-    </div>
-
-    <div class="mt-4">
-       <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Standard Group with Hint --&gt;
-&lt;div class="form-group"&gt;
-  &lt;label class="label-field"&gt;Benutzername&lt;/label&gt;
-  &lt;input type="text" class="input-field"&gt;
-  &lt;p class="form-hint"&gt;Hilfetext...&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;!-- Error State --&gt;
-&lt;div class="form-group"&gt;
-  &lt;label class="label-field label-error"&gt;Passwort&lt;/label&gt;
-  &lt;input type="password" class="input-field input-error"&gt;
-  &lt;p class="form-error-message"&gt;Fehlermeldung...&lt;/p&gt;
-&lt;/div&gt;</code></pre>
-    </div>
-  </section>
-
-  <!-- Boxes & Cards -->
-  <section class="space-y-6">
-    <h2 class="text-xl font-semibold border-b pb-2">Boxen & Karten</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-      <!-- Standard Card -->
-      <div class="card">
-        <div class="card-header">Standard Card</div>
-        <div class="card-body">
-          <p>This is a standard card with header, body, and footer. Great for grouping related content like a single cocktail recipe or user profile.</p>
+      <div class="flex gap-4 mb-12 max-w-sm">
+        <div class="flex-1 rounded-lg overflow-hidden border border-cs-ink-200 shadow-sm">
+          <div class="h-16 bg-cs-red-900 flex items-end p-2.5">
+            <span class="font-mono text-[9px] uppercase tracking-widest text-cs-red-400 font-bold">Primary</span>
+          </div>
+          <div class="px-3 py-2.5 bg-white">
+            <div class="font-bold text-[13px] text-cs-ink-900">Oxblood</div>
+            <div class="font-mono text-[10px] text-cs-ink-400 mt-0.5">cs-red-900 · #330A0A</div>
+          </div>
         </div>
-        <div class="card-footer">Last updated 3 mins ago</div>
+        <div class="flex-1 rounded-lg overflow-hidden border border-cs-ink-200 shadow-sm">
+          <div class="h-16 bg-cs-gold-400 flex items-end p-2.5">
+            <span class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-700 font-bold">Accent</span>
+          </div>
+          <div class="px-3 py-2.5 bg-white">
+            <div class="font-bold text-[13px] text-cs-ink-900">Brass</div>
+            <div class="font-mono text-[10px] text-cs-ink-400 mt-0.5">cs-gold-400 · #B6A555</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Callouts -->
-      <div class="space-y-4">
-        <div class="callout">
-          <strong>Neutral Callout</strong>
-          <p class="text-sm mt-1">Useful for general notes or side information.</p>
+      <% scales.each do |key, data| %>
+        <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8"><%= data[:label] %> — <%= key == :red ? "OXBLOOD (DARK RED)" : (key == :gold ? "BRASS (GOLD)" : (key == :ink ? "WARM NEUTRAL" : "BLUE (INFO & LINKS)")) %></div>
+        <div class="scale-label"><%= data[:label] %><small>cs-<%= key %></small></div>
+        <div class="scale-row">
+          <% data[:hexes].each do |step, hex| %>
+            <div class="swatch bg-cs-<%= key %>-<%= step %> <%= swatch_text_class.call(hex) %>">
+              <span class="step"><%= step %></span>
+              <span class="hex"><%= hex %></span>
+            </div>
+          <% end %>
         </div>
-        <div class="callout-gold">
-          <strong>Gold Feature</strong>
-          <p class="text-sm mt-1">Highlighting a premium feature or "Pro Tip".</p>
-        </div>
-        <div class="callout-red">
-          <strong>Important Note</strong>
-          <p class="text-sm mt-1">Critical information that shouldn't be ignored.</p>
-        </div>
-      </div>
-    </div>
+      <% end %>
 
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;!-- Card Component --&gt;
-&lt;div class="card"&gt;
-  &lt;div class="card-header"&gt;Header&lt;/div&gt;
-  &lt;div class="card-body"&gt;Content...&lt;/div&gt;
-  &lt;div class="card-footer"&gt;Footer...&lt;/div&gt;
-&lt;/div&gt;
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-10">SEMANTIC — SUCCESS · WARNING · ERROR</div>
+      <div class="flex flex-col gap-3">
+        <% semantic.each do |key, data| %>
+          <div>
+            <div class="scale-label"><%= data[:label] %><small>cs-<%= key %></small></div>
+            <div class="scale-row-4">
+              <% data[:hexes].each do |step, hex| %>
+                <div class="swatch bg-cs-<%= key %>-<%= step %> <%= swatch_text_class.call(hex) %>">
+                  <span class="step"><%= step %></span>
+                  <span class="hex"><%= hex %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
 
-&lt;!-- Callouts --&gt;
-&lt;div class="callout"&gt;...&lt;/div&gt;
-&lt;div class="callout-gold"&gt;...&lt;/div&gt;
-&lt;div class="callout-red"&gt;...&lt;/div&gt;</code></pre>
-    </div>
-  </section>
+    <!-- ================= 02 TYPE ================= -->
+    <section id="type" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Typography</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">02</span>
+      </div>
+      <p class="text-cs-ink-600 text-sm max-w-[720px] mb-8">
+        <strong>Cormorant Garamond</strong> (display serif) for headings — evokes classic bar menus. 
+        <strong>Inter</strong> for UI, body copy and numeric ratings. 
+        <strong>JetBrains Mono</strong> for token values, stats and counts.
+      </p>
+      <div class="divide-y divide-cs-ink-200">
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Display</span>
+          <span class="text-cs-red-900 font-display font-semibold text-[54px] leading-none tracking-tight">Cocktail Rezepte</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Serif 600 · 54/54</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-red-900 flex-shrink-0"></span>cs-red-900</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">H1 / Hero</span>
+          <span class="text-cs-red-900 font-display font-semibold text-[38px] leading-tight tracking-tight">Cocktail Rezepte & deine persönliche Bar</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Serif 600 · 38/44</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-red-900 flex-shrink-0"></span>cs-red-900</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">H2</span>
+          <span class="text-cs-red-900 font-display font-semibold text-[28px] leading-tight">Heute frisch gemixt</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Serif 600 · 28/32</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-red-900 flex-shrink-0"></span>cs-red-900</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">H3 / Card</span>
+          <span class="text-cs-ink-900 font-sans font-bold text-[18px]">Long Island Iced Tea</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Inter 700 · 18/24</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-900 flex-shrink-0"></span>cs-ink-900</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Body</span>
+          <span class="text-cs-ink-800 font-sans font-normal text-[15px] leading-relaxed">1.500+ Cocktail Rezepte — und mit Meine Bar siehst du sofort, was du mixen kannst.</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Inter 400 · 15/24</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-800 flex-shrink-0"></span>cs-ink-800</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Small</span>
+          <span class="text-cs-ink-600 font-sans font-normal text-[13px]">vor 19 Minuten · von Ripuli</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Inter 400 · 13/18</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-600 flex-shrink-0"></span>cs-ink-600</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Mono / Stat</span>
+          <span class="text-cs-ink-700 font-mono font-medium text-[13px]">1.124.100 views · 14.3% ABV</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">JBMono 500 · 13/18</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-700 flex-shrink-0"></span>cs-ink-700</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[80px_minmax(0,1fr)] md:grid-cols-[120px_minmax(0,1fr)_auto] gap-4 py-5 items-baseline">
+          <span class="font-mono text-cs-ink-500 uppercase text-[10px] font-bold tracking-widest">Eyebrow</span>
+          <span class="text-cs-ink-500 font-sans font-bold uppercase text-[11px] tracking-widest">KATEGORIE · KLASSIKER</span>
+          <div class="hidden md:flex flex-col items-end gap-1.5">
+            <span class="font-mono text-cs-ink-500 text-[11px]">Inter 700 · 11/14</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-cs-ink-400"><span class="w-2 h-2 rounded-full bg-cs-ink-500 flex-shrink-0"></span>cs-ink-500</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Tags -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Tags / Labels</h2>
-    <div class="flex flex-wrap gap-2">
-      <span class="tag tag-neutral">Neutral</span>
-      <span class="tag tag-primary">Primary</span>
-      <span class="tag tag-light-blue">Light Blue</span>
-      <span class="tag tag-gold">Gold</span>
-      <span class="tag tag-success">Success</span>
-      <span class="tag tag-warning">Warning</span>
-      <span class="tag tag-error">Error</span>
-    </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;span class="tag tag-neutral"&gt;Neutral&lt;/span&gt;
-&lt;span class="tag tag-primary"&gt;Primary&lt;/span&gt;
-&lt;span class="tag tag-light-blue"&gt;Light Blue&lt;/span&gt;
-&lt;span class="tag tag-gold"&gt;Gold&lt;/span&gt;
-&lt;span class="tag tag-success"&gt;Success&lt;/span&gt;
-&lt;span class="tag tag-warning"&gt;Warning&lt;/span&gt;
-&lt;span class="tag tag-error"&gt;Error&lt;/span&gt;</code></pre>
-    </div>
-  </section>
+    <!-- ================= 03 LINKS ================= -->
+    <section id="links" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Links</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">03</span>
+      </div>
+      <p class="text-cs-ink-600 text-sm max-w-[720px] mb-8">
+        Dedicated blue scale (<code>cs-blue</code>). Underlines appear on hover via <code>border-bottom</code> for sharpness.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 p-6 bg-white border border-cs-ink-200 rounded-xl shadow-sm text-inherit">
+        <div>
+          <div class="text-cs-ink-500 uppercase tracking-widest mb-2.5 font-bold text-[10px]">Default — <code class="bg-cs-ink-50 px-1 rounded normal-case">.link</code></div>
+          <p class="text-[15px] leading-relaxed">Unser <a href="#" class="link">Mojito-Rezept</a> ist heute dreimal so beliebt wie gestern. Alle Klassiker findest du <a href="#" class="link">in der Rezeptübersicht</a>.</p>
+        </div>
+        <div>
+          <div class="text-cs-ink-500 uppercase tracking-widest mb-2.5 font-bold text-[10px]">Underline — <code class="bg-cs-ink-50 px-1 rounded normal-case">.link-underline</code></div>
+          <p class="text-[15px] leading-relaxed">Teil unserer <a href="#" class="link link-underline">Allgemeinen Geschäftsbedingungen</a> und <a href="#" class="link link-underline">Datenschutzerklärung</a>.</p>
+        </div>
+        <div>
+          <div class="text-cs-ink-500 uppercase tracking-widest mb-2.5 font-bold text-[10px]">Muted — <code class="bg-cs-ink-50 px-1 rounded normal-case">.link-muted</code></div>
+          <p class="text-[15px] leading-relaxed">Breadcrumbs & Footer: <a href="#" class="link link-muted">Startseite</a> › <a href="#" class="link link-muted">Rezepte</a> › <strong>Long Island</strong>.</p>
+        </div>
+        <div>
+          <div class="text-cs-ink-500 uppercase tracking-widest mb-2.5 font-bold text-[10px]">Arrow — <code class="bg-cs-ink-50 px-1 rounded normal-case">.link-arrow</code></div>
+          <p class="text-[15px] leading-relaxed"><a href="#" class="link-arrow text-sm">Alle Rezepte ansehen <span class="arr">→</span></a><br/><a href="#" class="link-arrow text-sm">Zur Community <span class="arr">→</span></a></p>
+        </div>
+        <div>
+          <div class="text-cs-ink-500 uppercase tracking-widest mb-2.5 font-bold text-[10px]">Danger — <code class="bg-cs-ink-50 px-1 rounded normal-case">.link-danger</code></div>
+          <p class="text-[15px] leading-relaxed">Achtung: <a href="#" class="link link-danger">Konto löschen</a> oder <a href="#" class="link link-danger">Beitrag melden</a>.</p>
+        </div>
+        <div class="bg-cs-red-900 p-6 rounded-lg -m-1">
+          <div class="text-cs-gold-400 uppercase tracking-widest mb-2 font-bold text-[10px]">On Dark — <code class="bg-cs-red-950 px-1 rounded normal-case">.link-on-dark</code></div>
+          <p class="text-cs-gold-100 text-[15px] leading-relaxed"><a href="#" class="link link-on-dark italic">Impressum</a>, <a href="#" class="link link-on-dark italic">Datenschutz</a>, <a href="#" class="link link-on-dark italic">Kontakt</a>.</p>
+        </div>
+      </div>
 
-  <!-- Tables -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Tabellen</h2>
-    <div class="table-container">
-      <table class="table-standard">
-        <thead>
-          <tr>
-            <th class="table-th">Name</th>
-            <th class="table-th">Status</th>
-            <th class="table-th">Rolle</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          <tr class="table-tr-hover">
-            <td class="table-td">Max Mustermann</td>
-            <td class="table-td"><span class="tag tag-success">Aktiv</span></td>
-            <td class="table-td">Admin</td>
-          </tr>
-          <tr class="table-tr-hover">
-            <td class="table-td">Erika Musterfrau</td>
-            <td class="table-td"><span class="tag tag-neutral">Inaktiv</span></td>
-            <td class="table-td">User</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="mt-4">
-      <pre class="text-sm bg-gray-100 text-gray-800 p-4 rounded border border-gray-200 overflow-x-auto"><code>&lt;div class="table-container"&gt;
-  &lt;table class="table-standard"&gt;
-    &lt;thead&gt;
-      &lt;tr&gt;
-        &lt;th class="table-th"&gt;Name&lt;/th&gt;
-        ...
-      &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody class="divide-y divide-gray-200"&gt;
-      &lt;tr class="table-tr-hover"&gt;
-        &lt;td class="table-td"&gt;...&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-&lt;/div&gt;</code></pre>
-    </div>
-  </section>
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">Button-shaped link</div>
+      <div class="flex flex-wrap gap-x-6 gap-y-4 items-end">
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn.btn-primary</div>
+          <button class="btn btn-primary">Speichern</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn.btn-outline</div>
+          <button class="btn btn-outline">Vorschau</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn.btn-link</div>
+          <button class="btn btn-link">Abbrechen</button>
+        </div>
+      </div>
+    </section>
 
-  <!-- Colors -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-semibold border-b pb-2">Farben</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="p-4 rounded bg-cs-dark-red text-white">
-        <strong class="block mb-1 text-lg">Dark Red</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-dark-red</code>
-        </div>
-        <div class="text-sm font-mono opacity-80">#360D0C</div>
+    <!-- ================= 04 BUTTONS ================= -->
+    <section id="buttons" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Buttons</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">04</span>
       </div>
-      <div class="p-4 rounded bg-cs-gold text-cs-dark-red">
-        <strong class="block mb-1 text-lg">Gold</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-white/30 p-1 rounded">bg-cs-gold</code>
+      <div class="flex flex-wrap gap-x-6 gap-y-4 items-end mb-10">
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-primary</div>
+          <button class="btn btn-primary">Rezept speichern</button>
         </div>
-        <div class="text-sm font-mono opacity-80">#CBB859</div>
-      </div>
-      <div class="p-4 rounded bg-black text-cs-gold border border-gray-700">
-        <strong class="block mb-1 text-lg">Black</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-white/20 p-1 rounded text-white">bg-black</code>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-gold</div>
+          <button class="btn btn-gold">Rezepte entdecken</button>
         </div>
-        <div class="text-sm font-mono opacity-80 text-white">#000000</div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-outline</div>
+          <button class="btn btn-outline">Meine Bar</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-soft</div>
+          <button class="btn btn-soft">Favoritenliste</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-ghost</div>
+          <button class="btn btn-ghost">Abbrechen</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-danger</div>
+          <button class="btn btn-danger"><i class="fa-solid fa-trash mr-1"></i> Löschen</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-link</div>
+          <button class="btn btn-link">Mehr erfahren</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">[disabled]</div>
+          <button class="btn btn-primary" disabled>Disabled State</button>
+        </div>
       </div>
-    </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-      <div class="p-4 rounded bg-cs-success text-white">
-        <strong class="block mb-1 text-lg">Success</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-success</code>
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">Sizes</div>
+      <div class="flex flex-wrap gap-x-6 gap-y-4 items-end mb-10">
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-sm</div>
+          <button class="btn btn-primary btn-sm">Small Button</button>
         </div>
-        <div class="text-sm font-mono opacity-80">#16A34A</div>
-      </div>
-      <div class="p-4 rounded bg-cs-warning text-white">
-        <strong class="block mb-1 text-lg">Warning</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-warning</code>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn</div>
+          <button class="btn btn-primary">Default Size</button>
         </div>
-        <div class="text-sm font-mono opacity-80">#CA8A04</div>
-      </div>
-      <div class="p-4 rounded bg-cs-error text-white">
-        <strong class="block mb-1 text-lg">Error</strong>
-        <div class="mb-1">
-          <code class="text-xs bg-black/20 p-1 rounded">bg-cs-error</code>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-lg</div>
+          <button class="btn btn-primary btn-lg">Large Action</button>
         </div>
-        <div class="text-sm font-mono opacity-80">#DC2626</div>
       </div>
-    </div>
-  </section>
-</div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">Loading</div>
+      <div class="flex flex-wrap gap-x-6 gap-y-4 items-end mb-10">
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-loading primary</div>
+          <button class="btn btn-primary btn-loading" disabled aria-busy="true">Speichert...</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-loading gold</div>
+          <button class="btn btn-gold btn-loading" disabled aria-busy="true">Lädt Rezepte...</button>
+        </div>
+        <div class="flex flex-col items-start gap-2">
+          <div class="font-mono text-cs-ink-700 text-[11px]">.btn-loading outline</div>
+          <button class="btn btn-outline btn-loading" disabled aria-busy="true">Prüft...</button>
+        </div>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">Button group</div>
+      <div class="overflow-x-auto mb-10">
+        <div class="btn-group" role="group">
+          <button aria-pressed="false">Name</button>
+          <button aria-pressed="true">Bewertung ↓</button>
+          <button aria-pressed="false">Benutzer</button>
+          <button aria-pressed="false">Alkohol</button>
+          <button aria-pressed="false">Aufrufe</button>
+        </div>
+      </div>
+
+      <div class="p-8 bg-cs-red-900 rounded-xl">
+        <div class="text-cs-gold-400 uppercase tracking-widest mb-4 font-bold text-[10px]">On dark surfaces</div>
+        <div class="flex flex-wrap gap-x-6 gap-y-4 items-end">
+          <div class="flex flex-col items-start gap-2">
+            <div class="font-mono text-cs-gold-400 text-[11px]">.btn-gold</div>
+            <button class="btn btn-gold">Rezepte entdecken</button>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <div class="font-mono text-cs-gold-400 text-[11px]">.btn-outline-gold</div>
+            <button class="btn btn-outline-gold">Meine Bar</button>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <div class="font-mono text-cs-gold-400 text-[11px]">.btn-ghost-dark</div>
+            <button class="btn btn-ghost-dark">Später</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 05 CARDS ================= -->
+    <section id="cards" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Cards</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">05</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Standard -->
+        <div class="card">
+          <div class="card-header">
+            Standard Card
+            <span class="card-label">.card</span>
+          </div>
+          <div class="card-body">
+            The default container — white background, thin ink stroke, soft shadow. Works for recipe summaries, settings panels, or any structured content block.
+          </div>
+          <div class="card-footer">
+            <i class="fa-regular fa-clock"></i>
+            Zuletzt aktualisiert · vor 3 Min.
+          </div>
+        </div>
+
+        <!-- Elevated -->
+        <div class="card card-elevated">
+          <div class="card-header">
+            <span>Elevated <span class="tag tag-mini ml-1.5">Hover</span></span>
+            <span class="card-label">.card-elevated</span>
+          </div>
+          <div class="card-body">
+            Borderless — lifts to <code>shadow-md</code> on hover. Use for clickable recipe tiles or any card that links somewhere.
+          </div>
+          <div class="card-footer">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            Hover to see the shadow rise
+          </div>
+        </div>
+
+        <!-- Ghost / empty state -->
+        <div class="card card-ghost">
+          <div class="card-header">
+            Empty State
+            <span class="card-label">.card-ghost</span>
+          </div>
+          <div class="card-body">
+            <div class="w-10 h-10 rounded-full border-2 border-dashed border-cs-ink-300 flex items-center justify-center">
+              <i class="fa-solid fa-plus text-cs-ink-400"></i>
+            </div>
+            <p class="text-cs-ink-400 text-sm italic m-0">Noch keine Zutaten in deiner Bar.</p>
+            <a href="#" class="btn btn-outline btn-sm">Jetzt hinzufügen</a>
+          </div>
+        </div>
+
+        <!-- Gold / editorial -->
+        <div class="card card-gold">
+          <div class="card-header">
+            Gold Feature
+            <span class="card-label">.card-gold</span>
+          </div>
+          <div class="card-body">
+            Premium highlight for editorial picks, seasonal tips, or curated recommendations. The warm brass gradient signals quality and curation.
+          </div>
+          <div class="card-footer">
+            <i class="fa-solid fa-star text-cs-gold-500"></i>
+            Kuratiert von CocktailScout
+          </div>
+        </div>
+
+        <!-- Dark / stat tile -->
+        <div class="card card-dark">
+          <div class="card-header">
+            Dark Feature
+            <span class="card-label">.card-dark</span>
+          </div>
+          <div class="card-body">
+            <p class="text-cs-gold-200/60 text-sm mb-5">Inverted look for stat tiles or promo callouts. Oxblood ground, brass accents.</p>
+            <div class="flex gap-6">
+              <div>
+                <div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">1.5k</div>
+                <div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Rezepte</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">14k+</div>
+                <div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Mitglieder</div>
+              </div>
+              <div>
+                <div class="font-display font-bold text-3xl text-cs-gold-400 leading-none mb-1">98%</div>
+                <div class="font-mono text-[9px] uppercase tracking-widest text-cs-gold-600 font-bold">Zufrieden</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <i class="fa-solid fa-circle text-[5px] text-cs-gold-600"></i>
+            Community · täglich frisch
+          </div>
+        </div>
+
+        <!-- Interactive -->
+        <div class="card">
+          <div class="card-header">
+            Interactive Card
+            <div class="flex gap-1">
+              <button class="btn btn-ghost btn-sm p-1 h-6 w-6"><i class="fa-solid fa-pen scale-75"></i></button>
+              <button class="btn btn-ghost btn-sm p-1 h-6 w-6"><i class="fa-solid fa-ellipsis scale-75"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            Headers accept right-aligned action clusters — edit, share, or overflow menus. The ghost button style keeps them unobtrusive.
+          </div>
+          <div class="card-footer">
+            Long Island Iced Tea
+            <span class="tag tag-mini ml-auto">Klassiker</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 06 TAGS ================= -->
+    <section id="tags" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Tags & Labels</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">06</span>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">DARK — Brand</div>
+      <div class="flex flex-wrap gap-2.5 mb-10 text-inherit">
+        <span class="tag-primary">Primary</span>
+        <span class="tag-gold">Gold</span>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">SOFT — Status</div>
+      <div class="flex flex-wrap gap-2.5 mb-10 text-inherit">
+        <span class="tag-neutral">Neutral</span>
+        <span class="tag-info">Info</span>
+        <span class="tag-success">Aktiv</span>
+        <span class="tag-warning">Review</span>
+        <span class="tag-error">Archiv</span>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">SOFT — Category</div>
+      <div class="flex flex-wrap gap-2.5 mb-10 text-inherit">
+        <span class="tag-primary-soft">Klassiker</span>
+        <span class="tag-gold-soft">Aperitif</span>
+        <span class="tag-light-blue">Longdrink</span>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">MINI — Meta</div>
+      <div class="flex flex-wrap gap-2.5 text-inherit">
+        <span class="tag-mini">IBA</span>
+        <span class="tag-mini">14.3% ABV</span>
+        <span class="tag-mini">5 MIN</span>
+        <span class="tag-mini">★ 8.6</span>
+      </div>
+    </section>
+
+    <!-- ================= 07 CALLOUTS ================= -->
+    <section id="callouts" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Callouts</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">07</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-inherit">
+        <div class="callout"><i class="fa-regular fa-circle-question"></i><div><strong>Neutral Callout</strong> Nützlich für allgemeine Hinweise oder Randnotizen.</div></div>
+        <div class="callout-gold"><i class="fa-solid fa-wand-magic-sparkles"></i><div><strong>Pro-Tipp</strong> Für eine klare Textur: Eis mit einem Muddler vor dem Shaken leicht anstoßen.</div></div>
+        <div class="callout-red"><i class="fa-solid fa-circle-exclamation"></i><div><strong>Important</strong> Enthält Zutaten mit hohem Zuckergehalt — nicht für Diabetiker empfohlen.</div></div>
+        <div class="callout-info"><i class="fa-solid fa-circle-info"></i><div><strong>Community Notiz</strong> Dieses Rezept wurde zuletzt von <em>zoidberg</em> am 14.04. überarbeitet.</div></div>
+        <div class="callout-success"><i class="fa-solid fa-circle-check"></i><div><strong>Gespeichert</strong> Dein Rezept ist in „Meine Bar" verfügbar.</div></div>
+        <div class="callout-warning"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Achtung</strong> Eine deiner Zutaten ist in der Community als selten markiert.</div></div>
+      </div>
+    </section>
+
+    <!-- ================= 08 FORMS ================= -->
+    <section id="forms" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Forms</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">08</span>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5">TEXT INPUTS — <code class="normal-case font-mono font-normal">.input-field</code></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 mb-10">
+        <div>
+          <div class="form-group">
+            <label class="label-field">Rezeptname</label>
+            <input class="input-field" placeholder="z.B. Espresso Martini" />
+            <p class="form-hint">Nur Buchstaben, Zahlen und Leerzeichen erlaubt.</p>
+          </div>
+          <div class="form-group">
+            <label class="label-field">Kategorie</label>
+            <select class="input-field">
+              <option>Klassiker</option><option>Longdrink</option><option>Sauer</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label class="label-field">Beschreibung</label>
+            <textarea class="input-field" rows="5" placeholder="Tasting Notes, Geschichte, Tipps..."></textarea>
+            <p class="form-hint">Gilt für <code>input</code>, <code>select</code> und <code>textarea</code> gleichermaßen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">CHECKBOXES — <code class="normal-case font-mono font-normal">.check-field</code> · <code class="normal-case font-mono font-normal">.check-label</code></div>
+      <div class="flex flex-col gap-2.5 mb-10">
+        <label class="check-label"><input type="checkbox" class="check-field" /> Nicht ausgewählt</label>
+        <label class="check-label"><input type="checkbox" class="check-field" checked /> Ausgewählt</label>
+        <label class="check-label"><input type="checkbox" class="check-field" disabled /> Deaktiviert</label>
+        <label class="check-label"><input type="checkbox" class="check-field" disabled checked /> Deaktiviert &amp; ausgewählt</label>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">RADIO BUTTONS — <code class="normal-case font-mono font-normal">.radio-field</code> · <code class="normal-case font-mono font-normal">.check-label</code></div>
+      <div class="flex flex-col gap-2.5 mb-10">
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" /> Option A</label>
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" checked /> Option B (ausgewählt)</label>
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" /> Option C</label>
+        <label class="check-label"><input type="radio" class="radio-field" name="ds-radio" disabled /> Option D (deaktiviert)</label>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">ERROR STATES — <code class="normal-case font-mono font-normal">.input-error</code> · <code class="normal-case font-mono font-normal">.label-error</code> · <code class="normal-case font-mono font-normal">.check-field-error</code></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 mb-10">
+        <div>
+          <div class="form-group">
+            <label class="label-field label-error">Passwort</label>
+            <input class="input-field input-error" type="password" value="secret" />
+            <p class="form-error-message"><i class="fa-solid fa-circle-exclamation mr-1"></i>Das Passwort ist zu kurz (mind. 8 Zeichen).</p>
+          </div>
+          <div class="form-group">
+            <label class="label-field label-error">Beschreibung</label>
+            <textarea class="input-field input-error" rows="3" placeholder="Pflichtfeld..."></textarea>
+            <p class="form-error-message"><i class="fa-solid fa-circle-exclamation mr-1"></i>Dieses Feld ist erforderlich.</p>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <p class="label-field label-error">Zustimmung erforderlich</p>
+            <div class="flex flex-col gap-2.5 mt-1">
+              <label class="check-label text-cs-error-700"><input type="checkbox" class="check-field check-field-error" /> Ich stimme den AGB zu</label>
+              <label class="check-label text-cs-error-700"><input type="checkbox" class="check-field check-field-error" checked /> Ich bin volljährig</label>
+            </div>
+            <p class="form-error-message mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i>Bitte alle Felder bestätigen.</p>
+          </div>
+          <div class="form-group">
+            <p class="label-field label-error">Kategorie (Pflichtfeld)</p>
+            <div class="flex flex-col gap-2.5 mt-1">
+              <label class="check-label text-cs-error-700"><input type="radio" class="radio-field check-field-error" name="ds-radio-err" /> Klassiker</label>
+              <label class="check-label text-cs-error-700"><input type="radio" class="radio-field check-field-error" name="ds-radio-err" /> Longdrink</label>
+            </div>
+            <p class="form-error-message mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i>Bitte eine Option wählen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-cs-ink-500 font-bold text-[11px] uppercase tracking-widest mb-3.5 mt-8">DISABLED — <code class="normal-case font-mono font-normal">disabled</code> attribute</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
+        <div>
+          <div class="form-group">
+            <label class="label-field">Benutzername (gesperrt)</label>
+            <input class="input-field" value="zoidberg" disabled />
+            <p class="form-hint">Deaktivierte Inputs via nativen <code>disabled</code>-Attr.</p>
+          </div>
+          <div class="form-group">
+            <label class="label-field">Kategorie (gesperrt)</label>
+            <select class="input-field" disabled><option>Klassiker</option></select>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <p class="label-field">Einstellungen (gesperrt)</p>
+            <div class="flex flex-col gap-2.5 mt-1">
+              <label class="check-label"><input type="checkbox" class="check-field" disabled /> Option deaktiviert</label>
+              <label class="check-label"><input type="checkbox" class="check-field" disabled checked /> Aktiv, aber gesperrt</label>
+              <label class="check-label"><input type="radio" class="radio-field" name="ds-radio-dis" disabled /> Radio deaktiviert</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 09 TABLES ================= -->
+    <section id="tables" class="mb-20 scroll-mt-24">
+      <div class="flex items-baseline justify-between gap-4 border-b border-cs-ink-200 pb-3 mb-6">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Tables</h2>
+        <span class="font-mono text-cs-ink-500 text-xs uppercase tracking-widest">09</span>
+      </div>
+      <div class="table-container">
+        <table class="table-standard">
+          <thead>
+            <tr>
+              <th class="table-th">Spirituose</th>
+              <th class="table-th text-right">Preis</th>
+              <th class="table-th text-right">Alk.</th>
+              <th class="table-th">Geschmack</th>
+              <th class="table-th">Im Sortiment seit</th>
+            </tr>
+          </thead>
+          <tbody class="table-body">
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Hendrick's Gin</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Gin · Schottland</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">34,90 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">41,4 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-info">Blumig</span><span class="tag-light-blue">Gurke</span><span class="tag-neutral">Zitrus</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">12.03.2021</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Monkey 47</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Gin · Schwarzwald</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">42,50 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">47,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-neutral">Kräuter</span><span class="tag-primary-soft">Waldbeere</span><span class="tag-neutral">Würzig</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">05.11.2021</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Diplomático Reserva Exclusiva</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Rum · Venezuela</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">39,80 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">40,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-gold-soft">Karamell</span><span class="tag-gold-soft">Vanille</span><span class="tag-gold-soft">Süß</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">18.06.2022</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Don Julio Blanco</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Tequila · Mexiko</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">52,00 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">38,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-neutral">Agave</span><span class="tag-light-blue">Frisch</span><span class="tag-neutral">Zitrus</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">02.01.2023</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Lagavulin 16</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Whisky · Islay</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">78,90 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">43,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-neutral">Rauchig</span><span class="tag-neutral">Torf</span><span class="tag-light-blue">Salzig</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">29.09.2020</td>
+            </tr>
+            <tr class="table-tr-hover">
+              <td class="table-td">
+                <div class="font-medium text-cs-ink-900">Cointreau</div>
+                <div class="text-xs text-cs-ink-400 font-mono mt-0.5">Likör · Frankreich</div>
+              </td>
+              <td class="table-td text-right font-mono text-cs-ink-900">24,90 €</td>
+              <td class="table-td text-right font-mono text-cs-ink-600">40,0 %</td>
+              <td class="table-td"><div class="flex flex-wrap gap-1"><span class="tag-gold-soft">Orange</span><span class="tag-gold-soft">Süß</span><span class="tag-light-blue">Frisch</span></div></td>
+              <td class="table-td font-mono text-xs text-cs-ink-500">08.02.2020</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         10 · SPACING
+    ========================================================= -->
+    <section id="spacing" class="mb-20 scroll-mt-24">
+      <div class="flex items-start justify-between border-b border-cs-ink-200 pb-3 mb-8">
+        <h2 class="m-0 font-display font-semibold text-4xl text-cs-red-900 tracking-tight">Spacing</h2>
+        <span class="font-mono text-cs-ink-400 text-sm pt-3">10</span>
+      </div>
+
+      <p class="text-cs-ink-600 text-[15px] leading-relaxed mb-10 max-w-2xl">Base unit is <code class="font-mono text-xs bg-cs-ink-100 border border-cs-ink-200 px-1.5 py-0.5 rounded text-cs-ink-800">4px</code>. All spacing, padding, margin, and gap values are multiples of this base. Bars below are rendered at 4× scale for visibility.</p>
+
+      <!-- Scale -->
+      <div class="mb-12">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">SCALE</p>
+        <div class="space-y-2.5">
+          <% [
+            { token: "0.5", px: 2 },
+            { token: "1",   px: 4 },
+            { token: "1.5", px: 6 },
+            { token: "2",   px: 8 },
+            { token: "2.5", px: 10 },
+            { token: "3",   px: 12 },
+            { token: "4",   px: 16 },
+            { token: "5",   px: 20 },
+            { token: "6",   px: 24 },
+            { token: "8",   px: 32 },
+            { token: "10",  px: 40 },
+            { token: "12",  px: 48 },
+            { token: "16",  px: 64 },
+            { token: "20",  px: 80 },
+            { token: "24",  px: 96 },
+          ].each do |s| %>
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-xs text-cs-ink-500 w-10 flex-shrink-0 text-right"><%= s[:token] %></span>
+              <div class="h-5 bg-cs-red-900 rounded-sm flex-shrink-0" style="width: <%= s[:px] * 4 %>px;"></div>
+              <span class="font-mono text-[11px] text-cs-ink-400"><%= s[:px] %>px</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Common usage -->
+      <div class="mb-12">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">COMMON USAGE</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0">
+          <% [
+            { pattern: "px-3 py-2",    label: "Button padding" },
+            { pattern: "px-4 py-3",    label: "Input / field padding" },
+            { pattern: "p-4",          label: "Card inner padding" },
+            { pattern: "p-6",          label: "Card section padding" },
+            { pattern: "gap-1",        label: "Tag & badge groups" },
+            { pattern: "gap-2",        label: "Button groups, form rows" },
+            { pattern: "gap-4",        label: "Card grids" },
+            { pattern: "gap-6",        label: "Page sections" },
+            { pattern: "mb-4",         label: "Form field spacing" },
+            { pattern: "mb-8 / mb-12", label: "Section separators" },
+          ].each do |u| %>
+            <div class="flex items-center gap-3 py-2.5 border-b border-cs-ink-100">
+              <code class="font-mono text-xs bg-cs-ink-100 border border-cs-ink-200 px-2 py-1 rounded text-cs-red-900 flex-shrink-0 whitespace-nowrap"><%= u[:pattern] %></code>
+              <span class="text-sm text-cs-ink-600"><%= u[:label] %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="mb-12">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">GRID — COLUMN LAYOUTS</p>
+        <div class="space-y-6">
+          <% [
+            { cols: 1, label: "grid-cols-1", desc: "Detail pages, articles, forms" },
+            { cols: 2, label: "grid-cols-2", desc: "Split panels, settings, ingredient tables" },
+            { cols: 3, label: "grid-cols-3", desc: "Recipe card grids, feature rows" },
+            { cols: 4, label: "grid-cols-4", desc: "Dense thumbnail grids, icon sets" },
+          ].each do |g| %>
+            <div>
+              <div class="flex items-baseline gap-3 mb-2">
+                <code class="font-mono text-xs text-cs-red-900"><%= g[:label] %></code>
+                <span class="text-xs text-cs-ink-400"><%= g[:desc] %></span>
+              </div>
+              <div class="grid gap-2" style="grid-template-columns: repeat(<%= g[:cols] %>, minmax(0, 1fr));">
+                <% g[:cols].times do |ci| %>
+                  <div class="h-10 bg-cs-red-50 border border-cs-red-100 rounded flex items-center justify-center font-mono text-[10px] text-cs-red-400">col <%= ci + 1 %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Container widths -->
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cs-ink-400 mb-5">CONTAINER — MAX WIDTHS</p>
+        <div class="space-y-3">
+          <% [
+            { cls: "max-w-sm",  px: 384,  desc: "Modals, narrow forms" },
+            { cls: "max-w-md",  px: 448,  desc: "Auth pages, compact panels" },
+            { cls: "max-w-xl",  px: 576,  desc: "Article body text" },
+            { cls: "max-w-2xl", px: 672,  desc: "Cards, form content" },
+            { cls: "max-w-4xl", px: 896,  desc: "Content + sidebar" },
+            { cls: "max-w-7xl", px: 1280, desc: "Full-width page wrapper" },
+          ].each do |c| %>
+            <div class="flex items-center gap-4">
+              <code class="font-mono text-[11px] text-cs-ink-600 w-28 flex-shrink-0">.<%= c[:cls] %></code>
+              <div class="flex-1 bg-cs-ink-100 rounded-sm h-8 relative">
+                <div class="h-full bg-cs-gold-100 border border-cs-gold-200 rounded-sm flex items-center justify-end pr-3" style="width: <%= (c[:px].to_f / 1280 * 100).round(1) %>%;">
+                  <span class="font-mono text-[10px] text-cs-gold-700 whitespace-nowrap"><%= c[:px] %>px</span>
+                </div>
+              </div>
+              <span class="text-xs text-cs-ink-400 w-44 flex-shrink-0 hidden sm:inline"><%= c[:desc] %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </section>
+
+  </div><!-- /.max-w -->
+</div><!-- /.ds-body -->
+
+<script>
+  function dsOpenSidebar() {
+    document.getElementById('ds-sidebar').setAttribute('data-open', '');
+    document.getElementById('ds-backdrop').setAttribute('data-open', '');
+  }
+  function dsCloseSidebar() {
+    document.getElementById('ds-sidebar').removeAttribute('data-open');
+    document.getElementById('ds-backdrop').removeAttribute('data-open');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') dsCloseSidebar();
+  });
+</script>

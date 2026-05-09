@@ -3,11 +3,11 @@
     <template #header>
       <div>
         <h3 class="text-xl font-bold">
-          <a :href="recipeUrl" class="link hover:text-cs-gold transition-colors">
+          <a :href="recipeUrl" class="link hover:text-cs-gold-400 transition-colors">
             {{ recipeTitle }}
           </a>
         </h3>
-        <p class="text-sm text-gray-600 mt-1 flex items-center gap-1">
+        <p class="text-sm text-cs-ink-600 mt-1 flex items-center gap-1">
           von <UserBadge :user="imageUser" />
         </p>
       </div>
@@ -21,7 +21,7 @@
           class="max-w-full max-h-[70vh] object-contain rounded"
         />
       </div>
-      <div v-if="uploadDate" class="text-xs text-gray-500 text-center mt-2">
+      <div v-if="uploadDate" class="text-xs text-cs-ink-500 text-center mt-2">
         Hochgeladen am {{ uploadDate }}
       </div>
     </template>

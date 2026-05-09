@@ -234,6 +234,47 @@ RSpec.describe "Recipes", type: :request do
         expect(response.body).to include("\"id\":#{approved_image1.id}")
         expect(response.body).to include("\"id\":#{approved_image2.id}")
       end
+
+      context "with high-quality images" do
+        def extract_image_ids(body)
+          match = body.match(/window\.recipeImages\s*=\s*(\[.*?\]);/m)
+          return [] unless match
+          JSON.parse(match[1]).map { |img| img["id"] }
+        end
+
+        it "lists the high-quality image first when mixed with regular images" do
+          regular_image = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+          hq_image      = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+
+          get recipe_path(recipe)
+
+          ids = extract_image_ids(response.body)
+          expect(ids.first).to eq(hq_image.id)
+          expect(ids).to include(regular_image.id)
+        end
+
+        it "lists all high-quality images before regular images" do
+          regular_image = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+          hq_image1     = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+          hq_image2     = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+
+          get recipe_path(recipe)
+
+          ids = extract_image_ids(response.body)
+          expect(ids.index(regular_image.id)).to be > ids.index(hq_image1.id)
+          expect(ids.index(regular_image.id)).to be > ids.index(hq_image2.id)
+        end
+
+        it "includes all images when all are high quality" do
+          hq_image1 = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+          hq_image2 = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+
+          get recipe_path(recipe)
+
+          ids = extract_image_ids(response.body)
+          expect(ids).to include(hq_image1.id, hq_image2.id)
+        end
+      end
     end
   end
 
@@ -295,7 +336,7 @@ RSpec.describe "Recipes", type: :request do
       get recipes_path
       expect(response).to have_http_status(:success)
       # Should show 50 recipes (limit)
-      expect(response.body.scan(/class="card-body/).count).to eq(50)
+      expect(response.body.scan(/favoritable-type="Recipe"/).count).to eq(50)
       # Should have link to next page
       expect(response.body).to include('rel="next"')
     end
@@ -306,7 +347,7 @@ RSpec.describe "Recipes", type: :request do
       # Should show remaining recipes (1 + 50 = 51 total, so 1 on page 2)
       # Wait, let!(:recipe) at top creates 1. create_list creates 50. Total 51.
       # Page 1 has 50. Page 2 has 1.
-      expect(response.body.scan(/class="card-body/).count).to eq(1)
+      expect(response.body.scan(/favoritable-type="Recipe"/).count).to eq(1)
     end
   end
 

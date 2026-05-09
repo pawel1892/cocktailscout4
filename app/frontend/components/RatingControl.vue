@@ -5,12 +5,12 @@
       <div :class="badgeColorClass" class="text-white font-bold text-xl px-3 py-2 rounded-lg transition-colors duration-300">
         {{ displayAverage }}
       </div>
-      <div class="text-sm text-gray-600">
+      <div class="text-sm text-cs-ink-600">
         <div>{{ countLabel }}</div>
         <button 
           v-if="canRate && !showInput" 
           @click="showInput = true" 
-          class="text-cs-dark-red hover:underline font-medium"
+          class="text-cs-red-900 hover:underline font-medium"
         >
           Jetzt bewerten
         </button>
@@ -33,7 +33,7 @@
           {{ i }}
         </button>
       </div>
-      <button @click="showInput = false" class="text-xs text-gray-500 hover:text-gray-700 self-end mt-2">
+      <button @click="showInput = false" class="text-xs text-cs-ink-500 hover:text-cs-ink-700 self-end mt-2">
         Abbrechen
       </button>
     </div>
@@ -78,7 +78,7 @@ const countLabel = computed(() => {
 })
 
 const getColorForScore = (score) => {
-  if (score === 0) return 'bg-gray-400 border-gray-400 text-white'
+  if (score === 0) return 'bg-cs-ink-400 border-cs-ink-400 text-white'
   if (score < 4) return 'bg-red-600 border-red-600 text-white'
   if (score < 6) return 'bg-orange-500 border-orange-500 text-white'
   if (score < 7.5) return 'bg-yellow-500 border-yellow-500 text-white'
@@ -87,9 +87,9 @@ const getColorForScore = (score) => {
 }
 
 const badgeColorClass = computed(() => {
-  if (!hasEnoughRatings.value) return 'bg-gray-400'
+  if (!hasEnoughRatings.value) return 'bg-cs-ink-400'
   const score = average.value
-  if (score === 0) return 'bg-gray-400'
+  if (score === 0) return 'bg-cs-ink-400'
   if (score < 4) return 'bg-red-600'
   if (score < 6) return 'bg-orange-500'
   if (score < 7.5) return 'bg-yellow-500'
@@ -98,14 +98,14 @@ const badgeColorClass = computed(() => {
 })
 
 const getScoreClass = (i) => {
-  if (loading.value) return 'opacity-50 cursor-not-allowed bg-gray-100 text-gray-400'
+  if (loading.value) return 'opacity-50 cursor-not-allowed bg-cs-ink-100 text-cs-ink-400'
   
   if (hoverScore.value >= i || (myRating.value >= i && hoverScore.value === 0)) {
     const activeScore = hoverScore.value > 0 ? hoverScore.value : myRating.value
     return getColorForScore(activeScore)
   }
   
-  return 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
+  return 'bg-white text-cs-ink-700 border-cs-ink-300 hover:border-cs-ink-400'
 }
 
 const submitRating = async (score) => {

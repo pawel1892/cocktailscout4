@@ -1,13 +1,21 @@
-<div id="secondary-nav" class="bg-black text-cs-gold py-1 text-sm">
-  <div class="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 sm:gap-0">
-    <!-- Left: Breadcrumbs -->
-    <div class="text-gray-500 text-xs sm:text-sm">
-      <%= render_breadcrumbs %>
-    </div>
-
-    <!-- Right: Register/Login -->
-    <div class="self-end sm:self-auto">
-      <user-session></user-session>
+<% if show_subnav? %>
+  <div id="secondary-nav" class="hidden lg:block bg-cs-red-50 border-t border-cs-red-200">
+    <div class="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between gap-4">
+      <nav class="flex items-stretch gap-5 overflow-x-auto" aria-label="<%= current_nav_item[:label] %> Navigation">
+        <% subnav_items.each do |item| %>
+          <% active = subnav_item_active?(item) %>
+          <%= link_to item[:label], item[:path], class: "shrink-0 flex items-center border-b-2 py-2 text-[13px] font-medium tracking-[0.01em] no-underline transition #{active ? 'border-cs-gold-500 font-semibold text-cs-red-900' : 'border-transparent text-cs-ink-600 hover:border-cs-gold-300 hover:text-cs-red-900'}", aria: (active ? { current: "page" } : {}) %>
+        <% end %>
+      </nav>
+      <% if current_nav_item[:search] %>
+        <%= form_tag recipes_path, method: :get, class: "flex-shrink-0 relative flex items-center py-1.5" do %>
+          <input type="search" name="q" value="<%= params[:q] %>" placeholder="Rezepte suchen…"
+                 class="w-48 rounded-md border border-cs-ink-400 bg-white py-1 pl-3 pr-8 text-[13px] text-cs-ink-800 placeholder-cs-ink-400 shadow-xs transition focus:border-cs-gold-500 focus:outline-none focus:ring-1 focus:ring-cs-gold-400">
+          <button type="submit" class="absolute right-2.5 text-cs-ink-400 transition-colors hover:text-cs-red-700" aria-label="Suchen">
+            <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+          </button>
+        <% end %>
+      <% end %>
     </div>
   </div>
-</div>
+<% end %>

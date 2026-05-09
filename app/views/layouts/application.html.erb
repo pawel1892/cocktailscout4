@@ -19,11 +19,10 @@
 
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'application' %>
-    <%= vite_javascript_tag 'mobile-menu' %>
     <%= vite_stylesheet_tag 'application' %>
 
     <% authenticated? %>
-    <meta name="current-user" content="<%= (Current.user ? Current.user.as_json(only: [:id, :email_address, :username]).merge(is_moderator: Current.user.moderator?) : nil).to_json %>">
+    <meta name="current-user" content="<%= (Current.user ? Current.user.as_json(only: [:id, :email_address, :username]).merge(is_moderator: Current.user.moderator?, can_moderate_recipe: Current.user.can_moderate_recipe?, avatar_url_small: Current.user.avatar_path(:small)) : nil).to_json %>">
   </head>
 
   <body>
@@ -37,7 +36,8 @@
           <%= yield %>
         </div>
       <% else %>
-        <div class="container mx-auto px-4 py-6 grow">
+        <div class="max-w-[1180px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 grow">
+          <%= render_breadcrumbs %>
           <%= yield %>
         </div>
       <% end %>

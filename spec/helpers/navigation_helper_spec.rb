@@ -54,7 +54,7 @@ RSpec.describe NavigationHelper, type: :helper do
       community_item = items.find { |item| item[:label] == "Community" }
 
       expect(community_item[:dropdown].length).to eq(3)
-      expect(community_item[:dropdown][0][:label]).to eq("Übersicht")
+      expect(community_item[:dropdown][0][:label]).to eq("Aktivitätsstream")
       expect(community_item[:dropdown][1][:label]).to eq("Forum")
       expect(community_item[:dropdown][2][:label]).to eq("Benutzer")
     end
@@ -229,7 +229,7 @@ RSpec.describe NavigationHelper, type: :helper do
 
         expect(items).to be_an(Array)
         expect(items.length).to eq(3)
-        expect(items[0][:label]).to eq("Übersicht")
+        expect(items[0][:label]).to eq("Aktivitätsstream")
         expect(items[1][:label]).to eq("Forum")
         expect(items[2][:label]).to eq("Benutzer")
       end

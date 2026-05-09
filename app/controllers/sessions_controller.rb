@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def show
     if authenticated?
-      render json: { user: Current.user, message: "Authenticated" }, status: :ok
+      render json: { user: current_user_json, message: "Authenticated" }, status: :ok
     else
       render json: { user: nil, message: "Not authenticated" }, status: :ok
     end
@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
       start_new_session_for user
       respond_to do |format|
         format.html { redirect_to after_authentication_url }
-        format.json { render json: { user: user, message: "Signed in successfully", redirect_url: after_authentication_url }, status: :ok }
+        format.json { render json: { user: current_user_json(user), message: "Signed in successfully", redirect_url: after_authentication_url }, status: :ok }
       end
     else
       respond_to do |format|
@@ -47,5 +47,17 @@ class SessionsController < ApplicationController
       format.html { redirect_to new_session_path, status: :see_other }
       format.json { render json: { message: "Signed out successfully" }, status: :ok }
     end
+  end
+
+  private
+
+  def current_user_json(user = Current.user)
+    return nil unless user
+
+    user.as_json(only: [ :id, :email_address, :username ]).merge(
+      is_moderator: user.moderator?,
+      can_moderate_recipe: user.can_moderate_recipe?,
+      avatar_url_small: user.avatar_path(:small)
+    )
   end
 end

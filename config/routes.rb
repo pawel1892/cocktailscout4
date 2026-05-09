@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     end
 
     resources :featured_recipe_images, only: [ :create, :destroy ]
+    resources :high_quality_recipe_images, only: [ :create, :destroy ]
 
     resources :recipe_images, only: [ :index, :show, :destroy ] do
       member do
@@ -149,7 +150,6 @@ Rails.application.routes.draw do
   # Private Messages
   resources :private_messages, path: "nachrichten", only: [ :index, :show, :new, :create, :destroy ] do
     collection do
-      get :sent
       get :unread_count
     end
   end

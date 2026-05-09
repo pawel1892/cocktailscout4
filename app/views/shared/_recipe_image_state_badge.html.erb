@@ -1,22 +1,22 @@
 <% if recipe_image.soft_deleted? %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-gray-100 text-gray-600 rounded-full">
+  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-cs-ink-100 text-cs-ink-600 rounded-full">
     <i class="fa-solid fa-trash"></i>
     Gelöscht
   </span>
 <% else %>
 <% case recipe_image.state %>
 <% when "pending" %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 rounded-full">
+  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-cs-warning-50 text-cs-warning-700 rounded-full">
     <i class="fa-solid fa-clock"></i>
     Wartend
   </span>
 <% when "approved" %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full">
+  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-cs-success-50 text-cs-success-700 rounded-full">
     <i class="fa-solid fa-check-circle"></i>
     Genehmigt
   </span>
 <% when "rejected" %>
-  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-red-100 text-red-800 rounded-full">
+  <span class="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium bg-cs-error-50 text-cs-error-700 rounded-full">
     <i class="fa-solid fa-times-circle"></i>
     Abgelehnt
   </span>
