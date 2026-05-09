@@ -34,6 +34,7 @@ const components = {
   UserBadge: () => import('../components/UserBadge.vue'),
   SiteNav: () => import('../components/SiteNav.vue'),
   RecipeFilters: () => import('../components/RecipeFilters.vue'),
+  AdminHighQualityGallery: () => import('../components/AdminHighQualityGallery.vue'),
   // Add future components here:
   // CocktailCard: () => import('../components/CocktailCard.vue'),
 }

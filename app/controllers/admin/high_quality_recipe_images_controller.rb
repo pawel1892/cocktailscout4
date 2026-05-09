@@ -5,13 +5,19 @@ module Admin
     def create
       recipe_image = RecipeImage.find(params[:recipe_image_id])
       recipe_image.update!(high_quality: true)
-      redirect_to admin_recipe_image_path(recipe_image), notice: "Bild als hochwertig markiert."
+      respond_to do |format|
+        format.json { render json: { high_quality: true } }
+        format.html { redirect_to admin_recipe_image_path(recipe_image), notice: "Bild als hochwertig markiert." }
+      end
     end
 
     def destroy
       recipe_image = RecipeImage.find(params[:id])
       recipe_image.update!(high_quality: false)
-      redirect_to admin_recipe_image_path(recipe_image), notice: "Hochwertig-Markierung entfernt."
+      respond_to do |format|
+        format.json { render json: { high_quality: false } }
+        format.html { redirect_to admin_recipe_image_path(recipe_image), notice: "Hochwertig-Markierung entfernt." }
+      end
     end
 
     private
