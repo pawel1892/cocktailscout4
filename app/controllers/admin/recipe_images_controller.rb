@@ -62,6 +62,16 @@ module Admin
       render json: { count: RecipeImage.pending.count }
     end
 
+    def gallery
+      @recipe_images = RecipeImage.includes(:recipe, :user)
+                                   .approved.not_soft_deleted
+                                   .then { |q| filter_by_recipe_name(q) }
+                                   .then { |q| filter_by_high_quality(q) }
+                                   .high_quality_first
+                                   .recent
+      @pagy, @recipe_images = pagy(@recipe_images, limit: 60)
+    end
+
     private
 
     def require_image_moderator!
@@ -77,6 +87,14 @@ module Admin
     def filter_by_recipe_name(query)
       return query if params[:q].blank?
       query.joins(:recipe).where("recipes.title LIKE ?", "%#{params[:q]}%")
+    end
+
+    def filter_by_high_quality(query)
+      case params[:hq]
+      when "yes" then query.where(high_quality: true)
+      when "no"  then query.where(high_quality: false)
+      else query
+      end
     end
 
     def filter_by_state(query)

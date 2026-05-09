@@ -1,7 +1,12 @@
 <div class="mb-8 flex items-center justify-between">
   <h1 class="text-3xl font-bold text-cs-ink-800">Bilder</h1>
-  <div class="text-sm text-cs-ink-600">
-    Gesamt: <strong><%= @pagy.count %></strong> Bilder
+  <div class="flex items-center gap-4">
+    <div class="text-sm text-cs-ink-600">
+      Gesamt: <strong><%= @pagy.count %></strong> Bilder
+    </div>
+    <%= link_to gallery_admin_recipe_images_path, class: "btn btn-outline" do %>
+      <i class="fa-solid fa-grip mr-1"></i> Galerie-Ansicht
+    <% end %>
   </div>
 </div>
 

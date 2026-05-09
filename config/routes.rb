@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       end
       collection do
         get :count
+        get :gallery
       end
     end
   end
