@@ -688,6 +688,26 @@ nav.pagy a[role="separator"] {
 .prose-cs h1 { @apply text-2xl font-bold mt-6 mb-4 font-display; }
 .prose-cs h2 { @apply text-xl font-bold mt-5 mb-3 font-display; }
 .prose-cs h3 { @apply text-lg font-bold mt-4 mb-2; }
+
+/* Prose for user-generated content: forum posts, recipe descriptions, comments */
+.prose-body {
+  @apply text-cs-ink-800 leading-relaxed;
+}
+.prose-body h1 { @apply text-3xl font-bold text-cs-ink-900 mt-6 mb-3 border-b border-cs-ink-200 pb-1; }
+.prose-body h2 { @apply text-2xl font-bold text-cs-ink-900 mt-5 mb-2 border-b border-cs-ink-200 pb-1; }
+.prose-body h3 { @apply text-xl font-semibold text-cs-ink-900 mt-4 mb-1.5; }
+.prose-body p { @apply mb-4; }
+.prose-body ul { @apply list-disc list-inside mb-4; }
+.prose-body ol { @apply list-decimal list-inside mb-4; }
+.prose-body li { @apply mb-1; }
+.prose-body a { @apply text-cs-blue-600 underline underline-offset-[3px] hover:text-cs-blue-700; }
+.prose-body code { @apply bg-cs-ink-100 px-1 py-0.5 rounded text-sm font-mono; }
+.prose-body pre { @apply !bg-cs-ink-50 border border-cs-ink-200 p-4 rounded mb-4 overflow-x-auto; }
+.prose-body pre code { @apply bg-transparent p-0 rounded-none; }
+.prose-body blockquote { @apply border-l-4 border-cs-gold-500 pl-4 italic mb-4 text-cs-ink-600; }
+.prose-body strong { @apply font-bold; }
+.prose-body em { @apply italic; }
+.prose-body hr { @apply border-0 border-t border-cs-ink-300 my-6 mx-8; }
 .prose-cs p { @apply mb-4; }
 .prose-cs ul { @apply list-disc list-inside mb-4; }
 .prose-cs ol { @apply list-decimal list-inside mb-4; }
