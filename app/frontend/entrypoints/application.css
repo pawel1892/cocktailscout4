@@ -708,6 +708,10 @@ nav.pagy a[role="separator"] {
 .prose-body strong { @apply font-bold; }
 .prose-body em { @apply italic; }
 .prose-body hr { @apply border-0 border-t border-cs-ink-300 my-6 mx-8; }
+.prose-body table { @apply w-full border-collapse mb-4 text-sm; }
+.prose-body th { @apply border border-cs-ink-300 bg-cs-ink-50 px-3 py-2 text-left font-semibold; }
+.prose-body td { @apply border border-cs-ink-300 px-3 py-2 align-top; }
+.prose-body tbody tr:nth-child(even) td { @apply bg-cs-ink-50; }
 .prose-cs p { @apply mb-4; }
 .prose-cs ul { @apply list-disc list-inside mb-4; }
 .prose-cs ol { @apply list-decimal list-inside mb-4; }
