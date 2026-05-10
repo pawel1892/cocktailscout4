@@ -134,6 +134,10 @@ module MarkdownHelper
   class RichHtmlRenderer < Redcarpet::Render::HTML
     IMAGE_SIZE_CLASSES = { "medium" => "max-w-lg", "small" => "max-w-xs" }.freeze
 
+    def postprocess(doc)
+      doc.gsub(/(<t[hd][^>]*?) style="text-align: (left|center|right)"/, '\1 align="\2"')
+    end
+
     def link(link, title, content)
       title_attr = title ? %( title="#{ERB::Util.html_escape(title)}") : ""
       external   = !link.to_s.start_with?("/")
