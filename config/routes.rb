@@ -90,7 +90,7 @@ Rails.application.routes.draw do
   resources :top_lists, path: "toplisten", only: [ :index ]
   resources :recipe_images, path: "cocktailgalerie", only: [ :index ]
 
-  get "tag/:tag", to: "recipes#index", as: :tag
+  get "tag/:tag", to: "recipes#index", as: :tag, constraints: { tag: /[^\/]+/ }
 
   post "heartbeat", to: "heartbeats#create"
 
