@@ -21,6 +21,10 @@ class Ingredient < ApplicationRecord
     joins(:recipe_ingredients).distinct
   }
 
+  scope :used_in_visible_recipes, -> {
+    joins(recipe_ingredients: :recipe).merge(Recipe.visible).distinct
+  }
+
   scope :alcoholic, -> { where("alcoholic_content > 0") }
 
   scope :non_alcoholic, -> { where("alcoholic_content = 0") }

@@ -264,6 +264,51 @@ RSpec.describe Recipe, type: :model do
     end
   end
 
+  describe ".visible_tags" do
+    let!(:visible_recipe) { create(:recipe) }
+    let!(:deleted_recipe) { create(:recipe, :deleted) }
+    let!(:draft_recipe)   { create(:recipe, :draft) }
+
+    before do
+      visible_recipe.tag_list.add("Whiskey", "Sour")
+      visible_recipe.save!
+      deleted_recipe.tag_list.add("DeletedTag")
+      deleted_recipe.save!
+      draft_recipe.tag_list.add("DraftTag")
+      draft_recipe.save!
+    end
+
+    it "returns tags from visible recipes" do
+      names = Recipe.visible_tags.map(&:name)
+      expect(names).to include("Whiskey", "Sour")
+    end
+
+    it "excludes tags only used in deleted recipes" do
+      names = Recipe.visible_tags.map(&:name)
+      expect(names).not_to include("DeletedTag")
+    end
+
+    it "excludes tags only used in draft recipes" do
+      names = Recipe.visible_tags.map(&:name)
+      expect(names).not_to include("DraftTag")
+    end
+
+    it "returns taggings_count scoped to visible recipes only" do
+      extra_visible = create(:recipe)
+      extra_visible.tag_list.add("Whiskey")
+      extra_visible.save!
+      deleted_recipe.tag_list.add("Whiskey")
+      deleted_recipe.save!
+
+      tag = Recipe.visible_tags.find { |t| t.name == "Whiskey" }
+      expect(tag.taggings_count).to eq(2)
+    end
+
+    it "returns no duplicates" do
+      expect(Recipe.visible_tags.map(&:name)).to eq(Recipe.visible_tags.map(&:name).uniq)
+    end
+  end
+
   describe "Draft and publish methods" do
     let(:recipe) { create(:recipe, :draft) }
 

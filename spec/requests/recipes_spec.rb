@@ -351,6 +351,59 @@ RSpec.describe "Recipes", type: :request do
     end
   end
 
+  describe "Filter data (tags and ingredients passed to Vue component)" do
+    let!(:visible_recipe) { create(:recipe) }
+    let!(:deleted_recipe) { create(:recipe, :deleted) }
+    let!(:draft_recipe)   { create(:recipe, :draft) }
+
+    let!(:used_ingredient)    { create(:ingredient, name: "Gin") }
+    let!(:orphan_ingredient)  { create(:ingredient, name: "OrphanSpirit") }
+    let!(:deleted_ingredient) { create(:ingredient, name: "GhostLiqueur") }
+
+    before do
+      visible_recipe.tag_list.add("Whiskey")
+      visible_recipe.save!
+      deleted_recipe.tag_list.add("DeletedTag")
+      deleted_recipe.save!
+      draft_recipe.tag_list.add("DraftTag")
+      draft_recipe.save!
+
+      create(:recipe_ingredient, recipe: visible_recipe, ingredient: used_ingredient)
+      create(:recipe_ingredient, recipe: deleted_recipe, ingredient: deleted_ingredient)
+      # orphan_ingredient has no recipe_ingredient at all
+    end
+
+    it "includes tags from visible recipes in the filter component" do
+      get recipes_path
+      expect(response.body).to include("&quot;name&quot;:&quot;Whiskey&quot;")
+    end
+
+    it "excludes tags from deleted recipes" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;DeletedTag&quot;")
+    end
+
+    it "excludes tags from draft (non-public) recipes" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;DraftTag&quot;")
+    end
+
+    it "includes ingredients from visible recipes in the filter component" do
+      get recipes_path
+      expect(response.body).to include("&quot;name&quot;:&quot;Gin&quot;")
+    end
+
+    it "excludes ingredients only used in deleted recipes" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;GhostLiqueur&quot;")
+    end
+
+    it "excludes ingredients with no recipe associations at all" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;OrphanSpirit&quot;")
+    end
+  end
+
   describe "Filtering" do
     let!(:recipe1) { create(:recipe, title: "Strong Drink", average_rating: 9.5) }
     let!(:recipe2) { create(:recipe, title: "Weak Drink", average_rating: 4.5) }

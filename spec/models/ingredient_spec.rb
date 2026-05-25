@@ -39,6 +39,41 @@ RSpec.describe Ingredient, type: :model do
       end
     end
 
+    describe ".used_in_visible_recipes" do
+      let!(:deleted_recipe)      { create(:recipe, :deleted) }
+      let!(:draft_recipe)        { create(:recipe, :draft) }
+      let!(:deleted_ingredient)  { create(:ingredient) }
+      let!(:draft_ingredient)    { create(:ingredient) }
+      let!(:orphan_ingredient)   { create(:ingredient) }
+
+      before do
+        create(:recipe_ingredient, ingredient: deleted_ingredient, recipe: deleted_recipe)
+        create(:recipe_ingredient, ingredient: draft_ingredient, recipe: draft_recipe)
+      end
+
+      it "includes ingredients from visible recipes" do
+        expect(Ingredient.used_in_visible_recipes).to include(used_ingredient)
+      end
+
+      it "excludes ingredients only used in deleted recipes" do
+        expect(Ingredient.used_in_visible_recipes).not_to include(deleted_ingredient)
+      end
+
+      it "excludes ingredients only used in draft recipes" do
+        expect(Ingredient.used_in_visible_recipes).not_to include(draft_ingredient)
+      end
+
+      it "excludes ingredients with no recipe at all" do
+        expect(Ingredient.used_in_visible_recipes).not_to include(orphan_ingredient)
+      end
+
+      it "returns no duplicates when ingredient appears in multiple visible recipes" do
+        extra_recipe = create(:recipe)
+        create(:recipe_ingredient, ingredient: used_ingredient, recipe: extra_recipe)
+        expect(Ingredient.used_in_visible_recipes.where(id: used_ingredient.id).count).to eq(1)
+      end
+    end
+
     describe ".alcoholic" do
       it "returns ingredients with alcoholic content > 0" do
         expect(Ingredient.alcoholic).to include(alcoholic_ingredient)

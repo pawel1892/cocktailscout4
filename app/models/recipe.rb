@@ -51,6 +51,16 @@ class Recipe < ApplicationRecord
     end
   }
 
+  def self.visible_tags
+    ActsAsTaggableOn::Tag
+      .joins(:taggings)
+      .where(taggings: { taggable_type: "Recipe" })
+      .joins("INNER JOIN recipes ON recipes.id = taggings.taggable_id")
+      .merge(visible)
+      .select("tags.*, COUNT(taggings.id) AS taggings_count")
+      .group("tags.id")
+  end
+
   validates :title, presence: true
   validates :slug, uniqueness: true, allow_blank: true
 

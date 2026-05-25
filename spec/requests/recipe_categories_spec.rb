@@ -106,6 +106,40 @@ RSpec.describe "RecipeCategories", type: :request do
       end
     end
 
+    context "visibility filtering" do
+      let!(:visible_recipe) { create(:recipe) }
+      let!(:deleted_recipe) { create(:recipe, :deleted) }
+      let!(:draft_recipe)   { create(:recipe, :draft) }
+
+      before do
+        visible_recipe.tag_list.add("VisibleTag")
+        visible_recipe.save!
+        deleted_recipe.tag_list.add("DeletedTag")
+        deleted_recipe.save!
+        draft_recipe.tag_list.add("DraftTag")
+        draft_recipe.save!
+      end
+
+      it "shows only tags from visible recipes" do
+        get recipe_categories_path
+        expect(response.body).to include("VisibleTag")
+        expect(response.body).not_to include("DeletedTag")
+        expect(response.body).not_to include("DraftTag")
+      end
+
+      it "counts only taggings from visible recipes" do
+        visible_recipe2 = create(:recipe)
+        visible_recipe2.tag_list.add("VisibleTag")
+        visible_recipe2.save!
+        deleted_recipe.tag_list.add("VisibleTag")
+        deleted_recipe.save!
+
+        get recipe_categories_path
+        expect(response.body).to include('title="2 Rezepte"')
+        expect(response.body).not_to include('title="3 Rezepte"')
+      end
+    end
+
     it "is accessible without authentication" do
       get recipe_categories_path
       expect(response).to have_http_status(:success)
