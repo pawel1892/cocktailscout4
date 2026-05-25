@@ -30,7 +30,7 @@ namespace :dev do
       batching:      "batching-cocktails-fur-gruppen",
       fermentation:  "fermentation-sodawasser-in-der-bar",
       alkoholfrei:   "alkoholfreie-cocktails-mocktails-richtig-gemacht",
-      werkzeug:      "barwerkzeug-das-einmaleins",
+      werkzeug:      "barwerkzeug-das-einmaleins"
     }
 
     articles = [
