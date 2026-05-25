@@ -234,7 +234,7 @@ RSpec.describe "Admin::Units", type: :request do
 
       it "shows usage warning" do
         get edit_admin_unit_path(unit)
-        expect(response.body).to include("bg-yellow-50") # Yellow warning box
+        expect(response.body).to include("bg-cs-warning-50") # Warning box
         expect(response.body).to include("Diese Einheit wird in")
         expect(response.body).to include("verwendet")
         expect(response.body).not_to include("Gefahrenzone") # Delete button should not be shown

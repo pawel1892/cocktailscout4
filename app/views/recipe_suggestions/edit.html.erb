@@ -1,38 +1,46 @@
 <% content_for :title, "Vorschlag bearbeiten - CocktailScout" %>
 
-<div class="max-w-4xl mx-auto px-4 py-8">
-  <div class="mb-6">
-    <%= link_to recipe_suggestions_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
-      <i class="fas fa-chevron-left"></i>
-      Zurück zur Übersicht
-    <% end %>
+<!-- Back link -->
+<div class="mb-6">
+  <%= link_to recipe_suggestion_path(@suggestion), class: "link inline-flex items-center gap-1.5 text-sm font-medium" do %>
+    <i class="fas fa-arrow-left text-xs"></i>
+    Zurück zum Vorschlag
+  <% end %>
+</div>
 
-    <h1 class="text-2xl font-bold text-gray-800">Vorschlag bearbeiten</h1>
-    <p class="text-gray-600 mt-2">Nach dem Speichern wird dein Vorschlag erneut zur Prüfung eingereicht.</p>
+<!-- Page header -->
+<div class="mb-8">
+  <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900">Vorschlag bearbeiten</h1>
+  <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  <p class="text-sm text-cs-ink-500">Nach dem Speichern wird dein Vorschlag erneut zur Prüfung eingereicht</p>
+</div>
+
+<!-- Rejection feedback -->
+<% if @suggestion.status_rejected? && @suggestion.feedback.present? %>
+  <div class="callout-red mb-6">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div>
+      <p class="font-semibold mb-1">Ablehnungsgrund</p>
+      <div class="text-sm"><%= simple_format(@suggestion.feedback) %></div>
+    </div>
   </div>
+<% end %>
 
-  <% if @suggestion.status_rejected? && @suggestion.feedback.present? %>
-    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-      <p class="font-semibold text-red-900 mb-1 flex items-center gap-2">
-        <i class="fa-solid fa-exclamation-triangle"></i>
-        Ablehnungsgrund:
-      </p>
-      <p class="text-red-800"><%= simple_format(@suggestion.feedback) %></p>
-    </div>
-  <% end %>
+<!-- Errors -->
+<% if @errors.present? %>
+  <div class="callout-red mb-6">
+    <i class="fas fa-exclamation-triangle"></i>
+    <ul class="list-disc ml-4 text-sm space-y-0.5">
+      <% @errors.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
-  <% if @errors.present? %>
-    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-      <ul class="list-disc list-inside text-red-700">
-        <% @errors.each do |error| %>
-          <li><%= error %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="card p-6">
-    <%= form_with url: recipe_suggestion_path(@suggestion), method: :patch, local: true, class: "space-y-6" do |form| %>
+<div class="card">
+  <div class="card-body">
+    <%= form_with url: recipe_suggestion_path(@suggestion), method: :patch, local: true do |form| %>
       <recipe-form
         :initial-data='<%= raw @recipe_suggestion_form_data.to_json %>'
         :units='<%= raw Unit.order(:category, :name).map { |u| { id: u.id, name: u.name, display_name: u.display_name, plural_name: u.plural_name, category: u.category, divisible: u.divisible } }.to_json %>'

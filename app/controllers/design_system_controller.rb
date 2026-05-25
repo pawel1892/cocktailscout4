@@ -1,5 +1,5 @@
 class DesignSystemController < ApplicationController
-  before_action :require_admin!
+  allow_unauthenticated_access
 
   def index
   end

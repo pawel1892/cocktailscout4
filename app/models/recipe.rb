@@ -31,7 +31,7 @@ class Recipe < ApplicationRecord
 
   scope :by_user, ->(user_id) { where(user_id: user_id) if user_id.present? }
   scope :by_min_rating, ->(rating) { where("average_rating >= ?", rating) if rating.present? }
-  scope :by_ingredient, ->(ingredient_id) { joins(:ingredients).where(ingredients: { id: ingredient_id }) if ingredient_id.present? }
+  scope :by_ingredient, ->(ingredient_id) { joins(:ingredients).where(ingredients: { id: ingredient_id }).distinct if ingredient_id.present? }
   scope :by_collection, ->(collection_id) {
     if collection_id.present?
       collection = IngredientCollection.find_by(id: collection_id)
@@ -50,6 +50,16 @@ class Recipe < ApplicationRecord
       where("MATCH(title) AGAINST(? IN BOOLEAN MODE)", "#{query}*")
     end
   }
+
+  def self.visible_tags
+    ActsAsTaggableOn::Tag
+      .joins(:taggings)
+      .where(taggings: { taggable_type: "Recipe" })
+      .joins("INNER JOIN recipes ON recipes.id = taggings.taggable_id")
+      .merge(visible)
+      .select("tags.*, COUNT(taggings.id) AS taggings_count")
+      .group("tags.id")
+  end
 
   validates :title, presence: true
   validates :slug, uniqueness: true, allow_blank: true

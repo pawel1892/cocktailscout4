@@ -1,13 +1,13 @@
 <template>
   <BaseModal :model-value="show" @close="$emit('close')" max-width="max-w-md">
     <template #header>
-      <h3 class="text-xl font-bold text-gray-900">Liste bearbeiten</h3>
+      <h3 class="text-xl font-bold text-cs-ink-900">Liste bearbeiten</h3>
     </template>
 
     <template #content>
       <form @submit.prevent="submit" class="space-y-4">
         <div>
-          <label for="edit-name" class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="edit-name" class="block text-sm font-medium text-cs-ink-700 mb-1">
             Name <span class="text-red-500">*</span>
           </label>
           <input
@@ -15,20 +15,20 @@
             v-model="form.name"
             type="text"
             required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent"
+            class="w-full px-3 py-2 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-red-900 focus:border-transparent"
             placeholder="z.B. Meine Hausbar, Party 2024"
           />
         </div>
 
         <div>
-          <label for="edit-notes" class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="edit-notes" class="block text-sm font-medium text-cs-ink-700 mb-1">
             Notizen
           </label>
           <textarea
             id="edit-notes"
             v-model="form.notes"
             rows="3"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cs-dark-red focus:border-transparent"
+            class="w-full px-3 py-2 border border-cs-ink-300 rounded-lg focus:ring-2 focus:ring-cs-red-900 focus:border-transparent"
             placeholder="Optionale Notizen, z.B. Einkaufsliste..."
           ></textarea>
         </div>
@@ -38,9 +38,9 @@
             id="edit-is-default"
             v-model="form.is_default"
             type="checkbox"
-            class="h-4 w-4 text-cs-dark-red focus:ring-cs-dark-red border-gray-300 rounded"
+            class="h-4 w-4 text-cs-red-900 focus:ring-cs-red-900 border-cs-ink-300 rounded"
           />
-          <label for="edit-is-default" class="ml-2 block text-sm text-gray-700">
+          <label for="edit-is-default" class="ml-2 block text-sm text-cs-ink-700">
             Als Standard-Liste festlegen
           </label>
         </div>
@@ -52,7 +52,7 @@
         </div>
 
         <!-- Delete Section -->
-        <div class="pt-4 border-t border-gray-200">
+        <div class="pt-4 border-t border-cs-ink-200">
           <button
             @click="confirmDelete"
             type="button"
@@ -69,14 +69,14 @@
         <button
           @click="$emit('close')"
           type="button"
-          class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+          class="px-4 py-2 text-cs-ink-700 bg-cs-ink-100 rounded-lg hover:bg-cs-ink-200 transition"
         >
           Abbrechen
         </button>
         <button
           @click="submit"
           :disabled="loading"
-          class="px-4 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-4 py-2 bg-cs-red-900 text-white rounded-lg hover:bg-cs-red-900/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {{ loading ? 'Speichere...' : 'Speichern' }}
         </button>

@@ -14,10 +14,10 @@
     <%= vite_stylesheet_tag 'application' %>
   </head>
 
-  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <body class="bg-cs-ink-100 font-sans leading-normal tracking-normal">
     <div id="app" class="flex flex-col min-h-screen">
       <!-- Admin Header -->
-      <nav class="bg-cs-dark-red text-white p-4 shadow-md">
+      <nav class="bg-cs-red-900 text-white p-4 shadow-md">
         <div class="container mx-auto flex items-center justify-between">
           <!-- Logo & Brand -->
           <div class="flex items-center gap-4">
@@ -28,41 +28,41 @@
             
             <!-- Navigation -->
             <div class="hidden md:flex ml-8 space-x-6">
-              <%= link_to admin_reports_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'reports'}" do %>
+              <%= link_to admin_reports_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'reports'}" do %>
                 Meldungen
                 <% if Report.pending.count > 0 %>
-                  <span class="ml-1 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  <span class="ml-1 bg-cs-error-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     <%= Report.pending.count %>
                   </span>
                 <% end %>
               <% end %>
 
-              <%= link_to "Rezepte", admin_recipes_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipes'}" %>
+              <%= link_to "Rezepte", admin_recipes_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'recipes'}" %>
 
-              <%= link_to admin_recipe_suggestions_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipe_suggestions'}" do %>
+              <%= link_to admin_recipe_suggestions_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'recipe_suggestions'}" do %>
                 Rezeptvorschläge
                 <% if RecipeSuggestion.pending_review.count > 0 %>
-                  <span class="ml-1 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  <span class="ml-1 bg-cs-warning-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     <%= RecipeSuggestion.pending_review.count %>
                   </span>
                 <% end %>
               <% end %>
 
-              <%= link_to admin_recipe_images_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'recipe_images'}" do %>
+              <%= link_to admin_recipe_images_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'recipe_images'}" do %>
                 Rezeptbilder
                 <% pending = RecipeImage.pending.count %>
                 <% if pending > 0 %>
-                  <span class="ml-1 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"><%= pending %></span>
+                  <span class="ml-1 bg-cs-warning-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"><%= pending %></span>
                 <% end %>
               <% end %>
 
-              <%= link_to "Bilder", admin_images_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'images'}" %>
+              <%= link_to "Bilder", admin_images_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'images'}" %>
 
-              <%= link_to "Zutaten", admin_ingredients_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'ingredients'}" %>
+              <%= link_to "Zutaten", admin_ingredients_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'ingredients'}" %>
 
-              <%= link_to "Einheiten", admin_units_path, class: "hover:text-cs-gold transition #{'text-cs-gold border-b-2 border-cs-gold' if controller_name == 'units'}" %>
+              <%= link_to "Einheiten", admin_units_path, class: "hover:text-cs-gold-400 transition #{'text-cs-gold-400 border-b-2 border-cs-gold-400' if controller_name == 'units'}" %>
 
-              <%= link_to "Zurück zur Seite", root_path, class: "hover:text-cs-gold transition opacity-70" %>
+              <%= link_to "Zurück zur Seite", root_path, class: "hover:text-cs-gold-400 transition opacity-70" %>
             </div>
           </div>
 

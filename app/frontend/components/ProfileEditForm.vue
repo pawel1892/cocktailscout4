@@ -101,26 +101,26 @@ const onAvatarDeleted = (avatarUrls) => {
     </div>
 
     <div>
-      <label for="prename" class="block text-sm font-medium text-gray-700 mb-1">
+      <label for="prename" class="block text-sm font-medium text-cs-ink-700 mb-1">
         Vorname
       </label>
       <input
         id="prename"
         v-model="formData.prename"
         type="text"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full px-3 py-2 border border-cs-ink-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         :disabled="loading"
       />
     </div>
 
     <div>
-      <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">
+      <label for="gender" class="block text-sm font-medium text-cs-ink-700 mb-1">
         Geschlecht
       </label>
       <select
         id="gender"
         v-model="formData.gender"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full px-3 py-2 border border-cs-ink-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         :disabled="loading"
       >
         <option value="">Keine Angabe</option>
@@ -130,27 +130,27 @@ const onAvatarDeleted = (avatarUrls) => {
     </div>
 
     <div>
-      <label for="location" class="block text-sm font-medium text-gray-700 mb-1">
+      <label for="location" class="block text-sm font-medium text-cs-ink-700 mb-1">
         Ort
       </label>
       <input
         id="location"
         v-model="formData.location"
         type="text"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full px-3 py-2 border border-cs-ink-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         :disabled="loading"
       />
     </div>
 
     <div>
-      <label for="homepage" class="block text-sm font-medium text-gray-700 mb-1">
+      <label for="homepage" class="block text-sm font-medium text-cs-ink-700 mb-1">
         Homepage
       </label>
       <input
         id="homepage"
         v-model="formData.homepage"
         type="url"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full px-3 py-2 border border-cs-ink-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="https://"
         :disabled="loading"
       />
@@ -161,7 +161,7 @@ const onAvatarDeleted = (avatarUrls) => {
         type="button"
         @click="cancel"
         :disabled="loading"
-        class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition disabled:opacity-50"
+        class="px-4 py-2 text-cs-ink-700 bg-cs-ink-100 rounded-lg hover:bg-cs-ink-200 transition disabled:opacity-50"
       >
         Abbrechen
       </button>
@@ -169,7 +169,7 @@ const onAvatarDeleted = (avatarUrls) => {
         type="button"
         @click="saveProfile"
         :disabled="loading"
-        class="px-4 py-2 bg-cs-dark-red text-white rounded-lg hover:bg-cs-dark-red/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        class="px-4 py-2 bg-cs-red-900 text-white rounded-lg hover:bg-cs-red-900/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <i v-if="loading" class="fa-solid fa-spinner fa-spin mr-2"></i>
         <i v-else class="fa-solid fa-save mr-2"></i>

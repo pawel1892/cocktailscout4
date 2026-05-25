@@ -1,67 +1,69 @@
-<div class="flex flex-col gap-6">
-  <%# Back Button %>
-  <%= link_to private_messages_path, class: "link flex items-center gap-1 text-sm" do %>
-    <i class="fas fa-chevron-left"></i>
+<!-- Back link -->
+<div class="mb-6">
+  <%= link_to private_messages_path, class: "link inline-flex items-center gap-1.5 text-sm font-medium" do %>
+    <i class="fas fa-arrow-left text-xs"></i>
     Zurück
   <% end %>
+</div>
 
-  <%# Thread Header %>
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-    <div>
-      <h1 class="text-2xl font-bold">Konversation mit <%= @other_user.username %></h1>
-      <div class="text-sm text-gray-500 mt-1"><%= user_badge(@other_user) %></div>
-    </div>
-
+<!-- Thread header -->
+<div class="mb-8">
+  <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900">Konversation</h1>
+  <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  <div class="flex items-center gap-1.5 text-sm text-cs-ink-500">
+    mit <%= user_badge(@other_user) %>
   </div>
+</div>
 
-  <%# Inline Reply Form %>
-  <div class="card">
-    <div class="card-body p-4">
-      <h2 class="text-base font-semibold mb-3">Antworten</h2>
-      <%= form_with model: PrivateMessage.new, url: private_messages_path, local: true do |f| %>
-        <%= f.hidden_field :receiver_id, value: @other_user.id %>
-        <%= f.text_area :body,
-          rows: 4,
-          class: "input-field w-full mb-3",
-          placeholder: "Deine Antwort..." %>
-        <div class="flex justify-end">
-          <%= f.submit "Antworten", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
+<!-- Reply form -->
+<div class="card mb-8">
+  <div class="card-header">
+    <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Antworten</span>
   </div>
-
-  <%# Message Thread %>
-  <div class="space-y-6">
-    <% @conversation.each do |msg| %>
-      <% is_mine = msg.sender_id == Current.user.id %>
-      <div style="<%= is_mine ? 'margin-left: 15%' : 'margin-right: 15%' %>">
-        <div class="card">
-          <div class="card-header flex items-center justify-between py-2 px-4 border-b text-xs <%= is_mine ? 'bg-gray-50 border-gray-200 text-gray-600' : 'bg-blue-50 border-blue-200 text-blue-800' %>">
-            <div class="flex items-center gap-2">
-              <%= user_badge(msg.sender) %>
-              <span><%= msg.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
-            </div>
-            <div class="flex items-center gap-3">
-              <%= button_to private_message_path(msg), method: :delete,
-                onclick: "return confirm('Nachricht wirklich löschen?')",
-                class: "link flex items-center gap-1 hover:underline bg-transparent border-0 p-0 cursor-pointer" do %>
-                <i class="fas fa-trash text-[10px]"></i> Löschen
-              <% end %>
-              <% unless is_mine %>
-                <button onclick="window.dispatchEvent(new CustomEvent('open-report-modal', { detail: { type: 'PrivateMessage', id: <%= msg.id %> } }))" class="link flex items-center gap-1 hover:underline bg-transparent border-0 p-0 cursor-pointer">
-                  <i class="fas fa-flag text-[10px]"></i> Melden
-                </button>
-              <% end %>
-            </div>
-          </div>
-          <div class="card-body p-4 <%= is_mine ? '' : 'bg-blue-50/40' %>">
-            <div class="prose prose-sm max-w-none whitespace-pre-wrap">
-              <%= simple_format(msg.body) %>
-            </div>
-          </div>
-        </div>
+  <div class="card-body">
+    <%= form_with model: PrivateMessage.new, url: private_messages_path, local: true do |f| %>
+      <%= f.hidden_field :receiver_id, value: @other_user.id %>
+      <%= f.text_area :body,
+        rows: 4,
+        class: "input-field w-full mb-3",
+        placeholder: "Deine Antwort…" %>
+      <div class="flex justify-end">
+        <%= f.submit "Antworten", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
+</div>
+
+<!-- Message thread -->
+<div class="space-y-4">
+  <% @conversation.each do |msg| %>
+    <% is_mine = msg.sender_id == Current.user.id %>
+    <div class="<%= is_mine ? 'ml-[20%]' : 'mr-[20%]' %>">
+      <div class="card">
+        <div class="card-header text-xs <%= is_mine ? 'bg-cs-ink-50' : 'bg-cs-gold-50' %>">
+          <div class="flex items-center gap-2">
+            <%= user_badge(msg.sender) %>
+            <span class="text-cs-ink-400"><%= msg.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
+          </div>
+          <div class="flex items-center gap-3">
+            <%= button_to private_message_path(msg), method: :delete,
+              onclick: "return confirm('Nachricht wirklich löschen?')",
+              class: "link flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer" do %>
+              <i class="fas fa-trash text-[10px]"></i> Löschen
+            <% end %>
+            <% unless is_mine %>
+              <button onclick="window.dispatchEvent(new CustomEvent('open-report-modal', { detail: { type: 'PrivateMessage', id: <%= msg.id %> } }))" class="link flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer">
+                <i class="fas fa-flag text-[10px]"></i> Melden
+              </button>
+            <% end %>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="prose prose-sm max-w-none text-cs-ink-800">
+            <%= simple_format(msg.body) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

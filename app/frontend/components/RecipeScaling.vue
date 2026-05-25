@@ -1,15 +1,15 @@
 <template>
-  <div class="card">
-    <div class="card-body p-4 sm:p-6">
+  <div>
+    <div>
       <!-- Header with scaling controls -->
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-          <i class="fas fa-list text-cs-gold"></i>
-          Zutaten
-        </h2>
+        <div>
+          <h2 class="font-display font-semibold text-[28px] leading-tight text-cs-red-900">Zutaten</h2>
+          <div class="w-8 h-0.5 bg-cs-gold-400 mt-1"></div>
+        </div>
         <!-- Scaling controls (only shown if recipe is scalable) -->
         <div v-if="scalable" class="flex items-center gap-2 flex-wrap">
-          <span class="text-sm text-gray-600">Portionen:</span>
+          <span class="text-sm text-cs-ink-600">Portionen:</span>
           <div class="flex gap-1 flex-wrap">
             <button v-for="factor in scaleFactors"
                     :key="factor.value"
@@ -24,7 +24,7 @@
 
       <!-- Loading indicator -->
       <div v-if="loading" class="flex justify-center py-4">
-        <i class="fas fa-spinner fa-spin text-cs-gold text-2xl"></i>
+        <i class="fas fa-spinner fa-spin text-cs-gold-400 text-2xl"></i>
       </div>
 
       <!-- Ingredients list -->
@@ -32,7 +32,7 @@
         <li v-for="ingredient in ingredients"
             :key="ingredient.id"
             class="flex items-start gap-2">
-          <span class="text-cs-gold mt-1">•</span>
+          <span class="text-cs-gold-400 mt-1">•</span>
           <span v-if="ingredient.needs_review">
             <!-- Uncertain ingredient: show original description -->
             {{ ingredient.old_description }}
@@ -48,7 +48,7 @@
             <strong>{{ ingredient.formatted_amount }}</strong>
             {{ ingredient.ingredient_name }}
             <span v-if="ingredient.additional_info"
-                  class="text-gray-600">({{ ingredient.additional_info }})</span>
+                  class="text-cs-ink-600">({{ ingredient.additional_info }})</span>
           </span>
           <span v-else>
             <!-- Unstructured data: formatted_amount already contains everything -->
@@ -58,16 +58,14 @@
       </ul>
 
       <!-- Warning for uncertain ingredients when scaled -->
-      <div v-if="!loading && scaleFactor !== 1 && hasUncertainIngredients" class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm flex items-start gap-2">
-        <i class="fas fa-exclamation-triangle mt-0.5"></i>
-        <div>
-          <strong>Hinweis:</strong> Einige Zutaten (mit ⚠️ markiert) konnten nicht automatisch skaliert werden und sollten manuell angepasst werden.
-        </div>
+      <div v-if="!loading && scaleFactor !== 1 && hasUncertainIngredients" class="callout-warning mt-3">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div><strong>Hinweis:</strong> Einige Zutaten (mit ⚠️ markiert) konnten nicht automatisch skaliert werden und sollten manuell angepasst werden.</div>
       </div>
 
       <!-- Alcohol information (compact with icons) -->
-      <div v-if="!loading && alcoholInfo && alcoholInfo.total_volume_ml > 0" class="mt-4 pt-3 border-t border-gray-200">
-        <div class="text-xs text-gray-500 flex items-center gap-3 flex-wrap">
+      <div v-if="!loading && alcoholInfo && alcoholInfo.total_volume_ml > 0" class="mt-4 pt-3 border-t border-cs-ink-200">
+        <div class="text-xs text-cs-ink-500 flex items-center gap-3 flex-wrap">
           <span title="Gesamtvolumen">
             <i class="fas fa-flask"></i> {{ formatVolume(alcoholInfo.total_volume_ml / 10) }} cl
           </span>
@@ -78,8 +76,9 @@
       </div>
 
       <!-- Error message -->
-      <div v-if="error" class="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-        {{ error }}
+      <div v-if="error" class="callout-red mt-4">
+        <i class="fas fa-exclamation-circle"></i>
+        <div>{{ error }}</div>
       </div>
     </div>
   </div>
@@ -161,8 +160,8 @@ async function fetchScaledIngredients(factor) {
 
 function buttonClasses(value) {
   const baseClasses = 'px-3 py-1 rounded text-sm transition-colors disabled:opacity-50'
-  const activeClasses = 'bg-cs-dark-red text-white font-semibold'
-  const inactiveClasses = 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+  const activeClasses = 'bg-cs-red-900 text-white font-semibold'
+  const inactiveClasses = 'bg-cs-ink-100 text-cs-ink-700 hover:bg-cs-ink-200'
 
   return scaleFactor.value === value
     ? `${baseClasses} ${activeClasses}`

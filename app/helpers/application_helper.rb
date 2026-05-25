@@ -8,17 +8,17 @@ module ApplicationHelper
 
   def sortable(column, title = nil, default_dir: "asc")
     title ||= column.titleize
-    direction = column == sort_column ? (sort_direction == "asc" ? "desc" : "asc") : default_dir
+    active    = column == sort_column
+    direction = active ? (sort_direction == "asc" ? "desc" : "asc") : default_dir
 
-    # Icons for sort direction
-    icon = ""
-    if column == sort_column
-      icon = sort_direction == "asc" ? " ▲" : " ▼"
+    icon = if active
+      cls = sort_direction == "asc" ? "fas fa-arrow-up" : "fas fa-arrow-down"
+      tag.i("", class: "#{cls} text-[10px] opacity-70")
     end
 
-    link_to "#{request.path}?#{request.query_parameters.merge(sort: column, direction: direction).to_query}", class: "flex items-center group" do
-      tag.span(title, class: "group-hover:text-gray-700 transition-colors") +
-      tag.span(icon, class: "ml-1 text-xs text-cs-gold")
+    link_to "#{request.path}?#{request.query_parameters.merge(sort: column, direction: direction).to_query}",
+            aria: { pressed: active.to_s } do
+      safe_join([ title, icon ].compact)
     end
   end
 

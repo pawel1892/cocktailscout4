@@ -1,62 +1,60 @@
 <div class="card scroll-mt-24" id="post-<%= forum_post.id %>">
-  <%# Post Header (Mobile & Desktop) %>
-  <div class="card-header flex justify-between items-center py-2 px-4 bg-gray-50 text-xs text-gray-500">
-    <div class="flex items-center gap-2">
-      <span class="font-medium"><%= forum_post.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
-      <a href="<%= show_forum_post_path(forum_post.public_id) %>" class="link hover:underline" title="Permalink zu diesem Beitrag">#<%= forum_post.public_id %></a>
-    </div>
+
+  <!-- Post header bar -->
+  <div class="card-header bg-cs-ink-50 text-xs text-cs-ink-500 flex justify-between items-center">
+    <span class="font-medium text-cs-ink-700"><%= forum_post.created_at.strftime("%d.%m.%Y, %H:%M") %></span>
     <div class="flex items-center gap-3">
+      <a href="<%= show_forum_post_path(forum_post.public_id) %>" class="link font-mono" title="Permalink zu diesem Beitrag">#<%= forum_post.public_id %></a>
       <% if Current.user %>
-        <button onclick="window.dispatchEvent(new CustomEvent('open-report-modal', { detail: { type: 'ForumPost', id: <%= forum_post.id %> } }))" class="link flex items-center gap-1 hover:underline bg-transparent border-0 p-0 cursor-pointer">
-          <i class="fas fa-flag text-[10px]"></i> Beitrag melden
+        <button onclick="window.dispatchEvent(new CustomEvent('open-report-modal', { detail: { type: 'ForumPost', id: <%= forum_post.id %> } }))" class="link flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer">
+          <i class="fas fa-flag text-[10px]"></i> Melden
         </button>
       <% end %>
     </div>
   </div>
 
   <div class="flex flex-col lg:flex-row">
-    <%# User Sidebar %>
-    <aside class="w-full lg:w-36 lg:flex-shrink-0 bg-gray-50/50 p-3 border-b lg:border-b-0 lg:border-r border-gray-100 flex flex-row lg:flex-col items-center lg:items-center gap-3 lg:gap-1.5">
+
+    <!-- User sidebar -->
+    <aside class="w-full lg:w-36 lg:flex-shrink-0 bg-cs-ink-50/50 p-3 border-b lg:border-b-0 lg:border-r border-cs-ink-100 flex flex-row lg:flex-col items-center gap-3 lg:gap-2">
       <%= user_badge(forum_post.user, layout: :vertical) %>
       <div class="flex-1 lg:flex-none lg:w-full min-w-0 lg:text-center">
         <div class="mb-1 flex justify-center">
           <%= render 'users/role_badges', user: forum_post.user, size: :small %>
         </div>
-        <div class="text-[11px] text-gray-500 space-y-0.5">
+        <div class="text-[11px] text-cs-ink-400 space-y-0.5">
           <p><%= forum_post.user_post_count %> Beiträge</p>
-          <p class="hidden lg:block">Dabei seit: <%= forum_post.user&.created_at&.strftime("%m.%Y") %></p>
+          <p class="hidden lg:block">Dabei seit <%= forum_post.user&.created_at&.strftime("%m.%Y") %></p>
         </div>
       </div>
     </aside>
 
-    <%# Post Body %>
+    <!-- Post body -->
     <div class="flex-1 p-4 lg:p-6 min-w-0 flex flex-col">
-      <div class="prose prose-cs prose-sm [&_p]:mb-4 max-w-none text-gray-800 flex-1">
+      <div class="prose-body max-w-none flex-1">
         <%= render_markdown(forum_post.body) %>
       </div>
 
       <% if forum_post.last_editor %>
-        <div class="mt-6 pt-2 border-t border-gray-100 text-[10px] italic text-gray-400">
+        <div class="mt-6 pt-2 border-t border-cs-ink-100 text-[10px] italic text-cs-ink-400">
           Zuletzt bearbeitet von <%= user_badge(forum_post.last_editor, layout: :text) %> am <%= forum_post.updated_at.strftime("%d.%m.%Y, %H:%M") %>
         </div>
       <% end %>
 
-      <%# Post Actions %>
-      <div class="mt-6 flex justify-between items-center pt-4 border-t border-gray-100">
+      <!-- Post actions -->
+      <div class="mt-4 flex justify-between items-center pt-3 border-t border-cs-ink-100">
         <div class="flex gap-3">
           <% if Current.user && (forum_post.user == Current.user || Current.user.can_moderate_forum?) %>
-            <%= link_to edit_forum_post_path(forum_post), class: 'text-gray-400 hover:text-cs-gold transition-colors', title: "Bearbeiten" do %>
+            <%= link_to edit_forum_post_path(forum_post), class: 'text-cs-ink-400 hover:text-cs-gold-500 transition-colors', title: "Bearbeiten" do %>
               <i class="fas fa-pencil-alt"></i>
             <% end %>
           <% end %>
-
           <% if Current.user&.can_moderate_forum? %>
-            <%= button_to forum_post_path(forum_post), method: :delete, onclick: "return confirm('Möchten Sie diesen Beitrag wirklich löschen?')", class: 'text-gray-400 hover:text-cs-error transition-colors cursor-pointer', title: "Löschen" do %>
+            <%= button_to forum_post_path(forum_post), method: :delete, onclick: "return confirm('Möchten Sie diesen Beitrag wirklich löschen?')", class: 'text-cs-ink-400 hover:text-cs-error-500 transition-colors bg-transparent border-0 p-0 cursor-pointer', title: "Löschen" do %>
               <i class="fas fa-trash"></i>
             <% end %>
           <% end %>
         </div>
-        
         <% if Current.user %>
           <%= link_to new_forum_post_path(forum_post.forum_thread, quote: forum_post.id), class: 'btn btn-sm btn-gold' do %>
             <i class="fas fa-quote-left mr-1"></i> Zitieren
@@ -64,5 +62,6 @@
         <% end %>
       </div>
     </div>
+
   </div>
 </div>

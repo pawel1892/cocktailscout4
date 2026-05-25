@@ -33,9 +33,41 @@ RSpec.describe RecipesHelper, type: :helper do
 
       it "returns the approved image" do
         expect(helper.recipe_thumbnail(recipe)).to include("img")
-        # Since we use sample, it should always be the approved one as pending is filtered out
-        # We can verify it's NOT the placeholder
         expect(helper.recipe_thumbnail(recipe)).not_to include("fa-cocktail")
+      end
+    end
+
+    context "when recipe has only high-quality approved images" do
+      let!(:hq_image) { create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe) }
+
+      it "returns the high-quality image" do
+        expect(helper.recipe_thumbnail(recipe)).to include(url_for(hq_image.image.variant(:thumb)))
+      end
+    end
+
+    context "when recipe has both high-quality and regular approved images" do
+      let!(:regular_image) { create(:recipe_image, :with_image, :approved, recipe: recipe) }
+      let!(:hq_image) { create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe) }
+
+      it "never returns the regular image" do
+        20.times do
+          expect(helper.recipe_thumbnail(recipe)).to include(url_for(hq_image.image.variant(:thumb)))
+        end
+      end
+
+      it "never returns a placeholder" do
+        expect(helper.recipe_thumbnail(recipe)).not_to include("fa-cocktail")
+      end
+    end
+
+    context "when recipe has multiple high-quality approved images" do
+      let!(:hq_image1) { create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe) }
+      let!(:hq_image2) { create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe) }
+
+      it "returns one of the high-quality images" do
+        result = helper.recipe_thumbnail(recipe)
+        hq_urls = [ url_for(hq_image1.image.variant(:thumb)), url_for(hq_image2.image.variant(:thumb)) ]
+        expect(hq_urls.any? { |url| result.include?(url) }).to be true
       end
     end
   end

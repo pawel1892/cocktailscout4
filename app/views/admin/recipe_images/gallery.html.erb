@@ -1,0 +1,61 @@
+<div class="mb-8 flex items-center justify-between">
+  <div>
+    <h1 class="text-3xl font-bold text-cs-ink-800">Bildergalerie</h1>
+    <p class="text-sm text-cs-ink-500 mt-1">Gesamt: <strong><%= @pagy.count %></strong> Bilder</p>
+  </div>
+  <%= link_to "← Listenansicht", admin_recipe_images_path, class: "btn btn-outline" %>
+</div>
+
+<!-- Filters -->
+<div class="bg-white rounded-lg shadow border border-cs-ink-200 p-4 mb-6">
+  <%= form_with url: gallery_admin_recipe_images_path, method: :get, class: "flex flex-wrap gap-3 items-end" do |f| %>
+    <div class="flex-1 min-w-[200px]">
+      <%= f.label :q, "Rezept suchen", class: "label-field" %>
+      <%= f.text_field :q, value: params[:q], placeholder: "Rezeptname...", class: "input-field" %>
+    </div>
+    <div class="min-w-[180px]">
+      <%= f.label :hq, "Qualität", class: "label-field" %>
+      <%= f.select :hq,
+            [["Alle", ""], ["Nur hochwertig", "yes"], ["Nicht hochwertig", "no"]],
+            { selected: params[:hq] },
+            class: "input-field" %>
+    </div>
+    <%= f.submit "Filtern", class: "btn btn-primary" %>
+    <% if params[:q].present? || params[:hq].present? %>
+      <%= link_to "Zurücksetzen", gallery_admin_recipe_images_path, class: "btn btn-outline" %>
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Pagination top -->
+<% if @pagy.pages > 1 %>
+  <div class="mb-6">
+    <%== @pagy.series_nav %>
+  </div>
+<% end %>
+
+<% if @recipe_images.any? %>
+  <admin-high-quality-gallery id="hq-gallery"></admin-high-quality-gallery>
+
+  <!-- Pagination bottom -->
+  <% if @pagy.pages > 1 %>
+    <div class="mt-6">
+      <%== @pagy.series_nav %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="bg-white rounded-lg shadow border border-cs-ink-200 p-12 text-center">
+    <i class="fa-solid fa-images text-6xl text-cs-ink-300 mb-4"></i>
+    <h3 class="text-xl font-semibold text-cs-ink-700 mb-2">Keine Bilder gefunden</h3>
+    <p class="text-cs-ink-600">Es gibt keine genehmigten Bilder für diese Filtereinstellungen.</p>
+  </div>
+<% end %>
+
+<script>
+  window.adminGalleryImages = <%= raw @recipe_images.select { |i| i.image.attached? }.map { |i| {
+    id: i.id,
+    thumbnailUrl: url_for(i.image.variant(:medium)),
+    recipeTitle: i.recipe&.title || "(Rezept gelöscht)",
+    highQuality: i.high_quality
+  } }.to_json %>;
+</script>

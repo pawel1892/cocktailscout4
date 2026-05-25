@@ -40,7 +40,7 @@ const containerStyle = computed(() => ({
   height: `${px.value}px`,
 }))
 
-const containerClass = 'rounded-full flex-shrink-0 overflow-hidden ring-1 ring-gray-200'
+const containerClass = 'rounded-full flex-shrink-0 overflow-hidden ring-1 ring-cs-ink-200'
 
 const fallbackSvg = computed(() => {
   const seed = props.user?.username ?? 'unknown'

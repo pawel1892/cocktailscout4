@@ -4,11 +4,11 @@
 
 <!-- Breadcrumb / Back nav -->
 <div class="mb-6 flex items-center gap-3">
-  <%= link_to recipe_path(@recipe), class: "text-gray-400 hover:text-gray-600 transition-colors" do %>
+  <%= link_to recipe_path(@recipe), class: "text-cs-ink-400 hover:text-cs-ink-600 transition-colors" do %>
     <i class="fas fa-arrow-left"></i>
   <% end %>
   <div>
-    <p class="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Bewertungen für</p>
+    <p class="text-xs text-cs-ink-400 uppercase tracking-wide mb-0.5">Bewertungen für</p>
     <h1 class="text-2xl font-bold leading-tight"><%= @recipe.title %></h1>
   </div>
 </div>

@@ -2,199 +2,215 @@
   <%= pagy_seo_tags(@pagy) %>
 <% end %>
 
-<div class="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-  <h1 class="text-3xl font-bold">Rezepte</h1>
-  <div class="text-sm text-gray-500">
-    <%= @pagy.count %> <%= Recipe.model_name.human(count: @pagy.count) %> gefunden
-  </div>
-</div>
-
-<!-- Filter Bar -->
-<% if active_filters.any? %>
-  <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex flex-wrap items-center gap-3">
-    <span class="font-medium text-green-900">Aktive Filter:</span>
-    <% active_filters.each do |filter| %>
-      <span class="bg-white text-green-800 border border-green-200 px-2 py-1 rounded text-sm flex items-center gap-2 shadow-sm">
-        <%= filter[:label] %>
-        <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id, :user_id, :collection_id, :filter).except(filter[:param])), class: "text-green-600 hover:text-green-800" do %>
-          <i class="fas fa-times"></i>
-        <% end %>
-      </span>
-    <% end %>
-    <%= link_to "Alle Filter zurücksetzen", recipes_path(params.permit(:sort, :direction)), class: "text-sm text-green-700 hover:text-green-900 underline ml-auto" %>
-  </div>
-<% end %>
-
-<div class="mb-6 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-  <%= form_with url: recipes_path, method: :get, class: "flex flex-wrap gap-4 items-end", data: { turbo_frame: "_top" } do |f| %>
-    <%# Preserve sort params %>
-    <%= f.hidden_field :sort, value: params[:sort] if params[:sort] %>
-    <%= f.hidden_field :direction, value: params[:direction] if params[:direction] %>
-
-    <div class="flex flex-col gap-1 min-w-[200px] flex-1">
-      <%= f.label :q, "Suche", class: "label-field mb-0" %>
-      <div class="relative">
-        <%= f.text_field :q, value: params[:q], placeholder: "Rezeptname...", class: "input-field py-1.5 text-sm pl-8" %>
-        <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-      </div>
-    </div>
-
-    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
-      <%= f.label :min_rating, "Mindestbewertung", class: "label-field mb-0" %>
-      <%= f.select :min_rating, 
-          options_for_select([["Alle", ""], ["5+", 5], ["6+", 6], ["7+", 7], ["8+", 8], ["9+", 9]], params[:min_rating]), 
-          {}, 
-          class: "input-field py-1.5 text-sm" 
-      %>
-    </div>
-
-    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
-      <%= f.label :tag, "Kategorie / Tag", class: "label-field mb-0" %>
-      <%= f.collection_select :tag, @tags, :name, :name, 
-          { include_blank: "Alle" }, 
-          { class: "input-field py-1.5 text-sm", value: params[:tag] } 
-      %>
-    </div>
-
-    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
-      <%= f.label :ingredient_id, "Zutat", class: "label-field mb-0" %>
-      <%= f.collection_select :ingredient_id, @ingredients, :id, :name,
-          { include_blank: "Alle" },
-          { class: "input-field py-1.5 text-sm", value: params[:ingredient_id] }
-      %>
-    </div>
-
-    <div class="flex flex-col gap-1 min-w-[150px] flex-1">
-      <label class="label-field mb-0">Benutzer</label>
-      <user-autocomplete
-        initial-username="<%= @filter_user&.username %>"
-        initial-user-id="<%= params[:user_id] %>"
-      ></user-autocomplete>
-    </div>
-
-    <% if @collections.any? %>
-      <div class="flex flex-col gap-1 min-w-[200px] flex-1">
-        <%= f.label :collection_id, "Meine Liste", class: "label-field mb-0" %>
-        <%= f.collection_select :collection_id, @collections, :id, :name,
-            { include_blank: "Alle Rezepte" },
-            { class: "input-field py-1.5 text-sm", value: params[:collection_id] }
-        %>
-      </div>
-    <% end %>
-
-    <% if Current.user %>
-      <div class="flex flex-col gap-1 min-w-[150px] flex-1">
-        <label class="label-field mb-0">&nbsp;</label>
-        <label class="inline-flex items-center gap-2 cursor-pointer py-1.5 px-3 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors h-[34px]">
-          <%= f.check_box :filter, { checked: params[:filter] == "favorites", onchange: "this.form.submit()", class: "hidden" }, "favorites", "" %>
-          <i class="<%= params[:filter] == 'favorites' ? 'fas text-red-600' : 'far text-gray-400' %> fa-heart"></i>
-          <span class="<%= params[:filter] == 'favorites' ? 'font-medium text-gray-900' : 'text-gray-600' %> text-sm select-none">Nur Favoriten</span>
-        </label>
-      </div>
-    <% end %>
-
-    <div class="flex gap-2">
-      <%= f.submit "Filtern", class: "btn btn-primary btn-sm h-[34px]" %>
-    </div>
+<!-- Filter FAB (static HTML — visible immediately, before Vue loads) -->
+<button onclick="window.dispatchEvent(new CustomEvent('open-recipe-filters'))"
+        class="fixed bottom-5 right-4 z-30 lg:hidden
+               w-12 h-12 rounded-full bg-cs-red-900 text-white shadow-lg
+               flex items-center justify-center
+               hover:bg-cs-red-800 active:scale-95 transition-all">
+  <i class="fas fa-sliders-h text-sm"></i>
+  <% if active_filters.any? %>
+    <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-cs-gold-500 text-white text-[10px] font-bold flex items-center justify-center leading-none"><%= active_filters.size %></span>
   <% end %>
-</div>
+</button>
 
-<!-- Sort Bar -->
-<div class="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
-  <span class="font-medium text-gray-900">Sortieren:</span>
-  <%= sortable "title", Recipe.human_attribute_name(:title) %>
-  <%= sortable "average_rating", Recipe.human_attribute_name(:average_rating), default_dir: "desc" %>
-  <%= sortable "users.username", Recipe.human_attribute_name(:user) %>
-  <%= sortable "alcohol_content", Recipe.human_attribute_name(:alcohol_content) %>
-  <%= sortable "visits_count", Recipe.human_attribute_name(:visits_count), default_dir: "desc" %>
-  <%= sortable "favorites_count", Recipe.human_attribute_name(:favorites_count), default_dir: "desc" %>
-</div>
+<!-- Two-column layout: content + filter sidebar -->
+<div class="lg:grid lg:grid-cols-[1fr_272px] lg:gap-8">
 
-<% if @pagy.pages > 1 %>
-  <div class="flex justify-center mb-6">
-    <%== @pagy.series_nav %>
-  </div>
-<% end %>
+  <!-- ─── LEFT: main content ─── -->
+  <div>
 
-<div class="space-y-4">
-  <% if @recipes.any? %>
-    <% @recipes.each do |recipe| %>
-      <div class="card hover:shadow-md transition-all duration-200 group">
-        <div class="card-body p-4">
-          <div class="flex gap-4">
+    <!-- Page header -->
+    <div class="flex items-start justify-between mb-6 gap-4">
+      <div>
+        <h1 class="font-display font-semibold text-[52px] leading-none tracking-tight text-cs-red-900">Rezepte</h1>
+        <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+        <p class="text-sm text-cs-ink-500">
+          <%= @pagy.count %> <%= Recipe.model_name.human(count: @pagy.count) %> gefunden
+        </p>
+      </div>
+    </div>
+
+    <!-- Active filters -->
+    <% if active_filters.any? %>
+      <div class="mb-4 flex flex-wrap items-center gap-1.5">
+        <% active_filters.each do |filter| %>
+          <%= link_to recipes_path(params.permit(:sort, :direction, :q, :min_rating, :tag, :ingredient_id, :user_id, :collection_id, :filter).except(filter[:param])),
+                class: "tag-info gap-1.5" do %>
+            <%= filter[:label] %>
+            <i class="fas fa-times text-[9px] opacity-60"></i>
+          <% end %>
+        <% end %>
+        <%= link_to "Alle löschen", recipes_path(params.permit(:sort, :direction)),
+              class: "text-xs text-cs-ink-400 hover:text-cs-ink-700 underline ml-1" %>
+      </div>
+    <% end %>
+
+    <!-- Sort bar -->
+    <div class="mb-5 flex items-center gap-3">
+      <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400 shrink-0">Sortieren</span>
+
+      <!-- Desktop: segmented btn-group -->
+      <div class="hidden lg:block overflow-x-auto">
+        <div class="btn-group">
+          <%= sortable "title", "Name" %>
+          <%= sortable "average_rating", "Bewertung", default_dir: "desc" %>
+          <%= sortable "alcohol_content", "Alkohol" %>
+          <%= sortable "visits_count", "Beliebt", default_dir: "desc" %>
+          <%= sortable "favorites_count", "Favoriten", default_dir: "desc" %>
+          <%= sortable "created_at", "Neueste", default_dir: "desc" %>
+        </div>
+      </div>
+
+      <!-- Mobile/tablet: dropdown -->
+      <% sort_options = [
+           ["Name (A→Z)",       "title",           "asc"],
+           ["Name (Z→A)",       "title",           "desc"],
+           ["Bewertung",        "average_rating",  "desc"],
+           ["Beliebt",          "visits_count",    "desc"],
+           ["Favoriten",        "favorites_count", "desc"],
+           ["Neueste",          "created_at",      "desc"],
+           ["Alkohol",          "alcohol_content", "asc"],
+         ] %>
+      <select class="input-field lg:hidden"
+              onchange="window.location.href = this.value">
+        <% sort_options.each do |label, col, dir| %>
+          <option value="<%= request.path + "?" + request.query_parameters.merge(sort: col, direction: dir).to_query %>"
+                  <%= "selected" if sort_column == col && sort_direction == dir %>>
+            <%= label %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <!-- Top pagination -->
+    <% if @pagy.pages > 1 %>
+      <div class="flex justify-center py-4">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
+
+    <!-- Recipe list — divider rows, no cards -->
+    <% if @recipes.any? %>
+      <div class="divide-y divide-cs-ink-200">
+        <% @recipes.each do |recipe| %>
+          <div class="flex gap-4 sm:gap-5 py-5 group">
+
             <!-- Thumbnail -->
             <div class="flex-shrink-0">
-               <%= link_to recipe_path(recipe) do %>
-                 <%= recipe_thumbnail(recipe, size_class: "w-20 h-20 sm:w-24 sm:h-24") %>
-               <% end %>
+              <%= link_to recipe_path(recipe) do %>
+                <%= recipe_thumbnail(recipe, size_class: "w-[80px] h-[80px] sm:w-[96px] sm:h-[96px] rounded-xl shadow-sm group-hover:shadow-md transition-shadow duration-200") %>
+              <% end %>
             </div>
 
             <!-- Content -->
             <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-start gap-2">
-                 <div class="min-w-0 flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <%= link_to recipe.title, recipe_path(recipe), class: "link font-bold text-lg leading-tight truncate group-hover:text-cs-gold transition-colors" %>
-                      <favorite-toggle
-                        favoritable-type="Recipe"
-                        :favoritable-id="<%= recipe.id %>"
-                        :initial-favorited="<%= @favorite_recipe_ids.include?(recipe.id) ? 'true' : 'false' %>"
-                        size="text-lg"
-                      ></favorite-toggle>
+              <div class="flex justify-between items-start gap-3">
+                <div class="min-w-0 flex-1">
+
+                  <!-- Title + favorite -->
+                  <div class="flex items-baseline gap-2 flex-wrap mb-0.5">
+                    <%= link_to recipe.title, recipe_path(recipe),
+                          class: "font-display font-semibold text-xl sm:text-2xl leading-tight text-cs-red-900 hover:text-cs-red-700 transition-colors" %>
+                    <favorite-toggle
+                      favoritable-type="Recipe"
+                      :favoritable-id="<%= recipe.id %>"
+                      :initial-favorited="<%= @favorite_recipe_ids.include?(recipe.id) ? 'true' : 'false' %>"
+                      size="text-sm"
+                    ></favorite-toggle>
+                  </div>
+
+                  <!-- Author -->
+                  <p class="text-xs text-cs-ink-400 mb-3">
+                    von <span class="user-profile-trigger cursor-pointer hover:text-cs-ink-700 transition-colors"
+                               data-user-id="<%= recipe.user.id %>"><%= recipe.user.username %></span>
+                  </p>
+
+                </div>
+
+                <!-- Rating -->
+                <div class="flex flex-col items-center gap-0.5 flex-shrink-0">
+                  <% if recipe.show_rating? %>
+                    <div class="<%= rating_badge_class(recipe.average_rating) %> px-2.5 py-1 rounded-md text-base font-bold font-mono whitespace-nowrap min-w-[2.75rem] text-center text-white">
+                      <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
                     </div>
-                    <div class="text-xs text-gray-500 mb-2 flex flex-wrap items-center gap-1">
-                      <span>von</span>
-                      <%= user_badge(recipe.user) %>
-                    </div>
-                 </div>
-                 <div class="flex flex-col items-center gap-1">
-                   <% if recipe.show_rating? %>
-                     <div class="<%= rating_badge_class(recipe.average_rating) %> px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center">
-                       <%= number_with_precision(recipe.average_rating, precision: 1, separator: ",") %>
-                     </div>
-                     <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>)</span>
-                   <% else %>
-                     <div class="bg-gray-400 px-2 py-1 md:px-3 md:py-2 md:text-lg rounded text-sm font-bold whitespace-nowrap min-w-[3rem] md:min-w-[4rem] text-center text-white">–</div>
-                     <span class="text-[10px] text-gray-400 font-normal">(<%= recipe.ratings_count %>/4)</span>
-                   <% end %>
-                 </div>
+                    <span class="text-[10px] text-cs-ink-400 font-mono">(<%= recipe.ratings_count %>)</span>
+                  <% else %>
+                    <div class="bg-cs-ink-200 px-2.5 py-1 rounded-md text-base font-bold font-mono whitespace-nowrap min-w-[2.75rem] text-center text-cs-ink-500">–</div>
+                    <span class="text-[10px] text-cs-ink-400 font-mono">(<%= recipe.ratings_count %>/4)</span>
+                  <% end %>
+                </div>
               </div>
 
-                          <% if recipe.tag_list.any? %>
-                              <%= render "recipes/tag_list", tags: recipe.tags %>
-                          <% end %>
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-400 mt-2">
-                 <% if recipe.alcohol_content.present? %>
-                   <span title="<%= Recipe.human_attribute_name(:alcohol_content) %>" class="flex items-center gap-1">
-                     <i class="fas fa-wine-glass-alt"></i> <%= number_to_percentage recipe.alcohol_content, precision: 1 %>
-                   </span>
-                 <% end %>
-                 <span title="<%= Recipe.human_attribute_name(:visits_count) %>" class="flex items-center gap-1">
-                   <i class="far fa-eye"></i> <%= number_with_delimiter recipe.visits_count %>
-                 </span>
-                 <span title="<%= Recipe.human_attribute_name(:favorites_count) %>" class="flex items-center gap-1">
-                   <i class="far fa-heart"></i> <%= number_with_delimiter recipe.favorites_count %>
-                 </span>
+              <!-- Tags -->
+              <% if recipe.tag_list.any? %>
+                <div class="mb-2.5">
+                  <%= render "recipes/tag_list", tags: recipe.tags %>
+                </div>
+              <% end %>
+
+              <!-- Stats -->
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-cs-ink-400 font-mono">
+                <% if recipe.alcohol_content.present? %>
+                  <span class="flex items-center gap-1" title="<%= Recipe.human_attribute_name(:alcohol_content) %>">
+                    <i class="fas fa-wine-glass-alt"></i>
+                    <%= number_to_percentage recipe.alcohol_content, precision: 1 %>
+                  </span>
+                <% end %>
+                <span class="flex items-center gap-1" title="<%= Recipe.human_attribute_name(:visits_count) %>">
+                  <i class="far fa-eye"></i>
+                  <%= number_with_delimiter recipe.visits_count %>
+                </span>
+                <span class="flex items-center gap-1" title="<%= Recipe.human_attribute_name(:favorites_count) %>">
+                  <i class="far fa-heart"></i>
+                  <%= number_with_delimiter recipe.favorites_count %>
+                </span>
               </div>
             </div>
+
           </div>
+        <% end %>
+      </div>
+
+    <% else %>
+      <div class="card card-ghost p-12 text-center mt-4">
+        <div class="text-cs-ink-300 mb-4">
+          <i class="fas fa-search text-5xl"></i>
         </div>
+        <h3 class="font-display font-bold text-xl text-cs-ink-800 mb-2">Keine Rezepte gefunden</h3>
+        <p class="text-cs-ink-500 mb-8 max-w-md mx-auto">Leider konnten wir keine Rezepte finden, die deinen Filtereinstellungen entsprechen.</p>
+        <%= link_to "Alle Filter zurücksetzen", recipes_path(params.permit(:sort, :direction)), class: "btn btn-primary" %>
       </div>
     <% end %>
-  <% else %>
-    <div class="card p-12 text-center bg-gray-50 border-dashed border-2 border-gray-200">
-      <div class="text-gray-300 mb-4">
-        <i class="fas fa-search text-5xl"></i>
-      </div>
-      <h3 class="text-xl font-bold text-gray-800 mb-2">Keine Rezepte gefunden</h3>
-      <p class="text-gray-500 mb-8 max-w-md mx-auto">Leider konnten wir keine Rezepte finden, die deinen Filtereinstellungen entsprechen. Versuche es mit weniger Filtern oder anderen Kriterien.</p>
-      <%= link_to "Alle Filter zurücksetzen", recipes_path(params.permit(:sort, :direction)), class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
 
-<% if @pagy.pages > 1 %>
-  <div class="flex justify-center py-8">
-    <%== @pagy.series_nav %>
+    <!-- Bottom pagination -->
+    <% if @pagy.pages > 1 %>
+      <div class="flex justify-center py-8 border-t border-cs-ink-200">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
+
   </div>
-<% end %>
+
+  <!-- ─── RIGHT: RecipeFilters Vue component ─── -->
+  <recipe-filters
+    action="<%= recipes_path %>"
+    :tags="<%= @tags.map { |t| { name: t.name } }.to_json %>"
+    :ingredients="<%= @ingredients.map { |i| { id: i.id, name: i.name } }.to_json %>"
+    :collections="<%= @collections.map { |c| { id: c.id, name: c.name } }.to_json %>"
+    :active-filters-count="<%= active_filters.size %>"
+    reset-url="<%= recipes_path(params.permit(:sort, :direction)) %>"
+    current-q="<%= params[:q] %>"
+    current-min-rating="<%= params[:min_rating] %>"
+    current-tag="<%= params[:tag] %>"
+    current-ingredient-id="<%= params[:ingredient_id] %>"
+    current-user-id="<%= params[:user_id] %>"
+    current-collection-id="<%= params[:collection_id] %>"
+    current-filter="<%= params[:filter] %>"
+    current-sort="<%= params[:sort] %>"
+    current-direction="<%= params[:direction] %>"
+    initial-username="<%= @filter_user&.username %>"
+    :authenticated="<%= Current.user ? 'true' : 'false' %>"
+  ></recipe-filters>
+
+</div>

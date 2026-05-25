@@ -1,122 +1,126 @@
 <% content_for :title, "#{@suggestion.title} - Rezeptvorschlag - CocktailScout" %>
 
-<div class="max-w-4xl mx-auto px-4 py-8">
-  <div class="mb-6">
-    <%= link_to recipe_suggestions_path, class: "link flex items-center gap-1 text-sm mb-4" do %>
-      <i class="fas fa-chevron-left"></i>
-      Zurück zur Übersicht
-    <% end %>
-
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-      <h1 class="text-3xl font-bold text-gray-900"><%= @suggestion.title %></h1>
-      <% if @suggestion.editable_by?(Current.user) %>
-        <%= link_to edit_recipe_suggestion_path(@suggestion), class: "btn btn-primary" do %>
-          <i class="fa-solid fa-edit"></i>
-          Bearbeiten
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-
-  <!-- Status Card -->
-  <div class="card p-6 mb-6">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold text-gray-900">Status</h2>
-      <%= render "shared/suggestion_status_badge", suggestion: @suggestion %>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-      <div>
-        <span class="text-gray-600">Eingereicht:</span>
-        <span class="font-medium"><%= l(@suggestion.created_at, format: :long) %></span>
-      </div>
-
-      <% if @suggestion.reviewed_at %>
-        <div>
-          <span class="text-gray-600">Geprüft:</span>
-          <span class="font-medium"><%= l(@suggestion.reviewed_at, format: :long) %></span>
-        </div>
-      <% end %>
-
-      <% if @suggestion.reviewed_by %>
-        <div>
-          <span class="text-gray-600">Geprüft von:</span>
-          <span class="font-medium"><%= @suggestion.reviewed_by.username %></span>
-        </div>
-      <% end %>
-    </div>
-
-    <!-- Feedback for rejected suggestions -->
-    <% if @suggestion.status_rejected? && @suggestion.feedback.present? %>
-      <div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
-        <p class="font-semibold text-red-900 mb-1 flex items-center gap-2">
-          <i class="fa-solid fa-exclamation-triangle"></i>
-          Ablehnungsgrund:
-        </p>
-        <p class="text-red-800"><%= simple_format(@suggestion.feedback) %></p>
-      </div>
-    <% end %>
-
-    <!-- Published recipe link for approved suggestions -->
-    <% if @suggestion.status_approved? && @suggestion.published_recipe %>
-      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
-        <p class="font-semibold text-green-900 mb-1 flex items-center gap-2">
-          <i class="fa-solid fa-check-circle"></i>
-          Veröffentlicht als:
-        </p>
-        <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "text-green-800 link text-lg" do %>
-          <%= @suggestion.published_recipe.title %>
-          <i class="fa-solid fa-arrow-right ml-1"></i>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <!-- Recipe Details -->
-  <div class="card p-6 mb-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Beschreibung</h2>
-    <div class="prose max-w-none">
-      <%= simple_format(@suggestion.description) %>
-    </div>
-  </div>
-
-  <!-- Tags -->
-  <% if @suggestion.tag_list.present? %>
-    <div class="card p-6 mb-6">
-      <h2 class="text-lg font-semibold text-gray-900 mb-4">Tags</h2>
-      <div class="flex flex-wrap gap-2">
-        <% @suggestion.tag_list.split(',').map(&:strip).each do |tag| %>
-          <span class="inline-flex items-center px-3 py-1 text-sm font-medium bg-gray-100 text-gray-800 rounded-full">
-            <%= tag %>
-          </span>
-        <% end %>
-      </div>
-    </div>
+<!-- Back link -->
+<div class="mb-6">
+  <%= link_to recipe_suggestions_path, class: "link inline-flex items-center gap-1.5 text-sm font-medium" do %>
+    <i class="fas fa-arrow-left text-xs"></i>
+    Zurück zur Übersicht
   <% end %>
+</div>
 
-  <!-- Ingredients -->
-  <div class="card p-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Zutaten</h2>
-    <ul class="space-y-2">
-      <% @suggestion.recipe_suggestion_ingredients.each do |rsi| %>
-        <li class="flex items-start gap-2">
-          <i class="fa-solid fa-circle text-xs text-gray-400 mt-1.5"></i>
-          <span>
-            <% if rsi.amount && rsi.unit %>
-              <strong><%= rsi.amount %> <%= rsi.unit.display_name_for(rsi.amount) %></strong>
-            <% elsif rsi.amount %>
-              <strong><%= rsi.amount %>x</strong>
-            <% end %>
-            <%= rsi.display_name.presence || rsi.ingredient.name %>
-            <% if rsi.additional_info.present? %>
-              <span class="text-gray-600">(<%= rsi.additional_info %>)</span>
-            <% end %>
-            <% if rsi.is_optional %>
-              <span class="text-sm text-gray-500 italic">(optional)</span>
-            <% end %>
-          </span>
-        </li>
+<!-- Page header -->
+<div class="mb-8 flex items-start justify-between gap-4">
+  <div>
+    <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900"><%= @suggestion.title %></h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+    <div class="flex flex-wrap items-center gap-3">
+      <%= render "shared/suggestion_status_badge", suggestion: @suggestion %>
+      <span class="text-xs text-cs-ink-400"><i class="fas fa-calendar mr-1"></i>Eingereicht <%= l(@suggestion.created_at, format: :short) %></span>
+      <% if @suggestion.reviewed_at %>
+        <span class="text-xs text-cs-ink-400"><i class="fas fa-check mr-1"></i>Geprüft <%= l(@suggestion.reviewed_at, format: :short) %></span>
       <% end %>
-    </ul>
+    </div>
   </div>
+  <% if @suggestion.editable_by?(Current.user) %>
+    <%= link_to edit_recipe_suggestion_path(@suggestion), class: "btn btn-primary shrink-0" do %>
+      <i class="fas fa-pen text-xs mr-1.5"></i> Bearbeiten
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Feedback / published notice -->
+<% if @suggestion.status_rejected? && @suggestion.feedback.present? %>
+  <div class="callout-red mb-6">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div>
+      <p class="font-semibold mb-1">Ablehnungsgrund</p>
+      <div class="text-sm"><%= simple_format(@suggestion.feedback) %></div>
+    </div>
+  </div>
+<% end %>
+
+<% if @suggestion.status_approved? && @suggestion.published_recipe %>
+  <div class="callout-success mb-6">
+    <i class="fas fa-check-circle"></i>
+    <div>
+      <p class="font-semibold mb-1">Veröffentlicht als</p>
+      <%= link_to recipe_path(@suggestion.published_recipe.slug), class: "link font-medium" do %>
+        <%= @suggestion.published_recipe.title %>
+        <i class="fas fa-arrow-right ml-1 text-xs"></i>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if @suggestion.reviewed_by %>
+  <div class="mb-6 text-xs text-cs-ink-400">
+    Geprüft von <strong class="text-cs-ink-600"><%= @suggestion.reviewed_by.username %></strong>
+  </div>
+<% end %>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+  <!-- Main content -->
+  <div class="lg:col-span-2 space-y-6">
+
+    <!-- Description -->
+    <div class="card">
+      <div class="card-header">
+        <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Beschreibung</span>
+      </div>
+      <div class="card-body prose prose-sm max-w-none text-cs-ink-800">
+        <%= simple_format(@suggestion.description) %>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <% if @suggestion.tag_list.present? %>
+      <div class="card">
+        <div class="card-header">
+          <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Tags</span>
+        </div>
+        <div class="card-body">
+          <div class="flex flex-wrap gap-1.5">
+            <% @suggestion.tag_list.split(',').map(&:strip).each do |tag| %>
+              <span class="tag-neutral"><%= tag %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <!-- Ingredients sidebar -->
+  <div class="card h-fit">
+    <div class="card-header">
+      <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Zutaten</span>
+      <span class="font-mono text-[11px] text-cs-ink-400"><%= @suggestion.recipe_suggestion_ingredients.count %></span>
+    </div>
+    <div class="card-body p-0">
+      <ul class="divide-y divide-cs-ink-100">
+        <% @suggestion.recipe_suggestion_ingredients.each do |rsi| %>
+          <li class="flex items-baseline gap-2 px-[18px] py-3 text-sm">
+            <span class="font-mono text-[12px] text-cs-ink-500 shrink-0 w-16 text-right">
+              <% if rsi.amount && rsi.unit %>
+                <%= rsi.amount %> <%= rsi.unit.display_name_for(rsi.amount) %>
+              <% elsif rsi.amount %>
+                <%= rsi.amount %>×
+              <% end %>
+            </span>
+            <span class="text-cs-ink-900">
+              <%= rsi.display_name.presence || rsi.ingredient.name %>
+              <% if rsi.additional_info.present? %>
+                <span class="text-cs-ink-400 text-xs">(<%= rsi.additional_info %>)</span>
+              <% end %>
+              <% if rsi.is_optional %>
+                <span class="text-cs-ink-400 text-xs italic">optional</span>
+              <% end %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
 </div>

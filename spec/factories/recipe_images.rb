@@ -31,5 +31,9 @@ FactoryBot.define do
     trait :pending do
       state { "pending" }
     end
+
+    trait :high_quality do
+      high_quality { true }
+    end
   end
 end

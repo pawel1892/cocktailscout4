@@ -32,9 +32,9 @@ class RecipesController < ApplicationController
       query = query.joins(:favorites).where(favorites: { user_id: Current.user.id })
     end
 
-    # Filter data
-    @tags = ActsAsTaggableOn::Tag.order(:name)
-    @ingredients = Ingredient.order(:name)
+    # Filter data — only tags/ingredients used in currently visible recipes
+    @tags = Recipe.visible_tags.order(:name)
+    @ingredients = Ingredient.used_in_visible_recipes.order(:name)
     @collections = authenticated? ? Current.user.ingredient_collections.order(is_default: :desc, name: :asc) : []
     @filter_user = User.find_by(id: params[:user_id]) if params[:user_id].present?
     @selected_collection = @collections.find { |c| c.id == params[:collection_id].to_i } if params[:collection_id].present?
@@ -140,7 +140,7 @@ class RecipesController < ApplicationController
   end
 
   def sort_column
-    %w[title average_rating alcohol_content visits_count favorites_count users.username].include?(params[:sort]) ? params[:sort] : "visits_count"
+    %w[title average_rating alcohol_content visits_count favorites_count users.username created_at].include?(params[:sort]) ? params[:sort] : "visits_count"
   end
 
   def sort_direction

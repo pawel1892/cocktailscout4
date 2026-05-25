@@ -4,6 +4,6 @@ class RecipeCategoriesController < ApplicationController
   def index
     add_breadcrumb "Rezepte", recipes_path
     add_breadcrumb "Rezept-Kategorien"
-    @tags = Recipe.tag_counts.order(:name)
+    @tags = Recipe.visible_tags.order(:name)
   end
 end

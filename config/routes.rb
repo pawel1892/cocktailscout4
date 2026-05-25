@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     end
 
     resources :featured_recipe_images, only: [ :create, :destroy ]
+    resources :high_quality_recipe_images, only: [ :create, :destroy ]
 
     resources :recipe_images, only: [ :index, :show, :destroy ] do
       member do
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
       end
       collection do
         get :count
+        get :gallery
       end
     end
   end
@@ -132,6 +134,7 @@ Rails.application.routes.draw do
   delete "cocktailforum/thema/:thread_id/sperren", to: "forum_thread_locks#destroy", as: :unlock_forum_thread
   post "cocktailforum/thema/:thread_id/anpinnen", to: "forum_thread_pins#create", as: :pin_forum_thread
   delete "cocktailforum/thema/:thread_id/anpinnen", to: "forum_thread_pins#destroy", as: :unpin_forum_thread
+  post "cocktailforum/thema/:thread_id/verschieben", to: "forum_thread_moves#create", as: :move_forum_thread
   get "cocktailforum/suche", to: "forum_search#index", as: :forum_search
 
   # Forum Posts
@@ -148,7 +151,6 @@ Rails.application.routes.draw do
   # Private Messages
   resources :private_messages, path: "nachrichten", only: [ :index, :show, :new, :create, :destroy ] do
     collection do
-      get :sent
       get :unread_count
     end
   end

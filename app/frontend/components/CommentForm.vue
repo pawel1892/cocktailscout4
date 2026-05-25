@@ -48,10 +48,10 @@ const textareaClasses = computed(() => {
 
   if (props.hasError) {
     // Only apply red border, not red text color (so user can still type in normal color)
-    return `${baseClasses} border-cs-error focus:border-cs-error focus:ring-cs-error`
+    return `${baseClasses} border-cs-error-500 focus:border-cs-error-500 focus:ring-cs-error-500`
   }
 
-  return `${baseClasses} border-gray-300 focus:ring-cs-dark-red focus:border-transparent`
+  return `${baseClasses} border-cs-ink-300 focus:ring-cs-red-900 focus:border-transparent`
 })
 
 const counterColorClass = computed(() => {
@@ -63,6 +63,6 @@ const counterColorClass = computed(() => {
   } else if (count > props.maxLength * 0.85) {
     return 'text-yellow-600'
   }
-  return 'text-gray-500'
+  return 'text-cs-ink-500'
 })
 </script>

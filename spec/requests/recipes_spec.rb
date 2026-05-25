@@ -234,6 +234,47 @@ RSpec.describe "Recipes", type: :request do
         expect(response.body).to include("\"id\":#{approved_image1.id}")
         expect(response.body).to include("\"id\":#{approved_image2.id}")
       end
+
+      context "with high-quality images" do
+        def extract_image_ids(body)
+          match = body.match(/window\.recipeImages\s*=\s*(\[.*?\]);/m)
+          return [] unless match
+          JSON.parse(match[1]).map { |img| img["id"] }
+        end
+
+        it "lists the high-quality image first when mixed with regular images" do
+          regular_image = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+          hq_image      = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+
+          get recipe_path(recipe)
+
+          ids = extract_image_ids(response.body)
+          expect(ids.first).to eq(hq_image.id)
+          expect(ids).to include(regular_image.id)
+        end
+
+        it "lists all high-quality images before regular images" do
+          regular_image = create(:recipe_image, :with_image, :approved, recipe: recipe, user: recipe.user)
+          hq_image1     = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+          hq_image2     = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+
+          get recipe_path(recipe)
+
+          ids = extract_image_ids(response.body)
+          expect(ids.index(regular_image.id)).to be > ids.index(hq_image1.id)
+          expect(ids.index(regular_image.id)).to be > ids.index(hq_image2.id)
+        end
+
+        it "includes all images when all are high quality" do
+          hq_image1 = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+          hq_image2 = create(:recipe_image, :with_image, :approved, :high_quality, recipe: recipe, user: recipe.user)
+
+          get recipe_path(recipe)
+
+          ids = extract_image_ids(response.body)
+          expect(ids).to include(hq_image1.id, hq_image2.id)
+        end
+      end
     end
   end
 
@@ -256,6 +297,32 @@ RSpec.describe "Recipes", type: :request do
       get recipes_path(sort: "average_rating", direction: "desc")
       expect(response.body).to match(/#{recipe2.title}.*#{recipe1.title}.*#{recipe3.title}/m)
     end
+
+    describe "sort by newest" do
+      let!(:oldest)  { create(:recipe, title: "Oldest",  created_at: 3.days.ago) }
+      let!(:middle)  { create(:recipe, title: "Middle",  created_at: 2.days.ago) }
+      let!(:newest)  { create(:recipe, title: "Newest",  created_at: 1.day.ago) }
+
+      it "sorts by created_at desc" do
+        get recipes_path(sort: "created_at", direction: "desc")
+        expect(response.body).to match(/#{newest.title}.*#{middle.title}.*#{oldest.title}/m)
+      end
+
+      it "sorts by created_at asc" do
+        get recipes_path(sort: "created_at", direction: "asc")
+        expect(response.body).to match(/#{oldest.title}.*#{middle.title}.*#{newest.title}/m)
+      end
+
+      it "renders the Neueste sort link" do
+        get recipes_path
+        expect(response.body).to include("Neueste")
+      end
+
+      it "does not accept arbitrary columns as created_at sort" do
+        get recipes_path(sort: "created_at")
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 
   describe "Pagination" do
@@ -269,7 +336,7 @@ RSpec.describe "Recipes", type: :request do
       get recipes_path
       expect(response).to have_http_status(:success)
       # Should show 50 recipes (limit)
-      expect(response.body.scan(/class="card-body/).count).to eq(50)
+      expect(response.body.scan(/favoritable-type="Recipe"/).count).to eq(50)
       # Should have link to next page
       expect(response.body).to include('rel="next"')
     end
@@ -280,7 +347,60 @@ RSpec.describe "Recipes", type: :request do
       # Should show remaining recipes (1 + 50 = 51 total, so 1 on page 2)
       # Wait, let!(:recipe) at top creates 1. create_list creates 50. Total 51.
       # Page 1 has 50. Page 2 has 1.
-      expect(response.body.scan(/class="card-body/).count).to eq(1)
+      expect(response.body.scan(/favoritable-type="Recipe"/).count).to eq(1)
+    end
+  end
+
+  describe "Filter data (tags and ingredients passed to Vue component)" do
+    let!(:visible_recipe) { create(:recipe) }
+    let!(:deleted_recipe) { create(:recipe, :deleted) }
+    let!(:draft_recipe)   { create(:recipe, :draft) }
+
+    let!(:used_ingredient)    { create(:ingredient, name: "Gin") }
+    let!(:orphan_ingredient)  { create(:ingredient, name: "OrphanSpirit") }
+    let!(:deleted_ingredient) { create(:ingredient, name: "GhostLiqueur") }
+
+    before do
+      visible_recipe.tag_list.add("Whiskey")
+      visible_recipe.save!
+      deleted_recipe.tag_list.add("DeletedTag")
+      deleted_recipe.save!
+      draft_recipe.tag_list.add("DraftTag")
+      draft_recipe.save!
+
+      create(:recipe_ingredient, recipe: visible_recipe, ingredient: used_ingredient)
+      create(:recipe_ingredient, recipe: deleted_recipe, ingredient: deleted_ingredient)
+      # orphan_ingredient has no recipe_ingredient at all
+    end
+
+    it "includes tags from visible recipes in the filter component" do
+      get recipes_path
+      expect(response.body).to include("&quot;name&quot;:&quot;Whiskey&quot;")
+    end
+
+    it "excludes tags from deleted recipes" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;DeletedTag&quot;")
+    end
+
+    it "excludes tags from draft (non-public) recipes" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;DraftTag&quot;")
+    end
+
+    it "includes ingredients from visible recipes in the filter component" do
+      get recipes_path
+      expect(response.body).to include("&quot;name&quot;:&quot;Gin&quot;")
+    end
+
+    it "excludes ingredients only used in deleted recipes" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;GhostLiqueur&quot;")
+    end
+
+    it "excludes ingredients with no recipe associations at all" do
+      get recipes_path
+      expect(response.body).not_to include("&quot;name&quot;:&quot;OrphanSpirit&quot;")
     end
   end
 

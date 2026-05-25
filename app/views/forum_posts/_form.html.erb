@@ -2,7 +2,7 @@
   <div class="form-group">
     <%= form.label :body, "Dein Beitrag", class: "label-field" %>
     <% if forum_post.errors[:body].any? %>
-      <div class="text-cs-error text-sm mb-2"><%= forum_post.errors.full_messages_for(:body).join(", ") %></div>
+      <div class="text-cs-error-500 text-sm mb-2"><%= forum_post.errors.full_messages_for(:body).join(", ") %></div>
     <% end %>
     
     <markdown-editor

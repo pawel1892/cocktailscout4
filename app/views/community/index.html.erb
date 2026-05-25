@@ -1,32 +1,44 @@
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-  <div class="lg:col-span-2">
-    <script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
-    <div class="card">
-      <div class="card-header">Aktivitäten</div>
-      <div class="card-body">
-        <activity-stream></activity-stream>
-      </div>
+<!-- Page header -->
+<div class="mb-8">
+  <h1 class="font-display font-semibold text-[52px] leading-none tracking-tight text-cs-red-900">Community</h1>
+  <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  <p class="text-sm text-cs-ink-500">Was gerade bei CocktailScout passiert</p>
+</div>
+
+<script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
+
+<div class="grid grid-cols-1 lg:grid-cols-[1fr_264px] gap-10">
+
+  <!-- ─── Activity feed ─── -->
+  <div>
+    <div class="flex items-center gap-3 mb-5">
+      <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Aktivitäten</span>
+      <span class="flex-1 h-px bg-cs-ink-200"></span>
     </div>
+    <activity-stream></activity-stream>
   </div>
 
-  <%# Sidebar %>
-  <div class="lg:col-span-1 space-y-8">
-     <div class="card">
-        <div class="card-header">
-          Gerade aktive User
-        </div>
-        <img src="/images/active_users_small.jpg" alt="Aktive Benutzer" class="w-full h-48 object-cover">
-        <div class="card-body">
-          <online-users :initial-users='<%= @online_users.map { |u| { id: u.id, username: u.username, rank: u.rank, avatar_url_small: u.avatar_path(:small) } }.to_json %>'></online-users>
-        </div>
-     </div>
+  <!-- ─── Sidebar ─── -->
+  <div class="space-y-8">
 
-     <div class="card">
-       <div class="card-body text-center">
-         <h3 class="font-bold text-cs-dark-red font-serif text-lg mb-2">Cocktail Forum</h3>
-         <p class="text-sm text-gray-600 mb-4">Diskutiere Rezepte, teile Tipps und tausche dich mit anderen Cocktail-Fans aus.</p>
-         <%= link_to "Zum Forum", forum_topics_path, class: "btn btn-primary w-full" %>
-       </div>
-     </div>
+    <!-- Online users -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-cs-success-500 shrink-0" style="box-shadow: 0 0 0 3px rgba(0,0,0,0.06)"></span>
+        <span class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-ink-400">Gerade aktiv</span>
+      </div>
+      <online-users :initial-users='<%= @online_users.map { |u| { id: u.id, username: u.username, rank: u.rank, avatar_url_small: u.avatar_path(:small) } }.to_json %>'></online-users>
+    </div>
+
+    <!-- Forum CTA -->
+    <div class="card card-dark rounded-xl overflow-hidden">
+      <div class="card-body">
+        <p class="font-sans font-bold uppercase text-[11px] tracking-widest text-cs-gold-600 mb-3">Cocktail Forum</p>
+        <h3 class="font-display font-semibold text-[26px] leading-tight text-cs-gold-200 mb-3">Diskutiere.<br>Lerne. Teile.</h3>
+        <p class="text-sm text-cs-gold-100/70 mb-5 leading-relaxed">Rezepte besprechen, Tipps teilen, mit anderen Cocktail-Fans austauschen.</p>
+        <%= link_to "Zum Forum →", forum_topics_path, class: "btn btn-gold w-full" %>
+      </div>
+    </div>
+
   </div>
 </div>

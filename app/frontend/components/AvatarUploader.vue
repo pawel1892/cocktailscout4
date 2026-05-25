@@ -35,11 +35,11 @@
 
     <!-- Step 2: crop UI -->
     <div v-if="imageDataUrl" class="space-y-3">
-      <p class="text-xs text-gray-500">
+      <p class="text-xs text-cs-ink-500">
         <i class="fa-solid fa-circle-info mr-1"></i>
         Bereich auswählen – wird als Kreis angezeigt
       </p>
-      <div class="avatar-crop-container relative overflow-hidden rounded bg-gray-900">
+      <div class="avatar-crop-container relative overflow-hidden rounded bg-cs-ink-900">
         <img ref="cropperImg" :src="imageDataUrl" class="block max-w-full" alt="" style="opacity:0" />
       </div>
       <div class="flex gap-2">

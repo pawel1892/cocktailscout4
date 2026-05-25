@@ -57,48 +57,6 @@ RSpec.describe "PrivateMessages", type: :request do
     end
   end
 
-  describe "GET /nachrichten/sent" do
-    context "when authenticated" do
-      before { sign_in(sender) }
-
-      it "returns http success" do
-        get sent_private_messages_path
-        expect(response).to have_http_status(:success)
-      end
-
-      it "displays sent messages" do
-        message = create(:private_message, sender: sender, receiver: receiver)
-        get sent_private_messages_path
-        expect(response.body).to include(message.body)
-      end
-
-      it "displays received messages (unified conversation view)" do
-        message = create(:private_message, sender: other_user, receiver: sender)
-        get sent_private_messages_path
-        expect(response.body).to include(message.body)
-      end
-
-      it "does not display messages deleted by sender" do
-        message = create(:private_message, :deleted_by_sender, sender: sender, receiver: receiver)
-        get sent_private_messages_path
-        expect(response.body).not_to include(message.body)
-      end
-
-      it "does not display messages sent by other users" do
-        message_from_others = create(:private_message, sender: other_user, receiver: receiver, body: "Sent by another user body")
-        get sent_private_messages_path
-        expect(response.body).not_to include("Sent by another user body")
-      end
-    end
-
-    context "when not authenticated" do
-      it "redirects to login" do
-        get sent_private_messages_path
-        expect(response).to redirect_to(new_session_path)
-      end
-    end
-  end
-
   describe "GET /nachrichten/:id" do
     let(:message) { create(:private_message, sender: sender, receiver: receiver, read: false) }
 
@@ -188,9 +146,9 @@ RSpec.describe "PrivateMessages", type: :request do
     context "when authenticated" do
       before { sign_in(sender) }
 
-      it "returns http success" do
+      it "redirects to inbox without receiver_id" do
         get new_private_message_path
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(private_messages_path)
       end
 
       it "accepts receiver_id parameter" do
@@ -262,7 +220,7 @@ RSpec.describe "PrivateMessages", type: :request do
         expect(response).to have_http_status(:unprocessable_content)
       end
 
-      it "fails with missing receiver" do
+      it "redirects to inbox with missing receiver" do
         expect {
           post private_messages_path, params: {
             private_message: {
@@ -272,7 +230,7 @@ RSpec.describe "PrivateMessages", type: :request do
           }
         }.not_to change(PrivateMessage, :count)
 
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to redirect_to(private_messages_path)
       end
     end
 
@@ -437,14 +395,6 @@ RSpec.describe "PrivateMessages", type: :request do
       senders = create_list(:user, 21)
       senders.each { |s| create(:private_message, sender: s, receiver: receiver) }
       get private_messages_path
-
-      expect(response.body).to match(/page=2/)
-    end
-
-    it "paginates sent conversations" do
-      receivers = create_list(:user, 21)
-      receivers.each { |r| create(:private_message, sender: receiver, receiver: r) }
-      get sent_private_messages_path
 
       expect(response.body).to match(/page=2/)
     end

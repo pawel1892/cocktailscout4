@@ -3,150 +3,260 @@
 <% end %>
 <% content_for :full_bleed_page, true %>
 
-<!-- HERO — stacked on mobile, side-by-side from md -->
-<div class="w-full flex flex-col lg:flex-row bg-cs-dark-red">
-  <!-- Image: always natural 3:2 aspect ratio -->
-  <div class="w-full lg:w-1/2 overflow-hidden">
-    <picture>
-      <source media="(min-width: 1920px)" srcset="/images/startpage/hero1-3840.jpg">
-      <source media="(min-width: 1024px)" srcset="/images/startpage/hero1-1920.jpg">
-      <source media="(min-width: 640px)"  srcset="/images/startpage/hero1-1024.jpg">
-      <img src="/images/startpage/hero1-640.jpg" alt="Cocktail Rezepte" class="w-full block" fetchpriority="high">
-    </picture>
-  </div>
-  <!-- Content -->
-  <div class="w-full lg:w-1/2 flex items-center justify-center px-8 py-10 md:px-10 md:py-6 xl:px-14 xl:py-8">
-    <div class="w-full max-w-xl text-center md:text-left">
-      <h1 class="hero-h1 font-bold tracking-tight text-cs-gold mb-4 font-serif">
-        Cocktail Rezepte &amp; deine persönliche Bar
+<!-- ═══════════════════════════════════════
+     HERO — full-bleed dark, editorial split
+     ═══════════════════════════════════════ -->
+<section class="relative overflow-hidden bg-cs-red-950">
+  <div class="absolute top-0 right-0 w-[720px] h-[720px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3"
+       style="background: radial-gradient(circle at 38% 38%, rgba(203,184,89,.10), transparent 65%)"></div>
+
+  <div class="max-w-[1180px] mx-auto px-10 pt-10 pb-16 lg:pt-14 lg:pb-24 relative z-10">
+    <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-300 mb-6">
+      <span class="w-7 h-px bg-cs-gold-400 shrink-0"></span>
+      Cocktail Rezepte · seit 2003
+    </div>
+
+    <div class="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16 lg:items-center">
+      <h1 class="font-display font-medium text-[clamp(3.5rem,7.5vw,7.5rem)] leading-[.88] tracking-[-0.03em] text-cs-gold-300 m-0 mb-8 lg:mb-0">
+        Mixed<em class="block italic text-white font-normal">by design.</em>
       </h1>
-      <p class="mt-4 text-lg leading-7 text-white/80">
-        1.500+ Cocktail Rezepte — und mit <strong class="text-white">Meine Bar</strong> siehst du sofort, was du mit deinen Zutaten mixen kannst.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
-        <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-gold px-7 py-3 text-base shadow-lg" %>
-        <%= link_to "Meine Bar", my_bar_path, class: "btn px-7 py-3 text-base border-2 border-white/60 text-white hover:bg-white/10 transition-colors" %>
+      <div class="flex flex-col justify-end">
+        <p class="text-[16px] text-cs-ink-200 leading-relaxed m-0 mb-8">
+          Über 1.500 handgepflegte Rezepte,<br>echte Community-Ratings und eine Bar,<br>die sich merkt, was bei dir zu Hause steht.
+        </p>
+        <div class="flex gap-2.5 flex-wrap">
+          <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-gold" %>
+          <%= link_to "Meine Bar →", my_bar_path, class: "btn btn-outline-gold" %>
+        </div>
+
+        <%= form_tag recipes_path, method: :get, class: "mt-5 relative" do %>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cs-gold-400 text-[13px] pointer-events-none"></i>
+          <input type="search" name="q"
+                 placeholder="Rezept suchen… Margarita, Gin Sour"
+                 class="w-full rounded-md bg-white/10 border border-white/15 text-white placeholder-white/30 py-3 pl-11 pr-12 text-[14px] focus:outline-none focus:border-cs-gold-500/60 focus:bg-white/[0.13] transition-all duration-200">
+          <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-md bg-cs-gold-500/20 hover:bg-cs-gold-500/40 flex items-center justify-center transition-colors duration-150" aria-label="Suchen">
+            <i class="fa-solid fa-arrow-right text-cs-gold-400 text-[12px]"></i>
+          </button>
+        <% end %>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Section Divider -->
-<div class="flex justify-center -mt-[18px] mb-0 relative z-10">
-  <div class="w-9 h-9 rounded-full bg-cs-gold flex items-center justify-center shadow-md border-2 border-cs-dark-red/20">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-cs-dark-red">
-      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-    </svg>
-  </div>
-</div>
-
-<!-- COMMUNITY SECTION -->
-<script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
-<div class="container mx-auto px-4 py-12">
-  <div class="max-w-5xl mx-auto">
-    <div class="mb-8">
-      <h2 class="text-3xl font-bold font-serif text-cs-dark-red mb-1">Community</h2>
-      <p class="text-gray-500 text-sm">Was ist gerade los bei CocktailScout?</p>
+<!-- ═══════════════════════════════════════
+     TOP REZEPTE — Card B list
+     ═══════════════════════════════════════ -->
+<% if @top_recipes.any? %>
+<section class="py-[56px]">
+  <div class="max-w-[1180px] mx-auto px-10">
+    <div class="flex items-baseline justify-between gap-4 mb-6">
+      <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Top Rezepte</h2>
+      <%= link_to "Alle Rezepte →", recipes_path(sort: "average_rating"), class: "text-[13px] text-cs-red-700 font-medium no-underline hover:underline shrink-0" %>
     </div>
-    <activity-stream compact></activity-stream>
-    <div class="mt-4 text-center">
-      <%= link_to "Alle Aktivitäten anzeigen →", community_path, class: "link text-sm" %>
-    </div>
-  </div>
-</div>
-
-<% if @news_threads.any? %>
-  <!-- Section Divider -->
-  <div class="flex justify-center -mb-[18px] relative z-10">
-    <div class="w-9 h-9 rounded-full bg-cs-gold flex items-center justify-center shadow-md border-2 border-stone-100">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-cs-dark-red">
-        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-      </svg>
-    </div>
-  </div>
-
-  <!-- NEWS — full-width dark-red band -->
-  <div class="bg-cs-dark-red w-full overflow-hidden relative">
-    <div class="absolute top-0 left-0 w-64 h-64 rounded-full bg-white/5 -translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
-    <div class="container mx-auto px-4 py-12">
-      <div class="max-w-5xl mx-auto">
-      <h2 class="text-2xl font-bold font-serif text-white mb-6">Neuigkeiten</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <% @news_threads.each do |thread| %>
-          <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200">
-            <div class="p-5 flex flex-col flex-1">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold text-cs-dark-red uppercase tracking-wider bg-red-50 px-2 py-0.5 rounded">
-                  <%= thread.created_at.strftime("%d. %b") %>
-                </span>
+    <div class="flex flex-col">
+      <% @top_recipes.each_with_index do |recipe, i| %>
+        <% img = recipe.approved_recipe_images.find { |ri| ri.image.attached? } %>
+        <%= link_to recipe_path(recipe.slug), class: "group flex items-center gap-5 py-5 #{ i < @top_recipes.size - 1 ? 'border-b border-cs-ink-100' : '' } hover:bg-cs-ink-50 -mx-4 px-4 rounded-lg transition-colors duration-150" do %>
+          <span class="font-mono text-[13px] text-cs-ink-300 w-4 shrink-0 text-right"><%= i + 1 %></span>
+          <div class="w-14 h-14 rounded-lg overflow-hidden bg-cs-ink-100 shrink-0">
+            <% if img %>
+              <%= image_tag img.image.variant(:thumb), class: "w-full h-full object-cover", alt: "" %>
+            <% else %>
+              <div class="w-full h-full flex items-center justify-center text-cs-ink-400">
+                <i class="fas fa-cocktail text-lg"></i>
               </div>
-              <h3 class="font-bold text-gray-900 leading-snug mb-3 flex-1">
-                <%= thread.title %>
-              </h3>
-              <%= link_to "Weiterlesen", forum_thread_path(thread), class: "btn btn-primary btn-sm self-start mt-auto" %>
+            <% end %>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-display font-semibold text-[20px] text-cs-red-900 leading-[1.2] tracking-[-0.01em] truncate group-hover:text-cs-red-700 transition-colors"><%= recipe.title %></div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-cs-gold-500 text-[12px] leading-none">★</span>
+              <span class="font-semibold text-[14px] text-cs-gold-600 leading-none"><%= number_with_precision(recipe.average_rating.to_f, precision: 1, separator: ",") %></span>
+              <span class="text-cs-ink-400 text-[12px] leading-none"><%= recipe.ratings_count %> Bewertungen</span>
             </div>
           </div>
         <% end %>
-      </div>
-      </div>
+      <% end %>
     </div>
   </div>
+</section>
 <% end %>
 
-<!-- Section Divider -->
-<div class="flex justify-center -mt-[18px] mb-10 relative z-10">
-  <div class="w-9 h-9 rounded-full bg-cs-gold flex items-center justify-center shadow-md border-2 border-stone-100">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-cs-dark-red">
-      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-    </svg>
-  </div>
-</div>
-
-<!-- ABOUT + RECIPE HIGHLIGHT -->
-<div class="container mx-auto px-4 pb-16">
-  <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-stretch">
-
-    <!-- About Us (2/3) -->
-    <div class="lg:col-span-2 card p-8">
-      <h2 class="text-2xl font-bold font-serif text-cs-dark-red mb-4">Über CocktailScout</h2>
-
-      <p class="text-gray-700 leading-relaxed mb-4">
-        CocktailScout entstand 2003 aus einer konkreten Frustration: Die schönsten Cocktail-Bücher
-        waren wertlos, wenn die halben Zutaten fehlten. Also drehten wir den Prozess um.
-        „Was brauche ich für dieses Rezept?" wurde zu
-        „<%= link_to "Was kann ich mit dem mixen, was ich gerade habe?", my_bar_path, class: "link-underline font-medium" %>"
-      </p>
-
-      <p class="text-gray-700 leading-relaxed mb-4">
-        Heute findest du hier über 1.500
-        <%= link_to "Cocktail Rezepte", recipes_path, class: "link-underline font-medium" %>,
-        eine <%= link_to "Galerie", recipe_images_path, class: "link-underline font-medium" %>
-        voller Inspirationen und eine wachsende
-        <%= link_to "Community", community_path, class: "link-underline font-medium" %>.
-        Es ist aber bis heute ein Hobby-Projekt geblieben. Daher ist die Seite kostenlos, werbefrei
-        und unabhängig. Macht also mit und tragt zu dem Wissen hier bei.
-      </p>
-
-      <p class="text-gray-700 leading-relaxed">
-        Wer programmieren kann: CocktailScout ist ein
-        <%= link_to "Open Source", "https://github.com/pawel1892/cocktailscout4", class: "link-underline font-medium" %>-Projekt.
-        Wer möchte, kann auch Code beisteuern und die Seite direkt besser machen.
-      </p>
+<!-- ═══════════════════════════════════════
+     COMMUNITY
+     ═══════════════════════════════════════ -->
+<script>window.activityStream = <%= raw @activity_stream.to_json %>;</script>
+<section class="bg-cs-ink-100 border-t border-b border-cs-ink-200">
+  <div class="max-w-[1180px] mx-auto px-10 py-[72px]">
+    <div class="flex items-baseline justify-between gap-4 mb-2">
+      <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Community</h2>
+      <%= link_to "Alle Aktivitäten →", community_path, class: "text-[13px] text-cs-red-700 font-medium no-underline hover:underline shrink-0" %>
     </div>
+    <p class="text-cs-ink-600 text-sm mb-7 mt-0">Was gerade bei CocktailScout passiert.</p>
+    <activity-stream compact></activity-stream>
+  </div>
+</section>
 
-    <!-- Recipe Highlight (1/3) -->
-    <% if @featured_image && @featured_image.image.attached? %>
-      <div class="card hover:shadow-lg transition-shadow duration-200 flex flex-col h-full">
-        <div class="flex-1 overflow-hidden min-h-0">
-          <%= image_tag @featured_image.image.variant(:large), class: "object-cover w-full h-full", alt: @featured_image.recipe.title %>
+<!-- ═══════════════════════════════════════
+     NEUIGKEITEN — 3-column news cards
+     ═══════════════════════════════════════ -->
+<% if @news_threads.any? %>
+<section class="py-[56px]">
+  <div class="max-w-[1180px] mx-auto px-10">
+    <div class="flex items-baseline justify-between gap-4 mb-2">
+      <h2 class="font-display font-semibold text-[40px] text-cs-red-900 tracking-[-0.012em] m-0">Neuigkeiten</h2>
+    </div>
+    <p class="text-cs-ink-600 text-sm mb-7 mt-0">Was sich auf CocktailScout zuletzt getan hat.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+      <% @news_threads.each do |thread| %>
+        <article class="news-card">
+          <div class="news-date"><%= thread.created_at.strftime("%-d. %b %Y") %></div>
+          <h4><%= thread.title %></h4>
+          <%= link_to "Weiterlesen →", forum_thread_path(thread), class: "news-more" %>
+        </article>
+      <% end %>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<!-- ═══════════════════════════════════════
+     MEINE BAR — ingredient picker + recipe grid
+     ═══════════════════════════════════════ -->
+<section class="bg-cs-red-950 relative overflow-hidden py-[72px]">
+  <div class="absolute -right-[200px] -top-[160px] w-[560px] h-[560px] rounded-full pointer-events-none" style="background: radial-gradient(circle at 35% 35%, rgba(203,184,89,.12), transparent 70%)"></div>
+  <div class="absolute -left-[140px] -bottom-[140px] w-[380px] h-[380px] rounded-full pointer-events-none" style="background: radial-gradient(circle at 35% 35%, rgba(142,61,55,.3), transparent 70%)"></div>
+
+  <div class="max-w-[1180px] mx-auto px-10 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-[72px] items-center">
+
+      <!-- Left: text + ingredient tags + CTA -->
+      <div>
+        <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] text-cs-gold-300 mb-5">
+          <span class="w-7 h-px bg-cs-gold-400 shrink-0"></span>
+          Dein persönlicher Barbegleiter
         </div>
-        <div class="card-body flex-shrink-0">
-          <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Rezept-Highlight</p>
-          <h3 class="font-bold text-lg mb-3 leading-tight"><%= @featured_image.recipe.title %></h3>
-          <%= link_to "Zum Rezept", recipe_path(@featured_image.recipe.slug), class: "btn btn-primary btn-sm" %>
+        <h2 class="font-display font-medium text-[clamp(2.5rem,5vw,4rem)] leading-[.98] tracking-[-0.02em] text-cs-gold-300 m-0 mb-5">
+          Was kannst du<br><em class="italic text-white font-normal">heute mixen?</em>
+        </h2>
+        <p class="text-[15px] text-cs-ink-200 leading-relaxed max-w-[440px] mb-8">
+          Gib ein, was in deiner Bar steht. Wir zeigen dir sofort die Drinks, die du daraus machen kannst — inklusive Tipps, wenn dir nur eine Zutat fehlt.
+        </p>
+
+        <div class="flex gap-2 flex-wrap mb-8">
+          <% ["Gin", "Tonic", "Limette", "Zucker", "Wodka", "Rum"].each do |ing| %>
+            <span class="px-3.5 py-1.5 rounded-full border border-cs-gold-500/40 text-cs-gold-300 text-[13px] font-medium"><%= ing %></span>
+          <% end %>
+          <span class="px-3.5 py-1.5 rounded-full border border-white/10 text-white/25 text-[13px]">+ mehr …</span>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <%= link_to "Meine Bar öffnen →", my_bar_path, class: "btn btn-gold" %>
+          <span class="text-[13px] text-cs-ink-400">1.500+ Rezepte</span>
         </div>
       </div>
-    <% end %>
 
+      <!-- Right: full-bleed recipe cards (high-quality pool, falls back to top recipes) -->
+      <% hero_cards = @hero_images.any? ? @hero_images : nil %>
+      <% if hero_cards %>
+        <div class="hidden lg:grid grid-cols-2 gap-3.5" style="grid-auto-rows: 185px">
+          <% (hero_cards + [nil]).first(4).each do |ri| %>
+            <% if ri %>
+              <%= link_to recipe_path(ri.recipe.slug), class: "group relative rounded-xl overflow-hidden block" do %>
+                <%= image_tag ri.image.variant(:medium), class: "absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500", alt: ri.recipe.title %>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 px-3.5 pb-3.5">
+                  <b class="block font-display font-semibold text-[15px] text-white leading-[1.2] tracking-[-0.01em] line-clamp-2"><%= ri.recipe.title %></b>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="rounded-xl border border-white/8 flex items-center justify-center">
+                <span class="text-cs-ink-600 text-sm">Mehr →</span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% elsif @top_recipes.any? %>
+        <div class="hidden lg:grid grid-cols-2 gap-3.5" style="grid-auto-rows: 185px">
+          <% (@top_recipes.to_a + [nil]).first(4).each do |recipe| %>
+            <% if recipe %>
+              <%= link_to recipe_path(recipe.slug), class: "group relative rounded-xl overflow-hidden block" do %>
+                <%= recipe_thumbnail(recipe, size_class: "absolute inset-0 w-full h-full group-hover:scale-105 transition-transform duration-500") %>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 px-3.5 pb-3.5">
+                  <b class="block font-display font-semibold text-[15px] text-white leading-[1.2] tracking-[-0.01em] line-clamp-2"><%= recipe.title %></b>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="rounded-xl border border-white/8 flex items-center justify-center">
+                <span class="text-cs-ink-600 text-sm">Mehr →</span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
   </div>
-</div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ABOUT — 2-column grid + sidebar
+     ═══════════════════════════════════════ -->
+<section class="py-[56px]">
+  <div class="max-w-[1180px] mx-auto px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 items-start">
+
+      <!-- Left: about text -->
+      <div>
+        <div class="flex items-center gap-3 font-mono text-[10.5px] uppercase tracking-[.22em] text-cs-gold-700 mb-3">
+          <span class="w-5 h-px bg-cs-gold-600 shrink-0"></span>
+          Über CocktailScout
+        </div>
+        <h3 class="font-display font-semibold text-[32px] text-cs-red-900 tracking-[-0.01em] m-0 mb-3.5 leading-tight">
+          Entstanden 2003 aus einer kleinen Frustration
+        </h3>
+        <p class="text-cs-ink-700 text-[14.5px] leading-[1.65] m-0 mb-3.5">
+          Die schönsten Cocktail-Bücher waren entweder zu teuer, auf Englisch, oder die halbe Zutatenliste fehlte.
+          Also starteten wir — aus dem Protestgedanken heraus, dass
+          <em>„Was brauche ich für diesen Drink?"</em> eine einfach zu beantwortende Frage sein sollte.
+        </p>
+        <p class="text-cs-ink-700 text-[14.5px] leading-[1.65] m-0 mb-3.5">
+          Heute pflegen wir über 1.500 <%= link_to "Cocktail-Rezepte", recipes_path, class: "link-underline font-medium" %>,
+          eine lebendige <%= link_to "Community", community_path, class: "link-underline font-medium" %>, und
+          <%= link_to "Meine Bar", my_bar_path, class: "link-underline font-medium" %> — das Feature, das dir zeigt, was du aus deinem Hausvorrat mixen kannst.
+          Wir sind <%= link_to "Open Source", "https://github.com/pawel1892/cocktailscout4", class: "link-underline font-medium" %>, werbefrei und leben vom Beitrag unserer User.
+        </p>
+        <p class="text-cs-ink-700 text-[14.5px] leading-[1.65] m-0 mb-3.5">
+          Wer programmieren kann: CocktailScout ist ein Open-Source-Projekt. Wer möchte, kann Code beisteuern und die Seite direkt besser machen.
+        </p>
+        <div class="flex gap-2.5 mt-5">
+          <%= link_to "Rezepte entdecken", recipes_path, class: "btn btn-primary" %>
+          <%= link_to "Community →", community_path, class: "btn btn-outline" %>
+        </div>
+      </div>
+
+      <!-- Right: sidebar recipe card -->
+      <% if @featured_image && @featured_image.image.attached? %>
+        <aside class="about-side">
+          <div class="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[.22em] text-cs-gold-700 mb-2.5">
+            <span class="w-5 h-px bg-cs-gold-600 shrink-0"></span>
+            Rezept-Highlight
+          </div>
+          <div class="w-full h-40 rounded-lg overflow-hidden mb-3.5">
+            <%= image_tag @featured_image.image.variant(:large), class: "w-full h-full object-cover block", alt: @featured_image.recipe.title %>
+          </div>
+          <h4 class="font-display font-semibold text-[22px] text-cs-red-900 tracking-[-0.01em] m-0 mb-1 leading-snug"><%= @featured_image.recipe.title %></h4>
+          <div class="font-mono text-[11px] text-cs-ink-500 mb-3">
+            von <%= @featured_image.recipe.user.username %>
+            <% if @featured_image.recipe.average_rating.to_f > 0 %>
+              · <%= number_with_precision(@featured_image.recipe.average_rating.to_f, precision: 1, separator: ",") %> ★
+            <% end %>
+          </div>
+          <%= link_to "Zum Rezept →", recipe_path(@featured_image.recipe.slug), class: "btn btn-outline w-full justify-center" %>
+        </aside>
+      <% end %>
+
+    </div>
+  </div>
+</section>

@@ -66,7 +66,7 @@ RSpec.describe "Home Page", type: :request do
 
         it "shows thread dates" do
           get root_path
-          expect(response.body).to include(newest.created_at.strftime("%d. %b"))
+          expect(response.body).to include(newest.created_at.strftime("%-d. %b"))
         end
 
         it "links to each thread" do
@@ -78,7 +78,7 @@ RSpec.describe "Home Page", type: :request do
       context "when the news forum does not exist" do
         it "does not show the Neuigkeiten section" do
           get root_path
-          expect(response.body).not_to include("Neuigkeiten")
+          expect(response.body).not_to include("Neuigkeiten</h2>")
         end
       end
 
@@ -87,7 +87,7 @@ RSpec.describe "Home Page", type: :request do
 
         it "does not show the Neuigkeiten section" do
           get root_path
-          expect(response.body).not_to include("Neuigkeiten")
+          expect(response.body).not_to include("Neuigkeiten</h2>")
         end
       end
     end
