@@ -12,16 +12,24 @@ class WikiArticlesController < ApplicationController
   end
 
   def search
-    add_breadcrumb "Wiki", wiki_dashboard_path
-    add_breadcrumb "Suche"
     @query = params[:q].to_s.strip
-    if @query.present?
-      @pagy, @wiki_articles = pagy(
-        WikiArticle.published.search(@query).includes(:ingredients).order(title: :asc),
-        limit: 20
-      )
-    else
-      @pagy, @wiki_articles = pagy(WikiArticle.none)
+    respond_to do |format|
+      format.html do
+        add_breadcrumb "Wiki", wiki_dashboard_path
+        add_breadcrumb "Suche"
+        if @query.present?
+          @pagy, @wiki_articles = pagy(
+            WikiArticle.published.search(@query).includes(:ingredients).order(title: :asc),
+            limit: 20
+          )
+        else
+          @pagy, @wiki_articles = pagy(WikiArticle.none)
+        end
+      end
+      format.json do
+        articles = @query.length >= 2 ? WikiArticle.published.search(@query).order(title: :asc).limit(10) : []
+        render json: { wiki_articles: articles.map { |a| { slug: a.slug, title: a.title } } }
+      end
     end
   end
 

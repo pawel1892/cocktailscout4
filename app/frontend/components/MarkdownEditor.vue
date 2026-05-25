@@ -165,6 +165,46 @@
         <div class="border-l border-cs-ink-300 mx-1"></div>
       </template>
 
+      <!-- Wiki article link (wiki editor only) -->
+      <template v-if="showWikiLinks">
+        <div class="relative">
+          <button
+            type="button"
+            @click="toggleWikiSearch"
+            class="toolbar-btn"
+            title="Wiki-Artikel verlinken"
+          >
+            <i class="fas fa-book"></i>
+          </button>
+          <div
+            v-if="showWikiSearch"
+            class="absolute left-0 top-full mt-1 w-72 bg-white border border-cs-ink-200 shadow-lg rounded z-20"
+          >
+            <div class="p-2">
+              <input
+                v-model="wikiQuery"
+                @input="searchWikiArticles"
+                placeholder="Wiki-Artikel suchen..."
+                class="input-field w-full text-sm"
+                ref="wikiSearchRef"
+                @keydown.escape="showWikiSearch = false"
+              />
+            </div>
+            <div v-if="wikiResults.length" class="border-t border-cs-ink-100 max-h-48 overflow-y-auto">
+              <button
+                v-for="article in wikiResults"
+                :key="article.slug"
+                type="button"
+                @click="selectWikiArticle(article)"
+                class="w-full text-left px-3 py-2 text-sm hover:bg-cs-ink-50"
+              >{{ article.title }}</button>
+            </div>
+            <div v-else-if="wikiQuery.length >= 2" class="px-3 py-2 text-sm text-cs-ink-400">Keine Artikel gefunden</div>
+          </div>
+        </div>
+        <div class="border-l border-cs-ink-300 mx-1"></div>
+      </template>
+
       <!-- Smiley picker (only when smileys provided) -->
       <template v-if="smileys && smileys.length">
         <div class="relative ml-auto">
@@ -354,9 +394,11 @@
                 <td class="py-1.5 pr-4"><code class="help-code">[[post:abc123xy]]</code></td>
                 <td class="py-1.5 text-cs-ink-500">Forum-Beitrag verlinken</td>
               </tr>
+            </template>
+            <template v-if="showWikiLinks">
               <tr>
                 <td class="py-1.5 pr-4"><code class="help-code">[[wiki:artikel-slug]]</code></td>
-                <td class="py-1.5 text-gray-500">Wiki-Artikel verlinken</td>
+                <td class="py-1.5 text-cs-ink-500">Wiki-Artikel verlinken</td>
               </tr>
             </template>
           </tbody>
@@ -383,6 +425,8 @@ const props = defineProps({
   smileys: { type: Array, default: null },
   // Show recipe/thread/post wikilink buttons (set true for forum, wiki, etc.)
   showInternalLinks: { type: Boolean, default: false },
+  // Show wiki article link button (wiki editor only)
+  showWikiLinks: { type: Boolean, default: false },
   // Legacy prop: label (used by recipe forms)
   label: { type: String, default: '' },
 })
@@ -420,6 +464,13 @@ const recipeResults    = ref([])
 const recipeSearchRef  = ref(null)
 let recipeDebounceTimer = null
 
+// Wiki article autocomplete
+const showWikiSearch = ref(false)
+const wikiQuery      = ref('')
+const wikiResults    = ref([])
+const wikiSearchRef  = ref(null)
+let wikiDebounceTimer = null
+
 // ── Composables ───────────────────────────────────────────────────────────────
 const { handlePaste: handleWikilinkPaste } = useWikilinkPaste({ insertText: (t) => insertText(t) })
 
@@ -448,7 +499,7 @@ function insertText(text) {
   emit('update:modelValue', markdownText.value)
 
   nextTick(() => {
-    ta.focus()
+    ta.focus({ preventScroll: true })
     ta.setSelectionRange(start + text.length, start + text.length)
   })
 }
@@ -466,7 +517,7 @@ function wrapText(before, after, placeholder = 'Text') {
   emit('update:modelValue', markdownText.value)
 
   nextTick(() => {
-    ta.focus()
+    ta.focus({ preventScroll: true })
     if (selected === placeholder) {
       ta.setSelectionRange(start + before.length, start + before.length + placeholder.length)
     } else {
@@ -503,7 +554,7 @@ function insertMarkdown(type) {
         emit('update:modelValue', markdownText.value)
         nextTick(() => {
           const ta = textareaRef.value
-          ta.focus()
+          ta.focus({ preventScroll: true })
           const pos = before.length + sel.length + 3 // inside "(url)"
           ta.setSelectionRange(pos, pos + 3)
         })
@@ -536,6 +587,7 @@ function insertMarkdown(type) {
 // ── Popover management ────────────────────────────────────────────────────────
 function closeAllPopovers() {
   showRecipeSearch.value = false
+  showWikiSearch.value   = false
   showImagePopover.value = false
   showSmileys.value      = false
 }
@@ -591,6 +643,36 @@ function insertPostLink() {
   }
   const label = getSelectedText()
   insertText(label ? `[[post:${id}|${label}]]` : `[[post:${id}]]`)
+}
+
+// ── Wiki article link ─────────────────────────────────────────────────────────
+function toggleWikiSearch() {
+  const next = !showWikiSearch.value
+  closeAllPopovers()
+  showWikiSearch.value = next
+  if (next) nextTick(() => wikiSearchRef.value?.focus())
+}
+
+async function searchWikiArticles() {
+  clearTimeout(wikiDebounceTimer)
+  if (wikiQuery.value.length < 2) { wikiResults.value = []; return }
+  wikiDebounceTimer = setTimeout(async () => {
+    try {
+      const res = await fetch(`/wiki/search.json?q=${encodeURIComponent(wikiQuery.value)}`)
+      const data = await res.json()
+      wikiResults.value = data.wiki_articles || []
+    } catch {
+      wikiResults.value = []
+    }
+  }, 300)
+}
+
+function selectWikiArticle(article) {
+  const label = getSelectedText()
+  insertText(label ? `[[wiki:${article.slug}|${label}]]` : `[[wiki:${article.slug}]]`)
+  showWikiSearch.value = false
+  wikiQuery.value = ''
+  wikiResults.value = []
 }
 
 // ── Image upload ──────────────────────────────────────────────────────────────
