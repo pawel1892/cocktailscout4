@@ -5,16 +5,17 @@
   </div>
 <% end %>
 
-<div class="mb-6 flex items-start justify-between gap-4">
+<div class="mb-8 flex items-start justify-between gap-4">
   <div class="min-w-0 flex-1">
-    <h1 class="text-3xl md:text-4xl font-bold mb-1 break-words"><%= @wiki_article.title %></h1>
+    <h1 class="font-display font-semibold text-[38px] sm:text-[48px] leading-tight tracking-tight text-cs-red-900 mb-3 break-words"><%= @wiki_article.title %></h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mb-3"></div>
     <% @wiki_article.ingredients.each do |ingredient| %>
       <span class="tag tag-neutral"><i class="fas fa-flask mr-1"></i><%= ingredient.name %></span>
     <% end %>
-    <div class="text-sm text-gray-500 mt-2 flex flex-col gap-1">
+    <div class="text-sm text-cs-ink-500 mt-3 flex flex-col gap-1">
       <div class="flex items-center gap-1">Erstellt von <%= user_badge(@wiki_article.user) %></div>
       <% if @wiki_article.last_editor %>
-        <div>Zuletzt bearbeitet von <strong class="text-gray-700"><%= @wiki_article.last_editor.username %></strong> &middot; <%= l(@wiki_article.updated_at, format: :short) %></div>
+        <div>Zuletzt bearbeitet von <strong class="text-cs-ink-700"><%= @wiki_article.last_editor.username %></strong> &middot; <%= l(@wiki_article.updated_at, format: :short) %></div>
       <% else %>
         <div><%= l(@wiki_article.updated_at, format: :short) %></div>
       <% end %>
@@ -46,7 +47,7 @@
 </div>
 
 <% if @wiki_article.collaborators.any? %>
-  <div class="text-sm text-gray-500 mt-4 flex items-center flex-wrap gap-2">
+  <div class="text-sm text-cs-ink-500 mt-4 flex items-center flex-wrap gap-2">
     <span>Mitwirkende:</span>
     <% @wiki_article.collaborators.each do |user| %>
       <%= user_badge(user) %>
@@ -57,17 +58,18 @@
 <% if @linked_recipes.any? %>
   <div class="card mt-6">
     <div class="card-body p-4 sm:p-6">
-      <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-        <i class="fas fa-cocktail text-cs-gold"></i>
+      <h2 class="font-display font-semibold text-[24px] leading-tight text-cs-red-900 mb-1 flex items-center gap-2">
+        <i class="fas fa-cocktail text-cs-gold-500"></i>
         Rezepte mit verknüpften Zutaten
       </h2>
-      <ul class="divide-y divide-gray-100">
+      <div class="w-8 h-0.5 bg-cs-gold-400 mb-5"></div>
+      <ul class="divide-y divide-cs-ink-100">
         <% @linked_recipes.each do |recipe| %>
           <li class="py-2 flex items-center justify-between gap-2">
-            <%= link_to recipe.title, recipe_path(recipe), class: "link hover:underline font-medium" %>
+            <%= link_to recipe.title, recipe_path(recipe), class: "link font-medium" %>
             <% if recipe.average_rating&.positive? %>
-              <span class="text-sm text-gray-500 whitespace-nowrap">
-                <i class="fas fa-star text-cs-gold"></i> <%= recipe.average_rating %>
+              <span class="text-sm text-cs-ink-500 whitespace-nowrap font-mono">
+                <i class="fas fa-star text-cs-gold-500"></i> <%= recipe.average_rating %>
               </span>
             <% end %>
           </li>
@@ -80,7 +82,7 @@
 <% if Current.user&.admin? || Current.user&.super_moderator? %>
   <div class="mt-8 text-right">
     <%= button_to wiki_article_path(@wiki_article), method: :delete,
-        class: "text-xs text-gray-400 hover:text-cs-error transition-colors bg-transparent border-none cursor-pointer",
+        class: "link link-danger text-xs bg-transparent border-none cursor-pointer",
         data: { turbo_confirm: "Artikel '#{@wiki_article.title}' wirklich löschen?" } do %>
       <i class="fas fa-trash mr-1"></i> Artikel löschen
     <% end %>

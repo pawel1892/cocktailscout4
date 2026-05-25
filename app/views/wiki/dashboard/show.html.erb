@@ -1,5 +1,8 @@
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-  <h1 class="text-3xl font-bold">Wiki</h1>
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+  <div>
+    <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900">Wiki</h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  </div>
   <div class="flex items-center gap-3">
     <%= link_to wiki_articles_path, class: "btn btn-outline btn-sm" do %>
       <i class="fas fa-list mr-1"></i> Alle Artikel
@@ -16,14 +19,12 @@
 </div>
 
 <% if @featured_articles.empty? %>
-  <div class="card">
-    <div class="card-body p-8 text-center text-gray-500">
-      <i class="fas fa-book-open text-4xl mb-3 block text-gray-300"></i>
-      <p>Noch keine hervorgehobenen Artikel vorhanden.</p>
-      <% if Current.user&.admin? || Current.user&.super_moderator? %>
-        <p class="text-sm mt-2">Artikel bearbeiten und <strong>Featured</strong> aktivieren, um sie hier anzuzeigen.</p>
-      <% end %>
-    </div>
+  <div class="card card-ghost p-12 text-center">
+    <i class="fas fa-book-open text-5xl mb-4 block text-cs-ink-300"></i>
+    <p class="text-cs-ink-500">Noch keine hervorgehobenen Artikel vorhanden.</p>
+    <% if Current.user&.admin? || Current.user&.super_moderator? %>
+      <p class="text-sm text-cs-ink-400 mt-2">Artikel bearbeiten und <strong>Featured</strong> aktivieren, um sie hier anzuzeigen.</p>
+    <% end %>
   </div>
 <% else %>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -31,7 +32,7 @@
       <div class="card overflow-hidden hover:shadow-md transition-shadow">
         <% if article.cover_image.attached? %>
           <%= link_to wiki_article_path(article) do %>
-            <div class="h-44 overflow-hidden bg-gray-100">
+            <div class="h-44 overflow-hidden bg-cs-ink-100">
               <%= image_tag article.cover_image.variant(:hero),
                   class: "w-full h-full object-cover",
                   alt: "" %>
@@ -39,31 +40,30 @@
           <% end %>
         <% else %>
           <%= link_to wiki_article_path(article) do %>
-            <div class="h-44 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-              <i class="fas fa-book-open text-4xl text-gray-300"></i>
+            <div class="h-44 bg-gradient-to-br from-cs-ink-100 to-cs-ink-200 flex items-center justify-center">
+              <i class="fas fa-book-open text-4xl text-cs-ink-300"></i>
             </div>
           <% end %>
         <% end %>
         <div class="card-body p-4">
-          <h2 class="font-bold text-lg leading-tight mb-2">
-            <%= link_to article.title, wiki_article_path(article), class: "hover:underline" %>
+          <h2 class="font-display font-semibold text-[20px] leading-tight text-cs-red-900 mb-2">
+            <%= link_to article.title, wiki_article_path(article), class: "hover:text-cs-red-700 transition-colors" %>
           </h2>
           <% if article.ingredients.any? %>
-            <div class="mb-2">
+            <div class="mb-2 flex flex-wrap gap-1">
               <% article.ingredients.each do |ingredient| %>
                 <span class="tag tag-neutral"><i class="fas fa-flask mr-1"></i><%= ingredient.name %></span>
               <% end %>
             </div>
           <% end %>
-          <p class="text-sm text-gray-500 line-clamp-3">
+          <p class="text-sm text-cs-ink-500 line-clamp-3">
             <%= article.body.gsub(/[#*_\[\]`>]/, '').strip.truncate(250) %>
           </p>
           <div class="mt-3">
-            <%= link_to "Weiterlesen →", wiki_article_path(article), class: "text-sm font-medium text-cs-link hover:underline" %>
+            <%= link_to "Weiterlesen →", wiki_article_path(article), class: "link link-arrow text-sm" %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
 <% end %>
-
