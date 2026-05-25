@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_05_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_25_160639) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -498,6 +498,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_120000) do
     t.index ["featured"], name: "index_wiki_articles_on_featured"
     t.index ["published"], name: "index_wiki_articles_on_published"
     t.index ["slug"], name: "index_wiki_articles_on_slug", unique: true
+    t.index ["title", "body"], name: "index_wiki_articles_fulltext", type: :fulltext
     t.index ["user_id"], name: "index_wiki_articles_on_user_id"
   end
 

@@ -25,6 +25,15 @@ class WikiArticle < ApplicationRecord
   scope :unpublished, -> { where(published: false) }
   scope :featured_articles, -> { where(featured: true).order(:featured_position) }
 
+  scope :search, ->(query) {
+    return none if query.blank?
+    if Rails.env.test?
+      where("title LIKE ? OR body LIKE ?", "%#{query}%", "%#{query}%")
+    else
+      where("MATCH(title, body) AGAINST(? IN BOOLEAN MODE)", "#{query}*")
+    end
+  }
+
   def to_param
     slug
   end

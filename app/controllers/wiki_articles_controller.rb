@@ -1,5 +1,5 @@
 class WikiArticlesController < ApplicationController
-  allow_unauthenticated_access only: %i[index show]
+  allow_unauthenticated_access only: %i[index show search]
 
   before_action :set_article, only: %i[show edit update destroy]
   before_action :authorize_write!, only: %i[new create edit update drafts]
@@ -9,6 +9,20 @@ class WikiArticlesController < ApplicationController
     add_breadcrumb "Wiki", wiki_dashboard_path
     add_breadcrumb "Alle Artikel"
     @pagy, @wiki_articles = pagy(WikiArticle.published.includes(:ingredients).order(title: :asc), limit: 50)
+  end
+
+  def search
+    add_breadcrumb "Wiki", wiki_dashboard_path
+    add_breadcrumb "Suche"
+    @query = params[:q].to_s.strip
+    if @query.present?
+      @pagy, @wiki_articles = pagy(
+        WikiArticle.published.search(@query).includes(:ingredients).order(title: :asc),
+        limit: 20
+      )
+    else
+      @pagy, @wiki_articles = pagy(WikiArticle.none)
+    end
   end
 
   def drafts

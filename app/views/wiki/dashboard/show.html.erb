@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
   <div>
     <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900">Wiki</h1>
     <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
@@ -16,6 +16,21 @@
       <% end %>
     <% end %>
   </div>
+</div>
+
+<div class="mb-8">
+  <%= form_tag search_wiki_articles_path, method: :get do %>
+    <div class="relative">
+      <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-cs-ink-400 text-lg pointer-events-none"></i>
+      <%= text_field_tag :q, nil,
+            placeholder: "Wiki durchsuchen… Gin, Shaker, Vermouth",
+            class: "input-field py-4 text-lg w-full",
+            style: "padding-left: 3rem; padding-right: 8rem;" %>
+      <button type="submit" class="btn btn-primary absolute right-2 top-1/2 -translate-y-1/2">
+        Suchen
+      </button>
+    </div>
+  <% end %>
 </div>
 
 <% if @featured_articles.empty? %>

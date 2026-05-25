@@ -164,6 +164,7 @@ Rails.application.routes.draw do
     only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
     collection do
       get :drafts
+      get :search
     end
   end
 

@@ -1,0 +1,123 @@
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+  <div>
+    <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900">Wiki-Suche</h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  </div>
+  <div class="flex items-center gap-3">
+    <%= link_to wiki_dashboard_path, class: "btn btn-outline btn-sm" do %>
+      <i class="fas fa-home mr-1"></i> Dashboard
+    <% end %>
+    <%= link_to wiki_articles_path, class: "btn btn-outline btn-sm" do %>
+      <i class="fas fa-list mr-1"></i> Alle Artikel
+    <% end %>
+  </div>
+</div>
+
+<div class="mb-8">
+  <%= form_tag search_wiki_articles_path, method: :get do %>
+    <div class="relative">
+      <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-cs-ink-400 text-lg pointer-events-none"></i>
+      <%= text_field_tag :q, @query,
+            placeholder: "Artikel durchsuchen…",
+            autofocus: true,
+            class: "input-field py-4 text-lg w-full",
+            style: "padding-left: 3rem; padding-right: 8rem;" %>
+      <button type="submit" class="btn btn-primary absolute right-2 top-1/2 -translate-y-1/2">
+        Suchen
+      </button>
+    </div>
+  <% end %>
+</div>
+
+<% if @query.present? %>
+  <div class="mb-6 text-sm text-cs-ink-500">
+    <% if @pagy.count == 0 %>
+      Keine Artikel gefunden für <span class="font-semibold text-cs-ink-800">"<%= @query %>"</span>
+    <% else %>
+      <span class="font-semibold text-cs-ink-800"><%= @pagy.count %></span>
+      <%= @pagy.count == 1 ? "Artikel" : "Artikel" %> gefunden für
+      <span class="font-semibold text-cs-ink-800">"<%= @query %>"</span>
+    <% end %>
+  </div>
+
+  <% if @wiki_articles.any? %>
+    <% if @pagy.pages > 1 %>
+      <div class="flex justify-center mb-6">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
+
+    <div class="space-y-4">
+      <% @wiki_articles.each do |article| %>
+        <div class="card hover:shadow-md transition-shadow">
+          <div class="card-body p-5">
+            <div class="flex gap-4">
+              <% if article.cover_image.attached? %>
+                <%= link_to wiki_article_path(article), class: "shrink-0" do %>
+                  <div class="w-20 h-20 sm:w-24 sm:h-24 overflow-hidden rounded bg-cs-ink-100">
+                    <%= image_tag article.cover_image.variant(:thumb),
+                        class: "w-full h-full object-cover",
+                        alt: "" %>
+                  </div>
+                <% end %>
+              <% else %>
+                <%= link_to wiki_article_path(article), class: "shrink-0" do %>
+                  <div class="w-20 h-20 sm:w-24 sm:h-24 rounded bg-gradient-to-br from-cs-ink-100 to-cs-ink-200 flex items-center justify-center">
+                    <i class="fas fa-book-open text-2xl text-cs-ink-300"></i>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <div class="flex-1 min-w-0">
+                <h2 class="font-display font-semibold text-[18px] leading-tight text-cs-red-900 mb-2">
+                  <%= link_to wiki_article_path(article), class: "hover:text-cs-red-700 transition-colors" do %>
+                    <%== wiki_title_with_highlight(article.title, @query) %>
+                  <% end %>
+                </h2>
+
+                <% if article.ingredients.any? %>
+                  <div class="mb-2 flex flex-wrap gap-1">
+                    <% article.ingredients.each do |ingredient| %>
+                      <span class="tag tag-neutral text-xs"><i class="fas fa-flask mr-1"></i><%= ingredient.name %></span>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <p class="text-sm text-cs-ink-600 leading-relaxed">
+                  <%== wiki_search_excerpt(article.body, @query) %>
+                </p>
+
+                <div class="mt-3">
+                  <%= link_to "Zum Artikel →", wiki_article_path(article), class: "link link-arrow text-sm" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="flex justify-center mt-6">
+        <%== @pagy.series_nav %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="card p-12 text-center">
+      <div class="text-cs-ink-300 mb-4">
+        <i class="fas fa-search text-5xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-cs-ink-800 mb-2">Keine Artikel gefunden</h3>
+      <p class="text-cs-ink-500 mb-6">Für <span class="font-semibold">"<%= @query %>"</span> wurden keine Wiki-Artikel gefunden.</p>
+      <%= link_to "Alle Artikel ansehen", wiki_articles_path, class: "btn btn-outline" %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="card p-12 text-center">
+    <div class="text-cs-ink-300 mb-4">
+      <i class="fas fa-book-open text-5xl"></i>
+    </div>
+    <h3 class="text-xl font-bold text-cs-ink-800 mb-2">Wiki durchsuchen</h3>
+    <p class="text-cs-ink-500">Gib einen Suchbegriff ein, um Wiki-Artikel zu finden.</p>
+  </div>
+<% end %>
