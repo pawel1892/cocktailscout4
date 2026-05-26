@@ -5,6 +5,12 @@ namespace :dev do
 
     user = User.first || raise("No users found — create a user account first")
 
+    wiki_editor_role = Role.find_or_create_by(name: "wiki_editor") { |r| r.display_name = "Wiki-Editor" }
+    User.find_each do |u|
+      u.roles << wiki_editor_role unless u.role?(wiki_editor_role.name)
+    end
+    puts "Assigned wiki_editor role to all #{User.count} user(s)"
+
     rum      = Ingredient.find_by(name: "Rum")
     gin      = Ingredient.find_by(name: "Gin")
     lime     = Ingredient.find_by(name: "Limettensaft")
@@ -916,7 +922,7 @@ namespace :dev do
       article.assign_attributes(attrs.merge(user: user))
       if article.new_record?
         article.save!
-        article.ingredients = ingredients if ingredients.any?
+        ingredients.each { |i| i.update!(wiki_article: article) } if ingredients.any?
         puts "Created: #{article.title}"
       else
         puts "Skipped (exists): #{article.title}"
