@@ -94,6 +94,7 @@
       recipe-slug="<%= @recipe.slug %>"
       :scalable="<%= @recipe.has_scalable_ingredients? %>"
       :initial-ingredients='<%= h @recipe.recipe_ingredients.map { |ri|
+        wiki = @wiki_articles_by_ingredient_id[ri.ingredient_id]&.first
         {
           id: ri.id,
           amount: ri.amount,
@@ -106,7 +107,9 @@
           is_scalable: ri.is_scalable,
           is_optional: ri.is_optional,
           needs_review: ri.needs_review,
-          old_description: ri.old_description
+          old_description: ri.old_description,
+          wiki_article_slug: wiki&.slug,
+          wiki_article_title: wiki&.title
         }
       }.to_json %>'
       :initial-alcohol-info='<%= h({
@@ -115,20 +118,6 @@
         alcohol_content_percent: @recipe.calculate_alcohol_content
       }.to_json) %>'
     ></recipe-scaling>
-
-    <% if @wiki_articles_by_ingredient_id&.any? %>
-      <div class="mt-3 space-y-1">
-        <% @recipe.recipe_ingredients.each do |ri| %>
-          <% (@wiki_articles_by_ingredient_id[ri.ingredient_id] || []).each do |article| %>
-            <div class="text-sm">
-              <%= link_to wiki_article_path(article), class: "link text-cs-dark-red" do %>
-                <i class="fas fa-book-open mr-1"></i> Wiki: <%= article.title %>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
   </div>
 </div>
 

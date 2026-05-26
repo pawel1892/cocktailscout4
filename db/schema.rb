@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_25_160639) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_26_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -144,16 +144,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_160639) do
     t.index ["user_id"], name: "index_ingredient_collections_on_user_id"
   end
 
-  create_table "ingredient_wiki_articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.bigint "ingredient_id", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "wiki_article_id", null: false
-    t.index ["ingredient_id", "wiki_article_id"], name: "index_ingredient_wiki_articles_unique", unique: true
-    t.index ["ingredient_id"], name: "index_ingredient_wiki_articles_on_ingredient_id"
-    t.index ["wiki_article_id"], name: "index_ingredient_wiki_articles_on_wiki_article_id"
-  end
-
   create_table "ingredients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "alcoholic_content", precision: 10
     t.datetime "created_at", null: false
@@ -164,6 +154,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_160639) do
     t.string "plural_name"
     t.string "slug"
     t.datetime "updated_at", null: false
+    t.bigint "wiki_article_id"
+    t.index ["wiki_article_id"], name: "index_ingredients_on_wiki_article_id"
   end
 
   create_table "private_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -516,8 +508,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_160639) do
   add_foreign_key "forum_threads", "forum_topics"
   add_foreign_key "forum_threads", "users"
   add_foreign_key "ingredient_collections", "users"
-  add_foreign_key "ingredient_wiki_articles", "ingredients"
-  add_foreign_key "ingredient_wiki_articles", "wiki_articles"
+  add_foreign_key "ingredients", "wiki_articles"
   add_foreign_key "private_messages", "users", column: "receiver_id"
   add_foreign_key "private_messages", "users", column: "sender_id"
   add_foreign_key "ratings", "users"

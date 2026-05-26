@@ -9,8 +9,7 @@ class WikiArticle < ApplicationRecord
     attachable.variant :hero,  resize_to_limit: [ 1200, 800 ]
   end
 
-  has_many :ingredient_wiki_articles, dependent: :destroy
-  has_many :ingredients, through: :ingredient_wiki_articles
+  has_many :ingredients, dependent: :nullify
 
   has_many :wiki_article_collaborators, dependent: :destroy
   has_many :collaborators, through: :wiki_article_collaborators, class_name: "User", source: :user

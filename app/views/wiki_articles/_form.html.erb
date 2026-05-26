@@ -43,7 +43,7 @@
 
   <div class="form-group">
     <%= form.label :ingredient_ids, "Zutaten (optional)", class: "label-field" %>
-    <p class="text-sm text-cs-ink-500 mb-2">Verknüpft diesen Artikel mit Zutaten. Auf dem Artikel werden alle Rezepte mit diesen Zutaten angezeigt.</p>
+    <p class="text-sm text-cs-ink-500 mb-2">Weist diesen Artikel den gewählten Zutaten zu. Jede Zutat kann nur einen Wiki-Artikel haben – eine bereits verknüpfte Zutat wird hierher verschoben.</p>
     <wiki-tag-picker
       :initial-items="<%= wiki_article.ingredients.map { |i| { id: i.id, label: i.name } }.to_json %>"
       :suggestions="[]"

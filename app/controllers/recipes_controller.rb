@@ -66,11 +66,11 @@ class RecipesController < ApplicationController
 
     ingredient_ids = @recipe.recipe_ingredients.map(&:ingredient_id).compact
     @wiki_articles_by_ingredient_id = if ingredient_ids.any?
-      WikiArticle.published
-        .joins(:ingredient_wiki_articles)
-        .where(ingredient_wiki_articles: { ingredient_id: ingredient_ids })
-        .select("wiki_articles.*, ingredient_wiki_articles.ingredient_id AS linked_ingredient_id")
-        .group_by(&:linked_ingredient_id)
+      Ingredient.where(id: ingredient_ids)
+        .where.not(wiki_article_id: nil)
+        .joins(:wiki_article)
+        .where(wiki_articles: { published: true })
+        .each_with_object({}) { |i, h| h[i.id] = [ i.wiki_article ] }
     else
       {}
     end

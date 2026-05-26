@@ -58,11 +58,13 @@ class WikiArticlesController < ApplicationController
 
   def create
     p = article_params
+    ingredient_ids = p.delete(:ingredient_ids) || []
     p.delete("remove_cover_image") || p.delete(:remove_cover_image)
     @wiki_article = WikiArticle.new(p)
     @wiki_article.user = Current.user
 
     if @wiki_article.save
+      assign_ingredients(ingredient_ids)
       redirect_to wiki_article_path(@wiki_article), notice: "Artikel erfolgreich erstellt."
     else
       add_breadcrumb "Wiki", wiki_articles_path
@@ -80,9 +82,11 @@ class WikiArticlesController < ApplicationController
 
   def update
     p = article_params
+    ingredient_ids = p.delete(:ingredient_ids) || []
     remove = p.delete("remove_cover_image") || p.delete(:remove_cover_image)
     @wiki_article.cover_image.purge if remove == "1"
     if @wiki_article.update(p.merge(last_editor: Current.user))
+      assign_ingredients(ingredient_ids)
       redirect_to wiki_article_path(@wiki_article), notice: "Artikel aktualisiert."
     else
       add_breadcrumb "Wiki", wiki_articles_path
@@ -120,5 +124,10 @@ class WikiArticlesController < ApplicationController
       p[:ingredient_ids]&.reject!(&:blank?)
       p[:collaborator_ids]&.reject!(&:blank?)
     end
+  end
+
+  def assign_ingredients(ingredient_ids)
+    @wiki_article.ingredients.where.not(id: ingredient_ids).update_all(wiki_article_id: nil)
+    Ingredient.where(id: ingredient_ids).update_all(wiki_article_id: @wiki_article.id)
   end
 end

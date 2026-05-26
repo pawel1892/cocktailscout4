@@ -34,9 +34,7 @@
             class="flex items-start gap-2">
           <span class="text-cs-gold-400 mt-1">•</span>
           <span v-if="ingredient.needs_review">
-            <!-- Uncertain ingredient: show original description -->
             {{ ingredient.old_description }}
-            <!-- Warning icon when recipe is scaled -->
             <span v-if="scaleFactor !== 1"
                   class="inline-block ml-1 text-amber-600 cursor-help"
                   :title="warningMessage">
@@ -44,16 +42,21 @@
             </span>
           </span>
           <span v-else-if="ingredient.amount !== null">
-            <!-- Structured data: show formatted_amount + ingredient_name + optional additional_info -->
             <strong>{{ ingredient.formatted_amount }}</strong>
             {{ ingredient.ingredient_name }}
             <span v-if="ingredient.additional_info"
                   class="text-cs-ink-600">({{ ingredient.additional_info }})</span>
           </span>
           <span v-else>
-            <!-- Unstructured data: formatted_amount already contains everything -->
             <strong>{{ ingredient.formatted_amount }}</strong>
           </span>
+          <a v-if="ingredient.wiki_article_slug"
+             :href="`/wiki/${ingredient.wiki_article_slug}`"
+             :title="`Im Wiki lesen: ${ingredient.wiki_article_title}`"
+             class="mt-0.5 text-cs-ink-300 hover:text-cs-red-900 transition-colors flex-shrink-0"
+             aria-label="Wiki-Artikel öffnen">
+            <i class="fas fa-book-open text-[11px]"></i>
+          </a>
         </li>
       </ul>
 
