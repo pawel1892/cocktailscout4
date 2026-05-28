@@ -1,0 +1,4 @@
+interface:
+  display_name: "CocktailScout Design System"
+  short_description: "CocktailScout Tailwind design system rules"
+  default_prompt: "Use the CocktailScout design system rules for UI work."
