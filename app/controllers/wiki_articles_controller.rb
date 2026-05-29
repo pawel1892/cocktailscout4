@@ -1,6 +1,8 @@
 class WikiArticlesController < ApplicationController
   allow_unauthenticated_access only: %i[index show search]
 
+  # TEMP_WIKI_PROD_HIDE: Hide all wiki article routes from production non-editors.
+  prepend_before_action :require_visible_wiki!
   before_action :require_wiki_editor!, only: %i[new create edit update drafts destroy]
   before_action :set_article, only: %i[show edit update destroy]
 
