@@ -92,7 +92,7 @@
   </details>
 <% end %>
 
-<% if Current.user&.admin? || Current.user&.super_moderator? %>
+<% if Current.user&.can_edit_wiki? %>
   <div class="mt-8 text-right">
     <%= button_to wiki_article_path(@wiki_article), method: :delete,
         class: "link link-danger text-xs bg-transparent border-none cursor-pointer",

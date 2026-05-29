@@ -54,6 +54,10 @@ class ApplicationController < ActionController::Base
     authorization_redirect unless Current.user&.can_moderate_image?
   end
 
+  def require_wiki_editor!
+    authorization_redirect unless Current.user&.can_edit_wiki?
+  end
+
   def authorization_redirect
     redirect_to root_path, alert: "Access denied."
   end

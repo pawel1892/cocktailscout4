@@ -114,7 +114,7 @@ class User < ApplicationRecord
   end
 
   def can_edit_wiki?
-    admin? || wiki_editor? || super_moderator?
+    wiki_editor?
   end
 
   def moderator?

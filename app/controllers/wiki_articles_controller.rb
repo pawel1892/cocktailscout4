@@ -1,9 +1,8 @@
 class WikiArticlesController < ApplicationController
   allow_unauthenticated_access only: %i[index show search]
 
+  before_action :require_wiki_editor!, only: %i[new create edit update drafts destroy]
   before_action :set_article, only: %i[show edit update destroy]
-  before_action :authorize_write!, only: %i[new create edit update drafts]
-  before_action :authorize_delete!, only: %i[destroy]
 
   def index
     add_breadcrumb "Wiki", wiki_dashboard_path
@@ -105,18 +104,6 @@ class WikiArticlesController < ApplicationController
 
   def set_article
     @wiki_article = WikiArticle.includes(:ingredients, :collaborators, :user, :last_editor, :versions, cover_image_attachment: :blob).find_by!(slug: params[:slug])
-  end
-
-  def authorize_write!
-    unless Current.user&.can_edit_wiki?
-      redirect_to wiki_articles_path, alert: "Du hast keine Berechtigung, Wiki-Artikel zu bearbeiten."
-    end
-  end
-
-  def authorize_delete!
-    unless Current.user&.admin? || Current.user&.super_moderator?
-      redirect_to wiki_articles_path, alert: "Du hast keine Berechtigung, Wiki-Artikel zu löschen."
-    end
   end
 
   def article_params
