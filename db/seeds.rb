@@ -14,3 +14,4 @@ Role.find_or_create_by(name: 'forum_moderator') { |role| role.display_name = 'Fo
 Role.find_or_create_by(name: 'recipe_moderator') { |role| role.display_name = 'Rezept-Moderator' }
 Role.find_or_create_by(name: 'image_moderator') { |role| role.display_name = 'Bild-Moderator' }
 Role.find_or_create_by(name: 'super_moderator') { |role| role.display_name = 'Moderator' }
+Role.find_or_create_by(name: 'wiki_editor') { |role| role.display_name = 'Wiki-Editor' }

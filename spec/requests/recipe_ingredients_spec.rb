@@ -79,6 +79,47 @@ RSpec.describe "Recipe Ingredients API", type: :request do
         expect(ingredient).to have_key("additional_info")
         expect(ingredient).to have_key("is_scalable")
         expect(ingredient).to have_key("is_optional")
+        expect(ingredient).to have_key("wiki_article_slug")
+        expect(ingredient).to have_key("wiki_article_title")
+      end
+
+      context "with a linked wiki article" do
+        let!(:wiki_article) { create(:wiki_article, slug: "rum-guide", title: "Rum Guide") }
+
+        before { ingredient_rum.update!(wiki_article: wiki_article) }
+
+        it "includes the wiki article slug and title" do
+          get recipe_recipe_ingredients_path(recipe_slug: recipe.slug), headers: { "Accept" => "application/json" }
+
+          json = JSON.parse(response.body)
+          rum = json["ingredients"].find { |i| i["ingredient_name"] == "Rum (weiss)" }
+
+          expect(rum["wiki_article_slug"]).to eq("rum-guide")
+          expect(rum["wiki_article_title"]).to eq("Rum Guide")
+        end
+
+        it "returns nil for ingredients without a wiki article" do
+          get recipe_recipe_ingredients_path(recipe_slug: recipe.slug), headers: { "Accept" => "application/json" }
+
+          json = JSON.parse(response.body)
+          lime = json["ingredients"].find { |i| i["ingredient_name"] == "Limette" }
+
+          expect(lime["wiki_article_slug"]).to be_nil
+          expect(lime["wiki_article_title"]).to be_nil
+        end
+
+        context "when the wiki article is unpublished" do
+          before { wiki_article.update!(published: false) }
+
+          it "returns nil for unpublished wiki articles" do
+            get recipe_recipe_ingredients_path(recipe_slug: recipe.slug), headers: { "Accept" => "application/json" }
+
+            json = JSON.parse(response.body)
+            rum = json["ingredients"].find { |i| i["ingredient_name"] == "Rum (weiss)" }
+
+            expect(rum["wiki_article_slug"]).to be_nil
+          end
+        end
       end
 
       it "returns alcohol_info with total volume and alcohol content" do

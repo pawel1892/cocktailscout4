@@ -1,0 +1,93 @@
+<div class="space-y-6">
+  <div class="form-group">
+    <%= form.label :title, "Titel", class: "label-field" %>
+    <% if wiki_article.errors[:title].any? %>
+      <div class="form-error-message"><%= wiki_article.errors.full_messages_for(:title).join(", ") %></div>
+    <% end %>
+    <%= form.text_field :title, class: "input-field #{'input-error' if wiki_article.errors[:title].any?}", placeholder: "Artikel-Titel" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :body, "Inhalt", class: "label-field" %>
+    <% if wiki_article.errors[:body].any? %>
+      <div class="form-error-message"><%= wiki_article.errors.full_messages_for(:body).join(", ") %></div>
+    <% end %>
+    <markdown-editor
+      model-value="<%= wiki_article.body %>"
+      textarea-id="wiki_article_body"
+      textarea-name="<%= form.object_name %>[body]"
+      :smileys="<%= BbcodeHelper::SMILEYS.to_json %>"
+      :show-internal-links="true"
+      :show-wiki-links="true"
+    ></markdown-editor>
+  </div>
+
+  <div class="form-group">
+    <label class="check-label">
+      <%= form.check_box :published, class: "check-field" %>
+      <div>
+        <span class="label-field mb-0">Veröffentlicht</span>
+        <p class="text-sm text-cs-ink-500 mt-1">Unveröffentlichte Artikel sind nur für Wiki-Editoren sichtbar.</p>
+      </div>
+    </label>
+  </div>
+
+  <hr class="border-cs-ink-200">
+
+  <div class="form-group">
+    <%= form.label :cover_image, "Titelbild (optional)", class: "label-field" %>
+    <wiki-cover-image-picker
+      initial-url="<%= wiki_article.cover_image.attached? ? url_for(wiki_article.cover_image.variant(:thumb)) : '' %>"
+    ></wiki-cover-image-picker>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :ingredient_ids, "Zutaten (optional)", class: "label-field" %>
+    <p class="text-sm text-cs-ink-500 mb-2">Weist diesen Artikel den gewählten Zutaten zu. Jede Zutat kann nur einen Wiki-Artikel haben – eine bereits verknüpfte Zutat wird hierher verschoben.</p>
+    <wiki-tag-picker
+      :initial-items="<%= wiki_article.ingredients.map { |i| { id: i.id, label: i.name } }.to_json %>"
+      :suggestions="[]"
+      search-url="/ingredients.json?q="
+      response-key="ingredients"
+      display-key="name"
+      sub-key="recipes_count"
+      input-name="wiki_article[ingredient_ids][]"
+      placeholder="Zutat suchen…"
+    ></wiki-tag-picker>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :collaborator_ids, "Mitwirkende (optional)", class: "label-field" %>
+    <p class="text-sm text-cs-ink-500 mb-2">Benutzer, die an diesem Artikel mitgearbeitet haben.</p>
+    <wiki-tag-picker
+      :initial-items="<%= wiki_article.collaborators.map { |u| { id: u.id, label: u.username } }.to_json %>"
+      :suggestions="<%= (@whodunnit_suggestions || User.none).map { |u| { id: u.id, label: u.username } }.to_json %>"
+      search-url="/benutzer.json?q="
+      response-key="users"
+      display-key="username"
+      input-name="wiki_article[collaborator_ids][]"
+      placeholder="Benutzer suchen…"
+    ></wiki-tag-picker>
+  </div>
+
+  <% if Current.user&.admin? || Current.user&.super_moderator? %>
+    <hr class="border-cs-ink-200">
+    <div class="form-group">
+      <h3 class="label-field mb-3">Dashboard (Admin)</h3>
+      <label class="check-label mb-3">
+        <%= form.check_box :featured, class: "check-field" %>
+        <span class="text-sm font-medium text-cs-ink-800">Auf Wiki-Dashboard hervorheben</span>
+      </label>
+      <div class="flex items-center gap-3">
+        <%= form.label :featured_position, "Position", class: "text-sm text-cs-ink-600 whitespace-nowrap" %>
+        <%= form.number_field :featured_position, class: "input-field w-24", placeholder: "1, 2, 3…", min: 1 %>
+        <span class="text-sm text-cs-ink-500">Niedrigere Zahl = weiter vorne</span>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="flex justify-end gap-2">
+    <%= link_to "Abbrechen", :back, class: "btn btn-outline" %>
+    <%= form.submit "Speichern", class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="mb-6">
+  <div class="text-sm text-cs-ink-500 mb-1">
+    <%= link_to "← Wiki", wiki_dashboard_path, class: "link link-muted" %>
+  </div>
+  <h1 class="font-display font-semibold text-[28px] leading-tight tracking-tight text-cs-red-900">Neuer Wiki-Artikel</h1>
+  <div class="w-8 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+</div>
+
+<div class="card">
+  <div class="card-body p-4 sm:p-6">
+    <%= form_with model: @wiki_article, url: wiki_articles_path, multipart: true do |form| %>
+      <%= render "form", form: form, wiki_article: @wiki_article %>
+    <% end %>
+  </div>
+</div>

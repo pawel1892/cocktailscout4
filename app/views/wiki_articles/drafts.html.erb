@@ -1,0 +1,42 @@
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+  <div>
+    <div class="text-sm text-cs-ink-500 mb-1">
+      <%= link_to "← Wiki", wiki_dashboard_path, class: "link link-muted" %>
+    </div>
+    <h1 class="font-display font-semibold text-[38px] leading-tight tracking-tight text-cs-red-900">Entwürfe</h1>
+    <div class="w-10 h-0.5 bg-cs-gold-400 mt-3 mb-2.5"></div>
+  </div>
+  <%= link_to new_wiki_article_path, class: "btn btn-primary w-full sm:w-auto" do %>
+    <i class="fas fa-plus mr-2"></i> Neuer Artikel
+  <% end %>
+</div>
+
+<% if @draft_articles.empty? %>
+  <div class="card card-ghost p-12 text-center">
+    <i class="fas fa-file-alt text-5xl mb-4 block text-cs-ink-300"></i>
+    <p class="text-cs-ink-500">Keine Entwürfe vorhanden.</p>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-body p-0">
+      <ul class="divide-y divide-cs-ink-100">
+        <% @draft_articles.each do |article| %>
+          <li class="hover:bg-cs-ink-50 transition-colors">
+            <%= link_to wiki_article_path(article), class: "flex items-center justify-between gap-4 px-4 py-3 group" do %>
+              <div class="min-w-0 flex-1">
+                <span class="font-medium text-cs-ink-700 group-hover:text-cs-red-900 transition-colors"><%= article.title %></span>
+                <% article.ingredients.each do |ingredient| %>
+                  <span class="tag tag-neutral ml-1"><i class="fas fa-flask mr-1"></i><%= ingredient.name %></span>
+                <% end %>
+              </div>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <span class="tag-warning">Entwurf</span>
+                <span class="text-xs text-cs-ink-400 font-mono"><%= l(article.updated_at, format: :short) %></span>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

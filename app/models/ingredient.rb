@@ -6,6 +6,8 @@ class Ingredient < ApplicationRecord
   has_many :recipe_suggestion_ingredients, dependent: :destroy
   has_many :recipe_suggestions, through: :recipe_suggestion_ingredients
 
+  belongs_to :wiki_article, optional: true
+
   validates :name, presence: true, uniqueness: true
   validates :alcoholic_content, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 

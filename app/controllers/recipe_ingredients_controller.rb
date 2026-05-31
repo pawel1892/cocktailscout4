@@ -5,8 +5,9 @@ class RecipeIngredientsController < ApplicationController
   def index
     scale_factor = params[:scale]&.to_f || 1.0
 
-    scaled_ingredients = @recipe.recipe_ingredients.includes(:ingredient, :unit).map do |ri|
+    scaled_ingredients = @recipe.recipe_ingredients.includes(:unit, ingredient: :wiki_article).map do |ri|
       scaled = ri.scale(scale_factor)
+      wiki = ri.ingredient.wiki_article
       {
         id: ri.id,
         amount: scaled.amount,
@@ -19,7 +20,9 @@ class RecipeIngredientsController < ApplicationController
         is_scalable: ri.is_scalable,
         is_optional: ri.is_optional,
         needs_review: ri.needs_review,
-        old_description: ri.old_description
+        old_description: ri.old_description,
+        wiki_article_slug: wiki&.published? ? wiki.slug : nil,
+        wiki_article_title: wiki&.published? ? wiki.title : nil
       }
     end
 
@@ -41,7 +44,7 @@ class RecipeIngredientsController < ApplicationController
   private
 
   def set_recipe
-    @recipe = Recipe.includes(recipe_ingredients: [ :ingredient, :unit ])
+    @recipe = Recipe.includes(recipe_ingredients: [ { ingredient: :wiki_article }, :unit ])
                     .find_by!(slug: params[:recipe_slug])
   end
 end

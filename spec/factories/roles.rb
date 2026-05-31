@@ -26,6 +26,11 @@ FactoryBot.define do
       display_name { "Bild-Moderator" }
     end
 
+    trait :wiki_editor do
+      name { "wiki_editor" }
+      display_name { "Wiki-Editor" }
+    end
+
     trait :super_moderator do
       name { "super_moderator" }
       display_name { "Moderator" }

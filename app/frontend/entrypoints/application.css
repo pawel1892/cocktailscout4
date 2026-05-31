@@ -685,9 +685,9 @@ nav.pagy a[role="separator"] {
 .prose-cs {
   @apply text-cs-ink-800 leading-relaxed;
 }
-.prose-cs h1 { @apply text-2xl font-bold mt-6 mb-4 font-display; }
-.prose-cs h2 { @apply text-xl font-bold mt-5 mb-3 font-display; }
-.prose-cs h3 { @apply text-lg font-bold mt-4 mb-2; }
+.prose-cs h1 { @apply text-3xl font-bold mt-6 mb-4; }
+.prose-cs h2 { @apply text-2xl font-bold mt-5 mb-3; }
+.prose-cs h3 { @apply text-xl font-semibold mt-4 mb-2; }
 
 /* Prose for user-generated content: forum posts, recipe descriptions, comments */
 .prose-body {
@@ -770,6 +770,25 @@ user-badge {
 
 .avatar-crop-container cropper-selection {
   @apply rounded-full shadow-[0_0_0_9999em_rgba(0,0,0,0.55)];
+}
+
+/* Wiki article cover image — floats top-right on desktop, stacks on mobile */
+.wiki-cover-image {
+  max-height: 40vh;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.wiki-cover-image img {
+  max-height: 40vh;
+}
+@media (min-width: 640px) {
+  .wiki-cover-image {
+    float: right;
+    clear: right;
+    width: 40%;
+    max-height: 40vh;
+    margin: 0 0 1.25rem 1.5rem;
+  }
 }
 
 /* Tailwind 4 scans files for classes. */

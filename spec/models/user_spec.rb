@@ -24,6 +24,7 @@ RSpec.describe User, type: :model do
     let(:forum_mod) { create(:user, :forum_moderator) }
     let(:recipe_mod) { create(:user, :recipe_moderator) }
     let(:image_mod) { create(:user, :image_moderator) }
+    let(:wiki_editor) { create(:user, :wiki_editor) }
     let(:super_mod) { create(:user, :super_moderator) }
 
     describe "#admin?" do
@@ -77,6 +78,34 @@ RSpec.describe User, type: :model do
 
       it "returns false for regular user" do
         expect(user.super_moderator?).to be false
+      end
+    end
+
+    describe "#wiki_editor?" do
+      it "returns true for wiki editor" do
+        expect(wiki_editor.wiki_editor?).to be true
+      end
+
+      it "returns false for regular user" do
+        expect(user.wiki_editor?).to be false
+      end
+    end
+
+    describe "#can_edit_wiki?" do
+      it "returns true for wiki editor" do
+        expect(wiki_editor.can_edit_wiki?).to be true
+      end
+
+      it "returns false for admin" do
+        expect(admin.can_edit_wiki?).to be false
+      end
+
+      it "returns false for super moderator" do
+        expect(super_mod.can_edit_wiki?).to be false
+      end
+
+      it "returns false for regular user" do
+        expect(user.can_edit_wiki?).to be false
       end
     end
 

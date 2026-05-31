@@ -94,6 +94,7 @@
       recipe-slug="<%= @recipe.slug %>"
       :scalable="<%= @recipe.has_scalable_ingredients? %>"
       :initial-ingredients='<%= h @recipe.recipe_ingredients.map { |ri|
+        wiki = @wiki_articles_by_ingredient_id[ri.ingredient_id]&.first
         {
           id: ri.id,
           amount: ri.amount,
@@ -106,7 +107,9 @@
           is_scalable: ri.is_scalable,
           is_optional: ri.is_optional,
           needs_review: ri.needs_review,
-          old_description: ri.old_description
+          old_description: ri.old_description,
+          wiki_article_slug: wiki&.slug,
+          wiki_article_title: wiki&.title
         }
       }.to_json %>'
       :initial-alcohol-info='<%= h({

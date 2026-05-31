@@ -155,6 +155,19 @@ Rails.application.routes.draw do
     end
   end
 
+  get "wiki/dashboard", to: "wiki/dashboard#show", as: :wiki_dashboard
+
+  resources :wiki_articles,
+    path: "wiki",
+    param: :slug,
+    path_names: { new: "neu", edit: "bearbeiten" },
+    only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
+    collection do
+      get :drafts
+      get :search
+    end
+  end
+
   get "design-system", to: "design_system#index"
 
   get "impressum", to: "pages#impressum"

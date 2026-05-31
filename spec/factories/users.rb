@@ -33,6 +33,12 @@ FactoryBot.define do
       end
     end
 
+    trait :wiki_editor do
+      after(:create) do |user|
+        user.roles << create(:role, :wiki_editor)
+      end
+    end
+
     trait :super_moderator do
       after(:create) do |user|
         user.roles << create(:role, :super_moderator)
