@@ -90,6 +90,13 @@ module MarkdownHelper
       end
     end
 
+    # Any double brackets left over are not a valid [[type:ref]] wikilink
+    # (typo, missing type, stray text, etc). Escape them so they render as
+    # literal "[[" / "]]" instead of being handed to Redcarpet's own link
+    # parser, which can misbehave on unbalanced/nested bracket sequences.
+    t.gsub!(/\[\[/, "&#91;&#91;")
+    t.gsub!(/\]\]/, "&#93;&#93;")
+
     # Quotes — process innermost first
     loop do
       found = false

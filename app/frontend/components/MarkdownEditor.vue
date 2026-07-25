@@ -279,9 +279,18 @@
     </div>
 
     <!-- Preview Tab -->
-    <div v-show="activeTab === 'preview'" class="border-x border-b border-cs-ink-300 rounded-b-md p-4 min-h-[300px] bg-white">
+    <div v-if="activeTab === 'preview'" class="border-x border-b border-cs-ink-300 rounded-b-md p-4 min-h-[300px] bg-white">
       <div v-if="markdownText" class="prose prose-cs prose-sm max-w-none" v-html="renderedHtml"></div>
       <div v-else class="text-cs-ink-400 italic">Keine Vorschau verfügbar</div>
+    </div>
+
+    <!-- Malformed wikilink/shortcode warning -->
+    <div v-if="bracketIssues.length" class="callout-warning mt-2">
+      <i class="fas fa-exclamation-triangle"></i>
+      <div>
+        <strong>Hinweis:</strong> Es sieht so aus, als enthalte der Text unvollständige oder fehlerhafte Verknüpfungs-Syntax (<code>{{ bracketIssues[0].token }}</code>). Sie wird beim Speichern als reiner Text angezeigt und nicht verlinkt.
+        <div class="font-mono text-[12px] mt-1 text-cs-warning-700/80">{{ bracketIssues[0].context }}</div>
+      </div>
     </div>
 
     <!-- Upload error -->
@@ -410,7 +419,7 @@
 
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
-import { renderMarkdown } from '../lib/markdownPreview.js'
+import { renderMarkdown, findBracketIssues } from '../lib/markdownPreview.js'
 import { useWikilinkPaste } from '../composables/useWikilinkPaste.js'
 
 const props = defineProps({
@@ -479,6 +488,7 @@ watch(() => props.modelValue, (v) => { markdownText.value = v })
 
 // ── Preview ──────────────────────────────────────────────────────────────────
 const renderedHtml = computed(() => renderMarkdown(markdownText.value, props.smileys || undefined))
+const bracketIssues = computed(() => findBracketIssues(markdownText.value))
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 const onInput = () => emit('update:modelValue', markdownText.value)

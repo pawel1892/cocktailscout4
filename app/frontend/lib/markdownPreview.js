@@ -54,6 +54,13 @@ function preprocessShortcodes(text) {
     return _ // unknown type: leave unchanged
   })
 
+  // Any double brackets left over are not a valid [[type:ref]] wikilink.
+  // Escape them so they render as literal "[[" / "]]" instead of being
+  // handed to marked's own link parser, which can misbehave on
+  // unbalanced/nested bracket sequences.
+  t = t.replace(/\[\[/g, '&#91;&#91;')
+  t = t.replace(/\]\]/g, '&#93;&#93;')
+
   // Quotes — process innermost first
   let found = true
   while (found) {
@@ -74,6 +81,36 @@ function preprocessShortcodes(text) {
   }
 
   return t
+}
+
+// Finds double-bracket/brace sequences ([[, ]], {{, }}) that aren't part of
+// a valid [[type:ref]] wikilink — used to warn authors while they type,
+// before the escaping in preprocessShortcodes silently neutralizes them.
+export function findBracketIssues(text) {
+  if (!text) return []
+
+  let scan = text
+
+  // Blank out fenced code blocks and inline code spans (same length, so
+  // match indexes below still line up with the original text).
+  scan = scan.replace(/^(`{3,}|~{3,}).*?\n[\s\S]*?\n\1[ \t]*$/gm, m => ' '.repeat(m.length))
+  scan = scan.replace(/(`{1,2})(?!`)(.+?)\1(?!`)/gs, m => ' '.repeat(m.length))
+
+  // Blank out valid wikilinks so only unmatched/malformed brackets remain.
+  scan = scan.replace(WIKILINK, m => ' '.repeat(m.length))
+
+  const issues = []
+  const re = /\[\[|\]\]|\{\{|\}\}/g
+  let match
+  while ((match = re.exec(scan))) {
+    const start = Math.max(0, match.index - 20)
+    const end = Math.min(text.length, match.index + match[0].length + 20)
+    let context = text.slice(start, end).trim()
+    if (start > 0) context = `…${context}`
+    if (end < text.length) context = `${context}…`
+    issues.push({ index: match.index, token: match[0], context })
+  }
+  return issues
 }
 
 function applySmileys(html, smileys) {
