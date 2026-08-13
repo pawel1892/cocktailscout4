@@ -108,9 +108,8 @@
           is_optional: ri.is_optional,
           needs_review: ri.needs_review,
           old_description: ri.old_description,
-          # TEMP_WIKI_PROD_HIDE: Hide ingredient wiki links in production for non-editors.
-          wiki_article_slug: wiki_visible? ? wiki&.slug : nil,
-          wiki_article_title: wiki_visible? ? wiki&.title : nil
+          wiki_article_slug: wiki&.slug,
+          wiki_article_title: wiki&.title
         }
       }.to_json %>'
       :initial-alcohol-info='<%= h({
