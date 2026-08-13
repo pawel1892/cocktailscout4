@@ -1,0 +1,3840 @@
+---
+- :id: 1
+  :title: Piña Colada
+  :slug: pina-colada
+  :description: "Die Zutaten mit Crushed Ice im Blender gründlich mixen und anschließend
+    in ein Cocktailglas geben. \r\n\r\nDeutlich besser schmeckt die Piña Colada allerdings,
+    wenn man 1-2 cl Sahne hinzugibt. Man kann auch einige frische Ananasstücke mit
+    in den Blender hineingeben.\r\n\r\nAlternativ kann man die Piña Colada auch im
+    Shaker zubereiten. Einfach alle Zutaten mit einigen Eiswürfeln shaken und dann
+    in ein Cocktailglas geben.\r\n\r\n**Probiert doch auch mal schoeun's Version:**\r\n6cl
+    Weisser Rum / 4cl Cream of Coconut / 10cl Ananassaft / 2cl Sahne<br /\r\n\r\nVariante
+    hier bis zum 03.03.2026:\r\n3 cl Rum weiß\r\n3 cl Cream of Coconut\r\n9 cl Ananassaft"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 208712
+  :total_volume: !ruby/object:BigDecimal 9:0.2e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.12e2
+  :user_id: 31
+  :updated_by_id: 32
+  :old_id: 1
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2003-12-22 01:01:18.000000000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2026-05-24 11:05:13.197279000 Z
+    zone: *2
+    time: *3
+- :id: 9
+  :title: Whiskey Sour
+  :slug: whiskey-sour
+  :description: "Zutaten im Shaker auf Eis (mit Eiklar erst ohne Eis) kräftig schütteln,
+    anschließend in einen Tumbler geben. Das Ganze kann mit einem Zuckerrand und einer
+    Zitronenscheibe verziert werden.\r\n<br />\r\nVariante von Gertchen:\r\n4 cl Bourbon
+    Whiskey\r\n2 cl Limettensaft\r\n1 cl Zuckersirup\r\n1 Cocktailkirsche\r\n1 Teelöffel
+    Cocktailkirschensaft\r\nDie Zutaten im Shaker mit Eis schütteln und in den Tumbler
+    seihen.\r\nDie Coctailkirsche und den Saft derselben dazugeben.\r\nEtwas crushed
+    ice dazugeben und mit einem Schuß Mineralwasser auffüllen.\r\nResultat: Immer
+    noch ein Sour, aber nicht ganz so sauer!\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 586957
+  :total_volume: !ruby/object:BigDecimal 9:0.105e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.171e2
+  :user_id: 35
+  :updated_by_id: 36
+  :old_id: 10
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *4
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2026-05-03 09:13:33.160868000 Z
+    zone: *2
+    time: *5
+- :id: 10
+  :title: Tequila Sunrise
+  :slug: tequila-sunrise
+  :description: "Alle Zutaten ausser der Grenadine zusammen mit ein paar Eiswürfeln
+    kräftig im Shaker schütteln. Das ganze in ein Longdrinkglas auf frischem Eis abseihen.
+    Grenadine vorsichtig in das Glas geben, so dass diese zu Boden geht. Eine Orangenscheibe
+    als Dekoration.\r\n\r\nEs empfiehlt sich wirklich sehr, für diesen Cocktail einen
+    100%Agave-Tequila zu verwenden. Am besten eignet sich dafür der **Sauza Hornitos**.
+    Bei Verwendung dieses Tequilas sollte auch auf die Zugabe von Zitronensaft verzichtet
+    werden.\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 7.5
+  :ratings_count: 6
+  :favorites_count: 0
+  :visits_count: 266746
+  :total_volume: !ruby/object:BigDecimal 9:0.2e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.12e2
+  :user_id: 39
+  :updated_by_id: 40
+  :old_id: 11
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2004-04-07 19:12:17.000000000 Z
+    zone: *2
+    time: *6
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2026-03-02 10:25:35.854094000 Z
+    zone: *2
+    time: *7
+- :id: 11
+  :title: Mojito
+  :slug: mojito
+  :description: Die Limette achteln und zusammen mit dem Zucker und dem Minzzweig
+    in ein Longdrinkglas geben. Die Limettenstücke und eventuell auch die Minzblätter
+    mit dem Stößel quetschen. Anschließend das Glas mit Eiswürfeln füllen, den Rum
+    hineingeben und das Ganze mit Soda auffüllen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 9.7
+  :ratings_count: 6
+  :favorites_count: 0
+  :visits_count: 1082844
+  :total_volume: !ruby/object:BigDecimal 9:0.14e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.143e2
+  :user_id: 43
+  :updated_by_id:
+  :old_id: 12
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &8 2004-06-22 21:53:12.000000000 Z
+    zone: *2
+    time: *8
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &9 2017-04-27 22:57:00.000000000 Z
+    zone: *2
+    time: *9
+- :id: 12
+  :title: Planter's Punch
+  :slug: planter-s-punch
+  :description: Alle Zutaten mit Eiswürfel in einen Shaker geben und gut schütteln.
+    Anschließend in ein Cocktailglas füllen und bei Bedarf mit zwei Cocktailkirschen
+    dekorieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 65791
+  :total_volume: !ruby/object:BigDecimal 9:0.15e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.16e2
+  :user_id: 46
+  :updated_by_id:
+  :old_id: 13
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &10 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *10
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &11 2017-04-27 22:57:00.000000000 Z
+    zone: *2
+    time: *11
+- :id: 17
+  :title: Swimming Pool
+  :slug: swimming-pool
+  :description: "Alle Zutaten in einem Shaker gut schütteln und anschließend mit Crushed
+    Ice in ein Cocktailglas geben. Als Dekoration eignen sich tropische Früchte wie
+    Ananas oder Kiwi sehr gut.<br />\r\nWohl einer der bekanntesten Cocktails. Der
+    Geschmack ist tropisch-süß, keine Spur vom herben Alkohol. Und die Herkunft des
+    Namens lässt sich beim Betrachten der Farbe des Cocktails auch leicht erahnen.
+    \ <br />\r\nHier Schumanns Originalrezept:\r\n4cl weißer Rum\r\n2cl Wodka\r\n1cl
+    Curacao Blue\r\n2cl Coconut Cream\r\n1cl süße Sahne\r\n4cl Pineapple Juice\r\n\r\nRum,
+    Wodka, Coconut Cream, Sahne und Pineapple Juice auf Eis im Shaker schütteln.<br
+    />\r\nIn ein randvoll mit gestoßenem Eis gefülltem Glas abfüllen. Curacao Blue
+    darüberfließen lassen. Mit Ananasscheibe und Cocktailkirsche garnieren."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 155183
+  :total_volume: !ruby/object:BigDecimal 9:0.17e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.94e1
+  :user_id: 49
+  :updated_by_id: 50
+  :old_id: 19
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &12 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *12
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &13 2026-05-03 14:30:28.113531000 Z
+    zone: *2
+    time: *13
+- :id: 18
+  :title: Long Island Iced Tea
+  :slug: long-island-iced-tea
+  :description: Alle Zutaten außer der Cola mit ein paar Eiswürfeln kräftig im Shaker
+    schütteln. Das ganze in ein Longdrinkglas geben und mit Cola auffüllen. Eine Orangen-
+    oder Zitronenscheibe ist als Dekoration denkbar.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 1124798
+  :total_volume: !ruby/object:BigDecimal 9:0.11e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.18e2
+  :user_id: 3
+  :updated_by_id: 4
+  :old_id: 20
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &14 2005-06-11 13:11:25.000000000 Z
+    zone: *2
+    time: *14
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &15 2017-04-27 22:57:00.000000000 Z
+    zone: *2
+    time: *15
+- :id: 26
+  :title: Caipirinha
+  :slug: caipirinha
+  :description: Die Limetten achteln und zusammen mit dem Rohrzucker in ein Caipirinha-Glas
+    geben. Mit einem Stößel die Limetten ausquetschen, anschließend das Glas mit Crushed
+    Ice auffüllen und den Cachaça hinzugeben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 7.7
+  :ratings_count: 6
+  :favorites_count: 0
+  :visits_count: 290717
+  :total_volume: !ruby/object:BigDecimal 9:0.165e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.145e2
+  :user_id: 7
+  :updated_by_id:
+  :old_id: 28
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &16 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *16
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &17 2026-05-25 08:14:03.423808000 Z
+    zone: *2
+    time: *17
+- :id: 29
+  :title: Cuba Libre
+  :slug: cuba-libre
+  :description: "Eine halbe Limette vierteln und in einem Longdrinkglas ausquetschen.
+    Anschließend den Rum und Eiswürfel hinzugeben und mit Cola auffüllen.<br />\r\n<br
+    />\r\n<b>Mudball1993</b> schlägt als Version den <b>Cubata</b> vor, der mit braunem
+    anstatt mit weißem Rum gemixt wird.<br />\r\n<br />\r\nDer Cuba Libre entstand
+    gerüchteweise um 1900 am Ende des spanisch-amerikanischen Krieges als amerikanische
+    Soldaten mit diesem Getränk auf die Befreiung Kubas anstießen."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 339471
+  :total_volume: !ruby/object:BigDecimal 9:0.2e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.1e2
+  :user_id: 10
+  :updated_by_id: 11
+  :old_id: 31
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &18 2005-06-27 11:53:01.000000000 Z
+    zone: *2
+    time: *18
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &19 2017-04-27 22:57:00.000000000 Z
+    zone: *2
+    time: *19
+- :id: 30
+  :title: B 52
+  :slug: b-52
+  :description: "Kaffeelikör, Irish Cream (bevorzugt Baileys) und 73%Rum, in dieser
+    Reihenfolge vorsichtig in ein Shooterglas geben, so dass sich die Zutaten schichten.
+    Das Ganze dann anzünden. Den Trinkhalm natürlich beilegen und nicht in das brennende
+    Glas tun. Den Shooter, während er brennt, schnellstmöglich durch den Strohhalm
+    trinken.<br />\r\nIn der Ur-Version brannte der B52 übrigens nicht. Da wurde als
+    obere Schicht der Grand Marnier Cordon Rouge verwendet."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 116563
+  :total_volume: !ruby/object:BigDecimal 9:0.5e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.314e2
+  :user_id: 14
+  :updated_by_id: 15
+  :old_id: 32
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &20 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *20
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &21 2026-05-15 13:16:14.350820000 Z
+    zone: *2
+    time: *21
+- :id: 40
+  :title: Jack Rose
+  :slug: jack-rose
+  :description: Die Zutaten mit ein wenig Eis im Shaker schütteln und in eine Cocktailschale
+    abseihen
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 10692
+  :total_volume: !ruby/object:BigDecimal 9:0.8e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.25e2
+  :user_id: 18
+  :updated_by_id:
+  :old_id: 44
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &22 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *22
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &23 2017-04-27 22:57:00.000000000 Z
+    zone: *2
+    time: *23
+- :id: 41
+  :title: Mai Tai
+  :slug: mai-tai
+  :description: "Alle Zutaten gut shaken und in ein Cocktailglas auf frischem Eis
+    abseihen. Kann noch etwas mit Crushed Ice aufgefüllt werden. Optional nach Vic's
+    Rezept den Glasrand mit Minzezweig aromatisieren. Der Mai Tai gehört zu den bekanntesten
+    Cocktails.<br />\r\n\r\nTrader Vic`s <b>ORIGINAL FORMULA</b>:<br />\r\n2 ounces
+    17-year-old J. Wray Nephew Jamaican Rum<br />\r\n1/2 ounce French Garnier Orgeat<br
+    />\r\n1/2 ounce Holland DeKuyper Orange Curacao<br />\r\n1/4 ounce Rock Candy
+    Syrup<br />\r\nJuice from 1 fresh Lime<br />\r\nShake and garnish with half of
+    the lime shell inside the drink and float a sprig of fresh mint at the edge of
+    the glass.\r\n<br /><br />\r\nRezeptvorschlag hier bis 02.03.2026, wobei Vic's
+    Original oben steht:<br />\r\n6 cl brauner Rum<br />\r\n2 cl Triple Sec<br />\r\n1
+    cl Zuckersirup<br />\r\n2 cl Mandelsirup<br />\r\n2 cl Limettensaft"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 8.7
+  :ratings_count: 6
+  :favorites_count: 0
+  :visits_count: 253724
+  :total_volume: !ruby/object:BigDecimal 9:0.12e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.32e2
+  :user_id: 21
+  :updated_by_id: 22
+  :old_id: 45
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &24 2004-09-01 18:49:26.000000000 Z
+    zone: *2
+    time: *24
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &25 2026-03-02 12:00:37.842408000 Z
+    zone: *2
+    time: *25
+- :id: 49
+  :title: Casino
+  :slug: casino
+  :description: "Alle Zutaten mit ein wenig Eis shaken und anschließend durch ein
+    Barsieb in eine Cocktailschale geben.\r\n\r\nDer Cocktail schmeckt zwar sauer,
+    aber dennoch sehr stark nach Alkohol.\r\n\r\nVariante von Ripuli\r\n(bis 23.05.2014
+    Hauptrezept in der Datenbank)\r\n\r\n4cl Gin\r\n2cl Triple Sec Curaçao\r\n1 Spritzer
+    Angostura\r\n1cl Zitronensaft "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 16970
+  :total_volume: !ruby/object:BigDecimal 9:0.7e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.37e2
+  :user_id: 25
+  :updated_by_id: 26
+  :old_id: 55
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &26 2005-07-04 18:23:25.000000000 Z
+    zone: *2
+    time: *26
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &27 2026-05-25 08:31:52.957837000 Z
+    zone: *2
+    time: *27
+- :id: 53
+  :title: Tom Collins
+  :slug: tom-collins
+  :description: Alle Zutaten mit einigen Eiswürfeln in ein Longdrinkglas geben und
+    gut verrühren.<br><br>Ein erfrischend spitziger Geschmack zeichnet diesen Cocktail
+    aus.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 20698
+  :total_volume: !ruby/object:BigDecimal 9:0.2e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.11e2
+  :user_id: 29
+  :updated_by_id: 30
+  :old_id: 60
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &28 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *28
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &29 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *29
+- :id: 59
+  :title: Negroni
+  :slug: negroni
+  :description: "Die Zutaten mit Eiswürfeln in ein old-fashioned Glas geben und leicht
+    verrühren.<br />\r\n<br />\r\nStark alkoholischer Geschmack, der den Drink vor
+    allem für starke Männer interessant macht."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 17307
+  :total_volume: !ruby/object:BigDecimal 9:0.9e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.29e2
+  :user_id: 33
+  :updated_by_id: 34
+  :old_id: 67
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &30 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *30
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &31 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *31
+- :id: 68
+  :title: Red One
+  :slug: red-one
+  :description: "Die drei Säfte im Shaker mischen und in ein mit Eis gefülltes Longdrinkglas
+    geben. Die Grenadine vorsichtig hinzugeben und ganz leicht umrühren, damit ein
+    schöner Farbeffekt entsteht.<br /><br />\r\nSchmeckt fruchtig und ist auch für
+    Kinder gut geeignet."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 30584
+  :total_volume: !ruby/object:BigDecimal 9:0.12e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 37
+  :updated_by_id:
+  :old_id: 76
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &32 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *32
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &33 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *33
+- :id: 69
+  :title: Americano
+  :slug: americano
+  :description: 'Campari und Wermut in ein mit Eis gefülltes Old Fashioned Glas geben
+    und mit einem Spritzer Soda auffüllen. Mit einer halben Orangenscheibe garnieren. '
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 32100
+  :total_volume: !ruby/object:BigDecimal 9:0.7e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.17e2
+  :user_id: 40
+  :updated_by_id: 41
+  :old_id: 77
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &34 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *34
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &35 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *35
+- :id: 79
+  :title: Columbo
+  :slug: columbo
+  :description: Die Zutaten außer Tonic Water mit Eis shaken, in ein Longdrinkglas
+    geben und mit Tonic Water auffüllen. Das Ganze umrühren. <br><br>Ein sehr herber
+    aber auch erfrischender Cocktail. Wer Campari und Tonic mag, ist hier richtig.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 13569
+  :total_volume: !ruby/object:BigDecimal 9:0.18e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.42e1
+  :user_id: 44
+  :updated_by_id:
+  :old_id: 89
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &36 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *36
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &37 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *37
+- :id: 82
+  :title: Touch Down
+  :slug: touch-down
+  :description: "Alle Zutaten außer der Grenadine mit ein wenig Eis shaken. Die Mischung
+    in ein Longdrinkglas geben. Die Grenadine vorsichtig in das Glas abseihen und
+    leicht umrühren. <br> <br>\r\nEs sollte darauf geachtet werden, dass der Maracujasaft
+    frisch ist und ein möglichst milder Wodka gewählt wird."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 224496
+  :total_volume: !ruby/object:BigDecimal 9:0.24e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.9e1
+  :user_id: 46
+  :updated_by_id:
+  :old_id: 92
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &38 2004-07-29 03:19:47.000000000 Z
+    zone: *2
+    time: *38
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &39 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *39
+- :id: 90
+  :title: Simply Red
+  :slug: simply-red
+  :description: Alle Zutaten zusammen mit eis shaken und in ein Longdrinkglas geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 9247
+  :total_volume: !ruby/object:BigDecimal 9:0.18e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 49
+  :updated_by_id:
+  :old_id: 102
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &40 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *40
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &41 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *41
+- :id: 112
+  :title: Camurai
+  :slug: camurai
+  :description: "Den Wodka, den Blue Curaçao und die Cream of Coconut in ein Longdrinkglas
+    geben und gut umrühren. Anschließend mit Soda und einigen Eiswürfeln auffüllen.
+    Das Ganze mit einer Zitronenscheibe dekorieren und einen Trinkhalm hinzugeben.
+    <br><br>\r\nDer Cocktail ist aufgrund des hohen Sodaanteils sehr erfrischend,
+    schmeckt jedoch aufgrund der Cream of Coconut und des Blue Curaçao auch ein wenig
+    tropisch (Kokos/Orange)."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 13281
+  :total_volume: !ruby/object:BigDecimal 9:0.17e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.94e1
+  :user_id: 2
+  :updated_by_id:
+  :old_id: 127
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &42 2004-07-29 03:08:51.000000000 Z
+    zone: *2
+    time: *42
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &43 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *43
+- :id: 115
+  :title: Coral Sea
+  :slug: coral-sea
+  :description: "Alle Zutaten auf Eis in einem Shaker gut schütteln und in einer Cocktailschale
+    servieren. <br><br>\r\nEin süßlicher Cocktail mit einer leichten herben Rumnote."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 21055
+  :total_volume: !ruby/object:BigDecimal 9:0.13e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.13e2
+  :user_id: 4
+  :updated_by_id:
+  :old_id: 130
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &44 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *44
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &45 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *45
+- :id: 124
+  :title: Palm Beach Short
+  :slug: palm-beach-short
+  :description: Die Zutaten mit ein wenig Eis shaken und durch ein Barsieb in eine
+    Cocktailschale geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7007
+  :total_volume: !ruby/object:BigDecimal 9:0.6e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.21e2
+  :user_id: 7
+  :updated_by_id:
+  :old_id: 139
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &46 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *46
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &47 2017-04-27 22:57:01.000000000 Z
+    zone: *2
+    time: *47
+- :id: 140
+  :title: Ritz
+  :slug: ritz
+  :description: Alle Zutaten gut gekühlt in ein Sektglas geben und umrühren. Am besten
+    Champagner verwenden.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 12750
+  :total_volume: !ruby/object:BigDecimal 9:0.16e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.175e2
+  :user_id: 10
+  :updated_by_id:
+  :old_id: 156
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &48 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *48
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &49 2026-05-24 09:06:37.605370000 Z
+    zone: *2
+    time: *49
+- :id: 147
+  :title: Red Moon
+  :slug: red-moon
+  :description: "Geben Sie alle Zutaten bis auf Soda zusammen mit Eis in einen Shaker
+    und schütteln Sie gut. Gießen Sie den Drink anschließend durch ein Barsieb in
+    ein Longdrinkglas auf Eis und füllen Sie mit Soda auf. <br><br>\r\nDie Grenadine
+    ist beim Geschmack stark tonangebend. Daher schmeckt dieser Cocktail sehr süß."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 10881
+  :total_volume: !ruby/object:BigDecimal 9:0.17e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.47e1
+  :user_id: 13
+  :updated_by_id:
+  :old_id: 164
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &50 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *50
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &51 2017-04-27 22:57:02.000000000 Z
+    zone: *2
+    time: *51
+- :id: 154
+  :title: KiBa
+  :slug: kiba
+  :description: "Ein Longdrinkglas zur Hälfte mit Bananennektar füllen und anschließend
+    mit Kirschnektar auffüllen. <br />\r\nWenn man den Kirschnektar vorsichtig (z.B.
+    über einen Löffel) hinzugibt, entsteht ein schöner optischer Effekt, wie auf dem
+    Foto zu sehen ist.<br />\r\nDie Säfte sollten gekühlt sein, notfalls kann man
+    mit Eiswürfeln nachhelfen. KiBa ist auch hervorragend für Kinder geeignet."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 125241
+  :total_volume: !ruby/object:BigDecimal 9:0.2e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 15
+  :updated_by_id: 16
+  :old_id: 174
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &52 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *52
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &53 2017-04-27 22:57:02.000000000 Z
+    zone: *2
+    time: *53
+- :id: 160
+  :title: Magic Queen
+  :slug: magic-queen
+  :description: "Alle Zutaten (ohne Grenadine) in einem Shaker auf Eis gut schütteln,
+    mit der Grenadine floaten und anschließend in einem Cocktailglas servieren.\r\n<br
+    />\r\nDeko mit Ananas oder Orangenscheibe denkbar. Fruchtig-süßer Geschmack und
+    ein schöner Farbeffekt."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 12671
+  :total_volume: !ruby/object:BigDecimal 9:0.19e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.126e2
+  :user_id: 19
+  :updated_by_id:
+  :old_id: 180
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &54 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *54
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &55 2026-03-07 15:18:52.983033000 Z
+    zone: *2
+    time: *55
+- :id: 170
+  :title: Gin Fizz
+  :slug: gin-fizz
+  :description: Den Gin, den Zuckersirup und den Zitronensaft in einem Shaker auf
+    Eis gut schütteln und anschließend in ein Longdrinkglas mit frischen Eiswürfeln
+    abseihen. Mit Soda auffüllen.<br /><br />Erfrischend-herber Geschmack mit Ginnote.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 69257
+  :total_volume: !ruby/object:BigDecimal 9:0.13e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.217e2
+  :user_id: 21
+  :updated_by_id: 22
+  :old_id: 197
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &56 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *56
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &57 2017-04-27 22:57:02.000000000 Z
+    zone: *2
+    time: *57
+- :id: 173
+  :title: Schumann's Gimlet
+  :slug: schumann-s-gimlet
+  :description: Alle Zutaten in einem Shaker auf Eis gut schütteln und anschließend
+    in einer Cocktailschale servieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 25469
+  :total_volume: !ruby/object:BigDecimal 9:0.12e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.23e2
+  :user_id: 25
+  :updated_by_id:
+  :old_id: 200
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &58 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *58
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &59 2017-04-27 22:57:02.000000000 Z
+    zone: *2
+    time: *59
+- :id: 174
+  :title: Angel Face
+  :slug: angel-face
+  :description: "Alle Zutaten in einem Shaker auf Eis gut schütteln und anschließend
+    in einer kleinen Cocktailschale servieren.<br />\r\nSchmeckt süßlich-herb."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 14656
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.39e2
+  :user_id: 28
+  :updated_by_id: 29
+  :old_id: 201
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &60 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *60
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &61 2026-05-24 08:11:48.721154000 Z
+    zone: *2
+    time: *61
+- :id: 182
+  :title: Tropical Lady
+  :slug: tropical-lady
+  :description: Die Zutaten mit Eis im Shaker mischen und in ein Cocktailglas geben.
+    Mit einem Fruchtspieß dekorieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5769
+  :total_volume: !ruby/object:BigDecimal 9:0.19e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.12e2
+  :user_id: 32
+  :updated_by_id:
+  :old_id: 209
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &62 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *62
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &63 2017-07-21 11:58:42.000000000 Z
+    zone: *2
+    time: *63
+- :id: 191
+  :title: California Iced Tea
+  :slug: california-iced-tea
+  :description: Die Zutaten (bis auf den Ananas- und den Orangensaft) mit Eiswürfeln
+    shaken und in ein Cocktailglas geben.&lt;br /&gt;&lt;br /&gt;Die fruchtig-erfrischend-herbe
+    Geschmacksmischung ist sehr interessant.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 18926
+  :total_volume: !ruby/object:BigDecimal 9:0.14e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.14e2
+  :user_id: 35
+  :updated_by_id: 36
+  :old_id: 220
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &64 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *64
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &65 2017-04-27 22:57:02.000000000 Z
+    zone: *2
+    time: *65
+- :id: 198
+  :title: Country Club Cooler
+  :slug: country-club-cooler
+  :description: Die Zutaten, außer Ginger Ale, mit einigen Eiswürfeln shaken. Dann
+    das Ganze in ein Longdrinkglas geben und mit Ginger Ale auffüllen.<br /><br />Der
+    Country Club Cooler ist fruchtig-erfrischend.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 8914
+  :total_volume: !ruby/object:BigDecimal 9:0.2e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.45e1
+  :user_id: 38
+  :updated_by_id:
+  :old_id: 227
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &66 2005-06-04 20:29:05.000000000 Z
+    zone: *2
+    time: *66
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &67 2026-03-08 16:18:34.314119000 Z
+    zone: *2
+    time: *67
+- :id: 203
+  :title: Cosmopolitan
+  :slug: cosmopolitan
+  :description: Alle Zutaten gut shaken und anschließend auf Eis in eine (gekühlte)
+    Cocktailschale füllen.<br /><br />Leicht säuerlicher aber gut abgerundeter Geschmack.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 58681
+  :total_volume: !ruby/object:BigDecimal 9:0.1e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.16e2
+  :user_id: 41
+  :updated_by_id:
+  :old_id: 233
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &68 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *68
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &69 2017-04-27 22:57:02.000000000 Z
+    zone: *2
+    time: *69
+- :id: 222
+  :title: Pogo Stick
+  :slug: pogo-stick
+  :description: Die Zutaten mit einigen Eiswürfeln shaken und anschließend in eine
+    Cocktailschale geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6051
+  :total_volume: !ruby/object:BigDecimal 9:0.11e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.2e2
+  :user_id: 44
+  :updated_by_id:
+  :old_id: 256
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &70 2004-09-01 18:56:37.000000000 Z
+    zone: *2
+    time: *70
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &71 2017-04-27 22:57:03.000000000 Z
+    zone: *2
+    time: *71
+- :id: 244
+  :title: Dry Martini
+  :slug: dry-martini
+  :description: "Die beiden Zutaten in einem vorgekühlten Shaker verrühren und in
+    einer Cocktailschale servieren. Es ist üblich als Dekoration eine grüne Olive
+    zu verwenden.<br />\r\n<br />\r\nDas hier angegebene Mischungsverhältnis von 5:1
+    soll nur als Anregung dienen. Dieser Cocktail wird in den verschiedensten Variationen
+    zubereitet. Ein Gin zu Vermouth Verhältnis von 1:1 oder gar 10:1 ist genauso möglich.<br
+    />\r\n<br />\r\nWer möchte kann diesen Cocktail mit einigen Tropfen Angostura
+    oder Orange Bitter verfeinern.<br />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 45175
+  :total_volume: !ruby/object:BigDecimal 9:0.7e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.424e2
+  :user_id: 47
+  :updated_by_id: 48
+  :old_id: 284
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &72 2005-07-14 23:34:06.000000000 Z
+    zone: *2
+    time: *72
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &73 2026-02-24 20:54:50.057421000 Z
+    zone: *2
+    time: *73
+- :id: 246
+  :title: Chicago Freestyle
+  :slug: chicago-freestyle
+  :description: "Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    geben. Als Dekoration sind tropische Früchte (wie z.B. eine Sternfrucht) denkbar.
+    <br><br>\r\nEin starker Cocktail, dem man es überhaupt nicht anmerkt. Süßlich-fruchtig
+    im Geschmack und stark in seiner alkoholischen Wirkung."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 32836
+  :total_volume: !ruby/object:BigDecimal 9:0.2e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.18e2
+  :user_id: 1
+  :updated_by_id:
+  :old_id: 286
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &74 2003-12-22 01:01:18.000000000 Z
+    zone: *2
+    time: *74
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &75 2017-04-27 22:57:03.000000000 Z
+    zone: *2
+    time: *75
+- :id: 249
+  :title: Sidecar
+  :slug: sidecar
+  :description: Die Zutaten mit Eis im Shaker vermengen und anschließend in ein Glas
+    gießen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 28562
+  :total_volume: !ruby/object:BigDecimal 9:0.9e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.31e2
+  :user_id: 4
+  :updated_by_id:
+  :old_id: 289
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &76 2005-10-05 00:23:49.000000000 Z
+    zone: *2
+    time: *76
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &77 2017-04-27 22:57:03.000000000 Z
+    zone: *2
+    time: *77
+- :id: 257
+  :title: Tequila Pink
+  :slug: tequila-pink
+  :description: Alle Zutaten mit etwas gecrushtem Eis in einen Shaker geben, dann
+    shaken und in ein Longdrinkglas mit 3-4 Eiswürfeln über einem Barsieb abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 13715
+  :total_volume: !ruby/object:BigDecimal 9:0.19e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.1e2
+  :user_id: 7
+  :updated_by_id:
+  :old_id: 298
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &78 2005-11-17 18:45:19.000000000 Z
+    zone: *2
+    time: *78
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &79 2017-04-27 22:57:03.000000000 Z
+    zone: *2
+    time: *79
+- :id: 258
+  :title: Daiquiri
+  :slug: daiquiri
+  :description: "Alle Zutaten mit Eis kräftig shaken (mind. 10sec.) und in eine kleine
+    Martinischale auf frisches Eis abseihen. Eine Limettenscheibe zur Dekoration anstecken
+    und servieren. <br />\r\nAls Rum eignet sich z.B. der Havanna Club 3 Años recht
+    gut. Der Limettensaft sollte frisch gepreßt sein. Den Zuckersirup, oder auch nur
+    Teile davon, kann man auch durch Grenadine- oder BlueCuracao-Sirup ersetzen. Das
+    gibt auf Cocktailparty's lustige Farbspiele."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 48237
+  :total_volume: !ruby/object:BigDecimal 9:0.85e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.212e2
+  :user_id: 10
+  :updated_by_id: 11
+  :old_id: 299
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &80 2005-11-17 18:48:24.000000000 Z
+    zone: *2
+    time: *80
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &81 2026-05-25 08:20:06.860518000 Z
+    zone: *2
+    time: *81
+- :id: 270
+  :title: Golden Cadillac (2)
+  :slug: golden-cadillac-2
+  :description: Die Zutaten mit einigen Eiswürfeln shaken und das Ganze in eine Cocktailschale
+    abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7383
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.122e2
+  :user_id: 14
+  :updated_by_id:
+  :old_id: 314
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &82 2005-12-06 00:03:12.000000000 Z
+    zone: *2
+    time: *82
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &83 2017-04-27 22:57:03.000000000 Z
+    zone: *2
+    time: *83
+- :id: 277
+  :title: Wodka Sunrise
+  :slug: wodka-sunrise
+  :description: "Alle Zutaten bis auf die Grenadine mit ein paar Eiswürfeln in einen
+    Shaker geben und gut schütteln. Dann durch das Barsieb in ein Longdrinkglas geben.<br
+    />\r\nAls letztes vorsichtig die Grenadine zugeben, so dass diese sich am Boden
+    absetzt und ein schöner Farbverlauf entsteht.<br />\r\n<br />\r\nDie russische
+    Variante zum Tequila Sunrise, die etwas weniger nach Alkohol schmeckt als das
+    Original."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 39032
+  :total_volume: !ruby/object:BigDecimal 9:0.18e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.8e1
+  :user_id: 17
+  :updated_by_id:
+  :old_id: 322
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &84 2005-12-21 00:03:02.000000000 Z
+    zone: *2
+    time: *84
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &85 2017-04-27 22:57:03.000000000 Z
+    zone: *2
+    time: *85
+- :id: 284
+  :title: Bombay Punch
+  :slug: bombay-punch
+  :description: Alle Zutaten und einige Eiswürfel im Shaker schütteln und in ein Glas
+    geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 23911
+  :total_volume: !ruby/object:BigDecimal 9:0.16e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.12e2
+  :user_id: 20
+  :updated_by_id:
+  :old_id: 335
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &86 2006-01-08 16:13:28.000000000 Z
+    zone: *2
+    time: *86
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &87 2017-04-27 22:57:04.000000000 Z
+    zone: *2
+    time: *87
+- :id: 293
+  :title: Blowjob
+  :slug: blowjob
+  :description: Beide Zutaten im Shaker gut miteinander mischen und gekühlt servieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 26733
+  :total_volume: !ruby/object:BigDecimal 9:0.6e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.195e2
+  :user_id: 23
+  :updated_by_id:
+  :old_id: 347
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &88 2006-02-17 11:07:32.000000000 Z
+    zone: *2
+    time: *88
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &89 2026-05-15 13:10:14.633427000 Z
+    zone: *2
+    time: *89
+- :id: 298
+  :title: Caipirinha (alkoholfrei)
+  :slug: caipirinha-alkoholfrei
+  :description: "Die Limette achteln und die Achtel mit dem Mörser im Glas zerdrücken,
+    den Zucker hinzugeben und das Glas mit Crushed-Ice bis zum Rand füllen.<br />\r\nDanach
+    mit Ginger Ale auffüllen und mit einem Trinkhalm servieren.\r\n<br /><br />\r\n\r\neine
+    Variante <b>Virgin Pirinha</b>, vorgeschlagen von <i>florida</i><br />\r\n1 Limette
+    + 1BL brauner Rohrzucker + 10cl Bitter Lemon<br />\r\nLimette achteln, mit dem
+    Zucker im Glas zerstoßen und das Glas mit Crushed Ice auffüllen. Bitter Lemon
+    dazugeben, umrühren und mit zwei kurzen Trinkhalmen servieren.\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 87018
+  :total_volume: !ruby/object:BigDecimal 9:0.16e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 26
+  :updated_by_id: 27
+  :old_id: 352
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &90 2006-02-17 13:33:50.000000000 Z
+    zone: *2
+    time: *90
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &91 2017-04-27 22:57:04.000000000 Z
+    zone: *2
+    time: *91
+- :id: 304
+  :title: B 22
+  :slug: b-22
+  :description: "Die Zutaten in der obigen Reihenfolge schichten (zu unterst den Kaffelikör,
+    zu oberst den Baileys).\r\n<br />Alles durch einen Strohalm von unten nach oben
+    austrinken.\r\n<br />Alternativ zusätzlich auch noch etwas 73%igen Rum obenauf
+    und dann anzünden."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 22477
+  :total_volume: !ruby/object:BigDecimal 9:0.6e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.25e2
+  :user_id: 30
+  :updated_by_id: 31
+  :old_id: 361
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &92 2006-03-27 22:31:06.000000000 Z
+    zone: *2
+    time: *92
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &93 2026-05-15 13:00:14.582760000 Z
+    zone: *2
+    time: *93
+- :id: 327
+  :title: Almond Blossom
+  :slug: almond-blossom
+  :description: "Alle Zutaten auf einigen Eiswürfeln im Shaker kräftig schütteln und
+    anschließend auf Crushed Ice in ein Longdrinkglas abseihen. \r\n\r\nEin cremig-leichter
+    Cocktail mit leckerem Mandelgeschmack und einer dezenten Whiskeylikör-Note. "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 8381
+  :total_volume: !ruby/object:BigDecimal 9:0.18e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.93e1
+  :user_id: 34
+  :updated_by_id:
+  :old_id: 389
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &94 2006-09-05 14:51:22.000000000 Z
+    zone: *2
+    time: *94
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &95 2026-05-24 09:32:56.655415000 Z
+    zone: *2
+    time: *95
+- :id: 354
+  :title: Frozen Strawberry Margarita
+  :slug: frozen-strawberry-margarita
+  :description: Alle Zutaten im Blender vermixen und in eine große Cocktailschale
+    mit Crushed Ice geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 172396
+  :total_volume: !ruby/object:BigDecimal 9:0.135e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.267e2
+  :user_id: 37
+  :updated_by_id:
+  :old_id: 419
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &96 2006-10-06 16:57:11.000000000 Z
+    zone: *2
+    time: *96
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &97 2017-04-27 22:57:05.000000000 Z
+    zone: *2
+    time: *97
+- :id: 358
+  :title: Brasilian Sunset
+  :slug: brasilian-sunset
+  :description: Alle Zutaten im Shaker mit 3-4 Eiswürfeln kräftig schütteln und auf
+    frische Eiswürfel in einen Tumbler abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7588
+  :total_volume: !ruby/object:BigDecimal 9:0.1e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.2e2
+  :user_id: 40
+  :updated_by_id:
+  :old_id: 424
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &98 2006-10-06 21:18:58.000000000 Z
+    zone: *2
+    time: *98
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &99 2017-04-27 22:57:05.000000000 Z
+    zone: *2
+    time: *99
+- :id: 381
+  :title: Galliano Hot Shot
+  :slug: galliano-hot-shot
+  :description: In ein kleines Glas zu erst den Galliano geben, anschliessend vorsichtig
+    den heissen Kaffee draufgiessen und leicht geschlagene Sahne als Haube draufsetzen,
+    so dass drei Schichten entstehen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 16840
+  :total_volume: !ruby/object:BigDecimal 9:0.6e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.1e2
+  :user_id: 43
+  :updated_by_id: 44
+  :old_id: 449
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &100 2006-11-13 00:06:25.000000000 Z
+    zone: *2
+    time: *100
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &101 2026-04-27 11:42:55.879836000 Z
+    zone: *2
+    time: *101
+- :id: 385
+  :title: El Diablo
+  :slug: el-diablo
+  :description: Tequila (Ute_line empfiehlt Sauza Hornitos), Limettensaft und Cassissée
+    zusammen mit ein paar Eiswürfeln in ein Longdrinkglas geben, leicht verrühren
+    und mit eisgekühltem Ginger Ale auffüllen. Hübsch sieht eine Limettenscheibe als
+    Deko aus.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 13135
+  :total_volume: !ruby/object:BigDecimal 9:0.19e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.129e2
+  :user_id: 47
+  :updated_by_id: 48
+  :old_id: 453
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &102 2006-11-13 15:19:58.000000000 Z
+    zone: *2
+    time: *102
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &103 2017-04-27 22:57:05.000000000 Z
+    zone: *2
+    time: *103
+- :id: 393
+  :title: Good Night Ladies
+  :slug: good-night-ladies
+  :description: Alle Zutaten mit ein paar Eiswürfeln gut shaken und dann in ein Cocktailglas
+    abseihen. Zur Dekoration sei eine Aprikosen- oder Pfirsichscheibe auf einem Cocktailspieß
+    empfohlen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 8929
+  :total_volume: !ruby/object:BigDecimal 9:0.6e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.285e2
+  :user_id: 1
+  :updated_by_id:
+  :old_id: 463
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &104 2006-11-18 15:30:51.000000000 Z
+    zone: *2
+    time: *104
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &105 2017-04-27 22:57:05.000000000 Z
+    zone: *2
+    time: *105
+- :id: 406
+  :title: Mint Julep
+  :slug: mint-julep
+  :description: "Minze zwischen den Handflächen anklatschen und mit Whiskey in das
+    vorgekühlte Gästeglas geben. Fünf Minuten ziehen lassen und immer wieder umrühren,
+    bzw. die Minze vorsichtig andrücken. Minze herausnehmen, Glas mit gestoßenem Eis
+    füllen und so lange umrühren, bis das Glas von außen beschlägt. Mit gestoßenem
+    Eis auffüllen, mit übriger Minze dekorieren.\r\n\r\nAdaptiert nach einer Rezeptur
+    aus ›Bartenders Guide or How to Mix Drinks‹, Jerry Thomas, 1862.\r\nTraditionell
+    wird der Mint Julep in einem Silber- oder Zinnbecher serviert, mit einem Minzestängel
+    garniert und durch einen kurzen Strohhalm getrunken.\r\n\r\nVariante von Yannic\r\n(bis
+    20.05.2013 Hauptrezept in der Datenbank)\r\nPfefferminzblätter\r\n1 BL Zucker\r\n4cl
+    Bourbon Whiskey\r\n10cl Soda "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 42594
+  :total_volume: !ruby/object:BigDecimal 9:0.75e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.36e2
+  :user_id: 4
+  :updated_by_id: 5
+  :old_id: 478
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &106 2006-12-07 20:08:57.000000000 Z
+    zone: *2
+    time: *106
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &107 2026-05-24 11:08:52.142534000 Z
+    zone: *2
+    time: *107
+- :id: 424
+  :title: Feuervogel
+  :slug: feuervogel
+  :description: Alle Zutaten mit viel Eis kräftig shaken und in eine Cocktailschale
+    abseihen
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 14135
+  :total_volume: !ruby/object:BigDecimal 18:0.627e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.319e2
+  :user_id: 8
+  :updated_by_id: 9
+  :old_id: 503
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &108 2006-12-16 11:04:33.000000000 Z
+    zone: *2
+    time: *108
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &109 2026-05-18 16:18:40.141985000 Z
+    zone: *2
+    time: *109
+- :id: 428
+  :title: Bombay Crushed
+  :slug: bombay-crushed
+  :description: 'Ein Cocktailglas zur Hälfte mit Crushed Ice füllen. Die Kumquats
+    halbieren und ins Glas geben, dabei die Früchte gut quetschen. Gin, Limettensaft
+    und Zuckersirup hinzugeben, umrühren und mit Crushed Ice auffüllen. '
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 31577
+  :total_volume: !ruby/object:BigDecimal 9:0.11e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.256e2
+  :user_id: 12
+  :updated_by_id:
+  :old_id: 507
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &110 2006-12-16 11:59:41.000000000 Z
+    zone: *2
+    time: *110
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &111 2017-04-27 22:57:06.000000000 Z
+    zone: *2
+    time: *111
+- :id: 429
+  :title: Ebony & Ivory
+  :slug: ebony-ivory
+  :description: "Vanille-, Kokos- und Mandelsirup mit der Sahne, dem Birnennektar
+    und 2cl Maracujanektar mit ein paar Eiswürfeln kurz shaken und ins Glas abseihen.\r\nDen
+    BlueCuracaosirup, Zitronensaft, Grapefruitsaft, Schwarzer Johannisbeernektar und
+    1cl Maracujanektar mit etwas Eis kurz shaken und vorsichtig auf die untere Schicht
+    abseihen.<br><br>\r\n\r\nDie Dichte damit das Schichten gut gelingt erreicht man
+    mit Verwendung folgender Marken:<br>\r\nMonin Vanillesirup<br>\r\nRS Kokossirup<br>\r\nRS
+    Mandelsirup<br>\r\nRS BlueCuracaosirup<br>\r\nWesergold Zitronensaft<br>\r\nnaturella
+    Grapefruitsaft<br>\r\nGranini Williams-Christ Birnennektar<br>\r\nDietz Maracujanektar<br>\r\nRauch
+    Schwarzer Johannisbeernektar<br>\r\nBei Verwendung anderer Marken besteht die
+    Möglichkeit, daß sich die Schichten evtl. vermischen."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 49054
+  :total_volume: !ruby/object:BigDecimal 9:0.175e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 15
+  :updated_by_id: 16
+  :old_id: 508
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &112 2006-12-16 12:05:08.000000000 Z
+    zone: *2
+    time: *112
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &113 2017-04-27 22:57:06.000000000 Z
+    zone: *2
+    time: *113
+- :id: 471
+  :title: Mangotime
+  :slug: mangotime
+  :description: Alle Zutaten außer dem Ginger Ale mit Eiswürfeln im Shaker schütteln
+    und in ein Longdrinkglas mit Eiswürfeln abseihen. Mit Ginger Ale auffüllen und
+    mit einem Babyananasstück dekorieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6736
+  :total_volume: !ruby/object:BigDecimal 9:0.16e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 19
+  :updated_by_id: 20
+  :old_id: 554
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &114 2007-01-20 20:21:49.000000000 Z
+    zone: *2
+    time: *114
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &115 2017-04-27 22:57:07.000000000 Z
+    zone: *2
+    time: *115
+- :id: 478
+  :title: Martini - James Bond
+  :slug: martini-james-bond
+  :description: "Geschüttelt, nicht gerührt.<br />\r\nIm Original wird Gordons Gin,
+    ein russischer oder polnischer Wodka und Kina Lillet Vermouth verwendet. Alle
+    Zutaten mit sehr viel Eis, sehr lange schaken, in ein vorgekühltes Martiniglas
+    abseihen und eine hauchdünne Zitronenscheibe dazugeben.<br />\r\n<br />\r\n<br
+    />\r\nIm neuen Bondfilm - Casino Royal - wird der Kultmartini nun etwas anders
+    zubereitet und hat auch einen Namen bekommen. Er heißt jetzt Vesper. Beim Gin
+    ist der Gordons geblieben. Als Wodka findet jetzt kein Russe oder Pole mehr Verwendung,
+    sondern der Smirnoff Red Label. Für den Vermouth sollte Lillet Blanc oder Noilly
+    Prat verwendet werden. Geblieben ist das schütteln mit sehr viel Eis. Die Zitronenscheibe
+    wurde gegen eine Zitronenspirale getauscht."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 175337
+  :total_volume: !ruby/object:BigDecimal 9:0.9e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.41e2
+  :user_id: 23
+  :updated_by_id: 24
+  :old_id: 561
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &116 2007-01-27 09:18:15.000000000 Z
+    zone: *2
+    time: *116
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &117 2017-04-27 22:57:07.000000000 Z
+    zone: *2
+    time: *117
+- :id: 490
+  :title: Sailor Moon
+  :slug: sailor-moon
+  :description: Alle Zutaten mit Eiswürfeln im Shaker schütteln und in ein Longdrinkglas
+    mit Eiswürfeln abseihen. Mit Melonenecke, Kirsche und Minzblatt dekorieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 11643
+  :total_volume: !ruby/object:BigDecimal 9:0.18e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 27
+  :updated_by_id:
+  :old_id: 573
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &118 2007-02-04 15:03:13.000000000 Z
+    zone: *2
+    time: *118
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &119 2017-06-24 12:07:32.000000000 Z
+    zone: *2
+    time: *119
+- :id: 506
+  :title: Strawberry Dream (alkoholfrei)
+  :slug: strawberry-dream-alkoholfrei
+  :description: "mit viel Eis kräftig shaken<br />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 12818
+  :total_volume: !ruby/object:BigDecimal 9:0.205e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 30
+  :updated_by_id:
+  :old_id: 591
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &120 2007-02-17 11:43:03.000000000 Z
+    zone: *2
+    time: *120
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &121 2017-04-27 22:57:08.000000000 Z
+    zone: *2
+    time: *121
+- :id: 557
+  :title: Azul Bahia de Havanna
+  :slug: azul-bahia-de-havanna
+  :description: "Alle Zutaten mit viel Eis im Gästeglas rühren.\r\nAls Rum möglichst
+    einen Cubaner verwenden, zB den Havanna Club 3Anos, oder den Ron Mulata 3 Anos."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 17810
+  :total_volume: !ruby/object:BigDecimal 9:0.18e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.122e2
+  :user_id: 33
+  :updated_by_id:
+  :old_id: 643
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &122 2007-06-07 11:38:45.000000000 Z
+    zone: *2
+    time: *122
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &123 2017-04-27 22:57:09.000000000 Z
+    zone: *2
+    time: *123
+- :id: 574
+  :title: Lust
+  :slug: lust
+  :description: Alle Zutaten auf Eis shaken, in Cocktailschale strainen und mit eienr
+    Cocktailkirsche garnieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 18128
+  :total_volume: !ruby/object:BigDecimal 9:0.5e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.8e1
+  :user_id: 36
+  :updated_by_id:
+  :old_id: 660
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &124 2007-06-30 11:00:04.000000000 Z
+    zone: *2
+    time: *124
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &125 2017-04-27 22:57:09.000000000 Z
+    zone: *2
+    time: *125
+- :id: 577
+  :title: Island of Passion
+  :slug: island-of-passion
+  :description: Alle Zutaten im Shaker auf Eis gut schütteln, in ein Cocktailglas
+    abseihen und mit Eiswürfeln auffüllen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 9641
+  :total_volume: !ruby/object:BigDecimal 9:0.23e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.8e1
+  :user_id: 39
+  :updated_by_id:
+  :old_id: 663
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &126 2007-06-30 11:16:05.000000000 Z
+    zone: *2
+    time: *126
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &127 2017-04-27 22:57:09.000000000 Z
+    zone: *2
+    time: *127
+- :id: 583
+  :title: Fatboy
+  :slug: fatboy
+  :description: "Alle Zutaten mit viel Eis kräftig shaken.<br />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 20599
+  :total_volume: !ruby/object:BigDecimal 9:0.13e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.129e2
+  :user_id: 42
+  :updated_by_id:
+  :old_id: 670
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &128 2007-07-09 19:35:19.000000000 Z
+    zone: *2
+    time: *128
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &129 2026-05-26 12:05:48.290601000 Z
+    zone: *2
+    time: *129
+- :id: 590
+  :title: Perón
+  :slug: peron
+  :description: "Die Orangenhälfte achteln, mit dem Rohrzucker mörsern \r\nund die
+    großen Basilikumblätter kurz mitmörsern, \r\nden Wodka und 8 Streifen Limettenschale
+    (Zestenreißer) zugeben, \r\nmit Crushed Ice auffüllen und  umrühren, \r\n2 dicke
+    kurze Trinkhalme dazu.<br />"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 2
+  :visits_count: 83101
+  :total_volume: !ruby/object:BigDecimal 9:0.115e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.139e2
+  :user_id: 45
+  :updated_by_id:
+  :old_id: 678
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &130 2007-07-21 12:02:43.000000000 Z
+    zone: *2
+    time: *130
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &131 2026-05-18 11:16:00.371262000 Z
+    zone: *2
+    time: *131
+- :id: 595
+  :title: Colada Guave
+  :slug: colada-guave
+  :description: Alle Zutaten, mit einigen Eiswürfeln 20 Sekunden lang, kräftig shaken.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 11651
+  :total_volume: !ruby/object:BigDecimal 9:0.22e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 48
+  :updated_by_id:
+  :old_id: 684
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &132 2007-08-11 11:24:55.000000000 Z
+    zone: *2
+    time: *132
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &133 2017-04-27 22:57:09.000000000 Z
+    zone: *2
+    time: *133
+- :id: 635
+  :title: Darling
+  :slug: darling
+  :description: Alle Zutaten, mit Eis, kräftig shaken.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 9473
+  :total_volume: !ruby/object:BigDecimal 9:0.195e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 1
+  :updated_by_id: 2
+  :old_id: 727
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &134 2007-11-29 08:08:16.000000000 Z
+    zone: *2
+    time: *134
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &135 2017-04-27 22:57:10.000000000 Z
+    zone: *2
+    time: *135
+- :id: 637
+  :title: Gin Daisy
+  :slug: gin-daisy
+  :description: Zutaten mit 2 Eiswürfel ohne das Soda im Shaker gut schütteln, idealerweise
+    in eine Sektschale abseihen und mit dem Soda auffüllen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 19292
+  :total_volume: !ruby/object:BigDecimal 9:0.13e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.145e2
+  :user_id: 5
+  :updated_by_id:
+  :old_id: 730
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &136 2007-12-02 22:44:03.000000000 Z
+    zone: *2
+    time: *136
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &137 2017-04-27 22:57:10.000000000 Z
+    zone: *2
+    time: *137
+- :id: 649
+  :title: Sprizz con Aperol
+  :slug: sprizz-con-aperol
+  :description: Alle Zutaten in ein Longdrinkglas auf einige Eiswürfel geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 29377
+  :total_volume: !ruby/object:BigDecimal 9:0.19e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.114e2
+  :user_id: 8
+  :updated_by_id: 9
+  :old_id: 744
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &138 2007-12-19 19:10:04.000000000 Z
+    zone: *2
+    time: *138
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &139 2026-05-15 11:27:26.794720000 Z
+    zone: *2
+    time: *139
+- :id: 678
+  :title: Mexican Elderflower Gimleto
+  :slug: mexican-elderflower-gimleto
+  :description: "alle Zutaten in den Shaker auf Eiswuerfel<br />\r\ndann gut shaken
+    <br />\r\nund finestrain auf 3 Eiswuerfel<br />\r\n(ich empfehle einen kleinen
+    Cocktailspitz als Glas)"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 30492
+  :total_volume: !ruby/object:BigDecimal 9:0.15e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.24e2
+  :user_id: 12
+  :updated_by_id:
+  :old_id: 782
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &140 2008-04-03 13:37:38.000000000 Z
+    zone: *2
+    time: *140
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &141 2026-05-25 08:22:45.081498000 Z
+    zone: *2
+    time: *141
+- :id: 680
+  :title: Splitter
+  :slug: splitter
+  :description: Alle Zutaten in einen Shaker mit Eis geben und kräftig schütteln.
+    Danach in ein großes Cocktailglas eingießen noch dekorieren und fertig ist der
+    Cocktail.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 6335
+  :total_volume: !ruby/object:BigDecimal 9:0.21e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.11e2
+  :user_id: 15
+  :updated_by_id: 16
+  :old_id: 786
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &142 2008-04-04 16:57:36.000000000 Z
+    zone: *2
+    time: *142
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &143 2017-04-27 22:57:11.000000000 Z
+    zone: *2
+    time: *143
+- :id: 694
+  :title: 43 Red
+  :slug: 43-red
+  :description: Alle Zutaten mit einigen Eiswürfeln shaken, mit dem Barsieb in ein
+    Glas mit Eiswürfeln füllen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 17791
+  :total_volume: !ruby/object:BigDecimal 9:0.22e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.72e1
+  :user_id: 19
+  :updated_by_id: 20
+  :old_id: 815
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &144 2008-05-01 19:04:55.000000000 Z
+    zone: *2
+    time: *144
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &145 2017-04-27 22:57:11.000000000 Z
+    zone: *2
+    time: *145
+- :id: 695
+  :title: Sex Bomb 43
+  :slug: sex-bomb-43
+  :description: "Zutaten in einen Shaker mit 2 Eiswürfeln geben und shaken.<br />\r\nIn
+    ein Glas mit Crusheis abseien."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 20768
+  :total_volume: !ruby/object:BigDecimal 9:0.29e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.8e1
+  :user_id: 23
+  :updated_by_id: 24
+  :old_id: 817
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &146 2008-05-02 19:48:10.000000000 Z
+    zone: *2
+    time: *146
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &147 2017-04-27 22:57:11.000000000 Z
+    zone: *2
+    time: *147
+- :id: 704
+  :title: Raffles Singapore Sling
+  :slug: raffles-singapore-sling
+  :description: "Mit Eis shaken und dann ins Glas abseihen, als Garnitur eignet sich
+    ein Stück Ananas.\r\n<br />\r\n<br />\r\n<br />Dies ist angeblich das original
+    Rezept aus dem Raffles Hotel in Singapur und wurde von Ngiam Tong Boon kreiert."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 46339
+  :total_volume: !ruby/object:BigDecimal 18:0.2058e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.117e2
+  :user_id: 27
+  :updated_by_id: 28
+  :old_id: 835
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &148 2008-05-17 17:43:33.000000000 Z
+    zone: *2
+    time: *148
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &149 2026-05-23 16:20:19.101572000 Z
+    zone: *2
+    time: *149
+- :id: 707
+  :title: Caribbean Soul
+  :slug: caribbean-soul
+  :description: Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 8100
+  :total_volume: !ruby/object:BigDecimal 9:0.19e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.1e2
+  :user_id: 31
+  :updated_by_id:
+  :old_id: 838
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &150 2008-05-19 21:35:24.000000000 Z
+    zone: *2
+    time: *150
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &151 2017-04-27 22:57:12.000000000 Z
+    zone: *2
+    time: *151
+- :id: 723
+  :title: Madras
+  :slug: madras
+  :description: "Dieser Cocktail war der Exhibition Flair-Cocktail in der letzten
+    SKYY Flair Global Challenge. Schmeckt sehr lecker und sieht noch besser aus.<br
+    />\r\nCranberrynektar in ein Highballglas geben. Wodka und Orangensaft mit Eis
+    shaken, strainen und vorsichtig auf den Cranberrynektar geben, so dass sich zwei
+    Schichten bilden."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 9469
+  :total_volume: !ruby/object:BigDecimal 9:0.24e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.1e2
+  :user_id: 34
+  :updated_by_id: 35
+  :old_id: 881
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &152 2008-07-01 13:11:02.000000000 Z
+    zone: *2
+    time: *152
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &153 2026-05-15 13:36:16.364218000 Z
+    zone: *2
+    time: *153
+- :id: 724
+  :title: Yellow Star
+  :slug: yellow-star
+  :description: Alle Zutaten im Shaker auf Eis kräftig schütteln und anschließend
+    in ein Longdrinkglas auf frische Eiswürfeln abseihen. Ein leckerer Cocktail mit
+    leichtem Anisgeschmack.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 11017
+  :total_volume: !ruby/object:BigDecimal 9:0.16e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.13e2
+  :user_id: 38
+  :updated_by_id: 39
+  :old_id: 883
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &154 2008-07-02 22:13:14.000000000 Z
+    zone: *2
+    time: *154
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &155 2026-03-07 16:42:44.797896000 Z
+    zone: *2
+    time: *155
+- :id: 761
+  :title: Red Ocean
+  :slug: red-ocean
+  :description: "Limette achteln und in einem Glas zerdrücken.<br />\r\nDen Rest der
+    Zutaten auf Eis im Shaker mixen und zu der Limette geben.<br />\r\nDas Ganze mit
+    Crushed Ice auffüllen und kurz umrühren."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 6646
+  :total_volume: !ruby/object:BigDecimal 9:0.145e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.86e1
+  :user_id: 42
+  :updated_by_id: 43
+  :old_id: 962
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &156 2008-09-14 19:52:48.000000000 Z
+    zone: *2
+    time: *156
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &157 2026-05-15 11:23:44.318768000 Z
+    zone: *2
+    time: *157
+- :id: 768
+  :title: Caribbic Cream
+  :slug: caribbic-cream
+  :description: 'Die Zutaten zusammen mit Eis im Shaker shaken und in ein Glas abseihen. '
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 10208
+  :total_volume: !ruby/object:BigDecimal 9:0.18e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 46
+  :updated_by_id:
+  :old_id: 972
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &158 2008-09-23 21:59:32.000000000 Z
+    zone: *2
+    time: *158
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &159 2017-04-27 22:57:13.000000000 Z
+    zone: *2
+    time: *159
+- :id: 778
+  :title: Cuba Capone
+  :slug: cuba-capone
+  :description: Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    (halb gefüllt mit Crushed Ice) geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 12836
+  :total_volume: !ruby/object:BigDecimal 9:0.21e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.75e1
+  :user_id: 49
+  :updated_by_id:
+  :old_id: 989
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &160 2008-10-11 23:19:06.000000000 Z
+    zone: *2
+    time: *160
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &161 2017-04-27 22:57:14.000000000 Z
+    zone: *2
+    time: *161
+- :id: 780
+  :title: Sweet Berry
+  :slug: sweet-berry
+  :description: "3-4 Eiswürfel in den Shaker und die Zutaten, bis auf den Maracujanektar
+    zugießen. Nun nicht ganz so lang shaken und in ein Cocktailglas abseien. Jetzt
+    den Maracujanektar langsam ins Glas laufen lassen, so dass er sich im oberen Teil
+    des Glases absetzt. Den übriggebliebenen Schaum aus dem Mixer könnt ihr auch noch
+    auslöffeln und drauf verteilen! <br />\r\n<br />\r\nDekotipp: nehmt zwei große
+    frische Erdbeeren (gut waschen) und taucht sie zu 1/3 in Grenadine, kurz antrocknen
+    lassen und danach in braunen Rohrzucker tunken. Jetzt müsste der Rohrzucker auf
+    dem oberen Teil der Erdbeere haften. Einschneiden und auf das Glas stecken! Lecker!"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 6752
+  :total_volume: !ruby/object:BigDecimal 9:0.21e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 2
+  :updated_by_id: 3
+  :old_id: 994
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &162 2008-10-16 08:39:54.000000000 Z
+    zone: *2
+    time: *162
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &163 2017-04-27 22:57:14.000000000 Z
+    zone: *2
+    time: *163
+- :id: 797
+  :title: Dezemberabend
+  :slug: dezemberabend
+  :description: "Alle Zutaten mit Eis shaken und in ein Glas abseihen. <br />\r\nDieses
+    Rezept entstammt dem Adventskalender 2008.<br />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 27650
+  :total_volume: !ruby/object:BigDecimal 9:0.2e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 6
+  :updated_by_id:
+  :old_id: 1029
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &164 2008-12-09 18:28:50.000000000 Z
+    zone: *2
+    time: *164
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &165 2017-04-27 22:57:14.000000000 Z
+    zone: *2
+    time: *165
+- :id: 831
+  :title: Port Maria
+  :slug: port-maria
+  :description: Die Zutaten(außer dem Muskat) mit Eis shaken und in eine Cocktailschale
+    abseihen und anschließend etwas Muskat darüber reiben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4964
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.244e2
+  :user_id: 9
+  :updated_by_id: 10
+  :old_id: 1091
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &166 2009-02-10 12:28:37.000000000 Z
+    zone: *2
+    time: *166
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &167 2017-04-27 22:57:15.000000000 Z
+    zone: *2
+    time: *167
+- :id: 838
+  :title: Agave Basil
+  :slug: agave-amp-basil
+  :description: "Die Basilikumblätter und die restlichen flüssigen Zutaten in das
+    Mixglas geben und kräftig muddlen. Mit viel Eis 20-30 Sekunden shaken und mit
+    einem Teesieb in ein vorgekühltes Cocktailglas abseihen.\r\n<br />"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 18595
+  :total_volume: !ruby/object:BigDecimal 9:0.11e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.218e2
+  :user_id: 13
+  :updated_by_id: 14
+  :old_id: 1103
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &168 2009-02-19 09:17:45.000000000 Z
+    zone: *2
+    time: *168
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &169 2026-05-25 08:27:49.439484000 Z
+    zone: *2
+    time: *169
+- :id: 861
+  :title: Orange Flower Cocktail
+  :slug: orange-flower-cocktail
+  :description: Alle Zutaten mit Eis shaken und in eine Cocktailschale abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7794
+  :total_volume: !ruby/object:BigDecimal 18:0.659e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.255e2
+  :user_id: 17
+  :updated_by_id:
+  :old_id: 1138
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &170 2009-03-23 11:23:10.000000000 Z
+    zone: *2
+    time: *170
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &171 2017-04-27 22:57:15.000000000 Z
+    zone: *2
+    time: *171
+- :id: 864
+  :title: Kongocoffee
+  :slug: kongocoffee
+  :description: "Den Kaffee kochen und abkühlen lassen. Diesen nun mit den restlichen
+    Zutaten und 2-3 Eiswürfeln kräfig im Shaker schütteln und in ein dekoratives Glas
+    geben.<br />\r\n<br />\r\n<br />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4886
+  :total_volume: !ruby/object:BigDecimal 9:0.22e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 20
+  :updated_by_id: 21
+  :old_id: 1141
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &172 2009-03-25 15:10:53.000000000 Z
+    zone: *2
+    time: *172
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &173 2026-03-01 17:17:06.444941000 Z
+    zone: *2
+    time: *173
+- :id: 866
+  :title: Frozen Flaming Mango Daiquiri
+  :slug: frozen-flaming-mango-daiquiri
+  :description: Alle Zutaten(außer dem Overproof Rum) mit 6 Eiswürfeln in den Blender
+    geben und bis zur gewünschen Konsistenz mixen und anschließend in eine Cocktailschale
+    gießen. Als Mangostücken habe ich welche aus der Dose verwendet. Anschließend
+    mit einem Mangostück dekorieren und den Overproof Rum vorsichtig über einen Barlöffel
+    hinzugeben und anzünden. Kurz brennen lassen, auspusten und den Rum unterrühren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 13009
+  :total_volume: !ruby/object:BigDecimal 9:0.13e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.241e2
+  :user_id: 24
+  :updated_by_id: 25
+  :old_id: 1146
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &174 2009-03-26 12:51:55.000000000 Z
+    zone: *2
+    time: *174
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &175 2017-04-27 22:57:16.000000000 Z
+    zone: *2
+    time: *175
+- :id: 870
+  :title: Kahlua Julep
+  :slug: kahlua-julep
+  :description: Kahlúa und Bourbon auf Eis in einen Tumbler geben,und langsam verrühren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7513
+  :total_volume: !ruby/object:BigDecimal 9:0.8e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.325e2
+  :user_id: 28
+  :updated_by_id: 29
+  :old_id: 1150
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &176 2009-04-01 18:34:02.000000000 Z
+    zone: *2
+    time: *176
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &177 2026-03-18 14:56:17.437180000 Z
+    zone: *2
+    time: *177
+- :id: 878
+  :title: fruchtiger Kobold
+  :slug: fruchtiger-kobold
+  :description: Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    geben
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 4843
+  :total_volume: !ruby/object:BigDecimal 9:0.25e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 32
+  :updated_by_id:
+  :old_id: 1161
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &178 2009-04-17 16:19:32.000000000 Z
+    zone: *2
+    time: *178
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &179 2017-04-27 22:57:16.000000000 Z
+    zone: *2
+    time: *179
+- :id: 893
+  :title: Brown Derby
+  :slug: brown-derby
+  :description: Alle Zutaten mit Eiswürfeln shaken und in eine kleine Cocktailschale
+    abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 10996
+  :total_volume: !ruby/object:BigDecimal 9:0.7e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.229e2
+  :user_id: 35
+  :updated_by_id:
+  :old_id: 1190
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &180 2009-05-09 11:21:25.000000000 Z
+    zone: *2
+    time: *180
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &181 2026-05-25 08:37:40.265579000 Z
+    zone: *2
+    time: *181
+- :id: 897
+  :title: Basejumper
+  :slug: basejumper
+  :description: "Alle Zutaten in einen mit Eis gefüllten Shaker geben und gut shaken!<br
+    />\r\nAnschließend in ein vorgekühltes Cocktailglas geben und mit Energy auffüllen!(ich
+    bevorzuge Effect, aber Redbull geht genauso gut)<br />\r\n<br />\r\nDer Cocktail
+    ist ideal für Leute die fahren müssen und noch eine ganze Nacht vor sich haben!"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 12572
+  :total_volume: !ruby/object:BigDecimal 9:0.19e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 38
+  :updated_by_id: 39
+  :old_id: 1195
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &182 2009-05-14 07:20:03.000000000 Z
+    zone: *2
+    time: *182
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &183 2017-04-27 22:57:16.000000000 Z
+    zone: *2
+    time: *183
+- :id: 903
+  :title: Juicy Julep
+  :slug: juicy-julep
+  :description: Ananassaft, Orangensaft, Limettensaft und Himbeersirup mit ein paar
+    Eiswürfel in den Shaker geben. Die Minzblätter zerrupfen und auch zugeben dann
+    shaken. Am Ende mit Ginger Beer auffüllen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 12995
+  :total_volume: !ruby/object:BigDecimal 9:0.27e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 42
+  :updated_by_id: 43
+  :old_id: 1204
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &184 2009-06-02 08:19:33.000000000 Z
+    zone: *2
+    time: *184
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &185 2026-03-04 16:40:52.318384000 Z
+    zone: *2
+    time: *185
+- :id: 908
+  :title: Sazerac
+  :slug: sazerac
+  :description: "Alle Zutaten, außer des Whiskys und des Absinthes, in einem Rührglas
+    mit Eiswürfeln zusammen rühren bis sich der Zuckerwürfel aufgelöst hat, danach
+    den Whisky hinzugeben und nochmals rühren. Anschließend in ein Old fashioned Glas
+    strainen, welches vorher mit dem Absinth benetzt wurde, und eine Zitronenzeste
+    darüber auspressen, aber die Zeste nicht hinzugeben.<br />\r\n<br />\r\nEine weitere
+    Variante des Sazeracs wird anstelle des Whiskys mit Cognac gemacht."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 10583
+  :total_volume: !ruby/object:BigDecimal 18:0.658e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.422e2
+  :user_id: 46
+  :updated_by_id: 47
+  :old_id: 1214
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &186 2009-06-08 22:09:32.000000000 Z
+    zone: *2
+    time: *186
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &187 2026-02-27 18:47:30.219260000 Z
+    zone: *2
+    time: *187
+- :id: 910
+  :title: French Daiquiri
+  :slug: french-daiquiri
+  :description: Alle Zutaten mit Eiswürfeln shaken und in eine Cocktailschale abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7949
+  :total_volume: !ruby/object:BigDecimal 9:0.85e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.244e2
+  :user_id: 50
+  :updated_by_id:
+  :old_id: 1216
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &188 2009-06-10 12:40:33.000000000 Z
+    zone: *2
+    time: *188
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &189 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *189
+- :id: 911
+  :title: Beuser & Angus Spezial
+  :slug: beuser-amp-angus-spezial
+  :description: "Alle Zutaten außer dem Orange Flower Water lange auf Eis shaken und
+    in einen Tumbler abseihen und mit etwas OFW betröpfeln.\r\n<br />\r\n<br />\r\n<br
+    />\r\n<br />Kreiert wurde der Drink von Goncalo de Sousa Monteiro."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6458
+  :total_volume: !ruby/object:BigDecimal 18:0.1659e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.237e2
+  :user_id: 3
+  :updated_by_id: 4
+  :old_id: 1217
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &190 2009-06-10 14:24:15.000000000 Z
+    zone: *2
+    time: *190
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &191 2026-04-27 11:22:10.609640000 Z
+    zone: *2
+    time: *191
+- :id: 919
+  :title: Nicole
+  :slug: nicole
+  :description: "Einige gut gewaschene Heidelbeeren in ein 30 cl fassendes Glas füllen.
+    Das Glas sollte ca. 1cm mit Beeren gefüllt sein.<br />\r\nNun den Sirup und die
+    Säfte zugeben. Jetzt wird alles mit dem Stössel kräftig zerdrückt. Eine Schaufel
+    gestossenes Eis hinzugeben. <br />\r\nMit Tonic auffüllen und verrühren.<br />\r\nEs
+    empfiehlt sich diesen Drink mit einem Strohalm mit dickem Durchmesser zu servieren.<br
+    />\r\nStatt des Zitronensaftes kann man auch 1/2 -1 ganze Zitrone oder Limette
+    gewaschen und geviertelt zugeben und mit den Beeren zerdrücken."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7496
+  :total_volume: !ruby/object:BigDecimal 9:0.22e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 7
+  :updated_by_id: 8
+  :old_id: 1229
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &192 2009-06-27 19:17:25.000000000 Z
+    zone: *2
+    time: *192
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &193 2026-05-18 17:10:46.185096000 Z
+    zone: *2
+    time: *193
+- :id: 931
+  :title: Fruity Whisky
+  :slug: fruity-whiskey
+  :description: "Außer dem Erbeersirup alles kräftig auf Eis shaken und in ein Glas
+    abseihen. Sirup hinein gießen.<br />\r\nAls Deko Karambolescheibe und Physalis."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5201
+  :total_volume: !ruby/object:BigDecimal 9:0.15e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.57e1
+  :user_id: 11
+  :updated_by_id: 12
+  :old_id: 1251
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &194 2009-07-07 21:22:32.000000000 Z
+    zone: *2
+    time: *194
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &195 2026-03-10 21:16:26.175305000 Z
+    zone: *2
+    time: *195
+- :id: 942
+  :title: Dragos blood
+  :slug: dragos-blood
+  :description: "Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    geben.<br />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 28327
+  :total_volume: !ruby/object:BigDecimal 9:0.24e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 15
+  :updated_by_id:
+  :old_id: 1273
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &196 2009-07-18 14:16:53.000000000 Z
+    zone: *2
+    time: *196
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &197 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *197
+- :id: 943
+  :title: Young and fresh
+  :slug: young-and-fresh
+  :description: Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 9418
+  :total_volume: !ruby/object:BigDecimal 9:0.22e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 18
+  :updated_by_id: 19
+  :old_id: 1274
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &198 2009-07-18 14:22:48.000000000 Z
+    zone: *2
+    time: *198
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &199 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *199
+- :id: 944
+  :title: Ma Baker
+  :slug: ma-baker
+  :description: Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Longdrinkglas
+    geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 1
+  :visits_count: 4336
+  :total_volume: !ruby/object:BigDecimal 9:0.22e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 22
+  :updated_by_id:
+  :old_id: 1276
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &200 2009-07-18 15:10:29.000000000 Z
+    zone: *2
+    time: *200
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &201 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *201
+- :id: 948
+  :title: Caramel Colada
+  :slug: caramel-colada
+  :description: "Alles zusammen auf Eis shaken.<br />\r\nNach Belieben mehr oder weniger
+    Ananassaft verwenden..."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 14771
+  :total_volume: !ruby/object:BigDecimal 9:0.18e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.89e1
+  :user_id: 25
+  :updated_by_id: 26
+  :old_id: 1288
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &202 2009-07-24 11:21:58.000000000 Z
+    zone: *2
+    time: *202
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &203 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *203
+- :id: 961
+  :title: Blow Up
+  :slug: blow-up
+  :description: "Alles außer dem Sekt im Shaker schütteln und in ein Longdrinkglas
+    abgießen. Mit Sekt auffüllen. Als Garnierung eignet sich z.B. eine Erdbeere.<br
+    />\r\nIch empfehle einen trockenen Sekt."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 11681
+  :total_volume: !ruby/object:BigDecimal 9:0.2e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.1e2
+  :user_id: 29
+  :updated_by_id: 30
+  :old_id: 1329
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &204 2009-09-12 23:22:53.000000000 Z
+    zone: *2
+    time: *204
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &205 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *205
+- :id: 962
+  :title: 43er Special
+  :slug: 43er-special
+  :description: "Alle Zutaten im Shaker mit 2 Eiswürfeln mischen und in ein Fancyglas
+    gefüllt mit Eiswürfeln gießen.<br />\r\n<br />\r\nAnschließend mit einer Orangenscheibe
+    garnieren.<br />\r\n<br />\r\nEs handelt sich hierbei um eine Abwandlung des klassischen
+    43er Special, der anstatt mit 4cl Orangensaft mit 4cl Ananassaft gemixt wird.<br
+    />\r\nDer Drink schmeckt jetzt nicht ganz so süß und dafür fruchtiger."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 17080
+  :total_volume: !ruby/object:BigDecimal 9:0.18e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.96e1
+  :user_id: 33
+  :updated_by_id: 34
+  :old_id: 1336
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &206 2009-09-18 20:35:24.000000000 Z
+    zone: *2
+    time: *206
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &207 2017-04-27 22:57:17.000000000 Z
+    zone: *2
+    time: *207
+- :id: 976
+  :title: Pink Ball
+  :slug: pink-ball
+  :description: "Alle Zutaten mit reichlich Eis shaken und in ein Longdrinkglas abseihen.<br
+    />\r\n<br />\r\nDer Drink eignet sich auch sehr gut als alkoholfreier Aperitif! "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 8781
+  :total_volume: !ruby/object:BigDecimal 9:0.16e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 37
+  :updated_by_id: 38
+  :old_id: 1363
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &208 2009-11-24 15:07:35.000000000 Z
+    zone: *2
+    time: *208
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &209 2026-05-23 15:15:22.822953000 Z
+    zone: *2
+    time: *209
+- :id: 1002
+  :title: Last Word
+  :slug: last-word
+  :description: Alle Zutaten auf Eis shaken und in eine vorgekühlte Cocktailschale
+    abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 9551
+  :total_volume: !ruby/object:BigDecimal 9:0.8e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.335e2
+  :user_id: 41
+  :updated_by_id:
+  :old_id: 1403
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &210 2010-01-13 21:25:44.000000000 Z
+    zone: *2
+    time: *210
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &211 2026-05-25 08:40:52.776227000 Z
+    zone: *2
+    time: *211
+- :id: 1003
+  :title: St. Moritz
+  :slug: st-moritz
+  :description: "Die Zutaten im Mixglas mit Eis verrühren und anschließend in ein
+    Cocktailglas abseihen.<br />\r\nDer Cocktail ist eine Variante des Manhattan."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 2
+  :visits_count: 6346
+  :total_volume: !ruby/object:BigDecimal 18:0.833e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.404e2
+  :user_id: 44
+  :updated_by_id: 45
+  :old_id: 1404
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &212 2010-01-13 21:31:40.000000000 Z
+    zone: *2
+    time: *212
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &213 2017-07-06 16:04:45.000000000 Z
+    zone: *2
+    time: *213
+- :id: 1031
+  :title: Red Sensation
+  :slug: red-sensation
+  :description: 'Alles zusammen mit Eis gut shaken, anschließend auf etwas Crushed
+    Ice oder Eiswürfel ins Glas füllen, eine Orangenscheibe zum garnieren, Strohalm
+    dazu, fertig '
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 10210
+  :total_volume: !ruby/object:BigDecimal 9:0.21e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.99e1
+  :user_id: 48
+  :updated_by_id: 49
+  :old_id: 1459
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &214 2010-03-07 18:36:46.000000000 Z
+    zone: *2
+    time: *214
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &215 2017-04-27 22:57:19.000000000 Z
+    zone: *2
+    time: *215
+- :id: 1034
+  :title: Almond Fresh
+  :slug: almond-fresh
+  :description: "1Barlöffel weißen Rohrzucker in ein Glas geben Rum, Amaretto und
+    Zitronensaft hinzufügen, kurz durchrühren, nun 3-5 Eiswürfel hinzugeben und mit
+    Ginger Ale auffüllen.<br />\r\n<br />\r\nIch verwende dafür HC3A, Caleti Amaretto
+    und Ginger Ale von Schweppes.<br />\r\n<br />\r\nNach belieben kann auch noch
+    frische Minze zerstoßen hinzugegeben werden, auch sehr lecker."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7732
+  :total_volume: !ruby/object:BigDecimal 9:0.195e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.116e2
+  :user_id: 2
+  :updated_by_id: 3
+  :old_id: 1466
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &216 2010-03-19 23:17:56.000000000 Z
+    zone: *2
+    time: *216
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &217 2017-04-27 22:57:19.000000000 Z
+    zone: *2
+    time: *217
+- :id: 1067
+  :title: Berry Rosso
+  :slug: berry-rosso
+  :description: Alle Zutaten auf Eis shaken und in ein Cocktailglas abgießen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 12559
+  :total_volume: !ruby/object:BigDecimal 9:0.15e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.8e1
+  :user_id: 6
+  :updated_by_id:
+  :old_id: 1529
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &218 2010-05-09 09:56:07.000000000 Z
+    zone: *2
+    time: *218
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &219 2017-04-27 22:57:20.000000000 Z
+    zone: *2
+    time: *219
+- :id: 1122
+  :title: Caledonian Mist
+  :slug: caledonian-mist
+  :description: "Alle Zutaten außer dem Bitter Lemon auf Eis shaken und in ein Cocktailglas
+    abgießen. Mit Bitter Lemon auffüllen.<br />\r\n<br />\r\nDer Name des Cocktails
+    bedeutet übersetzt &quot;Schottischer Nebel&quot; (Caledonia = lateinisch/keltisch
+    für Schottland)."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 2
+  :visits_count: 9677
+  :total_volume: !ruby/object:BigDecimal 9:0.2e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.105e2
+  :user_id: 9
+  :updated_by_id: 10
+  :old_id: 1634
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &220 2010-11-01 21:29:58.000000000 Z
+    zone: *2
+    time: *220
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &221 2017-04-27 22:57:21.000000000 Z
+    zone: *2
+    time: *221
+- :id: 1123
+  :title: Charlie Chaplin
+  :slug: charlie-chaplin
+  :description: "Alle Zutaten mit 3 Eiswürfeln in den Shaker geben und feste schütteln.
+    <br />\r\nTipp: Wenn möglich eine Kirsche in das Glas geben, bevor der Cocktail
+    reinkommt."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 0
+  :visits_count: 6456
+  :total_volume: !ruby/object:BigDecimal 9:0.6e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.257e2
+  :user_id: 13
+  :updated_by_id: 14
+  :old_id: 1641
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &222 2010-11-10 18:28:01.000000000 Z
+    zone: *2
+    time: *222
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &223 2026-05-25 08:44:32.963378000 Z
+    zone: *2
+    time: *223
+- :id: 1127
+  :title: Simplório
+  :slug: simplorio
+  :description: Den Saft der halben Limette, Cachaca und Kokossirup in einem Shaker
+    mit Eiswürfel kräftig schütteln und in ein mit Crushed Ice gefülltes Glas (Tumbler)
+    gießen. Über die Eisfläche einen Barlöffel/Teelöffel braunen Zucker geben und
+    mit Strohhalm servieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 11522
+  :total_volume: !ruby/object:BigDecimal 18:0.1075e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.186e2
+  :user_id: 17
+  :updated_by_id: 18
+  :old_id: 1652
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &224 2010-12-12 21:42:25.000000000 Z
+    zone: *2
+    time: *224
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &225 2026-05-25 08:36:27.237336000 Z
+    zone: *2
+    time: *225
+- :id: 1143
+  :title: Aptercum
+  :slug: aptercum
+  :description: "Die halbe Kiwi schälen. Limette und Kiwi vierteln, in einen Shaker
+    geben. Alles zusammen mit dem Läuterzucker stößeln.Die restlichen Zutaten dazugeben,
+    mit viel Eis kräftig shaken, mittels Teesieb in ein mit Eis gefülltes Glas (Tumbler)
+    abseihen. Das Glas mit Hot Dragon Ginger Ale auffüllen und vorsichtig umrühren.<br
+    />\r\n<br />\r\nWenn man nichts gegen Fruchtstücke im Glas hat, kann man auch
+    die Früchte im Glas stößeln, mit Eis füllen und nach und nach die anderen Zutaten
+    zugeben.(das Ginger Ale zuletzt) <br />\r\n<br />\r\nHot Dragon ist ein Ginger
+    Ale mit Chili.  Gibt es in Asia Lebensmittelshops oder selbstgemacht."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5707
+  :total_volume: !ruby/object:BigDecimal 9:0.135e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.14e2
+  :user_id: 21
+  :updated_by_id: 22
+  :old_id: 1679
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &226 2011-01-23 11:17:11.000000000 Z
+    zone: *2
+    time: *226
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &227 2026-03-03 18:53:55.181082000 Z
+    zone: *2
+    time: *227
+- :id: 1152
+  :title: Atom Limon
+  :slug: atom-limon
+  :description: "Alle Zutaten, bis auf Ginger Beer, in einen Tumbler geben und mehrfach
+    umrühren. Anschließend Eiswürfel hinzugeben und zum Schluss das Ginger Beer unter
+    die Mischung heben. Dekorieren kann man den Drink z.B. mit einer Minzspitze, einer
+    frischen Sauerkirsche und einer Apfelspalte.<br />\r\n<br />\r\nDer Atom Limon
+    wurde von Stephan Hinz kreiert und zum Cocktail des Jahres bei der deutschen Cocktailmeisterschaft
+    2010 gekürt. Der Autor empfiehlt folgende Zutaten: Wild Turkey Whiskey, Lustau
+    San Emilio PX Sherry. Laut Originalrezept wurde der Drink in einem Marmeladenglas
+    zubereitet."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 9026
+  :total_volume: !ruby/object:BigDecimal 9:0.198e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.97e1
+  :user_id: 25
+  :updated_by_id: 26
+  :old_id: 1696
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &228 2011-02-22 23:26:16.000000000 Z
+    zone: *2
+    time: *228
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &229 2026-03-18 14:54:39.226959000 Z
+    zone: *2
+    time: *229
+- :id: 1199
+  :title: New Yorker
+  :slug: new-yorker
+  :description: "Alle Zutaten in den Shaker geben und mit 4-5 Eiswürfel etwa 15 Sekunden
+    kräftig schütteln.\r\n\r\nDen Inhalt des Shakers durch ein Barsieb in ein kleines
+    Cocktailglas oder in mehrere Shootergläser abseihen."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7382
+  :total_volume: !ruby/object:BigDecimal 9:0.7e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.229e2
+  :user_id: 29
+  :updated_by_id:
+  :old_id: 1807
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &230 2011-06-09 20:07:51.000000000 Z
+    zone: *2
+    time: *230
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &231 2026-03-18 14:57:07.031606000 Z
+    zone: *2
+    time: *231
+- :id: 1202
+  :title: Dons Special Daiquiri
+  :slug: dons-special-daiquiri
+  :description: "Alle Zutaten auf Eis shaken und in eine Cocktailschale abseihen.<br
+    />\r\n<br />\r\nEmpfehlungen goldener Jamaica-Rum: Coruba N.P.U., Appleton Special
+    Gold oder alternativ einen Amber Rum wie Appleton Estate V/X.<br />\r\n<br />\r\nWeißer
+    Rum: Hier ist ein eher ausdruckstarker und nicht zu süßer weißer Rum vorgesehen
+    wie Flor de Cana Exra Dry, Cruzan Light Rum oder Havana Club Anejo Blanco.\r\n\r\nHonig
+    mit Wasser gut vermengen."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 4877
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.2e2
+  :user_id: 32
+  :updated_by_id: 33
+  :old_id: 1819
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &232 2011-06-13 17:48:59.000000000 Z
+    zone: *2
+    time: *232
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &233 2026-02-26 19:01:02.764950000 Z
+    zone: *2
+    time: *233
+- :id: 1247
+  :title: Junglefruit
+  :slug: junglefruit
+  :description: "1. Zucker in ein Longdrinkglas schütten.<br />\r\n2. Limetten achteln,
+    ins Glas geben und kurz auspressen.<br />\r\n3. Vier Eiswürfel hinzugeben.<br
+    />\r\n4. Saft und Mineralwasser über das Eis fließen lassen.<br />\r\n5. Gut umrühren
+    und dann kalt genießen!<br />\r\n<br />\r\nDieser Drink ist aus Spontanität entstanden
+    und ähnelt einem Alkoholfreien Caipirinha. Allerdings wird er durch die Ananasnote
+    geprägt."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5908
+  :total_volume: !ruby/object:BigDecimal 9:0.17e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 36
+  :updated_by_id: 37
+  :old_id: 1913
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &234 2011-11-21 21:37:01.000000000 Z
+    zone: *2
+    time: *234
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &235 2017-04-27 22:57:24.000000000 Z
+    zone: *2
+    time: *235
+- :id: 1250
+  :title: Maracouzo
+  :slug: maracouzo
+  :description: Alle Zutaten auf Eis im Shaker mischen und anschließend in ein Cocktailglas
+    geben. Zur Deko eignet sich hervorragend ein Stück Orange. Nach Bedarf noch Grenadinesirup
+    über die Orange floaten.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5790
+  :total_volume: !ruby/object:BigDecimal 9:0.29e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.5e1
+  :user_id: 40
+  :updated_by_id: 41
+  :old_id: 1921
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &236 2011-12-16 19:30:08.000000000 Z
+    zone: *2
+    time: *236
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &237 2017-04-27 22:57:25.000000000 Z
+    zone: *2
+    time: *237
+- :id: 1262
+  :title: Sergeant Pepper
+  :slug: sergeant-pepper
+  :description: "Alle Zutaten auf Eis im Shaker mischen und anschließend auf Eis in
+    ein Longdrinkglas geben.\r\n\r\nHierbei handelt es sich um eine Eigenkreation
+    der Bar Esprit in Göttingen."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 50293
+  :total_volume: !ruby/object:BigDecimal 18:0.1709e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.117e2
+  :user_id: 44
+  :updated_by_id: 45
+  :old_id: 1936
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &238 2012-01-15 13:19:53.000000000 Z
+    zone: *2
+    time: *238
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &239 2026-02-24 19:54:57.381120000 Z
+    zone: *2
+    time: *239
+- :id: 1267
+  :title: Egg Nogg
+  :slug: egg-nogg
+  :description: In einen Topf Ei, Zucker, Sahne und Cognac geben und unter ständigem
+    rühren erwärmen. Die Milch separat erhitzen. Die Egg Nogg-Mischung in eine große
+    Tasse gießen, mit der heißen Milch auffüllen, umrühren und Muskatnuss darüber
+    streuen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4102
+  :total_volume: !ruby/object:BigDecimal 9:0.19e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.84e1
+  :user_id: 48
+  :updated_by_id: 49
+  :old_id: 1942
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &240 2012-01-18 20:32:04.000000000 Z
+    zone: *2
+    time: *240
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &241 2017-04-27 22:57:25.000000000 Z
+    zone: *2
+    time: *241
+- :id: 1268
+  :title: After All
+  :slug: after-all
+  :description: Alle Zutaten im Shaker mit Eiswürfeln gut schütteln und in eine Cocktailschale
+    abgießen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 8296
+  :total_volume: !ruby/object:BigDecimal 9:0.9e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.22e2
+  :user_id: 2
+  :updated_by_id: 3
+  :old_id: 1944
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &242 2012-01-22 12:03:41.000000000 Z
+    zone: *2
+    time: *242
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &243 2017-04-27 22:57:25.000000000 Z
+    zone: *2
+    time: *243
+- :id: 1274
+  :title: Mexico City Mule
+  :slug: mexico-city-mule
+  :description: "Chilischote im Shaker stößeln. Minze, Tequila, Sirup und Limettensaft
+    dazugeben und mit Eis kräftig shaken. Feinstrainen und auf große Eiswürfel schütten,
+    mit Gingerbeer auffüllen. Deko: Minze und Chilischote.<br />\r\n<br />\r\nAls
+    Tequila wird laut Veröffentlichung einer aus 100% Agave empfohlen."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6087
+  :total_volume: !ruby/object:BigDecimal 9:0.17e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.118e2
+  :user_id: 6
+  :updated_by_id: 7
+  :old_id: 1960
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &244 2012-02-17 06:52:53.000000000 Z
+    zone: *2
+    time: *244
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &245 2017-04-27 22:57:25.000000000 Z
+    zone: *2
+    time: *245
+- :id: 1295
+  :title: Amarula Passion
+  :slug: amarula-passion
+  :description: Alle Zutaten auf Eis shaken und in eine vorgekühlte Cocktailschale
+    geben.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 1
+  :visits_count: 5928
+  :total_volume: !ruby/object:BigDecimal 9:0.9e1
+  :alcohol_content: !ruby/object:BigDecimal 9:0.7e1
+  :user_id: 10
+  :updated_by_id: 11
+  :old_id: 1995
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &246 2012-05-31 08:13:40.000000000 Z
+    zone: *2
+    time: *246
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &247 2017-04-27 22:57:26.000000000 Z
+    zone: *2
+    time: *247
+- :id: 1302
+  :title: Who You Gonna Call?
+  :slug: who-you-gonna-call
+  :description: "Eine optische Kreation für Filmfans:\r\n\r\n1. Malibu, Wodka, Vanillesirup
+    und Milch auf Eis im Shaker mixen.\r\n2. Erdbeersirup in ein leeres Longdrinkglas\r\n3.
+    Shakerinhalt vorsichtig schichten.\r\n4. Waldmeisterlikör am Rande des Glases
+    eingießen.\r\n5. Mit Sprühsahne das Glas füllen und glattstreichen.\r\n6. Einen
+    Kreis mit einem Strohhalm (dünn) formen und mit Erdbeerlikör auffüllen.\r\n7.
+    Kopf und Hände des Geistes über den roten Rand streichen (wie beim Originallogo)\r\n8.
+    Einen Querstrich mit dem Strohhalm zufügen und auch mit Erdbeerlikör füllen.\r\n9.
+    Für Augen und Mund Schokostreusel verwenden (ist natürlich kein Muss)\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4600
+  :total_volume: !ruby/object:BigDecimal 9:0.32e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.66e1
+  :user_id: 14
+  :updated_by_id: 15
+  :old_id: 2004
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &248 2012-06-15 21:27:15.000000000 Z
+    zone: *2
+    time: *248
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &249 2026-05-21 17:53:09.534821000 Z
+    zone: *2
+    time: *249
+- :id: 1304
+  :title: Hibiskus Sektcocktail
+  :slug: hibiskus-sektcocktail
+  :description: "Die Hibiskusblüte im Sektkelch platzieren, den Sirup hinzugeben und
+    mit Sekt auffüllen.<br />\r\nNach dem Aufgießen steigt die Perlung durch die geöffnete
+    Blüte empor. <br />\r\n<br />\r\nHibiskusblüten sind auch zum Verzehren geeignet,
+    der Geschmack erinnert an Himbeeren mit leicht herber Rhabarbernote im Nachgang."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 9426
+  :total_volume: !ruby/object:BigDecimal 9:0.11e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.109e2
+  :user_id: 18
+  :updated_by_id: 19
+  :old_id: 2006
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &250 2012-06-19 21:49:06.000000000 Z
+    zone: *2
+    time: *250
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &251 2017-04-27 22:57:26.000000000 Z
+    zone: *2
+    time: *251
+- :id: 1308
+  :title: YUZU Sakerita
+  :slug: yuzu-sakerita
+  :description: "Den Rand eines Tumblers erst mit einem Limettenstück abreiben und
+    dann im Zucker wälzen. Sake, Tequila und Triple Sec auf Eiswürfel ins Glas geben
+    und mit Limette garnieren.\r\n<br />\r\n<br />\r\n<br />\r\n<br />Yuzu Sake ist
+    ein hochwertiger Sake, aromatisiert mit dem Saft der asiatischen Yuzu Frucht.
+    Deren frisches und komplexes Zitrusaroma erinnert an die Lieblichkeit der Mandarine,
+    ohne die adstringierende Säure der Zitrone."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4175
+  :total_volume: !ruby/object:BigDecimal 9:0.8e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.306e2
+  :user_id: 22
+  :updated_by_id: 23
+  :old_id: 2010
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &252 2012-07-04 09:17:25.000000000 Z
+    zone: *2
+    time: *252
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &253 2026-05-23 19:28:30.659148000 Z
+    zone: *2
+    time: *253
+- :id: 1318
+  :title: Minty Black Currant
+  :slug: minty-black-currant
+  :description: "Zuckersirup und Minze in den Shaker geben und gut muddeln (mit dem
+    Stößel zerdrücken) -&gt; den Rest der Zutaten (ausser der Orangenzeste) dazugeben
+    und mit Eis ca 15 Sekunden shaken -&gt; doppelt in ein Martiniglas abseihen -&gt;
+    ein Stück Orangenschale über dem Cocktail zerdrücken (ätherische Öle) und danach
+    den Glasrand damit &quot;abwischen&quot; -&gt; Schale in den Cocktail legen<br
+    />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5974
+  :total_volume: !ruby/object:BigDecimal 9:0.125e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.16e2
+  :user_id: 26
+  :updated_by_id: 27
+  :old_id: 2021
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &254 2012-08-16 00:39:23.000000000 Z
+    zone: *2
+    time: *254
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &255 2026-05-08 19:28:14.947480000 Z
+    zone: *2
+    time: *255
+- :id: 1348
+  :title: Sunny Crush
+  :slug: sunny-crush
+  :description: Alle Zutaten auf Ice shaken und in einen mit Crushed Ice gefüllten
+    Tumbler geben. Anschließend mit Bols Fuam Blue toppen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5060
+  :total_volume: !ruby/object:BigDecimal 9:0.1e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.34e2
+  :user_id: 30
+  :updated_by_id: 31
+  :old_id: 2073
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &256 2013-01-08 17:33:36.000000000 Z
+    zone: *2
+    time: *256
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &257 2017-04-27 22:57:27.000000000 Z
+    zone: *2
+    time: *257
+- :id: 1370
+  :title: Sommerzeit
+  :slug: sommerzeit
+  :description: Alle Zutaten zusammen mit viel Eis im Shaker mixen und in ein Cocktailglas
+    mit einigen Eiswürfeln abseihen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 2
+  :favorites_count: 2
+  :visits_count: 3855
+  :total_volume: !ruby/object:BigDecimal 9:0.24e2
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 34
+  :updated_by_id: 35
+  :old_id: 2097
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &258 2013-03-12 19:00:51.000000000 Z
+    zone: *2
+    time: *258
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &259 2017-04-27 22:57:28.000000000 Z
+    zone: *2
+    time: *259
+- :id: 1375
+  :title: Madame Hélène 2.0
+  :slug: madame-helene-2-0
+  :description: "½ Vanilleschote auskratzen und in ein Shakerglas geben. Restliche
+    Zutaten ebenfalls ins Shakerglas geben und mit Eis auffüllen. 15-20sec kräftig
+    shaken und dann in ein gekühltes Martiniglas abseihen. <br />\r\n<br />\r\n<br
+    />\r\nDieser edle Drink wurde mir im Hotel &quot;The Dolder Grand&quot; in Zürich
+    serviert. "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5299
+  :total_volume: !ruby/object:BigDecimal 9:0.1e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.21e2
+  :user_id: 38
+  :updated_by_id: 39
+  :old_id: 2105
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &260 2013-03-29 20:59:37.000000000 Z
+    zone: *2
+    time: *260
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &261 2017-04-27 22:57:28.000000000 Z
+    zone: *2
+    time: *261
+- :id: 1387
+  :title: Vieux Carré
+  :slug: vieux-carre
+  :description: Alle Zutaten in ein mit Eiswürfeln gefülltes Rührglas geben und ca.
+    30 Sekunden rühren. In eine Martinischale abseihen und mit einer Zitronen- oder
+    Orangenzeste abspritzen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6925
+  :total_volume: !ruby/object:BigDecimal 18:0.986e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.342e2
+  :user_id: 42
+  :updated_by_id: 43
+  :old_id: 2121
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &262 2013-05-04 20:09:12.000000000 Z
+    zone: *2
+    time: *262
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &263 2026-05-08 17:06:45.131287000 Z
+    zone: *2
+    time: *263
+- :id: 1426
+  :title: Rosemarys GT
+  :slug: rosemarys-gt
+  :description: 'Am besten ein Highball-Glas nehmen, die Gurkenscheiben rein, den
+    Zitronensaft drauf und etwas anmuddlen. Den Rosmarinzweig in das Glas geben, Gin
+    + Tonic dazu und nach eigener Vorliebe mit ein klein wenig Soda strecken. Die
+    2cl im Rezept habe ich mal als groben Richtwert angegeben. '
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7040
+  :total_volume: !ruby/object:BigDecimal 18:0.2209e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.106e2
+  :user_id: 46
+  :updated_by_id: 47
+  :old_id: 2175
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &264 2013-10-10 11:56:18.000000000 Z
+    zone: *2
+    time: *264
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &265 2017-04-27 22:57:29.000000000 Z
+    zone: *2
+    time: *265
+- :id: 1427
+  :title: Der Gondoliere
+  :slug: der-gondoliere
+  :description: "Eiswürfel und Zitronenschale in einen Tumbler geben, mit 2 Teilen
+    gutem schottischen Whisky und einem Teil Maraschino auffüllen.<br />\r\n<br />\r\nDieses
+    ist ein Rezept von Luxardo. Ich fand es nicht zuletzt wegen der Einfachheit interessant.
+    Die im Rezept angegebenen Mengen stehen nur als Beispiel. "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7023
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.393e2
+  :user_id: 50
+  :updated_by_id: 1
+  :old_id: 2176
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &266 2013-10-12 16:24:24.000000000 Z
+    zone: *2
+    time: *266
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &267 2017-04-27 22:57:29.000000000 Z
+    zone: *2
+    time: *267
+- :id: 1429
+  :title: Bellini
+  :slug: bellini
+  :description: Das Fleisch eines weißen Pfirsiches mit einer Gabel zerdrücken und
+    durch ein Sieb streichen. Dieses Püree in ein vorgekühltes Glas geben und den
+    gekühlten Prosecco einfüllen. Beides miteinander unter leichtem Rühren vermengen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5498
+  :total_volume: !ruby/object:BigDecimal 9:0.15e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.8e1
+  :user_id: 4
+  :updated_by_id: 5
+  :old_id: 2178
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &268 2013-10-31 15:45:02.000000000 Z
+    zone: *2
+    time: *268
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &269 2017-04-27 22:57:29.000000000 Z
+    zone: *2
+    time: *269
+- :id: 1445
+  :title: Q.B. Cooler
+  :slug: q-b-cooler
+  :description: "Für das Honigwasser: Honig und heißes Wasser im Verhältnis 1:1 mischen,
+    umrühren bis der Honig aufgelöst ist und abkühlen lassen.<br />\r\n<br />\r\nAlle
+    Zutaten bis auf das Mineralwasser mit Eiswürfeln shaken, in einen Tumbler abgießen
+    und mit Mineralwasser toppen. Mit mehreren Minzzweigen garnieren. Wahlweise kann
+    der Drink auch mit gestoßenem Eis geshakt und ohne sieben abgegossen werden.<br
+    />\r\n"
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5028
+  :total_volume: !ruby/object:BigDecimal 9:0.19e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.202e2
+  :user_id: 8
+  :updated_by_id: 9
+  :old_id: 2199
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &270 2014-03-04 22:37:01.000000000 Z
+    zone: *2
+    time: *270
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &271 2017-04-27 22:57:30.000000000 Z
+    zone: *2
+    time: *271
+- :id: 1450
+  :title: Bourbon Crusta
+  :slug: bourbon-crusta
+  :description: Alle Zutaten shaken und auf crushed ice in ein Glas mit Zuckerrand
+    abseihen. Mit Zitronenzeste dekorieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 7685
+  :total_volume: !ruby/object:BigDecimal 9:0.95e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.286e2
+  :user_id: 12
+  :updated_by_id: 13
+  :old_id: 2204
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &272 2014-04-03 08:40:13.000000000 Z
+    zone: *2
+    time: *272
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &273 2026-03-18 14:55:20.646766000 Z
+    zone: *2
+    time: *273
+- :id: 1452
+  :title: Brandy Crusta
+  :slug: brandy-crusta
+  :description: "Alle Zutaten in einen mit Eiswürfeln gefüllten Shaker, kräftig schütteln
+    und in ein mit Zuckerrand versehenes Crustaglas bzw. Cocktailschale abseihen.
+    Mit einer langen Zitronenzeste garnieren.<br />\r\n<br />\r\nDiesen Drink gibt
+    es in unterschiedlichen Variationen. So kann auch anstelle des Orange Curacaos
+    oder des Zuckersirups Maraschinolikör verwendet werden."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6178
+  :total_volume: !ruby/object:BigDecimal 9:0.1e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.304e2
+  :user_id: 16
+  :updated_by_id: 17
+  :old_id: 2206
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &274 2014-04-03 14:24:38.000000000 Z
+    zone: *2
+    time: *274
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &275 2017-04-27 22:57:30.000000000 Z
+    zone: *2
+    time: *275
+- :id: 1453
+  :title: Hemingway Special
+  :slug: hemingway-special
+  :description: "Alle Zutaten mit viel Eis shaken und in eine Cocktailschale abseihen.
+    Als Garnitur wird ein Limettenviertel empfohlen.<br />\r\n<br />\r\nDieser Drink
+    wurde von Constante Ribalaigua - welcher auch der Erfinder des Mary Pickford und
+    Mulata ist - für Ernest Hemingway kreiert."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 5040
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.302e2
+  :user_id: 20
+  :updated_by_id:
+  :old_id: 2207
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &276 2014-04-12 13:05:58.000000000 Z
+    zone: *2
+    time: *276
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &277 2017-04-27 22:57:30.000000000 Z
+    zone: *2
+    time: *277
+- :id: 1457
+  :title: Mai-Bowle
+  :slug: mai-bowle
+  :description: Das Waldmeisterbüschel ins Bowlengefäß hängen, mit gekühltem Weißwein
+    übergießen und abgedeckt an einem kühlen Ort ca. 1/2 Stunde ziehen lassen. Das
+    Fruchtfleisch der Melone mit einem Kugelausstecher auslösen, alternativ in kleine
+    Würfel schneiden. Den Waldmeister entfernen, Melone und Crème de Menthe zufügen.
+    Mit dem gut gekühlten Sekt auffüllen und leicht verrühren. Wer es noch leichter
+    möchte, kann den Sekt gegen Mineralwasser austauschen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 2
+  :visits_count: 9400
+  :total_volume: !ruby/object:BigDecimal 9:0.232e4
+  :alcohol_content: !ruby/object:BigDecimal 18:0.119e2
+  :user_id: 23
+  :updated_by_id: 24
+  :old_id: 2211
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &278 2014-04-19 09:20:34.000000000 Z
+    zone: *2
+    time: *278
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &279 2017-04-27 22:57:30.000000000 Z
+    zone: *2
+    time: *279
+- :id: 1460
+  :title: Ai Kariba
+  :slug: ai-kariba
+  :description: Alle Zutaten auf Eis shaken und on the rocks servieren. Für den besonderen
+    Kick frisch gepressten Mandarinensaft statt Orangensaft verwenden.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4802
+  :total_volume: !ruby/object:BigDecimal 9:0.125e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.236e2
+  :user_id: 27
+  :updated_by_id: 28
+  :old_id: 2214
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &280 2014-04-25 10:45:34.000000000 Z
+    zone: *2
+    time: *280
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &281 2017-04-27 22:57:30.000000000 Z
+    zone: *2
+    time: *281
+- :id: 1464
+  :title: Straits Sling
+  :slug: straits-sling
+  :description: "Alle Zutaten außer Soda mit Eiswürfeln shaken und in einen Tumbler
+    abseihen. Mit Soda toppen und nach Belieben etwas Muskatnuss drüberreiben.<br
+    />\r\n<br />\r\nEs empfiehlt sich einen Gin mit zurückhaltender Wacholdernote
+    zu verwenden, wie etwa Plymouth, Tanqueray 10 oder Bombay Sapphire."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4849
+  :total_volume: !ruby/object:BigDecimal 18:0.1132e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.323e2
+  :user_id: 31
+  :updated_by_id: 32
+  :old_id: 2219
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &282 2014-05-15 19:07:23.000000000 Z
+    zone: *2
+    time: *282
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &283 2026-04-27 10:11:41.504451000 Z
+    zone: *2
+    time: *283
+- :id: 1471
+  :title: Zombie, Don the Beachcomber
+  :slug: zombie-don-the-beachcomber
+  :description: "Alle Zutaten mit gestoßenem Eis ca. 20 Sekunden im Mixer blenden
+    und in ein Longdrinkglas oder Tiki Mug umfüllen. Um weniger Schmelzwasser zu erhalten
+    können alternativ auch alle Zutaten mit Eiswürfeln geshakt und auf frisches Eis
+    abgeseiht werden. Zum Schluss mit einem Minzzweig garnieren.<br />\r\n<br />\r\nAls
+    Overproof Rum empfehle ich Lemon Hart 151."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 13073
+  :total_volume: !ruby/object:BigDecimal 18:0.2218e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.278e2
+  :user_id: 35
+  :updated_by_id:
+  :old_id: 2228
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &284 2014-06-15 10:31:29.000000000 Z
+    zone: *2
+    time: *284
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &285 2017-04-27 22:57:31.000000000 Z
+    zone: *2
+    time: *285
+- :id: 1491
+  :title: Nollaig Chridheil
+  :slug: nollaig-chridheil
+  :description: Alle Zutaten auf Eis shaken, auf frisches Eis abseihen, mit einem
+    Stück Orangenschale abspritzen und zufügen.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4311
+  :total_volume: !ruby/object:BigDecimal 9:0.13e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.26e2
+  :user_id: 38
+  :updated_by_id:
+  :old_id: 2256
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &286 2014-12-16 20:22:18.000000000 Z
+    zone: *2
+    time: *286
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &287 2017-04-27 22:57:31.000000000 Z
+    zone: *2
+    time: *287
+- :id: 1500
+  :title: Too Too
+  :slug: too-too
+  :description: Alle Zutaten mit Eiswürfeln shaken, in eine Cocktailschale abseihen
+    und mit Vanillezucker garnieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4087
+  :total_volume: !ruby/object:BigDecimal 9:0.7e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.343e2
+  :user_id: 41
+  :updated_by_id:
+  :old_id: 2269
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &288 2015-01-07 20:25:28.000000000 Z
+    zone: *2
+    time: *288
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &289 2017-04-27 22:57:32.000000000 Z
+    zone: *2
+    time: *289
+- :id: 1501
+  :title: Feliz Navidad Toddy
+  :slug: feliz-navidad-toddy
+  :description: 'Honig und Gewürze in ein hitzebeständiges Gefäß, mit kochendem Wasser
+    aufgießen und Tequila zufügen. Zitronenspalte hierüber ausdrücken, ins Glas geben,
+    verrühren bis der Honig sich aufgelöst hat. '
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6363
+  :total_volume: !ruby/object:BigDecimal 9:0.175e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.114e2
+  :user_id: 44
+  :updated_by_id: 45
+  :old_id: 2270
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &290 2015-01-09 20:50:35.000000000 Z
+    zone: *2
+    time: *290
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &291 2017-04-27 22:57:32.000000000 Z
+    zone: *2
+    time: *291
+- :id: 1511
+  :title: Judgment Day
+  :slug: judgment-day
+  :description: "Alle Zutaten - bis auf Pimento Dram - zunächst ohne Eis shaken zum
+    besseren Vermengen. Anschließend alles kurz auf Eis shaken bis gut gekühlt. In
+    Cocktailschale abseihen und 4 Tropfen Pimento Dram draufgeben (oder einmal mit
+    P.D. besprühen).<br />\r\n<br />\r\nEine tolle Variante des beliebten Pisco Sour.
+    Falls man leider keinen Pisco zur Hand hat kann man aber auch einen vergleichbaren
+    Weinbrand nehmen. "
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 5329
+  :total_volume: !ruby/object:BigDecimal 18:0.1325e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.139e2
+  :user_id: 48
+  :updated_by_id:
+  :old_id: 2280
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &292 2015-03-22 17:38:15.000000000 Z
+    zone: *2
+    time: *292
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &293 2026-05-25 08:49:30.775181000 Z
+    zone: *2
+    time: *293
+- :id: 1512
+  :title: Rob Roy
+  :slug: rob-roy
+  :description: "Zutaten auf Eis im Rührglas ca. 30 sec. verrühren. In über Nacht
+    geeister Cocktailschale abseihen und mit einer Cocktailkirsche garnieren.\r\n<br
+    />\r\n<br />\r\n<br />\r\n<br />Als Standard die rote Version, ebenfalls möglich
+    mit Vermouth bianco oder dry."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 6003
+  :total_volume: !ruby/object:BigDecimal 9:0.9e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.356e2
+  :user_id: 1
+  :updated_by_id: 2
+  :old_id: 2281
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &294 2015-05-17 18:47:02.000000000 Z
+    zone: *2
+    time: *294
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &295 2026-02-27 17:11:36.913749000 Z
+    zone: *2
+    time: *295
+- :id: 1525
+  :title: Padovani
+  :slug: padovani
+  :description: "Whisky und Holunderblütenlikör in einen kleinen Tumbler geben, mit
+    Würfeleis füllen und verrühren. Mit einer Zitronen- oder Orangenzeste abspritzen
+    und im Drink versenken.<br />\r\n<br />\r\nEs empfiehlt sich die Verwendung eines
+    Highland oder Speyside Whisky."
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4801
+  :total_volume: !ruby/object:BigDecimal 9:0.6e2
+  :alcohol_content: !ruby/object:BigDecimal 18:0.353e2
+  :user_id: 5
+  :updated_by_id:
+  :old_id: 2301
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &296 2015-11-21 23:46:18.000000000 Z
+    zone: *2
+    time: *296
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &297 2017-04-27 22:57:32.000000000 Z
+    zone: *2
+    time: *297
+- :id: 1552
+  :title: English
+  :slug: english
+  :description: Alle Zutaten in einen Shaker geben und mit ein paar Eiswürfeln schütteln.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 3621
+  :total_volume: !ruby/object:BigDecimal 9:0.14e3
+  :alcohol_content: !ruby/object:BigDecimal 9:0.0
+  :user_id: 8
+  :updated_by_id: 9
+  :old_id: 2332
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &298 2016-08-28 17:40:41.000000000 Z
+    zone: *2
+    time: *298
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &299 2026-05-23 19:54:47.252237000 Z
+    zone: *2
+    time: *299
+- :id: 1568
+  :title: Black Refresher
+  :slug: black-refresher
+  :description: Apricot Brandy, Vermouth, Ginger Beer in ein gut halb mit Eis befülltes
+    Glas geben. Zutaten vermengen, mit Schwarzbier auffüllen. Leicht verrühren und
+    mit dem Orangenviertel aromatisieren.
+  :is_public: true
+  :is_deleted: false
+  :average_rating: 0.0
+  :ratings_count: 0
+  :favorites_count: 0
+  :visits_count: 4369
+  :total_volume: !ruby/object:BigDecimal 9:0.25e3
+  :alcohol_content: !ruby/object:BigDecimal 18:0.79e1
+  :user_id: 12
+  :updated_by_id:
+  :old_id: 2349
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &300 2018-03-10 14:37:15.000000000 Z
+    zone: *2
+    time: *300
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &301 2018-03-10 14:42:52.000000000 Z
+    zone: *2
+    time: *301

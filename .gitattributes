@@ -7,3 +7,6 @@ db/schema.rb linguist-generated
 vendor/* linguist-vendored
 config/credentials/*.yml.enc diff=rails_credentials
 config/credentials.yml.enc diff=rails_credentials
+
+# Sample-data bundle images: treat as binary so git doesn't attempt text diffs on them.
+db/sample_data/files/**/*.jpg binary

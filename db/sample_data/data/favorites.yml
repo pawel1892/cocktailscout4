@@ -1,0 +1,730 @@
+---
+- :id: 10098
+  :user_id: 1
+  :favoritable_type: Recipe
+  :favoritable_id: 424
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2026-05-11 18:40:38.159662000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2026-05-11 18:40:38.159662000 Z
+    zone: *2
+    time: *3
+- :id: 8557
+  :user_id: 2
+  :favoritable_type: Recipe
+  :favoritable_id: 424
+  :old_id: 9031
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2013-09-13 19:53:36.000000000 Z
+    zone: *2
+    time: *4
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2013-09-13 19:53:36.000000000 Z
+    zone: *2
+    time: *5
+- :id: 2027
+  :user_id: 3
+  :favoritable_type: Recipe
+  :favoritable_id: 191
+  :old_id: 2082
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2010-02-17 21:42:06.000000000 Z
+    zone: *2
+    time: *6
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2010-02-17 21:42:06.000000000 Z
+    zone: *2
+    time: *7
+- :id: 8418
+  :user_id: 4
+  :favoritable_type: Recipe
+  :favoritable_id: 191
+  :old_id: 8828
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &8 2013-04-03 22:00:01.000000000 Z
+    zone: *2
+    time: *8
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &9 2013-04-03 22:00:01.000000000 Z
+    zone: *2
+    time: *9
+- :id: 7287
+  :user_id: 5
+  :favoritable_type: Recipe
+  :favoritable_id: 1127
+  :old_id: 7647
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &10 2011-07-31 22:00:41.000000000 Z
+    zone: *2
+    time: *10
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &11 2011-07-31 22:00:41.000000000 Z
+    zone: *2
+    time: *11
+- :id: 6960
+  :user_id: 6
+  :favoritable_type: Recipe
+  :favoritable_id: 1127
+  :old_id: 7297
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &12 2011-07-05 21:10:38.000000000 Z
+    zone: *2
+    time: *12
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &13 2011-07-05 21:10:38.000000000 Z
+    zone: *2
+    time: *13
+- :id: 1012
+  :user_id: 7
+  :favoritable_type: Recipe
+  :favoritable_id: 203
+  :old_id: 1035
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &14 2009-01-19 21:39:40.000000000 Z
+    zone: *2
+    time: *14
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &15 2009-01-19 21:39:40.000000000 Z
+    zone: *2
+    time: *15
+- :id: 4068
+  :user_id: 8
+  :favoritable_type: Recipe
+  :favoritable_id: 203
+  :old_id: 4274
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &16 2009-09-18 13:27:29.000000000 Z
+    zone: *2
+    time: *16
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &17 2009-09-18 13:27:29.000000000 Z
+    zone: *2
+    time: *17
+- :id: 10118
+  :user_id: 9
+  :favoritable_type: Recipe
+  :favoritable_id: 1457
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &18 2026-05-11 19:00:39.886847000 Z
+    zone: *2
+    time: *18
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &19 2026-05-11 19:00:39.886847000 Z
+    zone: *2
+    time: *19
+- :id: 9368
+  :user_id: 10
+  :favoritable_type: Recipe
+  :favoritable_id: 1457
+  :old_id: 9861
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &20 2015-07-02 19:45:46.000000000 Z
+    zone: *2
+    time: *20
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &21 2015-07-02 19:45:46.000000000 Z
+    zone: *2
+    time: *21
+- :id: 2865
+  :user_id: 11
+  :favoritable_type: Recipe
+  :favoritable_id: 17
+  :old_id: 2993
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &22 2009-11-28 10:48:33.000000000 Z
+    zone: *2
+    time: *22
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &23 2009-11-28 10:48:33.000000000 Z
+    zone: *2
+    time: *23
+- :id: 2354
+  :user_id: 12
+  :favoritable_type: Recipe
+  :favoritable_id: 17
+  :old_id: 2448
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &24 2009-03-06 16:45:20.000000000 Z
+    zone: *2
+    time: *24
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &25 2009-03-06 16:45:20.000000000 Z
+    zone: *2
+    time: *25
+- :id: 10191
+  :user_id: 13
+  :favoritable_type: Recipe
+  :favoritable_id: 635
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &26 2026-05-13 09:43:27.270363000 Z
+    zone: *2
+    time: *26
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &27 2026-05-13 09:43:27.270363000 Z
+    zone: *2
+    time: *27
+- :id: 4006
+  :user_id: 14
+  :favoritable_type: Recipe
+  :favoritable_id: 635
+  :old_id: 4201
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &28 2010-03-31 14:06:01.000000000 Z
+    zone: *2
+    time: *28
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &29 2010-03-31 14:06:01.000000000 Z
+    zone: *2
+    time: *29
+- :id: 8460
+  :user_id: 15
+  :favoritable_type: Recipe
+  :favoritable_id: 79
+  :old_id: 8871
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &30 2013-06-24 22:27:32.000000000 Z
+    zone: *2
+    time: *30
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &31 2013-06-24 22:27:32.000000000 Z
+    zone: *2
+    time: *31
+- :id: 1745
+  :user_id: 16
+  :favoritable_type: Recipe
+  :favoritable_id: 79
+  :old_id: 1788
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &32 2008-04-21 22:58:08.000000000 Z
+    zone: *2
+    time: *32
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &33 2008-04-21 22:58:08.000000000 Z
+    zone: *2
+    time: *33
+- :id: 8766
+  :user_id: 17
+  :favoritable_type: Recipe
+  :favoritable_id: 258
+  :old_id: 9244
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &34 2013-08-22 23:13:08.000000000 Z
+    zone: *2
+    time: *34
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &35 2013-08-22 23:13:08.000000000 Z
+    zone: *2
+    time: *35
+- :id: 7006
+  :user_id: 18
+  :favoritable_type: Recipe
+  :favoritable_id: 258
+  :old_id: 7356
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &36 2011-05-18 11:06:02.000000000 Z
+    zone: *2
+    time: *36
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &37 2011-05-18 11:06:02.000000000 Z
+    zone: *2
+    time: *37
+- :id: 9992
+  :user_id: 19
+  :favoritable_type: Recipe
+  :favoritable_id: 1370
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &38 2026-04-03 11:53:00.191476000 Z
+    zone: *2
+    time: *38
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &39 2026-04-03 11:53:00.191476000 Z
+    zone: *2
+    time: *39
+- :id: 8319
+  :user_id: 20
+  :favoritable_type: Recipe
+  :favoritable_id: 1370
+  :old_id: 8723
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &40 2013-12-08 19:03:29.000000000 Z
+    zone: *2
+    time: *40
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &41 2013-12-08 19:03:29.000000000 Z
+    zone: *2
+    time: *41
+- :id: 8144
+  :user_id: 21
+  :favoritable_type: Recipe
+  :favoritable_id: 1202
+  :old_id: 8546
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &42 2013-06-02 23:39:50.000000000 Z
+    zone: *2
+    time: *42
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &43 2013-06-02 23:39:50.000000000 Z
+    zone: *2
+    time: *43
+- :id: 7148
+  :user_id: 22
+  :favoritable_type: Recipe
+  :favoritable_id: 1202
+  :old_id: 7501
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &44 2011-07-14 20:08:25.000000000 Z
+    zone: *2
+    time: *44
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &45 2011-07-14 20:08:25.000000000 Z
+    zone: *2
+    time: *45
+- :id: 2923
+  :user_id: 23
+  :favoritable_type: Recipe
+  :favoritable_id: 244
+  :old_id: 3054
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &46 2008-09-01 17:34:40.000000000 Z
+    zone: *2
+    time: *46
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &47 2008-09-01 17:34:40.000000000 Z
+    zone: *2
+    time: *47
+- :id: 341
+  :user_id: 24
+  :favoritable_type: Recipe
+  :favoritable_id: 244
+  :old_id: 346
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &48 2011-01-18 13:45:17.000000000 Z
+    zone: *2
+    time: *48
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &49 2011-01-18 13:45:17.000000000 Z
+    zone: *2
+    time: *49
+- :id: 9882
+  :user_id: 25
+  :favoritable_type: Recipe
+  :favoritable_id: 69
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &50 2026-04-01 09:34:19.485709000 Z
+    zone: *2
+    time: *50
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &51 2026-04-01 09:34:19.485709000 Z
+    zone: *2
+    time: *51
+- :id: 9568
+  :user_id: 26
+  :favoritable_type: Recipe
+  :favoritable_id: 69
+  :old_id: 10062
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &52 2016-01-13 16:40:15.000000000 Z
+    zone: *2
+    time: *52
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &53 2016-01-13 16:40:15.000000000 Z
+    zone: *2
+    time: *53
+- :id: 4889
+  :user_id: 27
+  :favoritable_type: Recipe
+  :favoritable_id: 198
+  :old_id: 5116
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &54 2010-01-18 19:31:57.000000000 Z
+    zone: *2
+    time: *54
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &55 2010-01-18 19:31:57.000000000 Z
+    zone: *2
+    time: *55
+- :id: 2959
+  :user_id: 28
+  :favoritable_type: Recipe
+  :favoritable_id: 198
+  :old_id: 3091
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &56 2008-12-01 23:32:22.000000000 Z
+    zone: *2
+    time: *56
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &57 2008-12-01 23:32:22.000000000 Z
+    zone: *2
+    time: *57
+- :id: 1934
+  :user_id: 29
+  :favoritable_type: Recipe
+  :favoritable_id: 944
+  :old_id: 1984
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &58 2009-08-01 11:51:13.000000000 Z
+    zone: *2
+    time: *58
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &59 2009-08-01 11:51:13.000000000 Z
+    zone: *2
+    time: *59
+- :id: 2151
+  :user_id: 30
+  :favoritable_type: Recipe
+  :favoritable_id: 903
+  :old_id: 2208
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &60 2009-10-08 15:36:00.000000000 Z
+    zone: *2
+    time: *60
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &61 2009-10-08 15:36:00.000000000 Z
+    zone: *2
+    time: *61
+- :id: 1928
+  :user_id: 31
+  :favoritable_type: Recipe
+  :favoritable_id: 903
+  :old_id: 1977
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &62 2010-03-26 13:32:26.000000000 Z
+    zone: *2
+    time: *62
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &63 2010-03-26 13:32:26.000000000 Z
+    zone: *2
+    time: *63
+- :id: 2119
+  :user_id: 32
+  :favoritable_type: Recipe
+  :favoritable_id: 778
+  :old_id: 2175
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &64 2010-02-15 08:53:52.000000000 Z
+    zone: *2
+    time: *64
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &65 2010-02-15 08:53:52.000000000 Z
+    zone: *2
+    time: *65
+- :id: 1120
+  :user_id: 33
+  :favoritable_type: Recipe
+  :favoritable_id: 778
+  :old_id: 1144
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &66 2008-11-22 23:12:39.000000000 Z
+    zone: *2
+    time: *66
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &67 2008-11-22 23:12:39.000000000 Z
+    zone: *2
+    time: *67
+- :id: 7087
+  :user_id: 34
+  :favoritable_type: Recipe
+  :favoritable_id: 761
+  :old_id: 7438
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &68 2011-09-21 20:38:40.000000000 Z
+    zone: *2
+    time: *68
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &69 2011-09-21 20:38:40.000000000 Z
+    zone: *2
+    time: *69
+- :id: 3227
+  :user_id: 35
+  :favoritable_type: Recipe
+  :favoritable_id: 761
+  :old_id: 3382
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &70 2009-01-06 19:44:16.000000000 Z
+    zone: *2
+    time: *70
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &71 2009-01-06 19:44:16.000000000 Z
+    zone: *2
+    time: *71
+- :id: 10150
+  :user_id: 36
+  :favoritable_type: Recipe
+  :favoritable_id: 1295
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &72 2026-05-11 19:24:29.616131000 Z
+    zone: *2
+    time: *72
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &73 2026-05-11 19:24:29.616131000 Z
+    zone: *2
+    time: *73
+- :id: 3232
+  :user_id: 37
+  :favoritable_type: Recipe
+  :favoritable_id: 12
+  :old_id: 3387
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &74 2008-10-09 03:10:27.000000000 Z
+    zone: *2
+    time: *74
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &75 2008-10-09 03:10:27.000000000 Z
+    zone: *2
+    time: *75
+- :id: 2368
+  :user_id: 38
+  :favoritable_type: Recipe
+  :favoritable_id: 12
+  :old_id: 2462
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &76 2008-06-09 21:11:32.000000000 Z
+    zone: *2
+    time: *76
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &77 2008-06-09 21:11:32.000000000 Z
+    zone: *2
+    time: *77
+- :id: 9081
+  :user_id: 39
+  :favoritable_type: Recipe
+  :favoritable_id: 574
+  :old_id: 9572
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &78 2014-06-29 19:42:48.000000000 Z
+    zone: *2
+    time: *78
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &79 2014-06-29 19:42:48.000000000 Z
+    zone: *2
+    time: *79
+- :id: 499
+  :user_id: 40
+  :favoritable_type: Recipe
+  :favoritable_id: 574
+  :old_id: 510
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &80 2008-09-12 17:06:45.000000000 Z
+    zone: *2
+    time: *80
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &81 2008-09-12 17:06:45.000000000 Z
+    zone: *2
+    time: *81
+- :id: 9921
+  :user_id: 41
+  :favoritable_type: Recipe
+  :favoritable_id: 1003
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &82 2026-04-01 15:15:18.591553000 Z
+    zone: *2
+    time: *82
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &83 2026-04-01 15:15:18.591553000 Z
+    zone: *2
+    time: *83
+- :id: 8129
+  :user_id: 42
+  :favoritable_type: Recipe
+  :favoritable_id: 1003
+  :old_id: 8529
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &84 2014-04-23 23:12:29.000000000 Z
+    zone: *2
+    time: *84
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &85 2014-04-23 23:12:29.000000000 Z
+    zone: *2
+    time: *85
+- :id: 2261
+  :user_id: 43
+  :favoritable_type: Recipe
+  :favoritable_id: 678
+  :old_id: 2342
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &86 2008-09-03 01:00:33.000000000 Z
+    zone: *2
+    time: *86
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &87 2008-09-03 01:00:33.000000000 Z
+    zone: *2
+    time: *87
+- :id: 1899
+  :user_id: 44
+  :favoritable_type: Recipe
+  :favoritable_id: 678
+  :old_id: 1943
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &88 2010-01-21 22:21:35.000000000 Z
+    zone: *2
+    time: *88
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &89 2010-01-21 22:21:35.000000000 Z
+    zone: *2
+    time: *89
+- :id: 10034
+  :user_id: 45
+  :favoritable_type: Recipe
+  :favoritable_id: 878
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &90 2026-04-03 13:02:56.237412000 Z
+    zone: *2
+    time: *90
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &91 2026-04-03 13:02:56.237412000 Z
+    zone: *2
+    time: *91
+- :id: 5865
+  :user_id: 46
+  :favoritable_type: Recipe
+  :favoritable_id: 878
+  :old_id: 6145
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &92 2011-11-18 20:18:06.000000000 Z
+    zone: *2
+    time: *92
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &93 2011-11-18 20:18:06.000000000 Z
+    zone: *2
+    time: *93
+- :id: 7116
+  :user_id: 47
+  :favoritable_type: Recipe
+  :favoritable_id: 590
+  :old_id: 7468
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &94 2011-06-14 18:49:18.000000000 Z
+    zone: *2
+    time: *94
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &95 2011-06-14 18:49:18.000000000 Z
+    zone: *2
+    time: *95
+- :id: 6131
+  :user_id: 48
+  :favoritable_type: Recipe
+  :favoritable_id: 590
+  :old_id: 6423
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &96 2010-10-16 19:48:30.000000000 Z
+    zone: *2
+    time: *96
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &97 2010-10-16 19:48:30.000000000 Z
+    zone: *2
+    time: *97
+- :id: 10188
+  :user_id: 49
+  :favoritable_type: Recipe
+  :favoritable_id: 1122
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &98 2026-05-13 09:41:15.607148000 Z
+    zone: *2
+    time: *98
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &99 2026-05-13 09:41:15.607148000 Z
+    zone: *2
+    time: *99
+- :id: 120
+  :user_id: 50
+  :favoritable_type: Recipe
+  :favoritable_id: 1122
+  :old_id: 121
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &100 2011-01-02 20:36:47.000000000 Z
+    zone: *2
+    time: *100
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &101 2011-01-02 20:36:47.000000000 Z
+    zone: *2
+    time: *101
+- :id: 5112
+  :user_id: 1
+  :favoritable_type: Recipe
+  :favoritable_id: 680
+  :old_id: 5346
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &102 2010-04-08 21:39:45.000000000 Z
+    zone: *2
+    time: *102
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &103 2010-04-08 21:39:45.000000000 Z
+    zone: *2
+    time: *103
+- :id: 3047
+  :user_id: 2
+  :favoritable_type: Recipe
+  :favoritable_id: 680
+  :old_id: 3179
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &104 2010-12-06 21:27:25.000000000 Z
+    zone: *2
+    time: *104
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &105 2010-12-06 21:27:25.000000000 Z
+    zone: *2
+    time: *105
+- :id: 9914
+  :user_id: 3
+  :favoritable_type: Recipe
+  :favoritable_id: 1453
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &106 2026-04-01 15:13:13.736085000 Z
+    zone: *2
+    time: *106
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &107 2026-04-01 15:13:13.736085000 Z
+    zone: *2
+    time: *107
+- :id: 8233
+  :user_id: 4
+  :favoritable_type: Recipe
+  :favoritable_id: 1453
+  :old_id: 8636
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &108 2014-06-04 11:28:19.000000000 Z
+    zone: *2
+    time: *108
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &109 2014-06-04 11:28:19.000000000 Z
+    zone: *2
+    time: *109
+- :id: 6878
+  :user_id: 5
+  :favoritable_type: Recipe
+  :favoritable_id: 90
+  :old_id: 7210
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &110 2011-07-24 14:18:06.000000000 Z
+    zone: *2
+    time: *110
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &111 2011-07-24 14:18:06.000000000 Z
+    zone: *2
+    time: *111
+- :id: 5908
+  :user_id: 6
+  :favoritable_type: Recipe
+  :favoritable_id: 90
+  :old_id: 6193
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &112 2010-12-19 13:27:45.000000000 Z
+    zone: *2
+    time: *112
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &113 2010-12-19 13:27:45.000000000 Z
+    zone: *2
+    time: *113

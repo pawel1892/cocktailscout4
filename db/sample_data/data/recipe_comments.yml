@@ -1,0 +1,1034 @@
+---
+- :id: 20169
+  :recipe_id: 203
+  :user_id: 41
+  :last_editor_id:
+  :parent_id:
+  :body: "IBA sagt hier:\n\r\n\n\r\n4 cl Citron Vodka \n\r\n1.5 cl Cointreau\n\r\n1.5
+    cl Fresh lime juice\n\r\n3 cl Cranberry juice\n\r\n\n\r\nÄndern oder lassen?"
+  :net_votes: 0
+  :old_id: 23895
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2014-05-25 14:22:59.000000000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2014-05-25 14:22:59.000000000 Z
+    zone: *2
+    time: *3
+- :id: 11282
+  :recipe_id: 203
+  :user_id: 42
+  :last_editor_id:
+  :parent_id:
+  :body: 'als nachtrag: versucht den cosmo mal mit absolut vanille. schmeckt auch
+    ausgezeichnet, bringt ein dezentes vanille aroma. finde der harmoniert noch besser
+    als normaler wodka.'
+  :net_votes: 0
+  :old_id: 13190
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2009-05-14 09:44:22.000000000 Z
+    zone: *2
+    time: *4
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2009-05-14 09:44:22.000000000 Z
+    zone: *2
+    time: *5
+- :id: 7506
+  :recipe_id: 203
+  :user_id: 43
+  :last_editor_id:
+  :parent_id:
+  :body: "@p.k aha, dann ist preiselbeersaft dasselbe wie cranberry juice?"
+  :net_votes: 0
+  :old_id: 8775
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2008-02-03 19:58:51.000000000 Z
+    zone: *2
+    time: *6
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2008-02-03 19:58:51.000000000 Z
+    zone: *2
+    time: *7
+- :id: 20124
+  :recipe_id: 1457
+  :user_id: 44
+  :last_editor_id:
+  :parent_id:
+  :body: Ich bin morgen bei Freunden das Spiel gucken, da steht ihr vor verschlossener
+    Tür :P
+  :net_votes: 0
+  :old_id: 23845
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &8 2014-05-16 14:55:54.000000000 Z
+    zone: *2
+    time: *8
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &9 2014-05-16 14:55:54.000000000 Z
+    zone: *2
+    time: *9
+- :id: 19981
+  :recipe_id: 1457
+  :user_id: 45
+  :last_editor_id:
+  :parent_id:
+  :body: "8 Leute.\n\r\nWar zwar nur im Senfkristall serviert, aber war zweckmäßig
+    bei der Grillparty ;-)\n\r\nDas nächste mal kommt die Bowle aber stilecht in ein
+    großes Weinglas."
+  :net_votes: 0
+  :old_id: 23699
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &10 2014-04-22 18:35:32.000000000 Z
+    zone: *2
+    time: *10
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &11 2014-04-22 18:35:32.000000000 Z
+    zone: *2
+    time: *11
+- :id: 19966
+  :recipe_id: 1457
+  :user_id: 46
+  :last_editor_id:
+  :parent_id:
+  :body: Besser zu früh als zu spät. So kann sich jeder noch überlegen wann die kleine
+    Gartenparty osä. steigen soll und rechtzeitig die anderen Zutaten einkaufen. :-)
+  :net_votes: 0
+  :old_id: 23683
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &12 2014-04-19 12:09:41.000000000 Z
+    zone: *2
+    time: *12
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &13 2014-04-19 12:09:41.000000000 Z
+    zone: *2
+    time: *13
+- :id: 4813
+  :recipe_id: 17
+  :user_id: 47
+  :last_editor_id:
+  :parent_id:
+  :body: "Lecker, und kommt eigentlich immer gut an.\n\r\nMeine Rezeptvariante\n\r\n\n\r\n2cl
+    Vodka\n\r\n2cl Rum\n\r\n2cl Sahne\n\r\n2cl CoC\n\r\n6cl Ananas\n\r\n\n\r\nshaken
+    und dann mit Blue Curacao floaten"
+  :net_votes: 0
+  :old_id: 5827
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &14 2007-06-05 10:14:49.000000000 Z
+    zone: *2
+    time: *14
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &15 2007-06-05 10:14:49.000000000 Z
+    zone: *2
+    time: *15
+- :id: 4080
+  :recipe_id: 17
+  :user_id: 48
+  :last_editor_id:
+  :parent_id:
+  :body: Einer meiner lieblinge!:-) Richtig Gut schöne Farbe! Guter Geschmack, so
+    schön tropisch, süß! Mag ich!
+  :net_votes: 0
+  :old_id: 5069
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &16 2007-03-19 08:18:23.000000000 Z
+    zone: *2
+    time: *16
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &17 2007-03-19 08:18:23.000000000 Z
+    zone: *2
+    time: *17
+- :id: 389
+  :recipe_id: 17
+  :user_id:
+  :last_editor_id:
+  :parent_id:
+  :body: "Cream of Coconut ist meist in Dosen (z. B. in Asiamärkten) erhältlich und
+    hat keinen Alkohol. \n\r\nBatida de Coco ist ein Kokoslikör, ja."
+  :net_votes: 0
+  :old_id: 1022
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &18 2004-09-08 10:00:37.000000000 Z
+    zone: *2
+    time: *18
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &19 2004-09-08 10:00:37.000000000 Z
+    zone: *2
+    time: *19
+- :id: 20132
+  :recipe_id: 258
+  :user_id: 49
+  :last_editor_id:
+  :parent_id:
+  :body: "Was machen wir denn hiermit, IBA-Tag löschen oder Rezept anpassen?\n\r\n\n\r\n4,5
+    Rum weiß\n\r\n2,5 Limettensaft\n\r\n1,5 Läuterzucker\n\r\n"
+  :net_votes: 0
+  :old_id: 23858
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &20 2014-05-22 10:25:00.000000000 Z
+    zone: *2
+    time: *20
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &21 2014-05-22 10:25:00.000000000 Z
+    zone: *2
+    time: *21
+- :id: 11977
+  :recipe_id: 258
+  :user_id: 50
+  :last_editor_id:
+  :parent_id:
+  :body: Sehr lecker und schnell gemacht.
+  :net_votes: 0
+  :old_id: 14246
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &22 2009-08-04 20:53:00.000000000 Z
+    zone: *2
+    time: *22
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &23 2009-08-04 20:53:00.000000000 Z
+    zone: *2
+    time: *23
+- :id: 4121
+  :recipe_id: 258
+  :user_id:
+  :last_editor_id:
+  :parent_id:
+  :body: "Am besten schmeckt dieser immer noch mit dem Original Havana Club Rum der
+    sollte aber nur drei Jahre alt sein.\n\r\n\n\r\nAm Strand kvon Kuba schmeckt er
+    aber um Klassen besser, aber somit hat man ein wenig Kubafeeling zu Hause."
+  :net_votes: 0
+  :old_id: 5111
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &24 2007-03-26 14:20:56.000000000 Z
+    zone: *2
+    time: *24
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &25 2007-03-26 14:20:56.000000000 Z
+    zone: *2
+    time: *25
+- :id: 20091
+  :recipe_id: 244
+  :user_id: 1
+  :last_editor_id:
+  :parent_id:
+  :body: Nicht nur Fabiene verwendet Noilly Prat sehr gern. Wenn es um Vermouth dry
+    geht, gibt es kaum etwas Vergleichbareres. Dem Rat von olli91 kann ich nur zustimmen.
+  :net_votes: 0
+  :old_id: 23811
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &26 2014-05-11 16:31:31.000000000 Z
+    zone: *2
+    time: *26
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &27 2014-05-11 16:31:31.000000000 Z
+    zone: *2
+    time: *27
+- :id: 12945
+  :recipe_id: 244
+  :user_id: 2
+  :last_editor_id:
+  :parent_id:
+  :body: "Orginal IBA Rezept:\n\r\n\n\r\nMARTINI ( DRY ) Pre dinner ( martini glass
+    )\n\r\n5.5 cl Gin\n\r\n1.5 cl Dry Vermouth\n\r\nPour all ingredients into mixing
+    glass with ice cubes. Stir well Strain in chilled martini cocktail glass. Squeeze
+    oil from lemon peel onto the drink, or garnish with olive. \n\r\n\n\r\n"
+  :net_votes: 0
+  :old_id: 15406
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &28 2010-01-08 20:05:14.000000000 Z
+    zone: *2
+    time: *28
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &29 2010-01-08 20:05:14.000000000 Z
+    zone: *2
+    time: *29
+- :id: 16462
+  :recipe_id: 244
+  :user_id: 3
+  :last_editor_id:
+  :parent_id:
+  :body: Autsch, Du hast recht. Ich hatte p.k`s Beschreibung gar nicht gelesen, nur
+    gesehen, 1/3 Wermut und für mich, daß das nix für mich ist. Ich hab mich zwar
+    noch gewundert, daß p.k dermaßen viel Wermut verwendet, bin aber mit keiner Silbe
+    darauf gekommen, daß sich das in der Zubereitung noch ändern könnte.
+  :net_votes: 0
+  :old_id: 19518
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &30 2011-06-08 14:11:58.000000000 Z
+    zone: *2
+    time: *30
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &31 2011-06-08 14:11:58.000000000 Z
+    zone: *2
+    time: *31
+- :id: 16543
+  :recipe_id: 1202
+  :user_id: 4
+  :last_editor_id: 5
+  :parent_id:
+  :body: Habe den goldenen Coruba, Flor de Cana Extra Dry, Maracuja-Sirup von Riemerschmid
+    und Akazienhonig (nicht so süß wie andere Honigsorten) verwendet. Schmeckt mir
+    wirklich gut der Drink. Gerne wieder.
+  :net_votes: 0
+  :old_id: 19662
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &32 2011-06-13 17:54:19.000000000 Z
+    zone: *2
+    time: *32
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &33 2026-05-05 08:19:19.021987000 Z
+    zone: *2
+    time: *33
+- :id: 16557
+  :recipe_id: 1202
+  :user_id: 6
+  :last_editor_id: 7
+  :parent_id:
+  :body: |+
+    Probiers. Aber beschwer Dich hinterher nicht, wenn es zu süß wird.
+
+
+
+  :net_votes: 0
+  :old_id: 19683
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &34 2011-06-14 12:20:33.000000000 Z
+    zone: *2
+    time: *34
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &35 2011-06-14 12:20:55.000000000 Z
+    zone: *2
+    time: *35
+- :id: 18727
+  :recipe_id: 1202
+  :user_id: 8
+  :last_editor_id: 9
+  :parent_id:
+  :body: In meiner Quelle waren von 4,5cl \"Gold Jamaica-Rum\" und 1,5cl \"light rum\"
+    die Rede, bei letzterem habe ich zu dem von dir empfohlenen HCAB gegriffen, das
+    war auch eine wirklich gute Wahl. Zusammen ergeben das dann ja 6cl und das ist
+    ja auch die Menge, die man üblicherweise beim Daiquiri hat. Beim Jamaicaner werde
+    ich demnächst noch mal mit dem Appleton Gold testen, der V/X war zwar okay, ich
+    denke aber, da ist noch etwas Luft nach oben:-)
+  :net_votes: 0
+  :old_id: 22244
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &36 2013-06-02 19:44:07.000000000 Z
+    zone: *2
+    time: *36
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &37 2013-06-02 19:44:40.000000000 Z
+    zone: *2
+    time: *37
+- :id: 7760
+  :recipe_id: 79
+  :user_id: 10
+  :last_editor_id:
+  :parent_id:
+  :body: joa mal was nicht soo mainstreamiges...aber dann doch nich so dolle...
+  :net_votes: 0
+  :old_id: 9046
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &38 2008-02-28 20:43:59.000000000 Z
+    zone: *2
+    time: *38
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &39 2008-02-28 20:43:59.000000000 Z
+    zone: *2
+    time: *39
+- :id: 1115
+  :recipe_id: 79
+  :user_id:
+  :last_editor_id:
+  :parent_id:
+  :body: "Eigentlich schmeckt Campari super lecker, ich drinke Campari on the roxx
+    mit etwas Zitronensaft und der schmeckt dann auch wirklich lecker!\n\r\n\n\r\nAramam!\n\r\n\n\r\n"
+  :net_votes: 0
+  :old_id: 1828
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &40 2005-04-25 20:14:38.000000000 Z
+    zone: *2
+    time: *40
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &41 2005-04-25 20:14:38.000000000 Z
+    zone: *2
+    time: *41
+- :id: 6126
+  :recipe_id: 79
+  :user_id: 11
+  :last_editor_id:
+  :parent_id:
+  :body: Ganz in Ordnung....
+  :net_votes: 0
+  :old_id: 7282
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &42 2007-08-19 14:36:42.000000000 Z
+    zone: *2
+    time: *42
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &43 2007-08-19 14:36:42.000000000 Z
+    zone: *2
+    time: *43
+- :id: 15885
+  :recipe_id: 198
+  :user_id: 12
+  :last_editor_id:
+  :parent_id:
+  :body: "Für meinen Geschmack ein ganz klein wenig zu süß.\n\r\nWenn ich ihn nochmal
+    machen sollte, dann wohl mit weniger Grenadine. Sonst aber durchaus lecker."
+  :net_votes: 0
+  :old_id: 18808
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &44 2011-03-05 22:55:15.000000000 Z
+    zone: *2
+    time: *44
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &45 2011-03-05 22:55:15.000000000 Z
+    zone: *2
+    time: *45
+- :id: 2729
+  :recipe_id: 198
+  :user_id: 13
+  :last_editor_id:
+  :parent_id:
+  :body: "Nun, Beast hat nicht gesagt, daß er Vermouth nicht mag. Also muss man ihm
+    das auch nicht vorwerfen. Soweit zur Logik. \n\r\n\n\r\nAuf geschmacklicher Ebene
+    vollziehen sich natürlich auch Grenzkonflikte, wenn man eine Komponente zu stark
+    herausschmeckt. Gerade Vermouth kann sehr intensiv sein. Auf unserer Cocktailparty
+    ging der Cocktail im Allgemeinen nicht so gut, auf meiner Zunge war er nur einmal
+    kurz zu finden. Er hatte aber einige wenige Fans, die sich 2 davon bestellt hatten.
+    Man könnte sagen, ein sehr \"spezieller\" Cocktail."
+  :net_votes: 0
+  :old_id: 3658
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &46 2006-11-01 00:24:44.000000000 Z
+    zone: *2
+    time: *46
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &47 2006-11-01 00:24:44.000000000 Z
+    zone: *2
+    time: *47
+- :id: 10635
+  :recipe_id: 198
+  :user_id: 14
+  :last_editor_id:
+  :parent_id:
+  :body: "Ich mag diesen Cocktail sehr gerne für zwischendurch. Sicherlich gibt es
+    bessere, aber hier kommt es auch auf die Auswahl der Zutaten an.\n\r\nLG alfagirl"
+  :net_votes: 0
+  :old_id: 12381
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &48 2009-03-07 22:24:51.000000000 Z
+    zone: *2
+    time: *48
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &49 2009-03-07 22:24:51.000000000 Z
+    zone: *2
+    time: *49
+- :id: 18906
+  :recipe_id: 424
+  :user_id: 15
+  :last_editor_id:
+  :parent_id:
+  :body: "@Fabiene, danke und gern darfst Du fragen. Der Cordon Rouge ist es.\n\r\n@SchuettelStefan,
+    auch vielen Dank. Du kennst mich noch nicht richtig. Agfafit zieht sich durch
+    mein Leben. ;-)"
+  :net_votes: 0
+  :old_id: 22491
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &50 2013-06-27 20:40:04.000000000 Z
+    zone: *2
+    time: *50
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &51 2013-06-27 20:40:04.000000000 Z
+    zone: *2
+    time: *51
+- :id: 18905
+  :recipe_id: 424
+  :user_id: 16
+  :last_editor_id:
+  :parent_id:
+  :body: "Hihi, ich glaub da fliegt ein neuer Aquavitfreund heran. :-D\n\r\nUnd ja,
+    Du hast den FF super in Szene gesetzt."
+  :net_votes: 0
+  :old_id: 22490
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &52 2013-06-27 20:26:14.000000000 Z
+    zone: *2
+    time: *52
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &53 2013-06-27 20:26:14.000000000 Z
+    zone: *2
+    time: *53
+- :id: 5818
+  :recipe_id: 424
+  :user_id: 17
+  :last_editor_id:
+  :parent_id:
+  :body: "So, auch diesen hier habe ich probiert.\n\r\nEr schmeckt auch echt lecker.
+    Ich finde ihn ein bißchen \"angenehmer\" zu trinken als den Fil d'Argent. Deshalb
+    gibts hier 0,5* mehr. \n\r\nDer Feuervogel ist zwar eher etwas rosa als feurig
+    rot, aber macht nix :D (mit RS Bar Grenadine)"
+  :net_votes: 0
+  :old_id: 6939
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &54 2007-08-07 11:16:43.000000000 Z
+    zone: *2
+    time: *54
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &55 2007-08-07 11:16:43.000000000 Z
+    zone: *2
+    time: *55
+- :id: 11379
+  :recipe_id: 903
+  :user_id: 18
+  :last_editor_id:
+  :parent_id:
+  :body: Den Favoriten zugefügt;) Ich gehe mal davon aus, dass mit Eis zu shaken ist,
+    sollte man ggf in der Zubereitung noch editieren.
+  :net_votes: 0
+  :old_id: 13311
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &56 2009-06-02 08:40:01.000000000 Z
+    zone: *2
+    time: *56
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &57 2009-06-02 08:40:01.000000000 Z
+    zone: *2
+    time: *57
+- :id: 11404
+  :recipe_id: 903
+  :user_id: 19
+  :last_editor_id:
+  :parent_id:
+  :body: Der ist doch schon längst in der DB *grübel*
+  :net_votes: 0
+  :old_id: 13347
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &58 2009-06-05 19:37:29.000000000 Z
+    zone: *2
+    time: *58
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &59 2009-06-05 19:37:29.000000000 Z
+    zone: *2
+    time: *59
+- :id: 21490
+  :recipe_id: 903
+  :user_id: 20
+  :last_editor_id:
+  :parent_id:
+  :body: Der Juicy Julep ist eine geschmacklich spannende Kombination aus Süße, Minze
+    und dem Igwer im Gingerale. Vielleicht eine Spur zu süß, aber dennoch sehr erfrischend.
+    Die Minze könnte etwas dominanter sein.
+  :net_votes: 0
+  :old_id: 25378
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &60 2016-08-30 18:02:03.000000000 Z
+    zone: *2
+    time: *60
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &61 2026-03-04 16:46:50.221324000 Z
+    zone: *2
+    time: *61
+- :id: 19387
+  :recipe_id: 1370
+  :user_id: 21
+  :last_editor_id:
+  :parent_id:
+  :body: Eine Rückbesinnung auf die schönste Zeit des Jahres wurde jetzt im Bild festgehalten.
+  :net_votes: 0
+  :old_id: 23056
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &62 2013-10-05 12:52:59.000000000 Z
+    zone: *2
+    time: *62
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &63 2013-10-05 12:52:59.000000000 Z
+    zone: *2
+    time: *63
+- :id: 19388
+  :recipe_id: 1370
+  :user_id: 22
+  :last_editor_id:
+  :parent_id:
+  :body: Und wo ist die Bewertung?;-)
+  :net_votes: 0
+  :old_id: 23057
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &64 2013-10-05 15:09:04.000000000 Z
+    zone: *2
+    time: *64
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &65 2013-10-05 15:09:04.000000000 Z
+    zone: *2
+    time: *65
+- :id: 19624
+  :recipe_id: 1370
+  :user_id: 23
+  :last_editor_id:
+  :parent_id:
+  :body: 'Mit frisch gepresstem O.-Saft sehr gut. Mit gekauften wäre er bestimmt etwas
+    langweiliger. Hatte zwischen 4 und 4,5* geschwankt. '
+  :net_votes: 0
+  :old_id: 23318
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &66 2013-12-31 14:06:21.000000000 Z
+    zone: *2
+    time: *66
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &67 2013-12-31 14:06:21.000000000 Z
+    zone: *2
+    time: *67
+- :id: 16868
+  :recipe_id: 69
+  :user_id: 24
+  :last_editor_id: 25
+  :parent_id:
+  :body: "Erfrischend-herber Cocktail mit typischer Camparinote. Der Wermut rundet
+    den Cocktail im Nachgeschmack ab.\n \nKlassisch, zeitlos, gut.\n\nFür alle, die
+    einen kleinen Touch noch benötigen: Ein Scheibe Bio-Orange noch mit ins Glas geben."
+  :net_votes: 0
+  :old_id: 20062
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &68 2011-08-06 14:17:34.000000000 Z
+    zone: *2
+    time: *68
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &69 2011-08-06 14:19:55.000000000 Z
+    zone: *2
+    time: *69
+- :id: 794
+  :recipe_id: 69
+  :user_id:
+  :last_editor_id:
+  :parent_id:
+  :body: "Unter allen Cocktails, die Campari und Soda enthalten und die ich schon
+    mal getrunken habe, ist das der beste. Und einzige.\n\r\nSchmeckt nach nix, hat
+    aber Nachgeschmack, der ekelhaft ist."
+  :net_votes: 0
+  :old_id: 1470
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &70 2005-01-06 21:38:12.000000000 Z
+    zone: *2
+    time: *70
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &71 2005-01-06 21:38:12.000000000 Z
+    zone: *2
+    time: *71
+- :id: 7407
+  :recipe_id: 69
+  :user_id: 26
+  :last_editor_id:
+  :parent_id:
+  :body: Steht und fällt - wie so vieles - mit der Qualität des Vermouth und des Soda.
+    4cl Campari, 3cl Antica Formula sowie Orangenzeste mit Eis im vorgekühlten Tumbler
+    verrühren. Mit 2-3cl Soda aufgießen. Sehr gut!
+  :net_votes: 0
+  :old_id: 8663
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &72 2008-01-24 11:04:07.000000000 Z
+    zone: *2
+    time: *72
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &73 2008-01-24 11:04:07.000000000 Z
+    zone: *2
+    time: *73
+- :id: 20988
+  :recipe_id: 191
+  :user_id:
+  :last_editor_id:
+  :parent_id:
+  :body: Viel Stoff? Ich hab eher Angst das des zu wenig is unn dann ned schmeckt.
+    Ich hann euch ahh alle voll doll lieb unn so. ;)
+  :net_votes: 0
+  :old_id: 24832
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &74 2015-03-31 18:44:21.000000000 Z
+    zone: *2
+    time: *74
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &75 2015-03-31 18:44:21.000000000 Z
+    zone: *2
+    time: *75
+- :id: 20990
+  :recipe_id: 191
+  :user_id: 27
+  :last_editor_id:
+  :parent_id:
+  :body: Besonders im Saarländischen. Probieren... nö, muß nicht sein.
+  :net_votes: 0
+  :old_id: 24834
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &76 2015-04-01 18:30:33.000000000 Z
+    zone: *2
+    time: *76
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &77 2015-04-01 18:30:33.000000000 Z
+    zone: *2
+    time: *77
+- :id: 12594
+  :recipe_id: 191
+  :user_id: 28
+  :last_editor_id:
+  :parent_id:
+  :body: 'Total lecker aber: Iced Tea nich Ice Tea^^'
+  :net_votes: 0
+  :old_id: 15011
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &78 2009-12-01 19:48:26.000000000 Z
+    zone: *2
+    time: *78
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &79 2009-12-01 19:48:26.000000000 Z
+    zone: *2
+    time: *79
+- :id: 15928
+  :recipe_id: 1127
+  :user_id: 29
+  :last_editor_id:
+  :parent_id:
+  :body: "Ich verstehe diesen Drink als eine kokosinfuzierte Version der Caipirinha
+    und habe ihn als solche gemixt:\n\r\n5 cl Velho Barreiro Gold\n\r\n3 cl Limettensaft\n\r\n2
+    cl Giffard Kokossirup\n\r\n\n\r\nEine nette Abwechslung mit präsentem aber nicht
+    zu dominantem Kokosgeschmack und für mich eine Möglichkeit den inzwischen überflüssigen
+    Kokossirup aufzubrauchen.\n\r\nAn das Original kommt der Drink jedoch nicht heran.\n\r\n3,5*"
+  :net_votes: 0
+  :old_id: 18866
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &80 2011-03-14 10:52:24.000000000 Z
+    zone: *2
+    time: *80
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &81 2011-03-14 10:52:24.000000000 Z
+    zone: *2
+    time: *81
+- :id: 15371
+  :recipe_id: 1127
+  :user_id: 30
+  :last_editor_id:
+  :parent_id:
+  :body: Ich hatte eine kleine Limette und deshalb die ganze verwendet. Hat dnan gut
+    gesschmackt so, hab die Menge aber nicht abgemessen. Dürfen 3-4cl sein. lg :)
+  :net_votes: 0
+  :old_id: 18228
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &82 2010-12-15 13:09:14.000000000 Z
+    zone: *2
+    time: *82
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &83 2010-12-15 13:09:14.000000000 Z
+    zone: *2
+    time: *83
+- :id: 17277
+  :recipe_id: 1127
+  :user_id: 31
+  :last_editor_id:
+  :parent_id:
+  :body: Ihr habt schon recht, nach Rezept etwas süß. Allerdings hatte ich wie beschrieben
+    immer sehr viel Crushed-Ice verwendet und dann noch einen Moment vorschmelzen
+    lassen. Nach mehrfachem Nachtesten kann ich aber immernoch sagen das der Simplorio
+    ein toller Drink ist. Inzwischen habe ich festgestellt daß es mir sehr gut schmeckt
+    wenn ich das Eis vor dem strainen mit Escorial aromatisiere. Das Verhältnis ist
+    bei mir jetzt 7 Cachaca - 3 Limette - 2 Sirup.
+  :net_votes: 0
+  :old_id: 20540
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &84 2011-11-30 03:17:58.000000000 Z
+    zone: *2
+    time: *84
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &85 2011-11-30 03:17:58.000000000 Z
+    zone: *2
+    time: *85
+- :id: 19469
+  :recipe_id: 944
+  :user_id: 32
+  :last_editor_id:
+  :parent_id:
+  :body: Mir war schon klar, dass Lime Juice und Limettensirup nicht dasselbe sind,
+    ich hatte aber letzteres nicht im Haus. Der Monin Lime Juice ist auch nicht so
+    schlecht, jedenfalls wesentlich weniger süß als der Rose's. Du hast aber natürlich
+    recht, dass das Ergebnis mit Limettensirup vielleicht noch besser wäre.
+  :net_votes: 0
+  :old_id: 23149
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &86 2013-10-25 16:05:37.000000000 Z
+    zone: *2
+    time: *86
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &87 2013-10-25 16:05:37.000000000 Z
+    zone: *2
+    time: *87
+- :id: 19467
+  :recipe_id: 944
+  :user_id: 33
+  :last_editor_id:
+  :parent_id:
+  :body: "Ähnlich dem Cocktailscout und durchaus lecker, aber auch ich bin der Meinung,
+    dass der Limettensirup (ich habe den Lime Juice von Monin verwendet) irgendwie
+    stört.\n\r\nDamit ist er nun in der DB:-)"
+  :net_votes: 0
+  :old_id: 23146
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &88 2013-10-24 20:19:34.000000000 Z
+    zone: *2
+    time: *88
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &89 2013-10-24 20:19:34.000000000 Z
+    zone: *2
+    time: *89
+- :id: 11969
+  :recipe_id: 944
+  :user_id: 34
+  :last_editor_id:
+  :parent_id:
+  :body: Also ich bevorzuge Monin, der RS schmeckt mir viel zu sehr nach normalen
+    Zuckersirup^^
+  :net_votes: 0
+  :old_id: 14222
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &90 2009-08-03 17:31:45.000000000 Z
+    zone: *2
+    time: *90
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &91 2009-08-03 17:31:45.000000000 Z
+    zone: *2
+    time: *91
+- :id: 9560
+  :recipe_id: 778
+  :user_id: 35
+  :last_editor_id:
+  :parent_id:
+  :body: 'Ein Drink mit Birnensaft, ist ja mal was ganz Neues :). Leider ist die Zutat
+    bei mir rot markiert im Moment ... :(. Der Drink ansich klingt ja ganz lecker,
+    wenn auch ziehmlich kokoslastig. '
+  :net_votes: 0
+  :old_id: 11082
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &92 2008-11-12 12:58:02.000000000 Z
+    zone: *2
+    time: *92
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &93 2008-11-12 12:58:02.000000000 Z
+    zone: *2
+    time: *93
+- :id: 9661
+  :recipe_id: 778
+  :user_id: 36
+  :last_editor_id:
+  :parent_id:
+  :body: Soll ich mal ehrlich was sagen...?!? Alleine schon  bei der Vorstellung von
+    Gin mit Kokosrum und -sirup gruselt's mich ... und dann auch noch Birnensaft dazu.
+    Nee, also der Drink reizt mich definitiv überhaupt gar nicht ... &gt;_&lt;
+  :net_votes: 0
+  :old_id: 11221
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &94 2008-11-23 12:24:51.000000000 Z
+    zone: *2
+    time: *94
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &95 2008-11-23 12:24:51.000000000 Z
+    zone: *2
+    time: *95
+- :id: 9672
+  :recipe_id: 778
+  :user_id: 37
+  :last_editor_id:
+  :parent_id:
+  :body: Ne ne Achim, das wird mir dann zu süß. Der Drink war mit oben angegebenen
+    Mengen schon ganz gut. Vllt. werde ich nochmals mit einem anderen Birnensaft testen
+    ... ;-)
+  :net_votes: 0
+  :old_id: 11234
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &96 2008-11-24 21:27:10.000000000 Z
+    zone: *2
+    time: *96
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &97 2008-11-24 21:27:10.000000000 Z
+    zone: *2
+    time: *97
+- :id: 7066
+  :recipe_id: 635
+  :user_id: 38
+  :last_editor_id:
+  :parent_id:
+  :body: Also das ist wirklich mal ein Feuerwerk auf der Zunge. Süß und Früchtig-herb
+    mit kremigem Beigeschmack. Einfach traumhaft.
+  :net_votes: 0
+  :old_id: 8287
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &98 2007-11-29 13:50:27.000000000 Z
+    zone: *2
+    time: *98
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &99 2007-11-29 13:50:27.000000000 Z
+    zone: *2
+    time: *99
+- :id: 18953
+  :recipe_id: 635
+  :user_id: 39
+  :last_editor_id:
+  :parent_id:
+  :body: Fruchtig, sahnig, lecker, ausgewogene Süße- und Säureanteile. Etwas Sternanis
+    frisch darüber gerieben, meint mlF und er wäre perfekt.
+  :net_votes: 0
+  :old_id: 22540
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &100 2013-07-05 12:33:39.000000000 Z
+    zone: *2
+    time: *100
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &101 2013-07-05 12:33:39.000000000 Z
+    zone: *2
+    time: *101
+- :id: 7802
+  :recipe_id: 635
+  :user_id: 40
+  :last_editor_id:
+  :parent_id:
+  :body: Habs aus Mangel an Alternativen mit Albisaft gemixt, fruchtig oder süß kann
+    ich an dieser Stelle überhaupt nicht nachvollziehen, für mich ist dieser Drink
+    nur herb, schmeckt mir gar nicht 2,5*
+  :net_votes: 0
+  :old_id: 9090
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &102 2008-03-07 14:19:40.000000000 Z
+    zone: *2
+    time: *102
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &103 2008-03-07 14:19:40.000000000 Z
+    zone: *2
+    time: *103
+- :id: 8943
+  :recipe_id: 761
+  :user_id: 41
+  :last_editor_id:
+  :parent_id:
+  :body: Mit mehr Zuckersirup IMHO leckererer.
+  :net_votes: 0
+  :old_id: 10374
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &104 2008-09-20 18:25:25.000000000 Z
+    zone: *2
+    time: *104
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &105 2008-09-20 18:25:25.000000000 Z
+    zone: *2
+    time: *105
+- :id: 9992
+  :recipe_id: 761
+  :user_id: 42
+  :last_editor_id:
+  :parent_id:
+  :body: Das ist ja mal eine intressante Abwechslung zum Caipi - sehr lecker, schön
+    süss_sauer und erfrischend.
+  :net_votes: 0
+  :old_id: 11623
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &106 2009-01-06 18:56:38.000000000 Z
+    zone: *2
+    time: *106
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &107 2009-01-06 18:56:38.000000000 Z
+    zone: *2
+    time: *107
+- :id: 8910
+  :recipe_id: 761
+  :user_id: 43
+  :last_editor_id:
+  :parent_id:
+  :body: 'Kategorien: Dieser Drink ist zur Zeit keiner Kategorie zugeordnet  [Bearbeiten]'
+  :net_votes: 0
+  :old_id: 10335
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &108 2008-09-14 21:24:00.000000000 Z
+    zone: *2
+    time: *108
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &109 2008-09-14 21:24:00.000000000 Z
+    zone: *2
+    time: *109
+- :id: 21486
+  :recipe_id: 1552
+  :user_id: 44
+  :last_editor_id:
+  :parent_id:
+  :body: Ein erfrischender, nicht zu süßer Nachmittagscocktail mit leichtem Teegeschmack.
+  :net_votes: 0
+  :old_id: 25374
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &110 2016-08-28 17:53:46.000000000 Z
+    zone: *2
+    time: *110
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &111 2016-08-28 17:53:46.000000000 Z
+    zone: *2
+    time: *111
+- :id: 21488
+  :recipe_id: 1552
+  :user_id: 45
+  :last_editor_id:
+  :parent_id:
+  :body: klingt interessant.
+  :net_votes: 0
+  :old_id: 25376
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &112 2016-08-29 15:11:59.000000000 Z
+    zone: *2
+    time: *112
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &113 2016-08-29 15:11:59.000000000 Z
+    zone: *2
+    time: *113
+- :id: 21698
+  :recipe_id: 1552
+  :user_id: 46
+  :last_editor_id:
+  :parent_id:
+  :body: Ein leckeres, erfrischendes Getränk, man sollte natürlich Tee mögen.
+  :net_votes: 0
+  :old_id: 25593
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &114 2017-03-23 07:59:54.000000000 Z
+    zone: *2
+    time: *114
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &115 2017-03-23 07:59:54.000000000 Z
+    zone: *2
+    time: *115
+- :id: 17880
+  :recipe_id: 1295
+  :user_id: 47
+  :last_editor_id:
+  :parent_id:
+  :body: "stimmt, viel davon gehen nicht! \n\r\nAls Alternative zum Amarula geht auch
+    Bailey's! \n\r\nIst zwar nicht das gleiche, aber zumindest ähnlich"
+  :net_votes: 0
+  :old_id: 21230
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &116 2012-06-12 10:59:20.000000000 Z
+    zone: *2
+    time: *116
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &117 2012-06-12 10:59:20.000000000 Z
+    zone: *2
+    time: *117
+- :id: 17837
+  :recipe_id: 1295
+  :user_id: 48
+  :last_editor_id:
+  :parent_id:
+  :body: Cremig, fruchtig, lecker. Ist auf Partys bei den Frauen der Renner. Man kann
+    nur nicht sehr viel von Trinken, da er doch sehr satt macht.
+  :net_votes: 0
+  :old_id: 21182
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &118 2012-05-31 08:34:23.000000000 Z
+    zone: *2
+    time: *118
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &119 2012-05-31 08:34:23.000000000 Z
+    zone: *2
+    time: *119
+...

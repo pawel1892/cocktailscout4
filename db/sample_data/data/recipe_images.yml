@@ -1,0 +1,3305 @@
+---
+- :id: 550
+  :recipe_id: 1
+  :user_id: 33
+  :moderated_by_id: 34
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2009-12-20 13:29:39.000000000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 592
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2009-12-20 11:29:11.000000000 Z
+    zone: *2
+    time: *3
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2026-05-10 18:16:18.142629000 Z
+    zone: *2
+    time: *4
+- :id: 2111
+  :recipe_id: 9
+  :user_id: 37
+  :moderated_by_id: 38
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2016-09-13 22:07:55.000000000 Z
+    zone: *2
+    time: *5
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2348
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2016-09-13 18:42:54.000000000 Z
+    zone: *2
+    time: *6
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2026-02-07 04:38:38.003247000 Z
+    zone: *2
+    time: *7
+- :id: 1496
+  :recipe_id: 10
+  :user_id: 41
+  :moderated_by_id: 42
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &8 2012-10-03 22:20:20.000000000 Z
+    zone: *2
+    time: *8
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1697
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &9 2012-10-03 09:51:35.000000000 Z
+    zone: *2
+    time: *9
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &10 2026-02-07 04:38:18.955971000 Z
+    zone: *2
+    time: *10
+- :id: 2218
+  :recipe_id: 11
+  :user_id: 44
+  :moderated_by_id: 45
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &11 2026-04-05 21:58:31.624145000 Z
+    zone: *2
+    time: *11
+  :moderation_reason:
+  :deleted_at:
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &12 2026-04-05 20:04:30.492366000 Z
+    zone: *2
+    time: *12
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &13 2026-05-09 18:58:16.858961000 Z
+    zone: *2
+    time: *13
+- :id: 1910
+  :recipe_id: 12
+  :user_id: 47
+  :moderated_by_id: 48
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &14 2014-09-27 11:50:16.000000000 Z
+    zone: *2
+    time: *14
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2146
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &15 2014-09-27 09:28:08.000000000 Z
+    zone: *2
+    time: *15
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &16 2026-05-11 12:36:10.253605000 Z
+    zone: *2
+    time: *16
+- :id: 1589
+  :recipe_id: 17
+  :user_id: 1
+  :moderated_by_id: 2
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &17 2013-06-04 22:14:36.000000000 Z
+    zone: *2
+    time: *17
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1810
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &18 2013-06-04 20:12:24.000000000 Z
+    zone: *2
+    time: *18
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &19 2026-02-07 04:38:23.561093000 Z
+    zone: *2
+    time: *19
+- :id: 1487
+  :recipe_id: 18
+  :user_id: 5
+  :moderated_by_id: 6
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &20 2012-09-18 10:07:20.000000000 Z
+    zone: *2
+    time: *20
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1683
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &21 2012-09-18 07:21:38.000000000 Z
+    zone: *2
+    time: *21
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &22 2026-02-07 04:38:18.415521000 Z
+    zone: *2
+    time: *22
+- :id: 1397
+  :recipe_id: 26
+  :user_id: 8
+  :moderated_by_id: 9
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &23 2012-01-11 22:47:41.000000000 Z
+    zone: *2
+    time: *23
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1571
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &24 2012-01-11 21:41:40.000000000 Z
+    zone: *2
+    time: *24
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &25 2026-02-07 04:38:15.327491000 Z
+    zone: *2
+    time: *25
+- :id: 1456
+  :recipe_id: 29
+  :user_id: 12
+  :moderated_by_id: 13
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &26 2012-06-04 19:46:26.000000000 Z
+    zone: *2
+    time: *26
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1642
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &27 2012-06-04 14:53:25.000000000 Z
+    zone: *2
+    time: *27
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &28 2026-02-07 04:38:17.594061000 Z
+    zone: *2
+    time: *28
+- :id: 672
+  :recipe_id: 30
+  :user_id: 16
+  :moderated_by_id: 17
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &29 2010-03-01 19:00:52.000000000 Z
+    zone: *2
+    time: *29
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 730
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &30 2010-03-01 17:47:51.000000000 Z
+    zone: *2
+    time: *30
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &31 2026-05-11 14:30:23.209181000 Z
+    zone: *2
+    time: *31
+- :id: 1341
+  :recipe_id: 40
+  :user_id: 19
+  :moderated_by_id: 20
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &32 2011-10-02 21:15:04.000000000 Z
+    zone: *2
+    time: *32
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1505
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &33 2011-10-02 17:47:17.000000000 Z
+    zone: *2
+    time: *33
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &34 2026-02-07 04:38:12.897226000 Z
+    zone: *2
+    time: *34
+- :id: 345
+  :recipe_id: 41
+  :user_id: 23
+  :moderated_by_id: 24
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &35 2009-04-26 14:03:34.000000000 Z
+    zone: *2
+    time: *35
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 367
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &36 2009-04-26 10:41:48.000000000 Z
+    zone: *2
+    time: *36
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &37 2026-05-10 16:54:09.851173000 Z
+    zone: *2
+    time: *37
+- :id: 1922
+  :recipe_id: 49
+  :user_id: 27
+  :moderated_by_id: 28
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &38 2014-11-01 19:28:27.000000000 Z
+    zone: *2
+    time: *38
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2158
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &39 2014-11-01 15:36:08.000000000 Z
+    zone: *2
+    time: *39
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &40 2026-05-11 12:33:51.555416000 Z
+    zone: *2
+    time: *40
+- :id: 2091
+  :recipe_id: 53
+  :user_id: 31
+  :moderated_by_id: 32
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &41 2016-09-04 20:48:48.000000000 Z
+    zone: *2
+    time: *41
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2328
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &42 2016-09-04 14:12:23.000000000 Z
+    zone: *2
+    time: *42
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &43 2026-02-07 04:38:37.093306000 Z
+    zone: *2
+    time: *43
+- :id: 1913
+  :recipe_id: 59
+  :user_id: 35
+  :moderated_by_id: 36
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &44 2014-10-15 07:18:40.000000000 Z
+    zone: *2
+    time: *44
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2149
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &45 2014-10-14 20:49:33.000000000 Z
+    zone: *2
+    time: *45
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &46 2026-02-07 04:38:42.547460000 Z
+    zone: *2
+    time: *46
+- :id: 2094
+  :recipe_id: 68
+  :user_id: 38
+  :moderated_by_id: 39
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &47 2016-09-06 20:29:15.000000000 Z
+    zone: *2
+    time: *47
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2331
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &48 2016-09-06 14:44:02.000000000 Z
+    zone: *2
+    time: *48
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &49 2026-02-07 04:38:37.227368000 Z
+    zone: *2
+    time: *49
+- :id: 1737
+  :recipe_id: 69
+  :user_id: 42
+  :moderated_by_id: 43
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &50 2014-01-15 17:11:21.000000000 Z
+    zone: *2
+    time: *50
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1966
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &51 2014-01-15 13:22:23.000000000 Z
+    zone: *2
+    time: *51
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &52 2026-05-11 09:55:01.143850000 Z
+    zone: *2
+    time: *52
+- :id: 67
+  :recipe_id: 79
+  :user_id: 45
+  :moderated_by_id:
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &53 2009-03-13 16:34:35.000000000 Z
+    zone: *2
+    time: *53
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 75
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &54 2009-03-13 15:32:16.000000000 Z
+    zone: *2
+    time: *54
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &55 2026-02-07 04:37:12.955972000 Z
+    zone: *2
+    time: *55
+- :id: 2141
+  :recipe_id: 82
+  :user_id: 47
+  :moderated_by_id: 48
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &56 2016-09-29 10:37:01.000000000 Z
+    zone: *2
+    time: *56
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2378
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &57 2016-09-27 18:08:12.000000000 Z
+    zone: *2
+    time: *57
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &58 2026-05-09 18:59:12.168665000 Z
+    zone: *2
+    time: *58
+- :id: 1278
+  :recipe_id: 90
+  :user_id: 50
+  :moderated_by_id: 1
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &59 2011-07-24 22:25:16.000000000 Z
+    zone: *2
+    time: *59
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1436
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &60 2011-07-24 12:17:40.000000000 Z
+    zone: *2
+    time: *60
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &61 2026-02-07 04:38:09.591675000 Z
+    zone: *2
+    time: *61
+- :id: 92
+  :recipe_id: 112
+  :user_id: 3
+  :moderated_by_id:
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &62 2009-03-13 16:34:35.000000000 Z
+    zone: *2
+    time: *62
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 101
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &63 2009-03-13 15:32:18.000000000 Z
+    zone: *2
+    time: *63
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &64 2026-02-07 04:37:14.034463000 Z
+    zone: *2
+    time: *64
+- :id: 1466
+  :recipe_id: 115
+  :user_id: 5
+  :moderated_by_id: 6
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &65 2012-06-24 21:53:15.000000000 Z
+    zone: *2
+    time: *65
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1653
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &66 2012-06-24 18:53:57.000000000 Z
+    zone: *2
+    time: *66
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &67 2026-02-07 04:38:17.913705000 Z
+    zone: *2
+    time: *67
+- :id: 2206
+  :recipe_id: 124
+  :user_id: 8
+  :moderated_by_id: 9
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &68 2019-05-12 13:00:02.000000000 Z
+    zone: *2
+    time: *68
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2443
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &69 2019-05-12 12:42:57.000000000 Z
+    zone: *2
+    time: *69
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &70 2026-05-09 18:58:19.845040000 Z
+    zone: *2
+    time: *70
+- :id: 924
+  :recipe_id: 140
+  :user_id: 11
+  :moderated_by_id: 12
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &71 2010-09-04 16:09:12.000000000 Z
+    zone: *2
+    time: *71
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1021
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &72 2010-09-04 13:54:14.000000000 Z
+    zone: *2
+    time: *72
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &73 2026-02-07 04:37:52.526291000 Z
+    zone: *2
+    time: *73
+- :id: 117
+  :recipe_id: 147
+  :user_id: 14
+  :moderated_by_id:
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &74 2009-03-13 16:34:35.000000000 Z
+    zone: *2
+    time: *74
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 127
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &75 2009-03-13 15:32:20.000000000 Z
+    zone: *2
+    time: *75
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &76 2026-02-07 04:37:15.058909000 Z
+    zone: *2
+    time: *76
+- :id: 2117
+  :recipe_id: 154
+  :user_id: 17
+  :moderated_by_id: 18
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &77 2016-09-16 19:58:50.000000000 Z
+    zone: *2
+    time: *77
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2354
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &78 2016-09-16 15:31:51.000000000 Z
+    zone: *2
+    time: *78
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &79 2026-02-07 04:38:38.291426000 Z
+    zone: *2
+    time: *79
+- :id: 128
+  :recipe_id: 160
+  :user_id: 20
+  :moderated_by_id:
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &80 2009-03-13 16:34:35.000000000 Z
+    zone: *2
+    time: *80
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 139
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &81 2009-03-13 15:32:20.000000000 Z
+    zone: *2
+    time: *81
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &82 2026-02-07 04:37:15.470020000 Z
+    zone: *2
+    time: *82
+- :id: 1271
+  :recipe_id: 170
+  :user_id: 23
+  :moderated_by_id: 24
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &83 2011-07-17 18:25:47.000000000 Z
+    zone: *2
+    time: *83
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1426
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &84 2011-07-17 14:42:27.000000000 Z
+    zone: *2
+    time: *84
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &85 2026-02-07 04:38:09.216249000 Z
+    zone: *2
+    time: *85
+- :id: 568
+  :recipe_id: 173
+  :user_id: 26
+  :moderated_by_id: 27
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &86 2010-01-01 22:23:27.000000000 Z
+    zone: *2
+    time: *86
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 610
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &87 2010-01-01 19:03:33.000000000 Z
+    zone: *2
+    time: *87
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &88 2026-02-07 04:37:32.630175000 Z
+    zone: *2
+    time: *88
+- :id: 1328
+  :recipe_id: 174
+  :user_id: 30
+  :moderated_by_id: 31
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &89 2011-09-20 20:34:49.000000000 Z
+    zone: *2
+    time: *89
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1490
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &90 2011-09-20 18:16:24.000000000 Z
+    zone: *2
+    time: *90
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &91 2026-02-07 04:38:11.847976000 Z
+    zone: *2
+    time: *91
+- :id: 2185
+  :recipe_id: 182
+  :user_id: 33
+  :moderated_by_id: 34
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &92 2017-07-21 20:34:53.000000000 Z
+    zone: *2
+    time: *92
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2422
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &93 2017-07-21 11:42:57.000000000 Z
+    zone: *2
+    time: *93
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &94 2026-05-09 18:58:38.012329000 Z
+    zone: *2
+    time: *94
+- :id: 152
+  :recipe_id: 191
+  :user_id: 37
+  :moderated_by_id:
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &95 2009-03-13 16:34:35.000000000 Z
+    zone: *2
+    time: *95
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 167
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &96 2009-03-13 15:32:22.000000000 Z
+    zone: *2
+    time: *96
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &97 2026-02-07 04:37:16.438647000 Z
+    zone: *2
+    time: *97
+- :id: 1074
+  :recipe_id: 198
+  :user_id: 39
+  :moderated_by_id: 40
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &98 2011-03-06 00:49:06.000000000 Z
+    zone: *2
+    time: *98
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1197
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &99 2011-03-05 22:44:26.000000000 Z
+    zone: *2
+    time: *99
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &100 2026-02-07 04:38:00.167863000 Z
+    zone: *2
+    time: *100
+- :id: 2100
+  :recipe_id: 203
+  :user_id: 42
+  :moderated_by_id: 43
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &101 2016-09-09 14:16:47.000000000 Z
+    zone: *2
+    time: *101
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2337
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &102 2016-09-08 19:01:33.000000000 Z
+    zone: *2
+    time: *102
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &103 2026-02-07 04:38:37.497913000 Z
+    zone: *2
+    time: *103
+- :id: 2030
+  :recipe_id: 222
+  :user_id: 45
+  :moderated_by_id: 46
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &104 2016-03-28 16:09:59.000000000 Z
+    zone: *2
+    time: *104
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2267
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &105 2016-03-28 13:43:36.000000000 Z
+    zone: *2
+    time: *105
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &106 2026-05-09 20:38:20.926306000 Z
+    zone: *2
+    time: *106
+- :id: 2093
+  :recipe_id: 244
+  :user_id: 49
+  :moderated_by_id: 50
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &107 2016-09-05 21:23:59.000000000 Z
+    zone: *2
+    time: *107
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2330
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &108 2016-09-05 18:20:50.000000000 Z
+    zone: *2
+    time: *108
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &109 2026-05-09 18:59:30.943476000 Z
+    zone: *2
+    time: *109
+- :id: 851
+  :recipe_id: 246
+  :user_id: 2
+  :moderated_by_id: 3
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &110 2010-05-26 19:36:26.000000000 Z
+    zone: *2
+    time: *110
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 931
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &111 2010-05-26 17:23:33.000000000 Z
+    zone: *2
+    time: *111
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &112 2026-02-07 04:37:49.343743000 Z
+    zone: *2
+    time: *112
+- :id: 1955
+  :recipe_id: 249
+  :user_id: 5
+  :moderated_by_id: 6
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &113 2015-02-19 07:05:27.000000000 Z
+    zone: *2
+    time: *113
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2191
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &114 2015-02-18 20:46:03.000000000 Z
+    zone: *2
+    time: *114
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &115 2026-02-07 04:38:29.587613000 Z
+    zone: *2
+    time: *115
+- :id: 480
+  :recipe_id: 257
+  :user_id: 8
+  :moderated_by_id: 9
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &116 2009-08-18 17:15:29.000000000 Z
+    zone: *2
+    time: *116
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 509
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &117 2009-08-18 14:43:02.000000000 Z
+    zone: *2
+    time: *117
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &118 2026-02-07 04:37:28.806330000 Z
+    zone: *2
+    time: *118
+- :id: 2163
+  :recipe_id: 258
+  :user_id: 12
+  :moderated_by_id: 13
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &119 2016-10-10 17:45:53.000000000 Z
+    zone: *2
+    time: *119
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2400
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &120 2016-10-10 15:37:25.000000000 Z
+    zone: *2
+    time: *120
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &121 2026-05-09 18:58:51.091538000 Z
+    zone: *2
+    time: *121
+- :id: 1884
+  :recipe_id: 270
+  :user_id: 15
+  :moderated_by_id: 16
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &122 2014-08-02 19:51:45.000000000 Z
+    zone: *2
+    time: *122
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2118
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &123 2014-08-02 09:16:35.000000000 Z
+    zone: *2
+    time: *123
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &124 2026-05-12 10:31:26.660921000 Z
+    zone: *2
+    time: *124
+- :id: 815
+  :recipe_id: 277
+  :user_id: 18
+  :moderated_by_id: 19
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &125 2010-05-08 08:41:36.000000000 Z
+    zone: *2
+    time: *125
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 890
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &126 2010-05-07 21:55:28.000000000 Z
+    zone: *2
+    time: *126
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &127 2026-02-07 04:37:46.978690000 Z
+    zone: *2
+    time: *127
+- :id: 837
+  :recipe_id: 284
+  :user_id: 21
+  :moderated_by_id: 22
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &128 2010-05-17 22:15:47.000000000 Z
+    zone: *2
+    time: *128
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 915
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &129 2010-05-17 20:11:59.000000000 Z
+    zone: *2
+    time: *129
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &130 2026-02-07 04:37:48.580090000 Z
+    zone: *2
+    time: *130
+- :id: 244
+  :recipe_id: 293
+  :user_id: 24
+  :moderated_by_id: 25
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &131 2009-03-27 22:33:36.000000000 Z
+    zone: *2
+    time: *131
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 266
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &132 2009-03-27 21:33:27.000000000 Z
+    zone: *2
+    time: *132
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &133 2026-05-10 17:51:20.282652000 Z
+    zone: *2
+    time: *133
+- :id: 2085
+  :recipe_id: 298
+  :user_id: 28
+  :moderated_by_id: 29
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &134 2016-08-31 20:06:02.000000000 Z
+    zone: *2
+    time: *134
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2322
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &135 2016-08-31 17:34:58.000000000 Z
+    zone: *2
+    time: *135
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &136 2026-02-07 04:38:36.804530000 Z
+    zone: *2
+    time: *136
+- :id: 229
+  :recipe_id: 304
+  :user_id: 32
+  :moderated_by_id: 33
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &137 2009-03-25 23:15:43.000000000 Z
+    zone: *2
+    time: *137
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 249
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &138 2009-03-25 22:15:01.000000000 Z
+    zone: *2
+    time: *138
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &139 2026-05-10 17:42:38.928611000 Z
+    zone: *2
+    time: *139
+- :id: 1303
+  :recipe_id: 327
+  :user_id: 35
+  :moderated_by_id: 36
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &140 2011-08-08 22:27:27.000000000 Z
+    zone: *2
+    time: *140
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1461
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &141 2011-08-08 18:55:54.000000000 Z
+    zone: *2
+    time: *141
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &142 2026-02-07 04:38:10.681357000 Z
+    zone: *2
+    time: *142
+- :id: 1868
+  :recipe_id: 354
+  :user_id: 38
+  :moderated_by_id: 39
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &143 2014-07-10 17:25:15.000000000 Z
+    zone: *2
+    time: *143
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2102
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &144 2014-07-09 17:35:28.000000000 Z
+    zone: *2
+    time: *144
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &145 2026-05-09 22:51:21.201316000 Z
+    zone: *2
+    time: *145
+- :id: 813
+  :recipe_id: 358
+  :user_id: 41
+  :moderated_by_id: 42
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &146 2010-05-08 08:41:14.000000000 Z
+    zone: *2
+    time: *146
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 888
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &147 2010-05-07 21:53:12.000000000 Z
+    zone: *2
+    time: *147
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &148 2026-02-07 04:37:46.801617000 Z
+    zone: *2
+    time: *148
+- :id: 1724
+  :recipe_id: 381
+  :user_id: 45
+  :moderated_by_id: 46
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &149 2015-09-21 20:16:36.000000000 Z
+    zone: *2
+    time: *149
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1953
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &150 2014-01-04 14:19:47.000000000 Z
+    zone: *2
+    time: *150
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &151 2026-05-11 09:36:25.012196000 Z
+    zone: *2
+    time: *151
+- :id: 1095
+  :recipe_id: 385
+  :user_id: 49
+  :moderated_by_id: 50
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &152 2011-03-18 09:50:41.000000000 Z
+    zone: *2
+    time: *152
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1225
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &153 2011-03-18 05:32:32.000000000 Z
+    zone: *2
+    time: *153
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &154 2026-02-07 04:38:01.256756000 Z
+    zone: *2
+    time: *154
+- :id: 1894
+  :recipe_id: 393
+  :user_id: 2
+  :moderated_by_id: 3
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &155 2014-08-13 21:01:36.000000000 Z
+    zone: *2
+    time: *155
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2128
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &156 2014-08-13 15:48:46.000000000 Z
+    zone: *2
+    time: *156
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &157 2026-05-09 22:51:12.239893000 Z
+    zone: *2
+    time: *157
+- :id: 362
+  :recipe_id: 406
+  :user_id: 6
+  :moderated_by_id: 7
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &158 2009-07-13 20:26:28.000000000 Z
+    zone: *2
+    time: *158
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 384
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &159 2009-05-17 19:45:32.000000000 Z
+    zone: *2
+    time: *159
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &160 2026-05-10 17:54:35.445981000 Z
+    zone: *2
+    time: *160
+- :id: 1615
+  :recipe_id: 424
+  :user_id: 10
+  :moderated_by_id: 11
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &161 2013-06-27 20:32:02.000000000 Z
+    zone: *2
+    time: *161
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1838
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &162 2013-06-27 18:12:02.000000000 Z
+    zone: *2
+    time: *162
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &163 2026-05-11 09:16:52.987129000 Z
+    zone: *2
+    time: *163
+- :id: 1898
+  :recipe_id: 428
+  :user_id: 13
+  :moderated_by_id: 14
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &164 2014-08-23 15:39:21.000000000 Z
+    zone: *2
+    time: *164
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2133
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &165 2014-08-23 12:26:59.000000000 Z
+    zone: *2
+    time: *165
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &166 2026-05-11 12:39:05.705770000 Z
+    zone: *2
+    time: *166
+- :id: 1020
+  :recipe_id: 429
+  :user_id: 17
+  :moderated_by_id: 18
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &167 2011-01-02 23:16:41.000000000 Z
+    zone: *2
+    time: *167
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1132
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &168 2011-01-02 22:15:32.000000000 Z
+    zone: *2
+    time: *168
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &169 2026-05-10 19:36:56.660167000 Z
+    zone: *2
+    time: *169
+- :id: 387
+  :recipe_id: 471
+  :user_id: 21
+  :moderated_by_id: 22
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &170 2009-06-10 21:32:49.000000000 Z
+    zone: *2
+    time: *170
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 410
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &171 2009-06-10 16:56:18.000000000 Z
+    zone: *2
+    time: *171
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &172 2026-02-07 04:37:24.691544000 Z
+    zone: *2
+    time: *172
+- :id: 1999
+  :recipe_id: 478
+  :user_id: 25
+  :moderated_by_id: 26
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &173 2015-09-27 12:10:41.000000000 Z
+    zone: *2
+    time: *173
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2236
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &174 2015-09-26 22:15:35.000000000 Z
+    zone: *2
+    time: *174
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &175 2026-05-09 20:42:43.020082000 Z
+    zone: *2
+    time: *175
+- :id: 1524
+  :recipe_id: 490
+  :user_id: 28
+  :moderated_by_id: 29
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &176 2013-01-08 21:54:06.000000000 Z
+    zone: *2
+    time: *176
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1732
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &177 2013-01-08 18:55:06.000000000 Z
+    zone: *2
+    time: *177
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &178 2026-02-07 04:38:20.214438000 Z
+    zone: *2
+    time: *178
+- :id: 413
+  :recipe_id: 506
+  :user_id: 31
+  :moderated_by_id: 32
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &179 2009-06-28 10:51:57.000000000 Z
+    zone: *2
+    time: *179
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 437
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &180 2009-06-28 08:51:30.000000000 Z
+    zone: *2
+    time: *180
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &181 2026-02-07 04:37:25.880306000 Z
+    zone: *2
+    time: *181
+- :id: 1000
+  :recipe_id: 557
+  :user_id: 34
+  :moderated_by_id: 35
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &182 2010-11-30 12:22:29.000000000 Z
+    zone: *2
+    time: *182
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1107
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &183 2010-11-30 11:20:14.000000000 Z
+    zone: *2
+    time: *183
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &184 2026-02-07 04:37:56.385367000 Z
+    zone: *2
+    time: *184
+- :id: 2038
+  :recipe_id: 574
+  :user_id: 37
+  :moderated_by_id: 38
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &185 2016-04-29 20:58:47.000000000 Z
+    zone: *2
+    time: *185
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2275
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &186 2016-04-29 11:24:33.000000000 Z
+    zone: *2
+    time: *186
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &187 2026-05-09 20:36:57.681080000 Z
+    zone: *2
+    time: *187
+- :id: 1246
+  :recipe_id: 577
+  :user_id: 40
+  :moderated_by_id: 41
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &188 2011-06-23 20:30:41.000000000 Z
+    zone: *2
+    time: *188
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1400
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &189 2011-06-23 17:51:46.000000000 Z
+    zone: *2
+    time: *189
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &190 2026-02-07 04:38:08.596107000 Z
+    zone: *2
+    time: *190
+- :id: 1667
+  :recipe_id: 583
+  :user_id: 43
+  :moderated_by_id: 44
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &191 2013-09-12 21:10:45.000000000 Z
+    zone: *2
+    time: *191
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1896
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &192 2013-09-12 16:04:23.000000000 Z
+    zone: *2
+    time: *192
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &193 2026-05-11 09:26:27.926093000 Z
+    zone: *2
+    time: *193
+- :id: 519
+  :recipe_id: 590
+  :user_id: 46
+  :moderated_by_id: 47
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &194 2009-11-04 11:29:07.000000000 Z
+    zone: *2
+    time: *194
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 554
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &195 2009-11-04 10:26:07.000000000 Z
+    zone: *2
+    time: *195
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &196 2026-05-10 18:22:38.938269000 Z
+    zone: *2
+    time: *196
+- :id: 522
+  :recipe_id: 595
+  :user_id: 49
+  :moderated_by_id: 50
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &197 2009-11-14 00:44:12.000000000 Z
+    zone: *2
+    time: *197
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 557
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &198 2009-11-13 23:19:53.000000000 Z
+    zone: *2
+    time: *198
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &199 2026-02-07 04:37:30.445549000 Z
+    zone: *2
+    time: *199
+- :id: 1622
+  :recipe_id: 635
+  :user_id: 3
+  :moderated_by_id: 4
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &200 2013-07-05 15:12:27.000000000 Z
+    zone: *2
+    time: *200
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1845
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &201 2013-07-05 12:26:38.000000000 Z
+    zone: *2
+    time: *201
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &202 2026-05-11 09:34:59.483098000 Z
+    zone: *2
+    time: *202
+- :id: 1297
+  :recipe_id: 637
+  :user_id: 6
+  :moderated_by_id: 7
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &203 2011-08-05 22:15:40.000000000 Z
+    zone: *2
+    time: *203
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1455
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &204 2011-08-05 19:39:28.000000000 Z
+    zone: *2
+    time: *204
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &205 2026-02-07 04:38:10.323659000 Z
+    zone: *2
+    time: *205
+- :id: 844
+  :recipe_id: 649
+  :user_id: 10
+  :moderated_by_id: 11
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &206 2010-05-24 13:36:33.000000000 Z
+    zone: *2
+    time: *206
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 924
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &207 2010-05-24 10:34:14.000000000 Z
+    zone: *2
+    time: *207
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &208 2026-02-07 04:37:48.974733000 Z
+    zone: *2
+    time: *208
+- :id: 1934
+  :recipe_id: 678
+  :user_id: 13
+  :moderated_by_id: 14
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &209 2014-12-24 06:56:19.000000000 Z
+    zone: *2
+    time: *209
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2170
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &210 2014-12-23 22:01:50.000000000 Z
+    zone: *2
+    time: *210
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &211 2026-02-07 04:38:28.475595000 Z
+    zone: *2
+    time: *211
+- :id: 675
+  :recipe_id: 680
+  :user_id: 17
+  :moderated_by_id: 18
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &212 2010-03-03 21:27:41.000000000 Z
+    zone: *2
+    time: *212
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 733
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &213 2010-03-03 20:25:47.000000000 Z
+    zone: *2
+    time: *213
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &214 2026-05-11 14:30:43.147371000 Z
+    zone: *2
+    time: *214
+- :id: 411
+  :recipe_id: 694
+  :user_id: 21
+  :moderated_by_id: 22
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &215 2009-06-28 10:51:42.000000000 Z
+    zone: *2
+    time: *215
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 435
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &216 2009-06-28 08:50:23.000000000 Z
+    zone: *2
+    time: *216
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &217 2026-02-07 04:37:25.774912000 Z
+    zone: *2
+    time: *217
+- :id: 654
+  :recipe_id: 695
+  :user_id: 25
+  :moderated_by_id: 26
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &218 2010-02-22 20:11:21.000000000 Z
+    zone: *2
+    time: *218
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 709
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &219 2010-02-22 17:05:13.000000000 Z
+    zone: *2
+    time: *219
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &220 2026-02-07 04:37:37.935724000 Z
+    zone: *2
+    time: *220
+- :id: 1990
+  :recipe_id: 704
+  :user_id: 29
+  :moderated_by_id: 30
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &221 2015-08-24 06:27:18.000000000 Z
+    zone: *2
+    time: *221
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2227
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &222 2015-08-23 18:03:23.000000000 Z
+    zone: *2
+    time: *222
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &223 2026-05-09 20:44:27.870388000 Z
+    zone: *2
+    time: *223
+- :id: 605
+  :recipe_id: 707
+  :user_id: 32
+  :moderated_by_id: 33
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &224 2010-01-24 20:52:38.000000000 Z
+    zone: *2
+    time: *224
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 652
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &225 2010-01-24 19:51:56.000000000 Z
+    zone: *2
+    time: *225
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &226 2026-02-07 04:37:34.771086000 Z
+    zone: *2
+    time: *226
+- :id: 1409
+  :recipe_id: 723
+  :user_id: 36
+  :moderated_by_id: 37
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &227 2012-01-16 22:29:57.000000000 Z
+    zone: *2
+    time: *227
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1583
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &228 2012-01-16 21:05:45.000000000 Z
+    zone: *2
+    time: *228
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &229 2026-02-07 04:38:15.845484000 Z
+    zone: *2
+    time: *229
+- :id: 604
+  :recipe_id: 724
+  :user_id: 40
+  :moderated_by_id: 41
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &230 2010-01-24 20:47:40.000000000 Z
+    zone: *2
+    time: *230
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 651
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &231 2010-01-24 19:46:17.000000000 Z
+    zone: *2
+    time: *231
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &232 2026-02-07 04:37:34.764712000 Z
+    zone: *2
+    time: *232
+- :id: 1055
+  :recipe_id: 761
+  :user_id: 44
+  :moderated_by_id: 45
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &233 2011-02-19 23:02:31.000000000 Z
+    zone: *2
+    time: *233
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1174
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &234 2011-02-19 22:02:17.000000000 Z
+    zone: *2
+    time: *234
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &235 2026-02-07 04:37:59.280030000 Z
+    zone: *2
+    time: *235
+- :id: 517
+  :recipe_id: 768
+  :user_id: 47
+  :moderated_by_id: 48
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &236 2009-11-03 17:54:26.000000000 Z
+    zone: *2
+    time: *236
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 552
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &237 2009-11-03 16:54:15.000000000 Z
+    zone: *2
+    time: *237
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &238 2026-02-07 04:37:30.156726000 Z
+    zone: *2
+    time: *238
+- :id: 495
+  :recipe_id: 778
+  :user_id: 50
+  :moderated_by_id: 1
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &239 2009-09-13 18:30:00.000000000 Z
+    zone: *2
+    time: *239
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 527
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &240 2009-09-13 15:43:04.000000000 Z
+    zone: *2
+    time: *240
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &241 2026-02-07 04:37:29.291801000 Z
+    zone: *2
+    time: *241
+- :id: 287
+  :recipe_id: 780
+  :user_id: 4
+  :moderated_by_id: 5
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &242 2009-04-03 18:48:23.000000000 Z
+    zone: *2
+    time: *242
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 309
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &243 2009-04-03 14:50:05.000000000 Z
+    zone: *2
+    time: *243
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &244 2026-02-07 04:37:21.158675000 Z
+    zone: *2
+    time: *244
+- :id: 1679
+  :recipe_id: 797
+  :user_id: 7
+  :moderated_by_id: 8
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &245 2013-10-16 16:46:22.000000000 Z
+    zone: *2
+    time: *245
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1908
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &246 2013-10-16 14:42:12.000000000 Z
+    zone: *2
+    time: *246
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &247 2026-05-11 09:44:40.096933000 Z
+    zone: *2
+    time: *247
+- :id: 1660
+  :recipe_id: 831
+  :user_id: 11
+  :moderated_by_id: 12
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &248 2013-08-27 15:45:03.000000000 Z
+    zone: *2
+    time: *248
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1889
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &249 2013-08-27 13:38:01.000000000 Z
+    zone: *2
+    time: *249
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &250 2026-05-11 09:27:26.912673000 Z
+    zone: *2
+    time: *250
+- :id: 1923
+  :recipe_id: 838
+  :user_id: 15
+  :moderated_by_id: 16
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &251 2014-11-02 05:55:32.000000000 Z
+    zone: *2
+    time: *251
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2159
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &252 2014-11-01 22:50:12.000000000 Z
+    zone: *2
+    time: *252
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &253 2026-02-07 04:38:43.213827000 Z
+    zone: *2
+    time: *253
+- :id: 1972
+  :recipe_id: 861
+  :user_id: 18
+  :moderated_by_id: 19
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &254 2015-05-01 23:47:40.000000000 Z
+    zone: *2
+    time: *254
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2208
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &255 2015-05-01 13:52:20.000000000 Z
+    zone: *2
+    time: *255
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &256 2026-05-09 20:46:58.074232000 Z
+    zone: *2
+    time: *256
+- :id: 1656
+  :recipe_id: 864
+  :user_id: 22
+  :moderated_by_id: 23
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &257 2013-08-22 21:01:11.000000000 Z
+    zone: *2
+    time: *257
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1884
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &258 2013-08-22 16:19:35.000000000 Z
+    zone: *2
+    time: *258
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &259 2026-05-11 09:29:11.167363000 Z
+    zone: *2
+    time: *259
+- :id: 231
+  :recipe_id: 866
+  :user_id: 26
+  :moderated_by_id: 27
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &260 2009-03-26 16:46:02.000000000 Z
+    zone: *2
+    time: *260
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 251
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &261 2009-03-26 13:06:36.000000000 Z
+    zone: *2
+    time: *261
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &262 2026-05-10 17:42:56.310140000 Z
+    zone: *2
+    time: *262
+- :id: 1669
+  :recipe_id: 870
+  :user_id: 30
+  :moderated_by_id: 31
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &263 2013-10-02 21:41:47.000000000 Z
+    zone: *2
+    time: *263
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1898
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &264 2013-10-02 19:11:52.000000000 Z
+    zone: *2
+    time: *264
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &265 2026-05-11 09:26:05.696445000 Z
+    zone: *2
+    time: *265
+- :id: 1644
+  :recipe_id: 878
+  :user_id: 33
+  :moderated_by_id: 34
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &266 2013-07-25 18:29:27.000000000 Z
+    zone: *2
+    time: *266
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1867
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &267 2013-07-25 11:47:14.000000000 Z
+    zone: *2
+    time: *267
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &268 2026-05-11 09:30:43.016462000 Z
+    zone: *2
+    time: *268
+- :id: 1928
+  :recipe_id: 893
+  :user_id: 36
+  :moderated_by_id: 37
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &269 2014-11-07 13:51:15.000000000 Z
+    zone: *2
+    time: *269
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2164
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &270 2014-11-07 12:02:57.000000000 Z
+    zone: *2
+    time: *270
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &271 2026-05-11 12:32:51.956400000 Z
+    zone: *2
+    time: *271
+- :id: 671
+  :recipe_id: 897
+  :user_id: 40
+  :moderated_by_id: 41
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &272 2010-02-27 08:16:58.000000000 Z
+    zone: *2
+    time: *272
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 728
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &273 2010-02-26 20:27:51.000000000 Z
+    zone: *2
+    time: *273
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &274 2026-02-07 04:37:38.987314000 Z
+    zone: *2
+    time: *274
+- :id: 2084
+  :recipe_id: 903
+  :user_id: 44
+  :moderated_by_id: 45
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &275 2016-08-30 20:58:10.000000000 Z
+    zone: *2
+    time: *275
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2321
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &276 2016-08-30 18:04:50.000000000 Z
+    zone: *2
+    time: *276
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &277 2026-02-07 04:38:36.775460000 Z
+    zone: *2
+    time: *277
+- :id: 1973
+  :recipe_id: 908
+  :user_id: 48
+  :moderated_by_id: 49
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &278 2015-05-08 12:47:43.000000000 Z
+    zone: *2
+    time: *278
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2209
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &279 2015-05-08 10:42:38.000000000 Z
+    zone: *2
+    time: *279
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &280 2026-05-09 20:46:47.241069000 Z
+    zone: *2
+    time: *280
+- :id: 397
+  :recipe_id: 910
+  :user_id: 1
+  :moderated_by_id: 2
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &281 2009-06-12 22:26:22.000000000 Z
+    zone: *2
+    time: *281
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 420
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &282 2009-06-12 20:03:21.000000000 Z
+    zone: *2
+    time: *282
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &283 2026-02-07 04:37:25.211374000 Z
+    zone: *2
+    time: *283
+- :id: 1691
+  :recipe_id: 911
+  :user_id: 5
+  :moderated_by_id: 6
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &284 2013-11-06 21:58:22.000000000 Z
+    zone: *2
+    time: *284
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1920
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &285 2013-11-06 20:38:59.000000000 Z
+    zone: *2
+    time: *285
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &286 2026-02-07 04:38:29.489524000 Z
+    zone: *2
+    time: *286
+- :id: 1683
+  :recipe_id: 919
+  :user_id: 9
+  :moderated_by_id: 10
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &287 2013-10-18 14:25:37.000000000 Z
+    zone: *2
+    time: *287
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1912
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &288 2013-10-18 11:22:06.000000000 Z
+    zone: *2
+    time: *288
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &289 2026-05-11 09:43:48.451474000 Z
+    zone: *2
+    time: *289
+- :id: 1311
+  :recipe_id: 931
+  :user_id: 13
+  :moderated_by_id: 14
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &290 2011-08-12 20:56:18.000000000 Z
+    zone: *2
+    time: *290
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1470
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &291 2011-08-12 18:44:36.000000000 Z
+    zone: *2
+    time: *291
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &292 2026-02-07 04:38:11.035952000 Z
+    zone: *2
+    time: *292
+- :id: 2112
+  :recipe_id: 942
+  :user_id: 16
+  :moderated_by_id: 17
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &293 2016-09-14 16:54:41.000000000 Z
+    zone: *2
+    time: *293
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2349
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &294 2016-09-14 13:53:59.000000000 Z
+    zone: *2
+    time: *294
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &295 2026-02-07 04:38:38.073058000 Z
+    zone: *2
+    time: *295
+- :id: 988
+  :recipe_id: 943
+  :user_id: 20
+  :moderated_by_id: 21
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &296 2010-11-02 16:10:07.000000000 Z
+    zone: *2
+    time: *296
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1095
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &297 2010-11-02 13:33:05.000000000 Z
+    zone: *2
+    time: *297
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &298 2026-02-07 04:37:55.421277000 Z
+    zone: *2
+    time: *298
+- :id: 1689
+  :recipe_id: 944
+  :user_id: 23
+  :moderated_by_id: 24
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &299 2013-10-24 22:46:34.000000000 Z
+    zone: *2
+    time: *299
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1918
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &300 2013-10-24 20:32:58.000000000 Z
+    zone: *2
+    time: *300
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &301 2026-02-07 04:38:29.434855000 Z
+    zone: *2
+    time: *301
+- :id: 1156
+  :recipe_id: 948
+  :user_id: 27
+  :moderated_by_id: 28
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &302 2011-05-21 20:41:22.000000000 Z
+    zone: *2
+    time: *302
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1291
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &303 2011-05-21 00:58:25.000000000 Z
+    zone: *2
+    time: *303
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &304 2026-02-07 04:38:04.199388000 Z
+    zone: *2
+    time: *304
+- :id: 1647
+  :recipe_id: 961
+  :user_id: 31
+  :moderated_by_id: 32
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &305 2013-07-28 15:12:19.000000000 Z
+    zone: *2
+    time: *305
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1870
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &306 2013-07-28 12:52:48.000000000 Z
+    zone: *2
+    time: *306
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &307 2026-05-11 09:30:00.779321000 Z
+    zone: *2
+    time: *307
+- :id: 2122
+  :recipe_id: 962
+  :user_id: 35
+  :moderated_by_id: 36
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &308 2016-09-18 10:16:52.000000000 Z
+    zone: *2
+    time: *308
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2359
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &309 2016-09-17 20:58:56.000000000 Z
+    zone: *2
+    time: *309
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &310 2026-02-07 04:38:38.510481000 Z
+    zone: *2
+    time: *310
+- :id: 1709
+  :recipe_id: 976
+  :user_id: 39
+  :moderated_by_id: 40
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &311 2013-12-15 12:04:06.000000000 Z
+    zone: *2
+    time: *311
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1938
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &312 2013-12-15 11:01:38.000000000 Z
+    zone: *2
+    time: *312
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &313 2026-05-11 09:39:19.712882000 Z
+    zone: *2
+    time: *313
+- :id: 1713
+  :recipe_id: 1002
+  :user_id: 42
+  :moderated_by_id: 43
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &314 2013-12-22 15:57:46.000000000 Z
+    zone: *2
+    time: *314
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1942
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &315 2013-12-22 14:07:59.000000000 Z
+    zone: *2
+    time: *315
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &316 2026-05-11 09:38:41.991527000 Z
+    zone: *2
+    time: *316
+- :id: 1765
+  :recipe_id: 1003
+  :user_id: 46
+  :moderated_by_id: 47
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &317 2014-02-18 15:40:32.000000000 Z
+    zone: *2
+    time: *317
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1995
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &318 2014-02-18 13:16:08.000000000 Z
+    zone: *2
+    time: *318
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &319 2026-05-11 09:49:03.779307000 Z
+    zone: *2
+    time: *319
+- :id: 1903
+  :recipe_id: 1031
+  :user_id: 50
+  :moderated_by_id: 1
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &320 2014-09-05 15:56:36.000000000 Z
+    zone: *2
+    time: *320
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2139
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &321 2014-09-05 09:07:26.000000000 Z
+    zone: *2
+    time: *321
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &322 2026-05-09 22:51:06.363359000 Z
+    zone: *2
+    time: *322
+- :id: 1763
+  :recipe_id: 1034
+  :user_id: 4
+  :moderated_by_id: 5
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &323 2014-02-16 18:20:25.000000000 Z
+    zone: *2
+    time: *323
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1992
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &324 2014-02-16 13:08:23.000000000 Z
+    zone: *2
+    time: *324
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &325 2026-05-11 09:49:22.920253000 Z
+    zone: *2
+    time: *325
+- :id: 1938
+  :recipe_id: 1067
+  :user_id: 7
+  :moderated_by_id: 8
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &326 2014-12-29 20:51:01.000000000 Z
+    zone: *2
+    time: *326
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2174
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &327 2014-12-29 12:53:32.000000000 Z
+    zone: *2
+    time: *327
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &328 2026-05-11 12:30:36.485867000 Z
+    zone: *2
+    time: *328
+- :id: 1707
+  :recipe_id: 1122
+  :user_id: 11
+  :moderated_by_id: 12
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &329 2013-12-11 17:38:42.000000000 Z
+    zone: *2
+    time: *329
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1936
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &330 2013-12-11 13:07:59.000000000 Z
+    zone: *2
+    time: *330
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &331 2026-05-11 09:39:40.203158000 Z
+    zone: *2
+    time: *331
+- :id: 1828
+  :recipe_id: 1123
+  :user_id: 15
+  :moderated_by_id: 16
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &332 2014-06-02 11:46:49.000000000 Z
+    zone: *2
+    time: *332
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2059
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &333 2014-06-02 09:08:58.000000000 Z
+    zone: *2
+    time: *333
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &334 2026-05-11 10:40:20.517806000 Z
+    zone: *2
+    time: *334
+- :id: 1005
+  :recipe_id: 1127
+  :user_id: 19
+  :moderated_by_id: 20
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &335 2010-12-15 21:32:38.000000000 Z
+    zone: *2
+    time: *335
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1114
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &336 2010-12-15 19:52:37.000000000 Z
+    zone: *2
+    time: *336
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &337 2026-05-12 10:58:52.923566000 Z
+    zone: *2
+    time: *337
+- :id: 1042
+  :recipe_id: 1143
+  :user_id: 23
+  :moderated_by_id: 24
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &338 2011-01-25 22:08:25.000000000 Z
+    zone: *2
+    time: *338
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1156
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &339 2011-01-25 19:27:50.000000000 Z
+    zone: *2
+    time: *339
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &340 2026-02-07 04:37:58.380273000 Z
+    zone: *2
+    time: *340
+- :id: 1918
+  :recipe_id: 1152
+  :user_id: 27
+  :moderated_by_id: 28
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &341 2014-10-22 10:27:14.000000000 Z
+    zone: *2
+    time: *341
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2154
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &342 2014-10-22 08:04:18.000000000 Z
+    zone: *2
+    time: *342
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &343 2026-05-11 12:34:34.103889000 Z
+    zone: *2
+    time: *343
+- :id: 1203
+  :recipe_id: 1199
+  :user_id: 30
+  :moderated_by_id: 31
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &344 2011-06-10 00:00:20.000000000 Z
+    zone: *2
+    time: *344
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1345
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &345 2011-06-09 20:10:32.000000000 Z
+    zone: *2
+    time: *345
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &346 2026-02-07 04:38:06.215512000 Z
+    zone: *2
+    time: *346
+- :id: 1882
+  :recipe_id: 1202
+  :user_id: 34
+  :moderated_by_id: 35
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &347 2014-08-01 10:59:29.000000000 Z
+    zone: *2
+    time: *347
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2116
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &348 2014-08-01 08:51:40.000000000 Z
+    zone: *2
+    time: *348
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &349 2026-05-11 10:50:36.883655000 Z
+    zone: *2
+    time: *349
+- :id: 1831
+  :recipe_id: 1247
+  :user_id: 38
+  :moderated_by_id: 39
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &350 2014-06-07 18:55:57.000000000 Z
+    zone: *2
+    time: *350
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2062
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &351 2014-06-07 09:56:20.000000000 Z
+    zone: *2
+    time: *351
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &352 2026-05-11 10:39:37.406523000 Z
+    zone: *2
+    time: *352
+- :id: 1375
+  :recipe_id: 1250
+  :user_id: 42
+  :moderated_by_id: 43
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &353 2011-12-16 22:31:48.000000000 Z
+    zone: *2
+    time: *353
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1548
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &354 2011-12-16 19:59:38.000000000 Z
+    zone: *2
+    time: *354
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &355 2026-02-07 04:38:14.352908000 Z
+    zone: *2
+    time: *355
+- :id: 1673
+  :recipe_id: 1262
+  :user_id: 46
+  :moderated_by_id: 47
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &356 2013-10-10 20:50:46.000000000 Z
+    zone: *2
+    time: *356
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1902
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &357 2013-10-10 18:47:41.000000000 Z
+    zone: *2
+    time: *357
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &358 2026-05-11 09:25:22.951911000 Z
+    zone: *2
+    time: *358
+- :id: 1888
+  :recipe_id: 1267
+  :user_id: 50
+  :moderated_by_id: 1
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &359 2014-08-07 14:02:03.000000000 Z
+    zone: *2
+    time: *359
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2122
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &360 2014-08-07 11:44:09.000000000 Z
+    zone: *2
+    time: *360
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &361 2026-05-11 10:49:43.585903000 Z
+    zone: *2
+    time: *361
+- :id: 1748
+  :recipe_id: 1268
+  :user_id: 4
+  :moderated_by_id: 5
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &362 2014-01-23 15:01:20.000000000 Z
+    zone: *2
+    time: *362
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1977
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &363 2014-01-23 11:38:15.000000000 Z
+    zone: *2
+    time: *363
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &364 2026-05-11 09:53:18.430366000 Z
+    zone: *2
+    time: *364
+- :id: 2070
+  :recipe_id: 1274
+  :user_id: 8
+  :moderated_by_id: 9
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &365 2016-08-21 20:52:56.000000000 Z
+    zone: *2
+    time: *365
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2307
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &366 2016-08-20 23:25:39.000000000 Z
+    zone: *2
+    time: *366
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &367 2026-02-07 04:38:36.064560000 Z
+    zone: *2
+    time: *367
+- :id: 1742
+  :recipe_id: 1295
+  :user_id: 12
+  :moderated_by_id: 13
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &368 2014-01-18 15:42:38.000000000 Z
+    zone: *2
+    time: *368
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1971
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &369 2014-01-18 13:09:22.000000000 Z
+    zone: *2
+    time: *369
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &370 2026-05-11 09:54:10.778372000 Z
+    zone: *2
+    time: *370
+- :id: 1463
+  :recipe_id: 1302
+  :user_id: 16
+  :moderated_by_id: 17
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &371 2012-06-16 21:36:14.000000000 Z
+    zone: *2
+    time: *371
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1649
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &372 2012-06-16 19:03:31.000000000 Z
+    zone: *2
+    time: *372
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &373 2026-02-26 16:20:44.110788000 Z
+    zone: *2
+    time: *373
+- :id: 1502
+  :recipe_id: 1304
+  :user_id: 20
+  :moderated_by_id: 21
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &374 2012-12-22 19:58:06.000000000 Z
+    zone: *2
+    time: *374
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1706
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &375 2012-12-22 17:25:19.000000000 Z
+    zone: *2
+    time: *375
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &376 2026-02-07 04:38:19.213252000 Z
+    zone: *2
+    time: *376
+- :id: 2197
+  :recipe_id: 1308
+  :user_id: 24
+  :moderated_by_id: 25
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &377 2018-06-24 13:25:33.000000000 Z
+    zone: *2
+    time: *377
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2434
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &378 2018-06-24 12:07:46.000000000 Z
+    zone: *2
+    time: *378
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &379 2026-05-09 18:58:32.889175000 Z
+    zone: *2
+    time: *379
+- :id: 1469
+  :recipe_id: 1318
+  :user_id: 28
+  :moderated_by_id: 29
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &380 2012-08-16 07:56:23.000000000 Z
+    zone: *2
+    time: *380
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1656
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &381 2012-08-16 00:46:22.000000000 Z
+    zone: *2
+    time: *381
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &382 2026-05-11 13:02:40.913950000 Z
+    zone: *2
+    time: *382
+- :id: 1522
+  :recipe_id: 1348
+  :user_id: 32
+  :moderated_by_id: 33
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &383 2013-01-08 19:09:48.000000000 Z
+    zone: *2
+    time: *383
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1730
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &384 2013-01-08 17:40:28.000000000 Z
+    zone: *2
+    time: *384
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &385 2026-02-07 04:38:20.201998000 Z
+    zone: *2
+    time: *385
+- :id: 1671
+  :recipe_id: 1370
+  :user_id: 36
+  :moderated_by_id: 37
+  :state: approved
+  :high_quality: true
+  :featured_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &386 2026-06-21 15:42:26.495295000 Z
+    zone: *2
+    time: *386
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &387 2013-10-05 15:39:59.000000000 Z
+    zone: *2
+    time: *387
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1900
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &388 2013-10-05 12:51:19.000000000 Z
+    zone: *2
+    time: *388
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &389 2026-06-21 15:42:26.503066000 Z
+    zone: *2
+    time: *389
+- :id: 1618
+  :recipe_id: 1375
+  :user_id: 40
+  :moderated_by_id: 41
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &390 2013-07-02 14:40:44.000000000 Z
+    zone: *2
+    time: *390
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1841
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &391 2013-07-02 09:55:47.000000000 Z
+    zone: *2
+    time: *391
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &392 2026-05-11 09:16:05.245404000 Z
+    zone: *2
+    time: *392
+- :id: 1722
+  :recipe_id: 1387
+  :user_id: 44
+  :moderated_by_id: 45
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &393 2014-01-03 16:15:22.000000000 Z
+    zone: *2
+    time: *393
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1951
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &394 2014-01-03 10:54:22.000000000 Z
+    zone: *2
+    time: *394
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &395 2026-05-11 09:37:32.063061000 Z
+    zone: *2
+    time: *395
+- :id: 1784
+  :recipe_id: 1426
+  :user_id: 48
+  :moderated_by_id: 49
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &396 2014-03-25 17:45:42.000000000 Z
+    zone: *2
+    time: *396
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2014
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &397 2014-03-25 14:42:07.000000000 Z
+    zone: *2
+    time: *397
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &398 2026-05-11 10:48:27.948932000 Z
+    zone: *2
+    time: *398
+- :id: 2160
+  :recipe_id: 1427
+  :user_id: 2
+  :moderated_by_id: 3
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &399 2016-10-09 08:36:23.000000000 Z
+    zone: *2
+    time: *399
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2397
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &400 2016-10-08 18:57:30.000000000 Z
+    zone: *2
+    time: *400
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &401 2026-05-09 20:31:19.589076000 Z
+    zone: *2
+    time: *401
+- :id: 1697
+  :recipe_id: 1429
+  :user_id: 6
+  :moderated_by_id: 7
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &402 2013-11-28 16:55:33.000000000 Z
+    zone: *2
+    time: *402
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 1926
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &403 2013-11-28 15:49:35.000000000 Z
+    zone: *2
+    time: *403
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &404 2026-06-04 11:00:14.005926000 Z
+    zone: *2
+    time: *404
+- :id: 1778
+  :recipe_id: 1445
+  :user_id: 10
+  :moderated_by_id: 11
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &405 2014-03-05 18:13:17.000000000 Z
+    zone: *2
+    time: *405
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2008
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &406 2014-03-05 13:57:32.000000000 Z
+    zone: *2
+    time: *406
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &407 2026-06-13 17:01:35.279615000 Z
+    zone: *2
+    time: *407
+- :id: 1792
+  :recipe_id: 1450
+  :user_id: 14
+  :moderated_by_id: 15
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &408 2014-04-10 20:03:37.000000000 Z
+    zone: *2
+    time: *408
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2022
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &409 2014-04-10 11:14:14.000000000 Z
+    zone: *2
+    time: *409
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &410 2026-05-11 10:47:22.136898000 Z
+    zone: *2
+    time: *410
+- :id: 2024
+  :recipe_id: 1452
+  :user_id: 18
+  :moderated_by_id: 19
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &411 2016-03-20 17:39:44.000000000 Z
+    zone: *2
+    time: *411
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2261
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &412 2016-03-20 14:44:18.000000000 Z
+    zone: *2
+    time: *412
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &413 2026-05-09 18:59:50.607854000 Z
+    zone: *2
+    time: *413
+- :id: 1795
+  :recipe_id: 1453
+  :user_id: 21
+  :moderated_by_id: 22
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &414 2014-04-13 06:33:24.000000000 Z
+    zone: *2
+    time: *414
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2025
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &415 2014-04-12 21:40:31.000000000 Z
+    zone: *2
+    time: *415
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &416 2026-05-11 10:47:03.800965000 Z
+    zone: *2
+    time: *416
+- :id: 1819
+  :recipe_id: 1457
+  :user_id: 25
+  :moderated_by_id: 26
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &417 2014-05-16 14:07:39.000000000 Z
+    zone: *2
+    time: *417
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2050
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &418 2014-05-16 11:58:24.000000000 Z
+    zone: *2
+    time: *418
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &419 2026-05-11 10:42:12.140091000 Z
+    zone: *2
+    time: *419
+- :id: 1924
+  :recipe_id: 1460
+  :user_id: 29
+  :moderated_by_id: 30
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &420 2014-11-02 05:55:45.000000000 Z
+    zone: *2
+    time: *420
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2160
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &421 2014-11-01 23:37:04.000000000 Z
+    zone: *2
+    time: *421
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &422 2026-02-07 04:38:43.255031000 Z
+    zone: *2
+    time: *422
+- :id: 1859
+  :recipe_id: 1464
+  :user_id: 33
+  :moderated_by_id: 34
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &423 2014-07-01 06:22:49.000000000 Z
+    zone: *2
+    time: *423
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2091
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &424 2014-06-30 23:15:47.000000000 Z
+    zone: *2
+    time: *424
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &425 2026-02-07 04:38:39.098673000 Z
+    zone: *2
+    time: *425
+- :id: 2050
+  :recipe_id: 1471
+  :user_id: 36
+  :moderated_by_id: 37
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &426 2016-07-03 07:47:22.000000000 Z
+    zone: *2
+    time: *426
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2287
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &427 2016-07-02 19:59:19.000000000 Z
+    zone: *2
+    time: *427
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &428 2026-02-07 04:38:35.165578000 Z
+    zone: *2
+    time: *428
+- :id: 1932
+  :recipe_id: 1491
+  :user_id: 39
+  :moderated_by_id: 40
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &429 2014-12-17 06:44:03.000000000 Z
+    zone: *2
+    time: *429
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2168
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &430 2014-12-16 20:24:23.000000000 Z
+    zone: *2
+    time: *430
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &431 2026-05-11 12:31:54.043214000 Z
+    zone: *2
+    time: *431
+- :id: 1959
+  :recipe_id: 1500
+  :user_id: 42
+  :moderated_by_id: 43
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &432 2015-03-01 07:06:09.000000000 Z
+    zone: *2
+    time: *432
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2195
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &433 2015-02-28 17:01:24.000000000 Z
+    zone: *2
+    time: *433
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &434 2026-05-11 12:45:35.319486000 Z
+    zone: *2
+    time: *434
+- :id: 1947
+  :recipe_id: 1501
+  :user_id: 46
+  :moderated_by_id: 47
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &435 2015-01-22 22:23:15.000000000 Z
+    zone: *2
+    time: *435
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2183
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &436 2015-01-22 13:34:07.000000000 Z
+    zone: *2
+    time: *436
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &437 2026-05-11 12:46:44.137079000 Z
+    zone: *2
+    time: *437
+- :id: 1965
+  :recipe_id: 1511
+  :user_id: 49
+  :moderated_by_id: 50
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &438 2015-03-26 06:44:45.000000000 Z
+    zone: *2
+    time: *438
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2201
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &439 2015-03-25 20:33:35.000000000 Z
+    zone: *2
+    time: *439
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &440 2026-02-07 04:38:30.224691000 Z
+    zone: *2
+    time: *440
+- :id: 2162
+  :recipe_id: 1512
+  :user_id: 3
+  :moderated_by_id: 4
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &441 2016-10-09 20:57:25.000000000 Z
+    zone: *2
+    time: *441
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2399
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &442 2016-10-09 17:10:55.000000000 Z
+    zone: *2
+    time: *442
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &443 2026-05-09 18:58:51.899414000 Z
+    zone: *2
+    time: *443
+- :id: 2013
+  :recipe_id: 1525
+  :user_id: 6
+  :moderated_by_id: 7
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &444 2015-11-22 07:39:06.000000000 Z
+    zone: *2
+    time: *444
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2250
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &445 2015-11-22 00:03:02.000000000 Z
+    zone: *2
+    time: *445
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &446 2026-02-07 04:38:32.995068000 Z
+    zone: *2
+    time: *446
+- :id: 2080
+  :recipe_id: 1552
+  :user_id: 10
+  :moderated_by_id: 11
+  :state: approved
+  :high_quality: false
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &447 2016-08-29 18:55:24.000000000 Z
+    zone: *2
+    time: *447
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2317
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &448 2016-08-28 17:51:22.000000000 Z
+    zone: *2
+    time: *448
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &449 2026-02-07 04:38:36.569246000 Z
+    zone: *2
+    time: *449
+- :id: 2193
+  :recipe_id: 1568
+  :user_id: 13
+  :moderated_by_id: 14
+  :state: approved
+  :high_quality: true
+  :featured_at:
+  :moderated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &450 2018-03-11 06:02:45.000000000 Z
+    zone: *2
+    time: *450
+  :moderation_reason:
+  :deleted_at:
+  :old_id: 2430
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &451 2018-03-10 15:06:13.000000000 Z
+    zone: *2
+    time: *451
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &452 2026-05-09 20:24:59.974393000 Z
+    zone: *2
+    time: *452

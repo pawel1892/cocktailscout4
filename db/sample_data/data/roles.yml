@@ -1,0 +1,74 @@
+---
+- :id: 1
+  :name: forum_moderator
+  :display_name: Forum-Moderator
+  :old_id: 2
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2026-02-07 04:06:12.834448000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2026-02-08 05:23:30.789791000 Z
+    zone: *2
+    time: *3
+- :id: 2
+  :name: recipe_moderator
+  :display_name: Rezept-Moderator
+  :old_id: 3
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2026-02-07 04:06:12.837550000 Z
+    zone: *2
+    time: *4
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2026-02-08 05:23:30.821251000 Z
+    zone: *2
+    time: *5
+- :id: 3
+  :name: admin
+  :display_name: Admin
+  :old_id: 4
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2026-02-07 04:06:12.839183000 Z
+    zone: *2
+    time: *6
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2026-02-08 05:23:30.732861000 Z
+    zone: *2
+    time: *7
+- :id: 4
+  :name: image_moderator
+  :display_name: Bild-Moderator
+  :old_id: 5
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &8 2026-02-07 04:06:12.841472000 Z
+    zone: *2
+    time: *8
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &9 2026-02-08 05:23:30.840793000 Z
+    zone: *2
+    time: *9
+- :id: 5
+  :name: super_moderator
+  :display_name: Moderator
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &10 2026-02-08 05:23:30.877188000 Z
+    zone: *2
+    time: *10
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &11 2026-02-08 05:23:30.877188000 Z
+    zone: *2
+    time: *11
+- :id: 6
+  :name: wiki_editor
+  :display_name: Wiki-Editor
+  :old_id:
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &12 2026-05-31 20:38:19.461520000 Z
+    zone: *2
+    time: *12
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &13 2026-05-31 20:38:19.461520000 Z
+    zone: *2
+    time: *13

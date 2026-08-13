@@ -1,0 +1,33 @@
+{
+  "exported_at": "2026-07-25T11:56:56Z",
+  "rng_seed": 20260101,
+  "fake_user_password": "password123",
+  "row_counts": {
+    "roles": 6,
+    "users": 50,
+    "user_roles": 10,
+    "units": 23,
+    "forum_topics": 8,
+    "wiki_articles": 10,
+    "wiki_article_collaborators": 10,
+    "ingredients": 437,
+    "recipes": 150,
+    "recipe_ingredients": 724,
+    "tags": 125,
+    "taggings": 770,
+    "recipe_images": 150,
+    "forum_threads": 18,
+    "forum_images": 154,
+    "forum_posts": 234,
+    "recipe_comments": 59,
+    "ratings": 52,
+    "favorites": 56
+  },
+  "image_counts": {
+    "recipe_images": 150,
+    "forum_images": 154,
+    "wiki_covers": 10
+  },
+  "total_bundle_bytes": 20824536,
+  "notes": []
+}

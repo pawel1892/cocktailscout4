@@ -1,0 +1,114 @@
+---
+- :id: 1
+  :name: Allgemeine Diskussion
+  :description: Alles rund ums Cocktailmixen
+  :slug: allgemeine-diskussion
+  :position: 0
+  :old_id: 1
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2017-04-27 16:10:34.000000000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2026-07-21 18:03:40.626727000 Z
+    zone: *2
+    time: *3
+- :id: 2
+  :name: Cocktailzutaten
+  :description: Welche Zutaten wo kaufen und wie verwenden?
+  :slug: cocktailzutaten
+  :position: 400
+  :old_id: 400
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *4
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2026-07-24 20:54:42.253127000 Z
+    zone: *2
+    time: *5
+- :id: 3
+  :name: Bars & Nightlife
+  :description: Erfahrungsberichte und Bartipps aus eurer Region
+  :slug: bars-nightlife
+  :position: 500
+  :old_id: 500
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &6 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *6
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &7 2026-04-02 15:42:34.488367000 Z
+    zone: *2
+    time: *7
+- :id: 4
+  :name: Offtopic
+  :description: Diskussion über alles, was sonst nirgends Platz findet
+  :slug: offtopic
+  :position: 1000
+  :old_id: 1000
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &8 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *8
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &9 2026-07-04 04:41:52.172084000 Z
+    zone: *2
+    time: *9
+- :id: 5
+  :name: News
+  :description: Offizielle Ankündigungen
+  :slug: news
+  :position: 4000
+  :old_id: 4000
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &10 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *10
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &11 2026-06-07 12:04:30.494280000 Z
+    zone: *2
+    time: *11
+- :id: 6
+  :name: Feedback
+  :description: Lob, Kritik, Verbesserungsvorschläge und Hilfe
+  :slug: feedback
+  :position: 5000
+  :old_id: 5000
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &12 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *12
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &13 2026-07-24 20:58:23.661814000 Z
+    zone: *2
+    time: *13
+- :id: 7
+  :name: Fotodiskussionen
+  :description: Wie können die Fotos verbessert werden?
+  :slug: fotodiskussionen
+  :position: 5500
+  :old_id: 5500
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &14 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *14
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &15 2026-06-04 09:53:05.545674000 Z
+    zone: *2
+    time: *15
+- :id: 8
+  :name: Rezeptvorschläge
+  :description: Diskussionen zu den Rezeptvorschlägen.
+  :slug: rezeptvorschlaege
+  :position: 6000
+  :old_id: 6000
+  :created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &16 2017-04-27 16:10:34.000000000 Z
+    zone: *2
+    time: *16
+  :updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &17 2026-05-25 15:08:48.040242000 Z
+    zone: *2
+    time: *17
