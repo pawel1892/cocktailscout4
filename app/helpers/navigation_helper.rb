@@ -1,9 +1,4 @@
 module NavigationHelper
-  # TEMP_WIKI_PROD_HIDE: Keep test/beta/dev visible; hide production wiki nav for non-editors.
-  def wiki_visible?
-    !Rails.env.production? || Current.user&.can_edit_wiki?
-  end
-
   def main_navigation_items
     [
       {
@@ -18,13 +13,12 @@ module NavigationHelper
           { label: "Rezept-Kategorien", path: recipe_categories_path, controllers: [ "recipe_categories" ], description: "Von Sour bis Tiki – nach Stil, Zutat oder Anlass stöbern." }
         ]
       },
-      # TEMP_WIKI_PROD_HIDE: Hide the Wiki nav item in production for non-editors.
-      (wiki_visible? ? {
+      {
         label: "Wiki",
         path: wiki_dashboard_path,
         controllers: [ "wiki_articles", "wiki/dashboard" ],
         dropdown: nil
-      } : nil),
+      },
       {
         label: "Community",
         path: community_path,
@@ -42,8 +36,7 @@ module NavigationHelper
         controllers: [ "my_bar" ],
         dropdown: nil
       }
-      # TEMP_WIKI_PROD_HIDE: Drop the hidden Wiki nav item while the production gate exists.
-    ].compact
+    ]
   end
 
   def current_nav_item
