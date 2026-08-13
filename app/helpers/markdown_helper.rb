@@ -83,8 +83,7 @@ module MarkdownHelper
       when "wiki"
         article = WikiArticle.find_by(slug: ref)
         label = custom_text.presence || article&.title || ref
-        # TEMP_WIKI_PROD_HIDE: Hide wiki links in production for non-editors.
-        wiki_visible? ? "[#{label}](#{wiki_article_path(ref)})" : label
+        "[#{label}](#{wiki_article_path(ref)})"
       else
         Regexp.last_match(0) # unknown type: leave unchanged
       end

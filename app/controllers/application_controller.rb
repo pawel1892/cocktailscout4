@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   include MetaTagsHelper
   helper BreadcrumbsHelper
   helper NavigationHelper
-  # TEMP_WIKI_PROD_HIDE: Expose wiki_visible? so helpers can hide wiki links in production.
-  helper_method :breadcrumbs, :wiki_visible?
+  helper_method :breadcrumbs
 
   # HTTP Basic Auth for beta environment
   if Rails.env.beta?
@@ -25,11 +24,6 @@ class ApplicationController < ActionController::Base
 
   def breadcrumbs
     @breadcrumbs ||= []
-  end
-
-  # TEMP_WIKI_PROD_HIDE: Remove this production-only gate when the wiki goes public.
-  def wiki_visible?
-    !Rails.env.production? || Current.user&.can_edit_wiki?
   end
 
   private
@@ -62,12 +56,6 @@ class ApplicationController < ActionController::Base
 
   def require_wiki_editor!
     authorization_redirect unless Current.user&.can_edit_wiki?
-  end
-
-  # TEMP_WIKI_PROD_HIDE: Return 404 for production non-editors before auth redirects.
-  def require_visible_wiki!
-    resume_session
-    head :not_found unless wiki_visible?
   end
 
   def authorization_redirect

@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe NavigationHelper, type: :helper do
-  # TEMP_WIKI_PROD_HIDE: Default helper specs to visible wiki unless a case tests hiding it.
-  before do
-    allow(helper).to receive(:wiki_visible?).and_return(true)
-  end
-
   describe "#main_navigation_items" do
     it "returns an array of navigation items" do
       items = helper.main_navigation_items
@@ -24,14 +19,13 @@ RSpec.describe NavigationHelper, type: :helper do
       expect(rezepte_item[:controllers]).to include('recipes', 'recipe_images')
     end
 
-    # TEMP_WIKI_PROD_HIDE: Covers the temporary production nav hiding.
-    it "hides Wiki navigation item when the wiki is not visible" do
-      allow(helper).to receive(:wiki_visible?).and_return(false)
-
+    it "includes Wiki navigation item" do
       items = helper.main_navigation_items
+      wiki_item = items.find { |item| item[:label] == "Wiki" }
 
-      expect(items.map { |item| item[:label] }).not_to include("Wiki")
-      expect(items.length).to eq(3)
+      expect(wiki_item).to be_present
+      expect(wiki_item[:path]).to eq(wiki_dashboard_path)
+      expect(wiki_item[:controllers]).to include("wiki_articles", "wiki/dashboard")
     end
 
     it "includes Community navigation item" do
