@@ -2,8 +2,8 @@ class ForumThreadMovesController < ApplicationController
   before_action :require_forum_moderator!
 
   def create
-    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
-    target_topic = ForumTopic.find(params[:forum_topic_id])
+    @forum_thread = ForumThread.visible_to(Current.user).find_by!(slug: params[:thread_id])
+    target_topic = ForumTopic.visible_to(Current.user).find(params[:forum_topic_id])
 
     if target_topic.news? && !Current.user.admin?
       redirect_to forum_thread_path(@forum_thread), alert: "Nur Administratoren können Threads ins News-Forum verschieben."

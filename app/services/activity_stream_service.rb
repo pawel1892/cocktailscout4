@@ -17,7 +17,7 @@ class ActivityStreamService
   private
 
   def forum_post_events
-    ForumPost.unscoped.where(deleted: false)
+    ForumPost.unscoped.where(deleted: false).publicly_visible
       .includes(user: [ :user_stat, avatar_attachment: :blob ], forum_thread: [])
       .order(created_at: :desc).limit(@limit)
       .map do |post|

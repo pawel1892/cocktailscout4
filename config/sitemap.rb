@@ -20,12 +20,12 @@ SitemapGenerator::Sitemap.create do
   end
 
   # Forum topics
-  ForumTopic.find_each do |topic|
+  ForumTopic.publicly_visible.find_each do |topic|
     add forum_topic_path(topic), priority: 0.7, changefreq: "daily", lastmod: topic.updated_at
   end
 
   # Forum threads (non-deleted)
-  ForumThread.where(deleted: false).find_each do |thread|
+  ForumThread.publicly_visible.where(deleted: false).find_each do |thread|
     add forum_thread_path(thread), priority: 0.7, changefreq: "daily", lastmod: thread.updated_at
   end
 

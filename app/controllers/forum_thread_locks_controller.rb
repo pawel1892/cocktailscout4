@@ -2,7 +2,7 @@ class ForumThreadLocksController < ApplicationController
   before_action :require_forum_moderator!
 
   def create
-    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
+    @forum_thread = ForumThread.visible_to(Current.user).find_by!(slug: params[:thread_id])
 
     if @forum_thread.update(locked: true)
       redirect_to forum_thread_path(@forum_thread), notice: "Thread wurde gesperrt."
@@ -12,7 +12,7 @@ class ForumThreadLocksController < ApplicationController
   end
 
   def destroy
-    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
+    @forum_thread = ForumThread.visible_to(Current.user).find_by!(slug: params[:thread_id])
 
     if @forum_thread.update(locked: false)
       redirect_to forum_thread_path(@forum_thread), notice: "Thread wurde entsperrt."

@@ -8,7 +8,7 @@ class ForumThreadsController < ApplicationController
   def index
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
-    @forum_topic = ForumTopic.find_by!(slug: params[:id])
+    @forum_topic = ForumTopic.visible_to(Current.user).find_by!(slug: params[:id])
     @pagy, @forum_threads = pagy(
       @forum_topic.forum_threads
         .joins("LEFT JOIN forum_posts ON forum_posts.forum_thread_id = forum_threads.id AND forum_posts.deleted = false")
@@ -22,7 +22,7 @@ class ForumThreadsController < ApplicationController
   def show
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
-    @forum_thread = ForumThread.find_by!(slug: params[:id])
+    @forum_thread = ForumThread.visible_to(Current.user).find_by!(slug: params[:id])
     @forum_thread.track_visit(Current.user)
     @forum_topic = @forum_thread.forum_topic
     if Current.user&.can_moderate_forum?
@@ -59,7 +59,8 @@ class ForumThreadsController < ApplicationController
   private
 
   def find_forum_topic
-    ForumTopic.find_by(slug: params[:topic_id]) || ForumTopic.find(params[:topic_id])
+    topics = ForumTopic.visible_to(Current.user)
+    topics.find_by(slug: params[:topic_id]) || topics.find(params[:topic_id])
   end
 
   def require_admin_for_news_forum!

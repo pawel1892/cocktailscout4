@@ -8,8 +8,15 @@ class ForumTopic < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  scope :publicly_visible, -> { where(moderators_only: false) }
+  scope :visible_to, ->(user) { user&.moderator? ? all : publicly_visible }
+
   def to_param
     slug
+  end
+
+  def visible_to?(user)
+    !moderators_only? || user&.moderator? || false
   end
 
   scope :unread_by, ->(user) {

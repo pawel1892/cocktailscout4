@@ -74,7 +74,7 @@ module MarkdownHelper
         label = custom_text.presence || r&.title || ref
         "[#{label}](#{recipe_path(ref)})"
       when "thread"
-        thread = ForumThread.find_by(slug: ref)
+        thread = ForumThread.visible_to(Current.user).find_by(slug: ref)
         label = custom_text.presence || thread&.title || ref
         "[#{label}](#{forum_thread_path(ref)})"
       when "post"

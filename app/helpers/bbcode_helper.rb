@@ -80,7 +80,7 @@ module BbcodeHelper
 
       # If no custom text provided, lookup thread title
       if link_text.blank?
-        thread = ForumThread.find_by(slug: thread_slug)
+        thread = ForumThread.visible_to(Current.user).find_by(slug: thread_slug)
         link_text = thread&.title || thread_slug
       end
 

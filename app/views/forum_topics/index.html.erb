@@ -28,7 +28,7 @@
 
           <!-- Icon -->
           <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 <%= is_unread ? 'bg-cs-red-100 unread-indicator' : 'bg-cs-ink-100' %>">
-            <i class="fas fa-comments text-base <%= is_unread ? 'text-cs-red-700' : 'text-cs-ink-400' %>"></i>
+            <i class="fas <%= forum_topic.moderators_only? ? 'fa-user-shield' : 'fa-comments' %> text-base <%= is_unread ? 'text-cs-red-700' : 'text-cs-ink-400' %>"></i>
           </div>
 
           <!-- Name + description -->

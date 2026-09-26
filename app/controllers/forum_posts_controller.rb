@@ -8,7 +8,7 @@ class ForumPostsController < ApplicationController
   before_action :ensure_thread_not_locked, only: %i[create]
 
   def show
-    @forum_post = ForumPost.includes(:forum_thread).find_by!(public_id: params[:public_id])
+    @forum_post = ForumPost.visible_to(Current.user).includes(:forum_thread).find_by!(public_id: params[:public_id])
     page = @forum_post.page
 
     redirect_to forum_thread_path(
@@ -21,11 +21,11 @@ class ForumPostsController < ApplicationController
   def new
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
-    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
+    @forum_thread = ForumThread.visible_to(Current.user).find_by!(slug: params[:thread_id])
     @forum_post = @forum_thread.forum_posts.new
 
     if params[:quote].present?
-      quoted_post = ForumPost.find_by(id: params[:quote])
+      quoted_post = ForumPost.visible_to(Current.user).find_by(id: params[:quote])
       if quoted_post
         @forum_post.body = "[quote=#{quoted_post.user&.username || 'Gast'}]#{quoted_post.body}[/quote]\n"
       end
@@ -38,7 +38,7 @@ class ForumPostsController < ApplicationController
   def create
     add_breadcrumb "Community", community_path
     add_breadcrumb "Forum", forum_topics_path
-    @forum_thread ||= ForumThread.find_by!(slug: params[:thread_id])
+    @forum_thread ||= ForumThread.visible_to(Current.user).find_by!(slug: params[:thread_id])
     @forum_post = @forum_thread.forum_posts.new(forum_post_params)
     @forum_post.user = Current.user
 
@@ -87,7 +87,7 @@ class ForumPostsController < ApplicationController
   private
 
   def set_forum_post
-    @forum_post = ForumPost.find(params[:id])
+    @forum_post = ForumPost.visible_to(Current.user).find(params[:id])
   end
 
   def authorize_edit!
@@ -107,7 +107,7 @@ class ForumPostsController < ApplicationController
   end
 
   def ensure_thread_not_locked
-    @forum_thread = ForumThread.find_by!(slug: params[:thread_id])
+    @forum_thread = ForumThread.visible_to(Current.user).find_by!(slug: params[:thread_id])
 
     if @forum_thread.locked? && !Current.user&.can_moderate_forum?
       redirect_to forum_thread_path(@forum_thread), alert: "Dieser Thread ist geschlossen. Nur Moderatoren können neue Beiträge erstellen."

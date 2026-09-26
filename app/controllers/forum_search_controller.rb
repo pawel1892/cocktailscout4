@@ -19,7 +19,7 @@ class ForumSearchController < ApplicationController
 
       # 3. Paginate the threads
       @pagy, @forum_threads = pagy(
-        ForumThread.where(id: combined_ids)
+        ForumThread.visible_to(Current.user).where(id: combined_ids)
                    .includes(:user, :forum_topic)
                    .order(updated_at: :desc)
       )

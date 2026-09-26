@@ -16,6 +16,9 @@ class ForumPost < ApplicationRecord
   after_create :update_user_stats
   after_save :update_user_stats_if_deleted, if: -> { saved_change_to_deleted? }
 
+  scope :publicly_visible, -> { joins(forum_thread: :forum_topic).merge(ForumTopic.publicly_visible) }
+  scope :visible_to, ->(user) { user&.moderator? ? all : publicly_visible }
+
   scope :search_by_body, ->(query) {
     return all if query.blank?
     if Rails.env.test?
