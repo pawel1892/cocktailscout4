@@ -1,0 +1,8 @@
+<th scope="col" class="table-th">
+  <%= link_to admin_users_path(sort: column, direction: params[:sort] == column && params[:direction] == "asc" ? "desc" : "asc", status: params[:status], q: params[:q]), class: "hover:text-cs-ink-700" do %>
+    <%= label %>
+    <% if params[:sort] == column %>
+      <%= params[:direction] == "asc" ? "↑" : "↓" %>
+    <% end %>
+  <% end %>
+</th>

@@ -31,6 +31,8 @@ class User < ApplicationRecord
   has_many :recipe_suggestions, dependent: :nullify
   has_many :reviewed_suggestions, class_name: "RecipeSuggestion", foreign_key: "reviewed_by_id", dependent: :nullify
 
+  belongs_to :banned_by, class_name: "User", optional: true
+
   has_many :sent_private_messages, -> { where(deleted_by_sender: false) },
     class_name: "PrivateMessage", foreign_key: "sender_id", dependent: :destroy
   has_many :received_private_messages, -> { where(deleted_by_receiver: false) },
@@ -40,6 +42,7 @@ class User < ApplicationRecord
   normalizes :username, with: ->(u) { u.strip }
 
   scope :online, -> { where("last_active_at > ?", 5.minutes.ago) }
+  scope :banned, -> { where.not(banned_at: nil).where("banned_until IS NULL OR banned_until > ?", Time.current) }
 
   def online?
     last_active_at? && last_active_at > 5.minutes.ago
@@ -83,6 +86,21 @@ class User < ApplicationRecord
     if unconfirmed_email.present? && User.where.not(id: id).exists?(email_address: unconfirmed_email)
       errors.add(:unconfirmed_email, "ist bereits vergeben")
     end
+  end
+
+  def banned?
+    banned_at.present? && (banned_until.nil? || banned_until.future?)
+  end
+
+  def ban!(by:, reason:, until_time: nil)
+    transaction do
+      update!(banned_at: Time.current, banned_until: until_time, ban_reason: reason, banned_by: by)
+      sessions.destroy_all
+    end
+  end
+
+  def unban!
+    update!(banned_at: nil, banned_until: nil, ban_reason: nil, banned_by: nil)
   end
 
   def stat
@@ -131,6 +149,10 @@ class User < ApplicationRecord
 
   def can_moderate_image?
     admin? || image_moderator? || super_moderator?
+  end
+
+  def can_ban_users?
+    admin? || super_moderator?
   end
 
   def role?(role_name)

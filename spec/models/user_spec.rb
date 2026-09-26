@@ -331,6 +331,82 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "Banning" do
+    let(:user) { create(:user) }
+    let(:admin) { create(:user, :admin) }
+
+    describe "#banned?" do
+      it "is false without a ban" do
+        expect(user.banned?).to be false
+      end
+
+      it "is true for a permanent ban" do
+        user.update!(banned_at: 1.day.ago)
+        expect(user.banned?).to be true
+      end
+
+      it "is true for a temporary ban that has not expired" do
+        user.update!(banned_at: 1.day.ago, banned_until: 1.day.from_now)
+        expect(user.banned?).to be true
+      end
+
+      it "is false for an expired temporary ban" do
+        user.update!(banned_at: 2.days.ago, banned_until: 1.day.ago)
+        expect(user.banned?).to be false
+      end
+    end
+
+    describe ".banned" do
+      it "returns only currently banned users" do
+        permanent = create(:user, banned_at: 1.day.ago)
+        temporary = create(:user, banned_at: 1.day.ago, banned_until: 1.day.from_now)
+        create(:user, banned_at: 2.days.ago, banned_until: 1.day.ago)
+        create(:user)
+
+        expect(User.banned).to contain_exactly(permanent, temporary)
+      end
+    end
+
+    describe "#ban!" do
+      it "stores the ban details" do
+        until_time = 3.days.from_now
+        user.ban!(by: admin, reason: "Spam", until_time: until_time)
+
+        expect(user.reload.banned_at).to be_present
+        expect(user.banned_until).to be_within(1.second).of(until_time)
+        expect(user.ban_reason).to eq("Spam")
+        expect(user.banned_by).to eq(admin)
+      end
+
+      it "terminates all sessions" do
+        user.sessions.create!(ip_address: "127.0.0.1", user_agent: "Test")
+
+        expect { user.ban!(by: admin, reason: "Spam") }.to change { user.sessions.count }.from(1).to(0)
+      end
+    end
+
+    describe "#unban!" do
+      it "clears all ban fields" do
+        user.ban!(by: admin, reason: "Spam", until_time: 1.day.from_now)
+        user.unban!
+
+        expect(user.reload).to have_attributes(banned_at: nil, banned_until: nil, ban_reason: nil, banned_by: nil)
+      end
+    end
+
+    describe "#can_ban_users?" do
+      it "is true for admins and super moderators" do
+        expect(admin.can_ban_users?).to be true
+        expect(create(:user, :super_moderator).can_ban_users?).to be true
+      end
+
+      it "is false for other moderators and regular users" do
+        expect(create(:user, :recipe_moderator).can_ban_users?).to be false
+        expect(user.can_ban_users?).to be false
+      end
+    end
+  end
+
   describe "Avatar" do
     let(:user) { create(:user) }
     let(:image_file) { fixture_file_upload(Rails.root.join("spec/fixtures/files/test_image.jpg"), "image/jpeg") }

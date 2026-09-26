@@ -9,6 +9,11 @@ FactoryBot.define do
       confirmed_at { nil }
     end
 
+    trait :banned do
+      banned_at { 1.day.ago }
+      ban_reason { "Spam" }
+    end
+
     trait :admin do
       after(:create) do |user|
         user.roles << create(:role, :admin)

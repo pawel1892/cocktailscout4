@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_28_194500) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_26_120000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -417,6 +417,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_28_194500) do
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "ban_reason"
+    t.datetime "banned_at"
+    t.bigint "banned_by_id"
+    t.datetime "banned_until"
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
@@ -435,6 +439,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_28_194500) do
     t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
     t.string "username"
+    t.index ["banned_at"], name: "index_users_on_banned_at"
+    t.index ["banned_by_id"], name: "index_users_on_banned_by_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["last_active_at"], name: "index_users_on_last_active_at"
@@ -537,6 +543,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_28_194500) do
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_stats", "users"
+  add_foreign_key "users", "users", column: "banned_by_id", on_delete: :nullify
   add_foreign_key "visits", "users"
   add_foreign_key "wiki_article_collaborators", "users"
   add_foreign_key "wiki_article_collaborators", "wiki_articles"

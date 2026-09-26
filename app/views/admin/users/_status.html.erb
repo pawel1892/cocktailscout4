@@ -1,0 +1,7 @@
+<% if user.banned? %>
+  <span class="tag-error">
+    <%= user.banned_until ? "Gesperrt bis #{l(user.banned_until, format: :short)}" : "Dauerhaft gesperrt" %>
+  </span>
+<% else %>
+  <span class="tag-success">Aktiv</span>
+<% end %>

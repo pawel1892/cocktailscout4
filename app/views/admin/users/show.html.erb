@@ -1,0 +1,82 @@
+<div class="mb-8 flex items-center justify-between">
+  <h1 class="text-3xl font-bold text-cs-ink-800"><%= @user.username %></h1>
+  <%= link_to "← Zurück zur Übersicht", admin_users_path, class: "btn btn-outline" %>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="card">
+    <div class="card-header">
+      <span class="font-bold text-cs-ink-900">Benutzerdaten</span>
+      <%= render "status", user: @user %>
+    </div>
+    <div class="card-body">
+      <dl class="grid grid-cols-2 gap-2 text-sm">
+        <dt class="text-cs-ink-500">ID</dt>
+        <dd class="font-mono"><%= @user.id %></dd>
+        <dt class="text-cs-ink-500">E-Mail</dt>
+        <dd><%= @user.email_address %></dd>
+        <dt class="text-cs-ink-500">Registriert</dt>
+        <dd><%= l(@user.created_at, format: :short) %></dd>
+        <dt class="text-cs-ink-500">Bestätigt</dt>
+        <dd><%= @user.confirmed? ? l(@user.confirmed_at, format: :short) : "Nein" %></dd>
+        <dt class="text-cs-ink-500">Zuletzt aktiv</dt>
+        <dd><%= @user.last_seen_at ? l(@user.last_seen_at, format: :short) : "–" %></dd>
+        <dt class="text-cs-ink-500">Anmeldungen</dt>
+        <dd><%= @user.sign_in_count.to_i %></dd>
+        <dt class="text-cs-ink-500">Rollen</dt>
+        <dd class="flex flex-wrap gap-1">
+          <% if @user.roles.any? %>
+            <% @user.roles.each do |role| %>
+              <span class="tag-neutral"><%= role.display_name.presence || role.name %></span>
+            <% end %>
+          <% else %>
+            –
+          <% end %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="font-bold text-cs-ink-900">Sperre</span>
+    </div>
+    <div class="card-body">
+      <% if @user.banned? %>
+        <div class="flex flex-col gap-4">
+          <dl class="grid grid-cols-2 gap-2 text-sm">
+            <dt class="text-cs-ink-500">Gesperrt am</dt>
+            <dd><%= l(@user.banned_at, format: :short) %></dd>
+            <dt class="text-cs-ink-500">Gesperrt bis</dt>
+            <dd><%= @user.banned_until ? l(@user.banned_until, format: :short) : "Dauerhaft" %></dd>
+            <dt class="text-cs-ink-500">Gesperrt von</dt>
+            <dd><%= @user.banned_by&.username || "–" %></dd>
+            <dt class="text-cs-ink-500">Grund</dt>
+            <dd class="whitespace-pre-line"><%= @user.ban_reason %></dd>
+          </dl>
+          <%= button_to "Entsperren", unban_admin_user_path(@user),
+            class: "btn btn-outline self-start",
+            form: { data: { turbo_confirm: "#{@user.username} wirklich entsperren?" } } %>
+        </div>
+      <% elsif @user == Current.user %>
+        <p class="text-sm text-cs-ink-500">Du kannst dich nicht selbst sperren.</p>
+      <% elsif @user.can_ban_users? %>
+        <p class="text-sm text-cs-ink-500">Admins und Moderatoren können nicht gesperrt werden.</p>
+      <% else %>
+        <%= form_with url: ban_admin_user_path(@user), method: :post, class: "flex flex-col gap-4",
+              data: { turbo_confirm: "#{@user.username} wirklich sperren? Alle aktiven Sitzungen werden beendet." } do |f| %>
+          <div class="form-group">
+            <%= f.label :ban_reason, "Grund", class: "label-field" %>
+            <%= f.text_area :ban_reason, rows: 3, required: true, class: "input-field" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :banned_until, "Gesperrt bis (optional)", class: "label-field" %>
+            <%= f.date_field :banned_until, min: Date.tomorrow, class: "input-field" %>
+            <p class="form-hint">Leer lassen für eine dauerhafte Sperre.</p>
+          </div>
+          <%= f.submit "Sperren", class: "btn btn-danger self-start" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

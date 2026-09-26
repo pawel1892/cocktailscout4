@@ -1,0 +1,68 @@
+<div class="mb-8 flex items-center justify-between">
+  <h1 class="text-3xl font-bold text-cs-ink-800">Benutzer verwalten</h1>
+  <div class="text-sm text-cs-ink-600">
+    Gesamt: <strong><%= @pagy.count %></strong> Benutzer
+  </div>
+</div>
+
+<div class="card mb-6">
+  <div class="card-body">
+    <%= form_with url: admin_users_path, method: :get, class: "flex flex-col gap-4" do |f| %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <%= f.label :q, "Suchen", class: "label-field" %>
+          <%= f.text_field :q, value: params[:q], placeholder: "Benutzername oder E-Mail...", class: "input-field" %>
+        </div>
+        <div>
+          <%= f.label :status, "Status", class: "label-field" %>
+          <%= f.select :status, options_for_select([ [ "Alle", "" ], [ "Gesperrt", "banned" ] ], params[:status]), {}, class: "input-field" %>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <%= f.submit "Filtern", class: "btn btn-primary" %>
+        <% if params[:q].present? || params[:status].present? %>
+          <%= link_to "Filter zurücksetzen", admin_users_path, class: "btn btn-outline" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @users.any? %>
+  <div class="table-container">
+    <table class="table-standard">
+      <thead>
+        <tr>
+          <th scope="col" class="table-th">ID</th>
+          <%= render "sort_header", column: "username", label: "Benutzername" %>
+          <%= render "sort_header", column: "email_address", label: "E-Mail" %>
+          <%= render "sort_header", column: "created_at", label: "Registriert" %>
+          <%= render "sort_header", column: "last_seen_at", label: "Zuletzt aktiv" %>
+          <th scope="col" class="table-th">Status</th>
+          <th scope="col" class="table-th">Aktionen</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <% @users.each do |user| %>
+          <tr class="table-tr-hover">
+            <td class="table-td font-mono"><%= user.id %></td>
+            <td class="table-td font-medium"><%= user.username %></td>
+            <td class="table-td"><%= user.email_address %></td>
+            <td class="table-td"><%= l(user.created_at, format: :short) %></td>
+            <td class="table-td"><%= user.last_seen_at ? l(user.last_seen_at, format: :short) : "–" %></td>
+            <td class="table-td"><%= render "status", user: user %></td>
+            <td class="table-td"><%= link_to "Details", admin_user_path(user), class: "link" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 flex justify-center">
+    <%== @pagy.series_nav %>
+  </div>
+<% else %>
+  <div class="card-ghost text-center py-12">
+    <h3 class="text-lg font-medium text-cs-ink-900">Keine Benutzer gefunden</h3>
+  </div>
+<% end %>

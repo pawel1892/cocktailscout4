@@ -22,6 +22,13 @@ Rails.application.routes.draw do
     resources :ingredients
     resources :units
 
+    resources :users, only: [ :index, :show ] do
+      member do
+        post :ban
+        post :unban
+      end
+    end
+
     resources :recipe_suggestions, only: [ :index, :show ] do
       member do
         post :approve

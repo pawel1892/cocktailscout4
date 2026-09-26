@@ -26,6 +26,15 @@ class SessionsController < ApplicationController
         return
       end
 
+      if user.banned?
+        message = user.banned_until ? "Dein Konto ist bis zum #{l(user.banned_until, format: :short)} gesperrt." : "Dein Konto ist gesperrt."
+        respond_to do |format|
+          format.html { redirect_to new_session_path, alert: message }
+          format.json { render json: { error: message }, status: :forbidden }
+        end
+        return
+      end
+
       user.increment!(:sign_in_count)
       start_new_session_for user
       respond_to do |format|
